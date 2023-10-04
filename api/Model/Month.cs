@@ -14,6 +14,5 @@
         public static string October => "Říjen";
         public static string November => "Listopad";
         public static string December => "Prosinec";
-        public static bool SecondHalf => true;
     }
 }

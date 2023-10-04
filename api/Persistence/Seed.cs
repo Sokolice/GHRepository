@@ -10,6 +10,76 @@ namespace api.Persistence
     {
         public static async Task SeedData(DataContext context)
         {
+
+            var monthweeks = new List<MonthWeek>
+            {
+                new MonthWeek{Month = Month.January, Week = 1},
+                new MonthWeek{Month = Month.January, Week = 2},
+                new MonthWeek{Month = Month.January, Week = 3},
+                new MonthWeek{Month = Month.January, Week = 4},
+
+                new MonthWeek{Month = Month.February, Week = 1},
+                new MonthWeek{Month = Month.February, Week = 2},
+                new MonthWeek{Month = Month.February, Week = 3},
+                new MonthWeek{Month = Month.February, Week = 4},
+
+                new MonthWeek{Month = Month.March, Week = 1},
+                new MonthWeek{Month = Month.March, Week = 2},
+                new MonthWeek{Month = Month.March, Week = 3},
+                new MonthWeek{Month = Month.March, Week = 4},
+
+                new MonthWeek{Month = Month.April, Week = 1},
+                new MonthWeek{Month = Month.April, Week = 2},
+                new MonthWeek{Month = Month.April, Week = 3},
+                new MonthWeek{Month = Month.April, Week = 4},
+
+                new MonthWeek{Month = Month.May, Week = 1},
+                new MonthWeek{Month = Month.May, Week = 2},
+                new MonthWeek{Month = Month.May, Week = 3},
+                new MonthWeek{Month = Month.May, Week = 4},
+
+                new MonthWeek{Month = Month.June, Week = 1},
+                new MonthWeek{Month = Month.June, Week = 2},
+                new MonthWeek{Month = Month.June, Week = 3},
+                new MonthWeek{Month = Month.June, Week = 4},
+
+                new MonthWeek{Month = Month.July, Week = 1},
+                new MonthWeek{Month = Month.July, Week = 2},
+                new MonthWeek{Month = Month.July, Week = 3},
+                new MonthWeek{Month = Month.July, Week = 4},
+
+                new MonthWeek{Month = Month.August, Week = 1},
+                new MonthWeek{Month = Month.August, Week = 2},
+                new MonthWeek{Month = Month.August, Week = 3},
+                new MonthWeek{Month = Month.August, Week = 4},
+
+                new MonthWeek{Month = Month.September, Week = 1},
+                new MonthWeek{Month = Month.September, Week = 2},
+                new MonthWeek{Month = Month.September, Week = 3},
+                new MonthWeek{Month = Month.September, Week = 4},
+
+                new MonthWeek{Month = Month.October, Week = 1},
+                new MonthWeek{Month = Month.October, Week = 2},
+                new MonthWeek{Month = Month.October, Week = 3},
+                new MonthWeek{Month = Month.October, Week = 4},
+
+                new MonthWeek{Month = Month.November, Week = 1},
+                new MonthWeek{Month = Month.November, Week = 2},
+                new MonthWeek{Month = Month.November, Week = 3},
+                new MonthWeek{Month = Month.November, Week = 4},
+
+                new MonthWeek{Month = Month.December, Week = 1},
+                new MonthWeek{Month = Month.December, Week = 2},
+                new MonthWeek{Month = Month.December, Week = 3},
+                new MonthWeek{Month = Month.December, Week = 4},
+            };
+
+
+            await context.MonthWeeks.AddRangeAsync(monthweeks);
+            await context.SaveChangesAsync();
+
+            var monthWeekMap = monthweeks.ToDictionary(x => (x.Month, x.Week));
+
             var plants = new List<Plant>
             {
                 new Plant
@@ -18,13 +88,29 @@ namespace api.Persistence
                     IsHybrid = false,
                     DirectSewing = false,
                     GerminationTemp = 25,
-                    SewingMonths = new List<MonthWeek> {   
-                        new MonthWeek { Month = Month.March, Week = 3 },
-                        new MonthWeek { Month = Month.April } },
+                    SewingMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)] },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July }, 
-                        new MonthWeek { Month = Month.August }, 
-                        new MonthWeek { Month = Month.September } },
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
                     CropRotation = 1,
                     ImageSrc = "delights.jpg",
                     Description = "Gardeners Delight je jedna z původních odrůd tyčkového cherry rajčete.\r\n\r\n" +
@@ -38,13 +124,29 @@ namespace api.Persistence
                     IsHybrid = false,
                     DirectSewing = false,
                     GerminationTemp = 25,
-                    SewingMonths = new List<MonthWeek> { 
-                        new MonthWeek { Month = Month.March, Week = 3 },
-                        new MonthWeek { Month = Month.April } },
+                    SewingMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)] },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September } },
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
                     CropRotation = 1,
                     ImageSrc = "sweet_pea.jpg",
                     Description = "Hráškové rajče (někdy také nazývané divoké či rybízové) je tyčková odrůda rajčat, která plodí drobné červené plody. " +
@@ -58,13 +160,32 @@ namespace api.Persistence
                     IsHybrid = false,
                     DirectSewing = false,
                     GerminationTemp = 20,
-                    SewingMonths = new List<MonthWeek> {  
-                        new MonthWeek { Month = Month.April }, 
-                        new MonthWeek { Month = Month.May } },
-                    HarvestMonths = new List<MonthWeek> { 
-                        new MonthWeek { Month = Month.August }, 
-                        new MonthWeek { Month = Month.September },
-                        new MonthWeek { Month = Month.October }},
+                    SewingMonths = new List<MonthWeek> {   
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)] },
+                    HarvestMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]
+                    },
                     CropRotation = 1,
                     ImageSrc = "bantam.jpg",
                     Description = "Cukrová kukuřice Golden Bantam v BIO kvalitě je středně ranou odrůdou, kterou lze sklízet již začátkem srpna.\r\n\r\n" +
@@ -77,13 +198,29 @@ namespace api.Persistence
                     IsHybrid = false,
                     DirectSewing = false,
                     GerminationTemp = 25,
-                    SewingMonths = new List<MonthWeek> {  
-                        new MonthWeek { Month = Month.March, Week = 3 }, 
-                        new MonthWeek { Month = Month.April } },
-                    HarvestMonths = new List < MonthWeek > { 
-                        new MonthWeek { Month = Month.July }, 
-                        new MonthWeek { Month = Month.August }, 
-                        new MonthWeek { Month = Month.September } },
+                    SewingMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)] },
+                    HarvestMonths = new List < MonthWeek > {
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
                     CropRotation = 1,
                     ImageSrc = "roma.jpg",
                     Description = "Rajče Roma je středně raná odrůda keříčkových rajčat, která může dorůstat výšky až 70 cm. " +
@@ -97,13 +234,31 @@ namespace api.Persistence
                     IsHybrid = true,
                     DirectSewing = false,
                     GerminationTemp = 18,
-                    SewingMonths = new List<MonthWeek> {  
-                        new MonthWeek { Month = Month.April, Week = 2 },
-                        new MonthWeek { Month = Month.May} },
-                    HarvestMonths = new List<MonthWeek> { 
-                        new MonthWeek { Month = Month.August }, 
-                        new MonthWeek { Month = Month.September }, 
-                        new MonthWeek { Month = Month.October }},
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.April , 2)],
+                        monthWeekMap[(Month.April , 3)],
+                        monthWeekMap[(Month.April , 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)] },
+                    HarvestMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
                     CropRotation = 1,
                     ImageSrc = "arava.jpg",
                     Description = "Melouny typu Galia jsou výnosné cukrové odrůdy sladké a aromatické chuti. Jedná se o hybrid žlutého melounu a melounu cantaloupe, který byl poprvé vypěstován v Izraeli.\r\n\r\n" +
@@ -118,13 +273,30 @@ namespace api.Persistence
                     IsHybrid = true,
                     DirectSewing = false,
                     GerminationTemp = 20,
-                    SewingMonths = new List<MonthWeek> { 
-                        new MonthWeek { Month = Month.April, Week = 2 },
-                        new MonthWeek { Month = Month.May}},
+                    SewingMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.April , 2)],
+                        monthWeekMap[(Month.April , 3)],
+                        monthWeekMap[(Month.April , 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)] },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September }},
+                         monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],},
                     CropRotation = 1,
                     Description = "Cuketa Paladin F1 je výnosná hybridní tykev. Vytváří pravidelné plody válcovitého tvaru, žluté barvy. \r\n\r\n" +
                     "Jedná se o ranou odrůdu, na jejíž úrodu se můžete těšit již od začátku července.\r\n\r\nPoužívá se k přímé konzumaci nebo i ke konzervaci. \r\n\r\n" +
@@ -138,12 +310,27 @@ namespace api.Persistence
                     DirectSewing = false,
                     GerminationTemp = 20,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.April, Week = 4 },
-                        new MonthWeek { Month = Month.May} },
+                        monthWeekMap[(Month.April , 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)] },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September },
-                        new MonthWeek { Month = Month.October }},
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
                     CropRotation = 1,
                     ImageSrc = "muskatova.jpg",
                     Description = "Tykev Butterscotch je ranou a plazivou odrůdou muškátové tykve. " +
@@ -159,12 +346,31 @@ namespace api.Persistence
                     GerminationTemp = 28,
                     SewingMonths = new List<MonthWeek> {
                         new MonthWeek { Month = Month.February, Week = 3 },
-                        new MonthWeek { Month = Month.March },
-                        new MonthWeek { Month = Month.April}, },
+
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)]  },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September },
-                        new MonthWeek { Month = Month.October }},
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
                     CropRotation = 1,
                     ImageSrc = "korosko.jpg",
                     Description = "BIO Paprika Korosko je oblíbená odrůda se špičatými, červenými plody o velikosti cca 5 x 16 cm a hmotnosti cca 60 g. \r\n\r\n" +
@@ -178,19 +384,37 @@ namespace api.Persistence
                     DirectSewing = false,
                     GerminationTemp = 18,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.April, Week = 2},
-                        new MonthWeek { Month = Month.May}},
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)] ,
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)]
+                    },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September },
-                        new MonthWeek { Month = Month.October }},
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
                     CropRotation = 1,
                     ImageSrc = "bimbo.jpg",
                     Description = " Meloun Bimbo F1 je raná hybridní medová odrůda, která je velice odolná vůči padlí a virům. " +
                     "Vytváří až 2,5 kg velké plody žluté barvy s dobrou skladovatelností. \r\n\r\nMelouny se s oblibou pěstují pro svou výbornou chuť. " +
                     "Konzumují se v syrovém stavu a slouží jako zdravá pochutina, neboť jsou velice nízkokalorické a mají vysoký obsah vitamínů a vody.\r\n\r\n" +
                     "Ideální je tuto odrůdu si předpěstovat ve skleníku. "
-                },new Plant
+                }/*,new Plant
                 {
                     Name = "Řepa salátová kulatá",
                     IsHybrid = false,
@@ -456,7 +680,7 @@ namespace api.Persistence
                     "Tymián se používá čerstvý i sušený jako samostatné koření i do kořeninových směsí. Koření je skvělé pro dochucování nádivek, polévek a omáček. " +
                     "Výborné je s drůbežím masem a rybami.",
                     ImageSrc  = "kopr.jpg"
-                }
+                }*/
             };
 
             await context.Plants.AddRangeAsync(plants);

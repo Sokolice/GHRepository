@@ -14,7 +14,7 @@ namespace api
             builder.Services.AddControllers();
             builder.Services.AddDbContext<DataContext>(opt =>
             {
-                opt.UseSqlite(builder.Configuration.GetConnectionString("MyGarden"));
+                opt.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("MyGarden"));
             });
             builder.Services.AddCors(opt =>
             {

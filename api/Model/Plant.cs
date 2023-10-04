@@ -1,23 +1,23 @@
-﻿namespace api.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace api.Model
 {
     public class Plant
     {
+        [Key]
         public Guid Id { get; set; }
         public string Name { get; set; }
-        //mozna muze byt nekonacna smycka v odkazovani na listy, podivat se jak resit lazy loading 
-        
-
         public bool IsHybrid { get; set; }
 
         public bool DirectSewing { get; set; }
 
         public int GerminationTemp { get; set; }
-        public List<MonthWeek> SewingMonths { get; set; }
-        public List<MonthWeek> HarvestMonths { get; set; }
+        public virtual List<MonthWeek> SewingMonths { get; set; }
+        public virtual List<MonthWeek> HarvestMonths { get; set; }
 
-        public List<Plant> CompanionPlants { get; set; }
+        public virtual List<Plant> CompanionPlants { get; set; }
 
-        public List<Plant> AvoidPlants { get; set; }
+        public virtual List<Plant> AvoidPlants { get; set; }
 
         //trat ve ktere se pestuje 
         public int CropRotation { get; set; }
@@ -27,6 +27,8 @@
         public string ImageSrc {  get; set; }
 
         public int RepeatedPlanting { get; set; }
+
+        public virtual List<PlantRecord> PlantRecords { get; set; }
 
         public Plant()
         {
@@ -39,6 +41,7 @@
             Description = string.Empty;
             ImageSrc = string.Empty;
             RepeatedPlanting = 0;
+            PlantRecords = new List<PlantRecord>();
         }
 
     }
