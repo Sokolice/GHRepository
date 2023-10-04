@@ -15,8 +15,8 @@ namespace api.Model
         public virtual List<GardeningTask> GardeningTasks { get; set; }
 
         public MonthWeek() {
-            Month = api.Model.Month.January;
-            Week = 1;
+            Month = string.Empty;
+            Week = 0;
             SewedPlant = new List<Plant>();
             HarvestedPlant = new List<Plant>();
             GardeningTasks = new List<GardeningTask>();

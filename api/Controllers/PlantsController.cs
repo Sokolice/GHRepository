@@ -18,13 +18,31 @@ namespace api.Controllers
 
         // GET: api/Plants
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Plant>>> GetPlants()
+        public IQueryable<PlantDTO> GetPlants()
         {
-            if (_context.Plants == null)
-            {
-                return NotFound();
-            }
-            return await _context.Plants.ToListAsync();
+            var plants = from p in _context.Plants
+                         select new PlantDTO()
+                         {
+                             Id = p.Id,
+                             Name = p.Name,
+                             CropRotation = p.CropRotation,
+                             Description = p.Description,
+                             GerminationTemp  = p.GerminationTemp,
+                             DirectSewing = p.DirectSewing,
+                             IsHybrid = p.IsHybrid,
+                             ImageSrc = p.ImageSrc,
+                             RepeatedPlanting = p.RepeatedPlanting,
+                             PlantRecords = p.PlantRecords,
+                             AvoidPlants = p.AvoidPlants.Select( a=> a.Id ).ToList(),
+                             CompanionPlants = p.CompanionPlants.Select(a => a.Id).ToList(),
+                             HarvestMonths = p.HarvestMonths.Select(a => new { a.Month , a.Week })
+                             .AsEnumerable().Select(a => new Tuple<string, int>(a.Month, a.Week)).ToList(),
+                             SewingMonths = p.SewingMonths.Select(a => new { a.Month, a.Week })
+                             .AsEnumerable().Select(a => new Tuple<string, int>(a.Month, a.Week)).ToList(),
+                         };
+
+            
+            return plants;
         }
 
         // GET: api/Plants/5

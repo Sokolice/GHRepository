@@ -75,14 +75,14 @@ namespace api.Persistence
             };
 
 
-            await context.MonthWeeks.AddRangeAsync(monthweeks);
-            await context.SaveChangesAsync();
+            /*await context.MonthWeeks.AddRangeAsync(monthweeks);
+            await context.SaveChangesAsync();*/
 
-            var monthWeekMap = monthweeks.ToDictionary(x => (x.Month, x.Week));
+            var monthWeekMap = context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
 
             var plants = new List<Plant>
             {
-                new Plant
+                /*new Plant
                 {
                     Name = "Rajče tyčkové Gardeners Delight",
                     IsHybrid = false,
@@ -117,7 +117,7 @@ namespace api.Persistence
                     "Plodí počátkem července krásná šťavnatá rajčata o velikosti 2,5–4 cm.\r\n\r\n" +
                     "Odrůda Gardeners Delight je velmi stará a stále ceněná pro vynikající chuť svých plodů.\r\n\r\n" +
                     "Pěstujte na slunečném závětrném místě s oporou."
-                },
+                },*/
                 new Plant
                 {
                     Name = "Divoké rajče Sweet Pea",
@@ -345,7 +345,8 @@ namespace api.Persistence
                     DirectSewing = false,
                     GerminationTemp = 28,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.February, Week = 3 },
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
 
                         monthWeekMap[(Month.March, 1)],
                         monthWeekMap[(Month.March, 2)],
@@ -414,23 +415,54 @@ namespace api.Persistence
                     "Vytváří až 2,5 kg velké plody žluté barvy s dobrou skladovatelností. \r\n\r\nMelouny se s oblibou pěstují pro svou výbornou chuť. " +
                     "Konzumují se v syrovém stavu a slouží jako zdravá pochutina, neboť jsou velice nízkokalorické a mají vysoký obsah vitamínů a vody.\r\n\r\n" +
                     "Ideální je tuto odrůdu si předpěstovat ve skleníku. "
-                }/*,new Plant
+                },new Plant
                 {
                     Name = "Řepa salátová kulatá",
                     IsHybrid = false,
                     DirectSewing = true,
                     GerminationTemp = 8,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.March, Week = 4},
-                        new MonthWeek { Month = Month.April},
-                        new MonthWeek { Month = Month.May },
-                        new MonthWeek { Month = Month.June }},
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)]},
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.June },
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September},
-                        new MonthWeek { Month = Month.October }},
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
                     CropRotation = 2,
                     ImageSrc="repa_kulata.jpg",
                     Description = "epa salátová je polopozdní, výnosná odrůda, která je odolná vůči chorobám. " +
@@ -443,12 +475,28 @@ namespace api.Persistence
                     DirectSewing = false,
                     GerminationTemp = 25,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.March, Week = 3 },
-                        new MonthWeek { Month = Month.April } },
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)] },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September}},
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
                     CropRotation = 1,
                     Description = "Rajče Aztek je velmi výnosná odrůda keříčkových rajčat. " +
                     "Je ideální pro pěstování v truhlících či květináčích na balkónech. " +
@@ -463,11 +511,25 @@ namespace api.Persistence
                     DirectSewing = false,
                     GerminationTemp = 22,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.April } },
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)] },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September}},
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
                     CropRotation = 1,
                     Description = "Jedná se o jednoletou rostlinu, známou také pod názvem divoká okurka, jejíž stonek dorůstá délky až 5 m.\r\n" +
                     "Rostlina je vhodná pro polní pěstování, neboť se bohatě větví. Důležité je poskytnout ji dostatečnou vertikální oporu. V našich klimatických podmínkách se jí daří poměrně dobře.\r\n\r\n" +
@@ -484,11 +546,22 @@ namespace api.Persistence
                     DirectSewing = false,
                     GerminationTemp = 22,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.April, Week = 4 } },
+                        monthWeekMap[(Month.April, 4)] },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September}},
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
                     CropRotation = 1,
                     Description = "Tato tykev pochází z Japonska a svůj název získala díky své specifické dužině, která se po uvaření či s přibývající zralostí rozpadá na jednotlivá vlákna, připomínající špagety. " +
                     "Tato vlákna lze oddělit a ve vařeném stavu je podávat na způsob těstovin jako jejich nízkokalorickou variantu.\r\n\r\n" +
@@ -502,12 +575,29 @@ namespace api.Persistence
                     DirectSewing = false,
                     GerminationTemp = 20,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.April, Week = 2 },
-                        new MonthWeek { Month = Month.May}},
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)]},
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September}},
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
                     CropRotation = 1,
                     Description = "Costata Romanesco je středně raná italská keříčková odrůda s atraktivními plody. " +
                     "Ty jsou poměrně velké, jejich délka je okolo 40 cm. Ovšem ideální délka ke sklizni je okolo 20 cm. V té době mají cukety nejlepší chuť. \r\n\r\n" +
@@ -522,31 +612,29 @@ namespace api.Persistence
                     DirectSewing = false,
                     GerminationTemp = 22,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.April, Week = 2 },
-                        new MonthWeek { Month = Month.May}},
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)]},
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September}},
-                    CropRotation = 1,
-                    Description = "Jedná se o odrůdu salátové okurky typu multifruit. Odrůda je vhodná k rychlení ve sklenících či fóliových krytech.\r\n\r\n" +
-                    "Rostlina je středního vzrůstu, plodí 25–30 cm dlouhé tmavě zelené plody.\r\n\r\nOkurky mají jemnou chuť, jsou šťavnaté a geneticky nehořké. Jsou vhodné k přímé konzumaci.\r\n\r\n" +
-                    "Doba zrání je přibližně 70 dní.\r\n\r\n" +
-                    "Semena jsou mořená.",
-                    ImageSrc  = "superstar.jpg"
-                },new Plant
-                {
-                    Name = "Okurka salátová Superstar F1",
-                    IsHybrid = true,
-                    DirectSewing = false,
-                    GerminationTemp = 22,
-                    SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.April, Week = 2 },
-                        new MonthWeek { Month = Month.May}},
-                    HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September}},
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
                     CropRotation = 1,
                     Description = "Jedná se o odrůdu salátové okurky typu multifruit. Odrůda je vhodná k rychlení ve sklenících či fóliových krytech.\r\n\r\n" +
                     "Rostlina je středního vzrůstu, plodí 25–30 cm dlouhé tmavě zelené plody.\r\n\r\nOkurky mají jemnou chuť, jsou šťavnaté a geneticky nehořké. Jsou vhodné k přímé konzumaci.\r\n\r\n" +
@@ -560,16 +648,50 @@ namespace api.Persistence
                     DirectSewing = true,
                     GerminationTemp = 7,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.March},
-                        new MonthWeek { Month = Month.April},
-                        new MonthWeek { Month = Month.May},
-                        new MonthWeek { Month = Month.June},
-                        new MonthWeek { Month = Month.July, Week = 2}},
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],},
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September},
-                        new MonthWeek { Month = Month.October}},
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
                     CropRotation = 2,
                     Description = "Mrkev Táborská žlutá je typická středně dlouhými, válcovitými kořeny. \r\n\r\n" +
                     "Dorůstají délky 12–26 cm, dužina je sytě žlutá, někdy žlutooranžová a zakončení pološpičaté.\r\n\r\n" +
@@ -585,13 +707,25 @@ namespace api.Persistence
                     DirectSewing = true,
                     GerminationTemp = 9,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.November},
-                        new MonthWeek { Month = Month.December}},
+                        monthWeekMap[(Month.November, 1)],
+                        monthWeekMap[(Month.November, 2)],
+                        monthWeekMap[(Month.November, 3)],
+                        monthWeekMap[(Month.November, 4)],
+
+                        monthWeekMap[(Month.December, 1)],
+                        monthWeekMap[(Month.December, 2)],
+                        monthWeekMap[(Month.December, 3)],
+                        monthWeekMap[(Month.December, 4)]},
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September},
-                        new MonthWeek { Month = Month.October}},
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)]},
                     CropRotation = 2,
                     Description = "Sadbový česnek Topaz je poloraná odrůda ozimého paličáku.\r\n\r\n" +
                     "Topaz je odrůda pro podzimní výsadby s cibulkami kulovitého a pravidelného tvaru. Vnější suknice je bílá s fialovými pruhy, barva suknice stroužku je fialová.\r\n\r\n" +
@@ -605,13 +739,25 @@ namespace api.Persistence
                     DirectSewing = true,
                     GerminationTemp = 9,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.November},
-                        new MonthWeek { Month = Month.December}},
+                        monthWeekMap[(Month.November, 1)],
+                        monthWeekMap[(Month.November, 2)],
+                        monthWeekMap[(Month.November, 3)],
+                        monthWeekMap[(Month.November, 4)],
+
+                        monthWeekMap[(Month.December, 1)],
+                        monthWeekMap[(Month.December, 2)],
+                        monthWeekMap[(Month.December, 3)],
+                        monthWeekMap[(Month.December, 4)]},
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September},
-                        new MonthWeek { Month = Month.October}},
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)]},
                     CropRotation = 2,
                     Description = "Sadbový česnek odrůdy Vekan je oblíbená odrůda ozimého úzkolistého paličáku. \r\n\r\n" +
                     "Cibule dosahují středně velké velikosti, uspořádání stroužků v cibulovině je nepravidelné, průměrně obsahuje 8–12 stroužků. ",
@@ -623,13 +769,35 @@ namespace api.Persistence
                     DirectSewing = false,
                     GerminationTemp = 22,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.April},
-                        new MonthWeek { Month = Month.May}},
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)]},
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July },
-                        new MonthWeek { Month = Month.August },
-                        new MonthWeek { Month = Month.September},
-                        new MonthWeek { Month = Month.October}},
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
                     CropRotation = 1,
                     Description = "Jedná se o ranou hybridní odrůdu salátové okurky, která je vhodná jak pro polní pěstování, tak i pro pěstování ve sklenících či fóliových krytech. Rostliny jsou středně velkého vzrůstu a plodí dlouhé tmavě zelené plody, které dorůstají délky 20–22 cm. Povrch plodů je lehce bradavičnatý.\r\n\r\n" +
                     "Okurky jsou určeny k přímé konzumaci, hodí se k jakémukoliv běžnému zpracování.",
@@ -641,18 +809,60 @@ namespace api.Persistence
                     DirectSewing = true,
                     GerminationTemp = 15,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.March},
-                        new MonthWeek { Month = Month.April},
-                        new MonthWeek { Month = Month.May},
-                        new MonthWeek { Month = Month.June},
-                        new MonthWeek { Month = Month.July}},
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)]},
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.May},
-                        new MonthWeek { Month = Month.June},
-                        new MonthWeek { Month = Month.July},
-                        new MonthWeek { Month = Month.August},
-                        new MonthWeek { Month = Month.September},
-                        new MonthWeek { Month = Month.October}},
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+                        
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
                     CropRotation = 23,
                     Description = "Kopr vonný je jednoletá, aromatická bylina, původem z východní části Středozemí, Indie, Ruska a západní Asie. " +
                     "Dorůstá výšky 60–150 cm. Kopr má tenký kořen a přímou, jemně rýhovanou dutou lodyhu modrozelené barvy. Střídavé listy jsou několikrát dělené do nitkovitých úkrojů. " +
@@ -667,20 +877,46 @@ namespace api.Persistence
                     DirectSewing = true,
                     GerminationTemp = 20,
                     SewingMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.March},
-                        new MonthWeek { Month = Month.April},
-                        new MonthWeek { Month = Month.May}},
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)] },
                     HarvestMonths = new List<MonthWeek> {
-                        new MonthWeek { Month = Month.July},
-                        new MonthWeek { Month = Month.August},
-                        new MonthWeek { Month = Month.September},
-                        new MonthWeek { Month = Month.October}},
+                         monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
                     CropRotation = 23,
                     Description = "Tymián obecný je populární trvalka vysoká 40 cm. Sklízí se nať, která se seřezává 2–3x ročně vždy před plným rozkvětem.\r\n\r\n" +
                     "Tymián se používá čerstvý i sušený jako samostatné koření i do kořeninových směsí. Koření je skvělé pro dochucování nádivek, polévek a omáček. " +
                     "Výborné je s drůbežím masem a rybami.",
                     ImageSrc  = "kopr.jpg"
-                }*/
+                }
             };
 
             await context.Plants.AddRangeAsync(plants);
