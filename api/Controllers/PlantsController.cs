@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api.Persistence;
+using api.Model.DTOs;
 
 namespace api.Controllers
 {
@@ -27,18 +28,18 @@ namespace api.Controllers
                              Name = p.Name,
                              CropRotation = p.CropRotation,
                              Description = p.Description,
-                             GerminationTemp  = p.GerminationTemp,
+                             GerminationTemp = p.GerminationTemp,
                              DirectSewing = p.DirectSewing,
                              IsHybrid = p.IsHybrid,
                              ImageSrc = p.ImageSrc,
                              RepeatedPlanting = p.RepeatedPlanting,
                              PlantRecords = p.PlantRecords,
-                             AvoidPlants = p.AvoidPlants.Select( a=> a.Id ).ToList(),
+                             AvoidPlants = p.AvoidPlants.Select(a => a.Id).ToList(),
                              CompanionPlants = p.CompanionPlants.Select(a => a.Id).ToList(),
-                             HarvestMonths = p.HarvestMonths.Select(a => new { a.Month , a.Week })
-                             .AsEnumerable().Select(a => new Tuple<string, int>(a.Month, a.Week)).ToList(),
-                             SewingMonths = p.SewingMonths.Select(a => new { a.Month, a.Week })
-                             .AsEnumerable().Select(a => new Tuple<string, int>(a.Month, a.Week)).ToList(),
+                             HarvestMonths = p.HarvestMonths.Select(a => new MonthWeekDTO{ Month = a.Month, Week = a.Week })
+                             .ToList(),
+                             SewingMonths = p.SewingMonths.Select(a => new MonthWeekDTO { Month = a.Month, Week = a.Week })
+                             .ToList()
                          };
 
             

@@ -1,4 +1,4 @@
-﻿namespace api.Model
+﻿namespace api.Model.DTOs
 {
     public class MonthWeekDTO
     {

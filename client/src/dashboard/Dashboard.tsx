@@ -8,11 +8,12 @@ interface Props {
 
 export default function Dashboard({ plant }: Props) {
     return (
-            <Item>
-                <Item.Image src='/src/assets/plant.png' size='mini' />
-                <Item.Content>
-                <Item.Header>{plant.name}</Item.Header>
-                </Item.Content>
+        <Item key={plant.id}>
+            <Item.Content>
+            <Item.Header>{plant.name}</Item.Header>
+            </Item.Content>
+            <Item.Image src={`/src/assets/plants/${plant.imageSrc}`} size='small' />
+                
             </Item>
     )
 }

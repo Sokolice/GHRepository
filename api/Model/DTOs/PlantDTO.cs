@@ -1,4 +1,4 @@
-﻿namespace api.Model
+﻿namespace api.Model.DTOs
 {
     public class PlantDTO
     {
@@ -9,8 +9,8 @@
         public bool DirectSewing { get; set; }
 
         public int GerminationTemp { get; set; }
-        public List<Tuple<string, int>> SewingMonths { get; set; }
-        public List<Tuple<string, int>> HarvestMonths { get; set; }
+        public List<MonthWeekDTO> SewingMonths { get; set; }
+        public List<MonthWeekDTO> HarvestMonths { get; set; }
 
         public virtual List<Guid> CompanionPlants { get; set; }
 
@@ -33,8 +33,8 @@
             Name = string.Empty;
             CompanionPlants = new List<Guid>();
             AvoidPlants = new List<Guid>();
-            SewingMonths = new List<Tuple<string, int>>();
-            HarvestMonths = new List<Tuple<string, int>>();
+            SewingMonths = new List<MonthWeekDTO>();
+            HarvestMonths = new List<MonthWeekDTO>();
             Description = string.Empty;
             ImageSrc = string.Empty;
             RepeatedPlanting = 0;

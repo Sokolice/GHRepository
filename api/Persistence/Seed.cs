@@ -82,7 +82,7 @@ namespace api.Persistence
 
             var plants = new List<Plant>
             {
-                /*new Plant
+                new Plant
                 {
                     Name = "Rajče tyčkové Gardeners Delight",
                     IsHybrid = false,
@@ -117,7 +117,7 @@ namespace api.Persistence
                     "Plodí počátkem července krásná šťavnatá rajčata o velikosti 2,5–4 cm.\r\n\r\n" +
                     "Odrůda Gardeners Delight je velmi stará a stále ceněná pro vynikající chuť svých plodů.\r\n\r\n" +
                     "Pěstujte na slunečném závětrném místě s oporou."
-                },*/
+                },
                 new Plant
                 {
                     Name = "Divoké rajče Sweet Pea",
@@ -267,7 +267,8 @@ namespace api.Persistence
                     "Meloun Galia se využívá s oblibou do ovocných salátů, kde se kombinuje s kyselejšími druhy ovoce, neboť samotná jeho chuť je velmi specifická a hodně sladká. " +
                     "Dále je možné ho využít i do zeleninových salátů či v kombinaci s rybami nebo masem. Oblíbený je také jako přísada do koktejlů, smoothie a čerstvých džusů."
 
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Cuketa Paladin F1",
                     IsHybrid = true,
@@ -303,7 +304,8 @@ namespace api.Persistence
                     "Plody váží kolem 1,5 kg. Rostlina je keříčkovitého, kompaktního vzrůstu. \r\n\r\n" +
                     "Doba zrání je cca 70 dní. ",
                     ImageSrc = "paladin.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Tykev muškátová F1",
                     IsHybrid = true,
@@ -338,7 +340,8 @@ namespace api.Persistence
                     "Váha plodů je 600–900 g a velikost může být 30–50 cm.\r\n\r\nDužina plodů je v době zralosti světle žlutá. V této fázi je tykev vhodná k přímé konzumaci. " +
                     "Později se mění na sytě oranžovou a je vhodná k tepelnému zpracování či konzervaci.\r\n\r\nJedná se o velmi chutnou odrůdu, která vyniká odolností proti padlí (PMT).\r\n\r\n" +
                     "Doba zrání je přibližně 95 dní."
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "BIO Paprika Korosko",
                     IsHybrid = false,
@@ -378,7 +381,8 @@ namespace api.Persistence
                     "Je to velice výnosná odrůda, vhodná k přímé konzumaci, plnění i grilování. Chuť je čerstvá, sladká. \r\n\r\n" +
                     "Jedná se o ranou odrůdu, vhodnou k pěstování ve skleníku, v květináči na balkóně či volně venku. \r\n\r\n" +
                     "Celkově rostlina dosahuje výšky kolem 100 cm. "
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Meloun žlutý Bimbo F1",
                     IsHybrid = false,
@@ -415,7 +419,8 @@ namespace api.Persistence
                     "Vytváří až 2,5 kg velké plody žluté barvy s dobrou skladovatelností. \r\n\r\nMelouny se s oblibou pěstují pro svou výbornou chuť. " +
                     "Konzumují se v syrovém stavu a slouží jako zdravá pochutina, neboť jsou velice nízkokalorické a mají vysoký obsah vitamínů a vody.\r\n\r\n" +
                     "Ideální je tuto odrůdu si předpěstovat ve skleníku. "
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Řepa salátová kulatá",
                     IsHybrid = false,
@@ -468,7 +473,8 @@ namespace api.Persistence
                     Description = "epa salátová je polopozdní, výnosná odrůda, která je odolná vůči chorobám. " +
                     "Je vhodná pro přímou konzumaci, konzervaci i tepelné zpracování.\r\n\r\n" +
                     "Řepa je velice zdravá zelenina. Obsahuje velké množství vitamínů B, C a provitamínu A, dále pak minerálů, antioxidantů a stopových prvků."
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Rajče Aztek",
                     IsHybrid = false,
@@ -504,7 +510,8 @@ namespace api.Persistence
                     "Tato odrůda plodí drobné žluté plody o váze 15–20 g. Rajčátka jsou kulatá s vynikající sladkou chutí, takže se oblibě těší především u dětí.\r\n\r\n" +
                     "Rajče Aztek je vhodné k přímé konzumaci a do studené kuchyně.\r\n\r\nDoba zrání je asi 70 dní.",
                     ImageSrc  = "aztek.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Ačokča",
                     IsHybrid = false,
@@ -539,7 +546,8 @@ namespace api.Persistence
                     "Ačokču lze konzumovat syrovou, stejně jako jiné druhy zeleniny, nebo ji lze tepelně upravovat. " +
                     "Příprava je stejná jako u paprik. Kromě toho lze plody nakládat buď samostatně nebo v kombinaci s okurkami, cibulkami apod.",
                     ImageSrc  = "acokca.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Tykev špagetová",
                     IsHybrid = false,
@@ -568,7 +576,8 @@ namespace api.Persistence
                     "Rostlina je plazivá, plodí oválné plody žluté barvy. Tykve dorůstají hmotnosti přibližně 2 kg.\r\n\r\n" +
                     "Doba zrání je okolo 90 dní.",
                     ImageSrc  = "spagetova.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Cuketa Costata Romanesco",
                     IsHybrid = false,
@@ -605,7 +614,8 @@ namespace api.Persistence
                     "Konzumovat lze plody i květy. Plody jsou vhodné k vaření, sušení nebo konzervování.\r\n\r\n" +
                     "Doba zrání je přibližně 50 dní. ",
                     ImageSrc  = "romanesco.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Okurka salátová Superstar F1",
                     IsHybrid = true,
@@ -641,7 +651,8 @@ namespace api.Persistence
                     "Doba zrání je přibližně 70 dní.\r\n\r\n" +
                     "Semena jsou mořená.",
                     ImageSrc  = "superstar.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Mrkev Táborská žlutá",
                     IsHybrid = false,
@@ -700,7 +711,8 @@ namespace api.Persistence
                     "Mrkev Táborská je odolná proti chorobám, také proti krátkodobému zamokření nebo suchu a vybíhání do květu.\r\n\r\n" +
                     "Semena jsou mořená.",
                     ImageSrc  = "taborska.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Sadbový česnek Topaz",
                     IsHybrid = false,
@@ -732,7 +744,8 @@ namespace api.Persistence
                     "Jedna cibulka obsahuje obvykle kolem 8–11 stroužků. \r\n\r\n" +
                     "Odrůda je vysoce odolná proti virózám a vhodná k dlouhodobému skladování.",
                     ImageSrc  = "topaz.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Sadbový česnek Vekan",
                     IsHybrid = false,
@@ -762,7 +775,8 @@ namespace api.Persistence
                     Description = "Sadbový česnek odrůdy Vekan je oblíbená odrůda ozimého úzkolistého paličáku. \r\n\r\n" +
                     "Cibule dosahují středně velké velikosti, uspořádání stroužků v cibulovině je nepravidelné, průměrně obsahuje 8–12 stroužků. ",
                     ImageSrc  = "vekan.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Okurka salátová Jogger F1",
                     IsHybrid = true,
@@ -802,7 +816,8 @@ namespace api.Persistence
                     Description = "Jedná se o ranou hybridní odrůdu salátové okurky, která je vhodná jak pro polní pěstování, tak i pro pěstování ve sklenících či fóliových krytech. Rostliny jsou středně velkého vzrůstu a plodí dlouhé tmavě zelené plody, které dorůstají délky 20–22 cm. Povrch plodů je lehce bradavičnatý.\r\n\r\n" +
                     "Okurky jsou určeny k přímé konzumaci, hodí se k jakémukoliv běžnému zpracování.",
                     ImageSrc  = "jogger.jpg"
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Kopr",
                     IsHybrid = false,
@@ -870,7 +885,8 @@ namespace api.Persistence
                     "budou mít v tchynině domě moc nad vším.",
                     ImageSrc  = "kopr.jpg",
                     RepeatedPlanting = 14
-                },new Plant
+                },
+                new Plant
                 {
                     Name = "Tymián obecný",
                     IsHybrid = false,
@@ -917,7 +933,7 @@ namespace api.Persistence
                     "Výborné je s drůbežím masem a rybami.",
                     ImageSrc  = "kopr.jpg"
                 }
-            };
+            };                      
 
             await context.Plants.AddRangeAsync(plants);
             await context.SaveChangesAsync();
