@@ -32,17 +32,8 @@ namespace api.Controllers
                              DirectSewing = p.DirectSewing,
                              IsHybrid = p.IsHybrid,
                              ImageSrc = p.ImageSrc,
-                             RepeatedPlanting = p.RepeatedPlanting,
-                             PlantRecords = p.PlantRecords,
-                             AvoidPlants = p.AvoidPlants.Select(a => a.Id).ToList(),
-                             CompanionPlants = p.CompanionPlants.Select(a => a.Id).ToList(),
-                             HarvestMonths = p.HarvestMonths.Select(a => new MonthWeekDTO{ Month = a.Month, Week = a.Week })
-                             .ToList(),
-                             SewingMonths = p.SewingMonths.Select(a => new MonthWeekDTO { Month = a.Month, Week = a.Week })
-                             .ToList()
-                         };
-
-            
+                             RepeatedPlanting = p.RepeatedPlanting,                            
+                         };            
             return plants;
         }
 

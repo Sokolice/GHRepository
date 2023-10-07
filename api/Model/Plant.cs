@@ -30,6 +30,8 @@ namespace api.Model
 
         public virtual List<PlantRecord> PlantRecords { get; set; }
 
+        public virtual List<Pest> Pests { get; set; }
+
         public Plant()
         {
             Id = new Guid();
@@ -42,6 +44,7 @@ namespace api.Model
             ImageSrc = string.Empty;
             RepeatedPlanting = 0;
             PlantRecords = new List<PlantRecord>();
+            Pests = new List<Pest>();
         }
 
     }

@@ -1,16 +1,14 @@
-﻿namespace api.Model
+﻿namespace api.Model.DTOs
 {
-    public class Pest
+    public class PestDTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Advice { get; set; }
 
-        public virtual List<Plant> Plants { get; set; }
 
-        public Pest()
+        public PestDTO()
         {
-            Plants = new List<Plant>();
             Id = Guid.NewGuid();
             Name = string.Empty;
             Advice = string.Empty;
