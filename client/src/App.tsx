@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import './App.css'
-import Dashboard from './dashboard/Dashboard';
+import SewingPlan from './dashboard/Sewingplan';
 
 function App() {
 
@@ -8,7 +8,7 @@ function App() {
 
     return (
         <>
-            <Dashboard />
+            <SewingPlan />
         </>
     )
 }

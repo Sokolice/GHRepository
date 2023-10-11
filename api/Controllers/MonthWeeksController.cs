@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using api.Model;
 using api.Persistence;
 using api.Model.DTOs;
+using api.Model.Relations;
+using AutoMapper;
+using api.Core;
 
 namespace api.Controllers
 {
@@ -16,28 +19,38 @@ namespace api.Controllers
     public class MonthWeeksController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public MonthWeeksController(DataContext context)
+        public MonthWeeksController(DataContext context, IMapper mapper)
         {
             _context = context;
-        }
+            _mapper = mapper;
+    }
 
-        // GET: api/MonthWeeks
+        // GET: api/MonthWeeksGrouped
         [HttpGet]
-        public IQueryable<MonthWeekDTO> GetMonthWeeks()
+        public List<MonthSewedRelation> GetMonthWeeksGrouped()
         {
 
-            var monthweeks = from m in _context.MonthWeeks
-                             select new MonthWeekDTO()
-                             {
-                                 GardeningTasks = m.GardeningTasks.Select(a => a.Id).ToList(),
-                                 HarvestedPlant = m.HarvestedPlant.Select(a => a.Id).ToList(),
-                                 Month = m.Month,
-                                 SewedPlant = m.SewedPlant.Select(a => a.Id).ToList(),
-                                 Week = m.Week,
-                             };
-            return monthweeks;
+            // _mapper.Map(_context.MonthWeeks, MonthWeekDTO mont)
+
+            //var monthweeks = _mapper.Map<List<>>
+
+            var monthweeks = _context.MonthWeeks.Include(x => x.SewedPlant).ToList();
+
+            var monthsDictionary = monthweeks
+                .GroupBy(x => x.Month)
+                .ToDictionary(x => x.Key,
+                    x => x.SelectMany(y => y.SewedPlant).GroupBy(y => y.Id).Select(y => y.First()).ToList());
+                    
+
+            return monthsDictionary.Select(y => new MonthSewedRelation
+            {
+                Month = y.Key,
+                SewedPlants = MyMapping.MapPlants(y.Value)
+            }).ToList();
         }
+        
 
         // GET: api/MonthWeeks/5
         [HttpGet("{id}")]

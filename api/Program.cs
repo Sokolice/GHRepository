@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using api.Persistence;
 using System.Web.Http;
+using api.Core;
 
 namespace api
 {
@@ -27,6 +28,7 @@ namespace api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
             var app = builder.Build();
 

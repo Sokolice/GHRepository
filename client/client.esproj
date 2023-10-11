@@ -11,7 +11,8 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\models\" />
+    <Folder Include="api\" />
     <Folder Include="src\api\" />
+    <Folder Include="src\app\" />
   </ItemGroup>
 </Project>

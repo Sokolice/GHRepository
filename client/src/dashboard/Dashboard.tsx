@@ -1,7 +1,7 @@
 import { Card, Container, Image, Label, Icon } from "semantic-ui-react";
-import { Plant } from "../models/Plant";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { PlantDTO } from "../models/PlantDTO";
 
 
 export default function Dashboard() {
@@ -21,7 +21,7 @@ export default function Dashboard() {
         <Container>
             <Card.Group itemsPerRow={6} >
                 {
-                    plants.map((plant: Plant) => (
+                    plants.map((plant: PlantDTO) => (
                         <Card key={plant.id}>
                             <Image src={`/src/assets/plants/${plant.imageSrc}`} wrapped ui={false} />
                             <Card.Content>
