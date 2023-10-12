@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { MonthWeekRelation } from '../models/MonthWeekRelation';
+import { MonthSewedRelation } from '../models/MonthSewedRelation';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>
@@ -30,7 +31,7 @@ const requests = {
 }
 
 const MonthWeeks = {
-    list: () => requests.get<MonthWeekRelation[]>('/MonthWeeks'),
+    sewingGroupByMonth: () => requests.get<MonthSewedRelation[]>('/MonthWeeks'),
     /*details: (id: string) => requests.get<MonthWeekRelation>(`/activities/${id}`),
     create: (monthweek: MonthWeekRelation) => axios.post('/activities', monthweek),
     update: (monthweek: MonthWeekRelation) => axios.put(`/activities/${monthweek.id}`, monthweek),

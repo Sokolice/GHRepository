@@ -29,7 +29,7 @@ namespace api.Controllers
 
         // GET: api/MonthWeeksGrouped
         [HttpGet]
-        public List<MonthSewedRelation> GetMonthWeeksGrouped()
+        public List<MonthSewedRelation> GetMonthWeeks()
         {
 
             // _mapper.Map(_context.MonthWeeks, MonthWeekDTO mont)
@@ -42,7 +42,10 @@ namespace api.Controllers
                 .GroupBy(x => x.Month)
                 .ToDictionary(x => x.Key,
                     x => x.SelectMany(y => y.SewedPlant).GroupBy(y => y.Id).Select(y => y.First()).ToList());
-                    
+
+            //var monthsDictionarySorted = monthsDictionary.OrderBy(a => Month.sortedOrderList.IndexOf(a.Key));
+
+
 
             return monthsDictionary.Select(y => new MonthSewedRelation
             {

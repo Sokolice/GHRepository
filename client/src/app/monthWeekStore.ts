@@ -3,12 +3,13 @@ import monthWeekAgent from "../api/monthWeekAgent";
 import { MonthWeekRelation } from "../models/MonthWeekRelation";
 import { MonthWeekDTO } from "../models/MonthWeekDTO";
 import { PlantDTO } from "../models/PlantDTO";
+import { MonthSewedRelation } from "../models/MonthSewedRelation";
 
 export default class MonthWeekStore {
 
-    monthWeekList = new Array<MonthWeekRelation>();
+    monthWeekList = new Array<MonthSewedRelation>();
     //prepsat naplneni hodnot a tvorbu komponent
-    groupedMonthWeeksList = new Map<string, PlantDTO[]>(); 
+    //groupedMonthWeeksList = new Map<string, PlantDTO[]>(); 
 
 
     constructor() {
@@ -19,13 +20,13 @@ export default class MonthWeekStore {
         return this.monthWeekList;
     }
 
-    get groupedMonthWeeks() {
+    /*get groupedMonthWeeks() {
         return Object.entries(
             Array.from(this.groupedMonthWeeksList.values())
         )        
-    }
+    }*/
 
-    groupSewedPlantsByMonth = async () => {
+    /*groupSewedPlantsByMonth = async () => {
 
         if (this.monthWeekList.length <= 1)
             await this.loadMonthWeeeks();
@@ -47,11 +48,11 @@ export default class MonthWeekStore {
                 console.log(this.groupedMonthWeeksList.values());
             })
         })
-    }
+    }*/
 
     loadMonthWeeeks = async () => {
         try {
-            const monthWeeks = await monthWeekAgent.MonthWeeks.list();
+            const monthWeeks = await monthWeekAgent.MonthWeeks.sewingGroupByMonth();
             //console.log(monthWeeks);
             /*monthWeeks.map((monthRelation: MonthWeekRelation) => {
                 console.log(monthRelation.monthWeekDTO);

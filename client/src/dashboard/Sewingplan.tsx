@@ -3,6 +3,7 @@ import { PlantDTO } from "../models/PlantDTO";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../app/store";
 import { useEffect } from "react";
+import { MonthSewedRelation } from "../models/MonthSewedRelation";
 
 const RenderPlant = (plant: PlantDTO) => {
     return (
@@ -14,7 +15,6 @@ const RenderPlant = (plant: PlantDTO) => {
                 {plant.directSewing ? null :
                     <Label color="grey">
                         <Icon name='home' />
-                        Pøedpìstování
                     </Label>}
 
                 {plant.isHybrid ? null :
@@ -26,21 +26,22 @@ const RenderPlant = (plant: PlantDTO) => {
     )
 }
 
-const RenderMonthWeek = (month: [string,PlantDTO[]]) => {
+const RenderMonthWeek = (monthSewed: MonthSewedRelation) => {
     return (
-        <div key={`${month}`}>
-            <Label color="olive" >
-                {month[0]}
-            </Label>
-            <Card.Group itemsPerRow={6} >
-            {
 
-                    month[1].map((plant: PlantDTO) => RenderPlant(plant))
+        <div key={`${monthSewed.month}`}>
+                <Label color="olive" >
+                {monthSewed.month}
+                </Label>
+                <Card.Group itemsPerRow={6} >
+                    {
+
+                    monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant))
 
 
-                }
-            </Card.Group>
-        </div>
+                    }
+                </Card.Group>
+            </div>
     );
 }
 
@@ -52,7 +53,7 @@ const RenderMonthWeek = (month: [string,PlantDTO[]]) => {
 
 const SewingPlantComponent = observer(function SewingPlan() {
     const { monthWeekStore } = useStore();
-    const {groupedMonthWeeksList, groupSewedPlantsByMonth } = monthWeekStore;
+    const { monthWeekList, loadMonthWeeeks } = monthWeekStore;
 
     /*useEffect(() => {
         if (monthWeekList.length <= 1)
@@ -60,22 +61,23 @@ const SewingPlantComponent = observer(function SewingPlan() {
     }, [loadMonthWeeeks])*/
 
     useEffect(() => {
-        if (groupedMonthWeeksList.size <= 1)
-            groupSewedPlantsByMonth();
-    }, [groupSewedPlantsByMonth])
+        if (monthWeekList.length <= 1)
+            loadMonthWeeeks();
+    }, [monthWeekList])
 
-    const { groupedMonthWeeks } = monthWeekStore;
+    //const { groupedMonthWeeks } = monthWeekStore;
 
     //groupedMonthWeeks.forEach(a => console.log(a[0], a[1].values));
-    //console.log(groupedMonthWeeks)
+    console.log(monthWeekList)
 
     return (
         <Container>
             {
-               
-                groupedMonthWeeks.map((month) => {
-                    return RenderMonthWeek(month);
-                })
+                (
+                monthWeekList.map((m: MonthSewedRelation) => {
+                    return RenderMonthWeek(m);
+                })       
+                )
             }
         </Container>
     )
