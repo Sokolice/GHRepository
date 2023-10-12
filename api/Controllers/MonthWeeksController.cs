@@ -38,7 +38,7 @@ namespace api.Controllers
 
             var monthweeks = _context.MonthWeeks.Include(x => x.SewedPlant).ToList();
 
-            var monthsDictionary = monthweeks
+            var monthsDictionary = monthweeks.OrderBy(a=>a.MonthIndex)
                 .GroupBy(x => x.Month)
                 .ToDictionary(x => x.Key,
                     x => x.SelectMany(y => y.SewedPlant).GroupBy(y => y.Id).Select(y => y.First()).ToList());

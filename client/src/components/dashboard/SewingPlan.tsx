@@ -1,9 +1,9 @@
 import { Card, Container, Image, Label, Icon } from "semantic-ui-react";
-import { PlantDTO } from "../models/PlantDTO";
+import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../app/store";
+import { useStore } from "../../app/store";
 import { useEffect } from "react";
-import { MonthSewedRelation } from "../models/MonthSewedRelation";
+import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 
 const RenderPlant = (plant: PlantDTO) => {
     return (
@@ -51,7 +51,7 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation) => {
     }
 }*/
 
-const SewingPlantComponent = observer(function SewingPlan() {
+const SewingPlanComponent = observer(function SewingPlan() {
     const { monthWeekStore } = useStore();
     const { monthWeekList, loadMonthWeeeks } = monthWeekStore;
 
@@ -84,4 +84,4 @@ const SewingPlantComponent = observer(function SewingPlan() {
 }
 )
 
-export default SewingPlantComponent;
+export default SewingPlanComponent;

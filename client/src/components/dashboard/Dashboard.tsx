@@ -1,7 +1,7 @@
 import { Card, Container, Image, Label, Icon } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PlantDTO } from "../models/PlantDTO";
+import { PlantDTO } from "../../models/PlantDTO";
 
 
 export default function Dashboard() {

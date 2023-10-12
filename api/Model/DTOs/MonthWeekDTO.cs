@@ -3,6 +3,7 @@
     public class MonthWeekDTO
     {
         public string Month { get; set; }
+        public int MonthIndex {  get; set; }
         public int Week { get; set; }
 
 

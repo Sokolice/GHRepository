@@ -7,6 +7,7 @@ namespace api.Model
     public class MonthWeek
     {
         public string Month { get; set; }
+        public int MonthIndex {  get; set; }
         public int Week { get; set; }
 
         public virtual List<Plant> SewedPlant { get; set; }

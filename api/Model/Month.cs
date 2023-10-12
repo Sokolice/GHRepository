@@ -14,10 +14,5 @@
         public static string October => "Říjen";
         public static string November => "Listopad";
         public static string December => "Prosinec";
-
-        public static List<string> sortedOrderList = new List<string>()
-        {
-            January.ToString(), February.ToString(), March.ToString(), April.ToString(), May.ToString(), June.ToString(), October.ToString(), November.ToString(), December.ToString()
-        };
     }
 }
