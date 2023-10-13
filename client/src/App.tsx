@@ -2,13 +2,14 @@
 import { Container } from 'semantic-ui-react';
 import './App.css'
 import HomePage from './components/home/HomePage';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import NavBar from './components/layout/NavBar';
+import { observer } from 'mobx-react-lite';
 
 function App() {
 
-    
 
+    const location = useLocation();
     return (
         <>
             {location.pathname === '/' ? <HomePage /> : (
@@ -24,4 +25,4 @@ function App() {
     )
 }
 
-export default App
+export default observer(App)

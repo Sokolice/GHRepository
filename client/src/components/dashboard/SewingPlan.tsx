@@ -34,50 +34,29 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation) => {
                 {monthSewed.month}
                 </Label>
                 <Card.Group itemsPerRow={6} >
-                    {
-
+                {
                     monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant))
-
-
-                    }
+                }
                 </Card.Group>
             </div>
     );
 }
 
-/*const RenderItems* = (groupedMonthWeeksList: Map<string, PlantDTO[]>): React.Component* => {
-    for (let key of groupedMonthWeeksList.keys()) {
-        yield RenderMonthWeek(key, groupedMonthWeeksList.get(key))
-    }
-}*/
-
 const SewingPlanComponent = observer(function SewingPlan() {
     const { monthWeekStore } = useStore();
     const { monthWeekList, loadMonthWeeeks } = monthWeekStore;
 
-    /*useEffect(() => {
-        if (monthWeekList.length <= 1)
-            loadMonthWeeeks();
-    }, [loadMonthWeeeks])*/
-
     useEffect(() => {
         if (monthWeekList.length <= 1)
             loadMonthWeeeks();
-    }, [monthWeekList])
-
-    //const { groupedMonthWeeks } = monthWeekStore;
-
-    //groupedMonthWeeks.forEach(a => console.log(a[0], a[1].values));
-    console.log(monthWeekList)
+    }, [loadMonthWeeeks, monthWeekList])
 
     return (
         <Container>
             {
-                (
-                monthWeekList.map((m: MonthSewedRelation) => {
+             monthWeekList.map((m: MonthSewedRelation) => {
                     return RenderMonthWeek(m);
-                })       
-                )
+             })
             }
         </Container>
     )

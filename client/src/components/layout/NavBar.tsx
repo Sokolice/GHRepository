@@ -11,7 +11,12 @@ export default function NavBar() {
                 <Menu.Item as={NavLink} to='/' header>
                     Zahradnikuv pomocnik
                 </Menu.Item>
-                <Menu.Item as={NavLink} to='/sewingplan' name='SewingPlan' />
+                <Menu.Item as={NavLink} to='/sewingplan' >
+                    Moje seminka
+                </Menu.Item>
+                <Menu.Item as={NavLink} to='/plantrecords' >
+                    Uz roste
+                </Menu.Item>
             </Container>
         </Menu>
     )

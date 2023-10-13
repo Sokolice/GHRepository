@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { MonthWeekRelation } from '../models/MonthWeekRelation';
 import { MonthSewedRelation } from '../models/MonthSewedRelation';
 
 const sleep = (delay: number) => {
@@ -7,7 +6,7 @@ const sleep = (delay: number) => {
         setTimeout(resolve, delay))
 }
 
-axios.defaults.baseURL = 'http://localhost:5180/api';
+axios.defaults.baseURL = 'http://localhost:5180/api/MonthWeeks';
 
 
 axios.interceptors.response.use(async response => {
@@ -31,7 +30,7 @@ const requests = {
 }
 
 const MonthWeeks = {
-    sewingGroupByMonth: () => requests.get<MonthSewedRelation[]>('/MonthWeeks'),
+    sewingGroupByMonth: () => requests.get<MonthSewedRelation[]>('/GetMonthWeeksGrouped'),
     /*details: (id: string) => requests.get<MonthWeekRelation>(`/activities/${id}`),
     create: (monthweek: MonthWeekRelation) => axios.post('/activities', monthweek),
     update: (monthweek: MonthWeekRelation) => axios.put(`/activities/${monthweek.id}`, monthweek),
