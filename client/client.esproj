@@ -12,7 +12,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="api\" />
-    <Folder Include="src\api\" />
-    <Folder Include="src\app\" />
   </ItemGroup>
 </Project>

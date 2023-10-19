@@ -1,9 +1,10 @@
-import { Card, Container, Image, Label, Icon } from "semantic-ui-react";
+import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../app/store";
+import { useStore } from "../../app/stores/store";
 import { useEffect } from "react";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
+import PlantRecordFormComponent from "./PlantRecordForm";
 
 const RenderPlant = (plant: PlantDTO) => {
     return (
@@ -12,17 +13,21 @@ const RenderPlant = (plant: PlantDTO) => {
                 <Card.Content>
                     <Card.Header>{plant.name}</Card.Header>
                 </Card.Content>
-                {plant.directSewing ? null :
-                    <Label color="grey">
-                        <Icon name='home' />
-                    </Label>}
+                <Card.Content extra>
+                {
+                    plant.directSewing ?
+                        <Popup content='Primy vysev' trigger={<Icon name='tree' size='large' color='green' />} /> :
+                        <Popup content='Pøedpìstovaní' trigger={<Icon name='home' size='large' color='green' />} />
+                }
 
-                {plant.isHybrid ? null :
-                    <Label color="yellow">
-                        <Icon name='pagelines' />
-                        Hybrid
-                    </Label>}
-            </Card>
+                {plant.isHybrid ?
+                    <Popup content='Hybridní odrùda' trigger={<Icon name='pagelines' size='large' color='brown' />} /> :
+                    null
+                }
+                <Divider horizontal/>
+                <PlantRecordFormComponent plant={plant} />
+                </Card.Content>
+        </Card>
     )
 }
 
@@ -30,9 +35,14 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation) => {
     return (
 
         <div key={`${monthSewed.month}`}>
+
+            <Divider horizontal />
+            
                 <Label color="olive" >
-                {monthSewed.month}
+                    <Header as='h2'>{monthSewed.month}
+                </Header>
                 </Label>
+            <Divider horizontal />
                 <Card.Group itemsPerRow={6} >
                 {
                     monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant))

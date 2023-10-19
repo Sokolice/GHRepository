@@ -1,4 +1,5 @@
 export interface MonthWeekDTO {
     month: string,
-    week: number
+    week: number,
+    monthIndex: number
 }

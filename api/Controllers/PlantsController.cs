@@ -19,22 +19,24 @@ namespace api.Controllers
 
         // GET: api/Plants
         [HttpGet]
-        public IQueryable<PlantDTO> GetPlants()
+        public List<PlantDTO> GetPlants()
         {
-            var plants = from p in _context.Plants
-                         select new PlantDTO()
-                         {
-                             Id = p.Id,
-                             Name = p.Name,
-                             CropRotation = p.CropRotation,
-                             Description = p.Description,
-                             GerminationTemp = p.GerminationTemp,
-                             DirectSewing = p.DirectSewing,
-                             IsHybrid = p.IsHybrid,
-                             ImageSrc = p.ImageSrc,
-                             RepeatedPlanting = p.RepeatedPlanting,                            
-                         };            
-            return plants;
+            var plants = _context.Plants.ToList();
+
+            var plantsDTO = plants.Select(a => new PlantDTO
+            {
+                CropRotation = a.CropRotation,
+                Description = a.Description,
+                DirectSewing = a.DirectSewing,
+                GerminationTemp = a.GerminationTemp,
+                Id = a.Id,
+                ImageSrc = a.ImageSrc,
+                IsHybrid = a.IsHybrid,
+                Name = a.Name,
+                RepeatedPlanting = a.RepeatedPlanting
+            }).ToList();
+            
+            return plantsDTO;
         }
 
         // GET: api/Plants/5

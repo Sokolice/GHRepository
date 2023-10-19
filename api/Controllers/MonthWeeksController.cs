@@ -19,13 +19,11 @@ namespace api.Controllers
     public class MonthWeeksController : ControllerBase
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
 
-        public MonthWeeksController(DataContext context, IMapper mapper)
+        public MonthWeeksController(DataContext context)
         {
             _context = context;
-            _mapper = mapper;
-    }
+        }
 
         // GET: api/MonthWeeksGrouped
         [HttpGet]
@@ -46,7 +44,24 @@ namespace api.Controllers
                 SewedPlants = MyMapping.MapPlants(y.Value)
             }).ToList();
         }
-        
+
+        // GET: api/MonthWeeksRelation
+        [HttpGet]
+        [Route("GetMonthWeeksRelation")]
+        public List<MonthWeekRelation> GetMonthWeeksRelation()
+        {
+
+            var monthWeeksRelations = _context.MonthWeeks.OrderBy(a => a.MonthIndex).Select(x => new MonthWeekRelation
+            {
+                GardeningTasks = MyMapping.MapGardeningTasks(x.GardeningTasks),
+                HarvestedPlants = MyMapping.MapPlants(x.HarvestedPlant),
+                MonthWeekDTO = new MonthWeekDTO{Month = x.Month, MonthIndex = x.MonthIndex, Week = x.Week},
+                SewedPlants = MyMapping.MapPlants(x.SewedPlant)
+            }).ToList();
+
+            return monthWeeksRelations;
+        }
+
 
         // GET: api/MonthWeeks/5
         [HttpGet("{id}")]
