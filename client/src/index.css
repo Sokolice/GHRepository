@@ -14,6 +14,7 @@ body{
     align-items: center;
     background-image: linear-gradient( 135deg, rgb(0, 102, 0) 0%, rgb(0, 153, 0) 69%, rgb(0, 204, 0) 89% ) !important;
     height: 100vh;
+    width:100%;
 }
 
     .masthead .ui.menu .ui.button,

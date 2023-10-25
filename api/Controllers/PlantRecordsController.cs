@@ -49,5 +49,25 @@ namespace api.Controllers
 
             return new OkObjectResult(plantRecord);
         }
-     }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<PlantRecordDTO>> DeletePlantRecord(Guid id)
+        {
+            if (_context.PlantRecords == null)
+            {
+                return NotFound();
+            }
+            var plant = await _context.PlantRecords.FindAsync(id);
+            if (plant == null)
+            {
+                return NotFound();
+            }
+
+            _context.PlantRecords.Remove(plant);
+            await _context.SaveChangesAsync();
+
+            return new OkObjectResult(id);
+        }
+
+    }
 }

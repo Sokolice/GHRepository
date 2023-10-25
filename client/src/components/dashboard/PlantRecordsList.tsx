@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { observer } from "mobx-react-lite";
-import { Card, Divider, Header, Image, Progress } from "semantic-ui-react";
+import { Button, Card, Divider, Header, Image, Progress } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
-import { useEffect } from "react";
+import { SyntheticEvent, useEffect } from "react";
 import { PlantDTO } from "../../models/PlantDTO";
 
-const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
-    const { monthWeekStore } = useStore()
+const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO, handleActivityDelete: (e: SyntheticEvent<HTMLButtonElement>, id: string)=>void) => {
+    /*const { monthWeekStore } = useStore()
     const { monthWeekRelationList } = monthWeekStore;
 
     function calculateProgress(plant: PlantDTO, plantRecord: PlantRecordDTO) {
@@ -30,7 +30,8 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
         console.log(finalMonth);
 
         return Math.round(((now.getMonth()+1) * 100) / finalMonth);
-    }
+    }*/
+
 
     return (
         <Card key={plantRecord.id}>
@@ -38,32 +39,43 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
             <Card.Content>
                 <Card.Header>{plant.name}</Card.Header>
             </Card.Content>
-            <Card.Content extra>                
+            <Card.Content extra>
                 <Card.Header>Datum vysadby: </Card.Header>{plantRecord.datePlanted}
-                <Divider/>
+                <Divider />
                 <Card.Header>Mnozstni: </Card.Header>{plantRecord.amountPlanted}
                 <Divider />
-                <Progress percent={calculateProgress(plant, plantRecord)} progress />
-            </Card.Content>               
+                <Progress percent={plantRecord.progress} progress />
+                <Button icon='minus' color='red' onClick={(e) => handleActivityDelete(e, plantRecord.id)} />
+            </Card.Content>
         </Card>
     )
 }
+
+
 const PlantRecordsListComponent = observer(function PlantRecordsList() {
     const { plantRecordStore, globalStore } = useStore();
     const { loadPlantDTO, getPlantDTO, plantDTOList } = globalStore;
+    const { deletePlantRecord, plantRecordsList, loadPlantRecords } = plantRecordStore;
 
     //nacist nekde v nadrazene komponente asi v app
     useEffect(() => {
         if (plantDTOList.size <= 1)
             loadPlantDTO();
     }, [loadPlantDTO, plantDTOList.size])
+    useEffect(() => {
+        if (plantRecordsList.length <= 1)
+            loadPlantRecords();
+    }, [loadPlantRecords, plantRecordsList.length])
+    function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+        deletePlantRecord(id);
+    }
 
     return (
         <Card.Group itemsPerRow='6'>
             {
                 plantRecordStore.plantRecordsList.map((plantRecord: PlantRecordDTO) =>
                 {
-                    return RenderPlantRecord(plantRecord, getPlantDTO(plantRecord.plantId))
+                    return RenderPlantRecord(plantRecord, getPlantDTO(plantRecord.plantId), handleActivityDelete)
                 })
             }
         </Card.Group>

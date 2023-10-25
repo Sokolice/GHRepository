@@ -53,6 +53,7 @@ const MonthWeeks = {
 const PlantRecords = {
     getPlantRecords: () => requests.get<PlantRecordDTO[]>('/PlantRecords/GetPlantRecords'),
     create: (plantRecord: PlantRecordDTO) => axios.post('/PlantRecords', plantRecord),
+    delete: (id: string) => axios.delete(`/PlantRecords/${id}`)
 
 }
 

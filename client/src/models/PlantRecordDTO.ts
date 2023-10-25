@@ -3,4 +3,5 @@ export interface PlantRecordDTO {
     plantId: string
     datePlanted: string
     amountPlanted: number
+    progress:number
 }
