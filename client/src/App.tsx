@@ -13,28 +13,30 @@ function App() {
     const { monthWeekStore, globalStore, plantRecordStore } = useStore();
     const { monthWeekList, loadMonthWeeeks, loadMonthWeeekRelations, monthWeekRelationList } = monthWeekStore;
     const { loadPlantDTO, plantDTOList } = globalStore;
-    const { loadPlantRecords, plantRecordsList } = plantRecordStore;
+    const { loadPlantRecords, plantRecordMap } = plantRecordStore;
 
     useEffect(() => {
-        if (monthWeekList.length <= 1)
-            loadMonthWeeeks();
-    }, [loadMonthWeeeks, monthWeekList])
 
-    useEffect(() => {
-        if (plantRecordsList.length <= 1)
-            loadPlantRecords();
-    }, [loadPlantRecords, plantRecordsList.length])
+        async function fetchData() {
+            if (plantDTOList.size <= 0)
+               await loadPlantDTO();
 
-    useEffect(() => {
-        if (plantDTOList.size <= 1)
-            loadPlantDTO();
-    }, [loadPlantDTO, plantDTOList.size])
+            if (monthWeekList.length <= 0)
+                await loadMonthWeeeks();
 
-    useEffect(() => {
-        if (monthWeekRelationList.length <= 1)
-            loadMonthWeeekRelations();
-    }, [loadMonthWeeekRelations, monthWeekRelationList.length])
+            if (monthWeekRelationList.length <= 0)
+                await loadMonthWeeekRelations();
 
+            if (plantRecordMap.size <= 0)
+                await loadPlantRecords();
+        }
+
+        fetchData();
+        
+    }, [loadMonthWeeeks, loadMonthWeeekRelations, loadPlantRecords, loadPlantDTO])
+
+    
+  
     const location = useLocation();
     return (
         <>
