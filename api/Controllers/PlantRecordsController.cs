@@ -3,6 +3,7 @@ using api.Model.DTOs;
 using api.Model.Relations;
 using api.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -67,6 +68,44 @@ namespace api.Controllers
             await _context.SaveChangesAsync();
 
             return new OkObjectResult(id);
+        }
+
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<PlantRecordDTO>> UpdatePlantRecord(Guid id, PlantRecordDTO plantRecord)
+        {
+            if (id != plantRecord.Id)
+            {
+                return BadRequest();
+            }
+
+            //_context.Entry(monthWeek).State = EntityState.Modified;
+
+            try
+            {
+                var record = await _context.PlantRecords.FindAsync(id);
+                if(record != null) 
+                {
+                    record.AmountPlanted = plantRecord.AmountPlanted;
+                    record.DatePlanted = plantRecord.DatePlanted;
+
+                    var plant = await _context.Plants.FindAsync(plantRecord.PlantId);
+
+                    if(plant != null){
+                        record.Plant = plant;
+                    }
+
+                    record.PlantId = plantRecord.PlantId;
+                }
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+               
+            }
+
+            return NoContent();
         }
 
     }

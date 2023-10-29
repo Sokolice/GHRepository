@@ -16,14 +16,12 @@ function App() {
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
 
     useEffect(() => {
-
-        async function fetchData() {
-            if (plantDTOList.size <= 0)
-               await loadPlantDTO();
-
-            if (monthWeekList.length <= 0)
-                await loadMonthWeeeks();
-
+        if (monthWeekList.length <= 0)
+            loadMonthWeeeks();
+        if (plantDTOList.size <= 0)
+            loadPlantDTO();
+        async function fetchData() {          
+           
             if (monthWeekRelationList.length <= 0)
                 await loadMonthWeeekRelations();
 
@@ -33,7 +31,7 @@ function App() {
 
         fetchData();
         
-    }, [loadMonthWeeeks, loadMonthWeeekRelations, loadPlantRecords, loadPlantDTO])
+    }, [loadMonthWeeeks, loadMonthWeeekRelations, loadPlantRecords, loadPlantDTO, monthWeekList.length, plantDTOList.size, monthWeekRelationList.length, plantRecordMap.size])
 
     
   

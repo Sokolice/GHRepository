@@ -1,41 +1,70 @@
 import { observer } from "mobx-react-lite";
 import { PlantDTO } from "../../models/PlantDTO";
 import { Button, Form, Header, Segment, Image, Modal, Popup, Input, Divider } from "semantic-ui-react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { v4 as uuid } from 'uuid'
-import { useStore } from "../../app/stores/store";
+import { store} from "../../app/stores/store";
+import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 
 
 interface Props {
-    plant: PlantDTO
+    plant: PlantDTO | undefined,
+    plantRecordId: string | undefined,
+    isOpen: boolean,
+    onOpen: () => void,
+    onClose: () => void
 }
 
-const PlantRecordFormComponent = observer(function PlantRecordForm({ plant }: Props) {
-
-    const { plantRecordStore } = useStore();
-    const { createPlantRecord } = plantRecordStore;
-    const [open, setOpen] = useState(false);
+const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plantRecordId, onOpen, onClose, isOpen }: Props) {
+    //const [open, setOpen] = useState(openForm);
 
     const [plantRecord, setRecord] = useState({
         id: '',
         plantId: '',
         datePlanted: '',
         amountPlanted: 0,
+        progress:0
     });
+
+    const [selectedPlant, setPlant] = useState({
+        id: '',
+        name: '',
+        isHybrid: false,
+        directSewing: false,
+        germinationTemp: 0,
+        cropRotatoin: 0,
+        description: '',
+        imageSrc: '',
+        repeatedPlanting: 0
+    });
+
+    useEffect(() => {
+        if (plant != undefined) {
+            setPlant(plant);
+        }
+    }, [plant])
+
+    useEffect(() => {
+        if (plantRecordId != '') {
+            store.plantRecordStore.loadPlantRecord(plantRecordId!).then(plantRecord => setRecord(plantRecord!));
+        }
+    }, [plantRecordId])
+    
+
+    
 
     function handleSubmit() {
         //console.log("submit");
         //e.preventDefault();
-        if (!plantRecord.id) {
+        if (plantRecord.id == '') {
             plantRecord.id = uuid();
-            plantRecord.plantId = plant.id;
-            //console.log(plantRecord);
+            plantRecord.plantId = selectedPlant.id;
+            store.plantRecordStore.createPlantRecord(plantRecord);
         }
         else {
-            //updateActivity(activity).then(() => navigate(`/activities/${activity.id}`));
+            store.plantRecordStore.updatePlantRecord(plantRecord);
         }
-        setOpen(false);
-        createPlantRecord(plantRecord);
+        onClose();
     }
 
     function handleInputCHhange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -48,14 +77,12 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant }: Pr
 
         <Modal as={Form}
             onSubmit={handleSubmit}
-            onClose={() => setOpen(false)}
-            onOpen={() => setOpen(true)}
-            open={open}
-            
-            trigger={<Button key={plant.id}> Zasad me</Button>}>
-            <Modal.Header>{plant.name}</Modal.Header>
+            onClose={onClose}
+            onOpen={onOpen}
+            open={isOpen}>
+            <Modal.Header>{selectedPlant.name}</Modal.Header>
             <Modal.Content image>
-                <Image size='medium' src={`/src/assets/plants/${plant.imageSrc}`} wrapped />
+                <Image size='medium' src={`/src/assets/plants/${selectedPlant.imageSrc}`} wrapped />
                 <Modal.Description>
                     <Form.Input type='date' placeholder='Datum sadby' name='datePlanted' label='Datum sadby' value={plantRecord.datePlanted} onChange={handleInputCHhange} />
                     <Form.Input placeholder='Mnozstvi' name='amountPlanted' type='number' value={plantRecord.amountPlanted} onChange={handleInputCHhange} />                              
@@ -69,18 +96,15 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant }: Pr
                     icon='checkmark'
                     positive
                 />
+                <Button
+                    onClick={onClose}
+                    content="Zrusit"
+                    labelPosition='right'
+                    icon='remove'
+                    negative
+                />
             </Modal.Actions>
             </Modal>
-
-        /*<Segment clearing>
-            <Form  autoComplete='off'>
-                <Header>{plant.name}</Header>
-                <Image src={plant.imageSrc} size='small' />
-                <Form.Input placeholder='Mnozstvi' name='amount' />
-                <Form.Input type="date" placeholder='Datum vysevu' name='date' />
-                <Button floated="right" positive type='submit' content='Submit' />
-            </Form>
-        </Segment>*/
     )
 })
 export default PlantRecordFormComponent;

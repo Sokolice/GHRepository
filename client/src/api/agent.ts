@@ -29,8 +29,8 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
-    /*put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
-    del: <T>(url: string) => axios.delete<T>(url).then(responseBody),*/
+    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+    /*del: <T>(url: string) => axios.delete<T>(url).then(responseBody),*/
 }
 
 const Plants = {
@@ -53,7 +53,8 @@ const MonthWeeks = {
 const PlantRecords = {
     getPlantRecords: () => requests.get<PlantRecordDTO[]>('/PlantRecords/GetPlantRecords'),
     create: (plantRecord: PlantRecordDTO) => axios.post('/PlantRecords', plantRecord),
-    delete: (id: string) => axios.delete(`/PlantRecords/${id}`)
+    delete: (id: string) => axios.delete(`/PlantRecords/${id}`),
+    update: (plantRecord: PlantRecordDTO) => axios.put(`/PlantRecords/${plantRecord.id}`, plantRecord),
 
 }
 
@@ -61,7 +62,6 @@ const agent = {
     Plants,
     MonthWeeks,
     PlantRecords
-
 }
 
 export default agent;

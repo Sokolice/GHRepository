@@ -8,7 +8,6 @@ import { MonthWeekRelation } from "../../models/MonthWeekRelation";
 export default class PlantRecordStore {
 
     plantRecordMap = new Map<string, PlantRecordDTO>();
-
     constructor() {
         makeAutoObservable(this)
     }
@@ -18,7 +17,9 @@ export default class PlantRecordStore {
             Date.parse(a.datePlanted) - Date.parse(b.datePlanted));
     }
 
+
     loadPlantRecords = async () => {
+        store.globalStore.loading = true;
         try {
             const plantRecords = await agent.PlantRecords.getPlantRecords();
             
@@ -26,6 +27,7 @@ export default class PlantRecordStore {
                 plantRecords.forEach(plantRecord => {
                     this.setPlantRecord(plantRecord);
                 })
+                store.globalStore.loading = false;
             });
 
         }
@@ -33,6 +35,15 @@ export default class PlantRecordStore {
             console.log(error);
         }
 
+    }
+
+    loadPlantRecord = async (id: string)=>{
+        try {
+            return this.plantRecordMap.get(id);
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     createPlantRecord = async (plantRecord: PlantRecordDTO) => {
@@ -51,11 +62,28 @@ export default class PlantRecordStore {
         }
     }
 
+    updatePlantRecord = async (plantRecord: PlantRecordDTO) => {
+        store.globalStore.loading = true;
+        try {
+            await agent.PlantRecords.update(plantRecord);
+
+            runInAction(() => {
+                this.plantRecordMap.set(plantRecord.id, plantRecord);
+                store.globalStore.loading = false;
+            })
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     deletePlantRecord = async (id: string) => {
+        store.globalStore.loading = true;
         try {
             await agent.PlantRecords.delete(id);
             runInAction(() => {
                 this.plantRecordMap.delete(id);
+                store.globalStore.loading = false;
             });
 
         } catch (error) {
@@ -81,17 +109,18 @@ export default class PlantRecordStore {
         const firstSewingtMonth = sewedMonthRelation?.monthWeekDTO.monthIndex;
         const firstHarvestedMonth = harvestedMonthRelation?.monthWeekDTO.monthIndex;
 
-        const vegetationPeriod = firstHarvestedMonth - firstSewingtMonth;
+        const dateSewedMonth = new Date().setMonth(firstSewingtMonth - 1);
+        const dateHarvestedMonth = new Date().setMonth(firstHarvestedMonth - 1);
 
-        const now = new Date(Date.now());
-        const planted = new Date(plantRecord.datePlanted);
-        console.log(planted);
-        const PlantedMonth = planted.getMonth() + 1;
-        console.log("vyseto v mesici " +PlantedMonth + " - roste mesicu " + vegetationPeriod);
-        const finalMonth = PlantedMonth + vegetationPeriod;
-        console.log(finalMonth);
 
-        return Math.round(((now.getMonth() + 1) * 100) / finalMonth);
+        const vegetationPeriod = Math.abs(firstHarvestedMonth - firstSewingtMonth);
+        const planted = new Date(plantRecord.datePlanted).getMonth();
+
+
+        const now = new Date(Date.now()).getMonth();
+
+
+        return Math.round((((now + 1) - (planted + 1)) / (vegetationPeriod))*100);
 
     }
 

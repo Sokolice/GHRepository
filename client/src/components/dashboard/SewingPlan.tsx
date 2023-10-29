@@ -1,12 +1,12 @@
 import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../app/stores/store";
-import { useEffect } from "react";
+import { store, useStore } from "../../app/stores/store";
+import { useEffect, useState } from "react";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
 
-const RenderPlant = (plant: PlantDTO) => {
+const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void) => {
     return (
             <Card key={plant.id}>
                 <Image src={`/src/assets/plants/${plant.imageSrc}`} wrapped ui={false} />
@@ -24,14 +24,15 @@ const RenderPlant = (plant: PlantDTO) => {
                     <Popup content='Hybridní odrùda' trigger={<Icon name='pagelines' size='large' color='brown' />} /> :
                     null
                 }
-                <Divider horizontal/>
-                <PlantRecordFormComponent plant={plant} />
+                <Divider horizontal />
+
+                <Button  onClick={() => openForm(plant)} content="Zasad me" key={plant.id} /> 
                 </Card.Content>
         </Card>
     )
 }
 
-const RenderMonthWeek = (monthSewed: MonthSewedRelation) => {
+const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: PlantDTO) => void) => {
     return (
 
         <div key={`${monthSewed.month}`}>
@@ -45,7 +46,7 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation) => {
             <Divider horizontal />
                 <Card.Group itemsPerRow={6} >
                 {
-                    monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant))
+                    monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant, openForm))
                 }
                 </Card.Group>
             </div>
@@ -56,18 +57,47 @@ const SewingPlanComponent = observer(function SewingPlan() {
     const { monthWeekStore } = useStore();
     const { monthWeekList, loadMonthWeeeks } = monthWeekStore;
 
+    const [open, setOpen] = useState(false);
+
+    const [selectedPlant, setPlant] = useState({
+        id: '',
+        name: '',
+        isHybrid: false,
+        directSewing: false,
+        germinationTemp: 0,
+        cropRotatoin: 0,
+        description: '',
+        imageSrc: '',
+        repeatedPlanting: 0
+    });
+
     useEffect(() => {
         if (monthWeekList.length <= 1)
             loadMonthWeeeks();
     }, [loadMonthWeeeks, monthWeekList])
 
+    function openForm(plant: PlantDTO) {
+        setOpen(true);
+        setPlant(plant);
+    }
+
+    function onOpen() {
+        setOpen(true);
+    }
+
+    function onClose() {
+        setOpen(false);
+    }
+
     return (
         <Container>
             {
-             monthWeekList.map((m: MonthSewedRelation) => {
-                    return RenderMonthWeek(m);
+                monthWeekList.map((m: MonthSewedRelation) => {
+                    return RenderMonthWeek(m, openForm);
              })
             }
+            <PlantRecordFormComponent plant={selectedPlant} isOpen={open} onClose={onClose} onOpen={onOpen} plantRecordId={''} />
+
         </Container>
     )
 }
