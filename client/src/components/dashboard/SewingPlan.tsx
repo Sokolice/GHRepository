@@ -1,10 +1,11 @@
-import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header } from "semantic-ui-react";
+import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header, ButtonGroup } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
-import { store, useStore } from "../../app/stores/store";
+import { useStore } from "../../app/stores/store";
 import { useEffect, useState } from "react";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
+import { Link } from "react-router-dom";
 
 const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void) => {
     return (
@@ -25,8 +26,10 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void) => {
                     null
                 }
                 <Divider horizontal />
-
-                <Button  onClick={() => openForm(plant)} content="Zasad me" key={plant.id} /> 
+                <ButtonGroup vertical labeled icon>
+                    <Button icon='angle double down' onClick={() => openForm(plant)} content="Zasad me" key={plant.id} />
+                    <Button icon='info' as={Link} to={`/plants/${plant.id}`} content="Detail" /> 
+                </ButtonGroup>
                 </Card.Content>
         </Card>
     )

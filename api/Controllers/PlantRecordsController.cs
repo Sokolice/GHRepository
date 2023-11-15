@@ -108,5 +108,23 @@ namespace api.Controllers
             return NoContent();
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PlantRecordDTO>> GetPlant(Guid id)
+        {
+            var plantRecord = await _context.PlantRecords.FindAsync(id);
+
+            if (plantRecord == null)
+            {
+                return NotFound();
+            }
+            
+            return new PlantRecordDTO { 
+                AmountPlanted = plantRecord.AmountPlanted, 
+                DatePlanted = plantRecord.DatePlanted,
+                Id = plantRecord.Id,
+                PlantId = plantRecord.PlantId
+            };
+        }
+
     }
 }

@@ -32,4 +32,34 @@ body{
         font-weight: normal;
     }
 
+
+
+.grid-container {
+    display: grid;
+    gap: 10px;
+    /*margin-bottom: 20px;
+    margin-left: 20px;
+    float: left;*/
+    padding: 10px;
+}
+
+.grid-item {
+    /*width: 32px;
+    height: 32px;*/
+    border: solid 1px #888;
+    border-radius: 6px;
+    margin: 2px;
+    padding: 20px 0;
+}
+.grid-item:focus{
+    background-color:blueviolet;
+}
+
+.grid-item:active{
+    background-color:brown;
+}
+
+.grid-item.clicked{
+    background-color:darkred;
+}
 /*end home page styles*/

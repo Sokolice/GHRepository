@@ -9,9 +9,24 @@ export default class GlobalStore {
     plantDTOList = new Map<string, PlantDTO>();
     gardeningTaskList = new Map<string, GardeningTaskDTO>();
     loading = false;
+    selectedPlant: PlantDTO | undefined = undefined;
+
+    bedList = new Map<string, Bed>();
+
+    cellMap = new Array<Array<{ x: number, y: number }>>();
+    clickedCells = new Array<string>();
+    clickedGridId = "";
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    get beds() {
+        return Array.from(this.bedList.values());
+    }
+
+    setBed(bed: Bed) {
+        this.bedList.set(bed.id, bed);
     }
 
     loadPlantDTO = async () => {
@@ -33,5 +48,29 @@ export default class GlobalStore {
 
     getPlantDTO = (id: string) => {
         return this.plantDTOList.get(id);
+    }
+
+    loadPlant = async (id: string) => {
+        let plant = this.getPlantDTO(id);
+        if (plant) {
+            this.selectedPlant = plant;
+            return plant;
+        }
+
+        else {
+            this.loading = true;
+            try {
+                plant = await agent.Plants.details(id);
+                runInAction(() => {
+                    this.selectedPlant = plant
+                });
+                this.loading = false;
+                return plant;
+
+            } catch (error) {
+                console.log(error);
+                this.loading = false;
+            }
+        }
     }
 } 

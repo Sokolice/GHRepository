@@ -1,10 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { PlantDTO } from "../../models/PlantDTO";
-import { Button, Form, Header, Segment, Image, Modal, Popup, Input, Divider } from "semantic-ui-react";
+import { Button, Form, Image, Modal} from "semantic-ui-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { v4 as uuid } from 'uuid'
 import { store} from "../../app/stores/store";
-import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 
 
 interface Props {
@@ -68,10 +67,8 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
     }
 
     function handleInputCHhange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        //console.log(plantRecord);
         const { name, value } = event.target;
         setRecord({ ...plantRecord, [name]: value });
-        //console.log(plantRecord);
     }
     return (
 
