@@ -10,24 +10,11 @@ export default class GlobalStore {
     gardeningTaskList = new Map<string, GardeningTaskDTO>();
     loading = false;
     selectedPlant: PlantDTO | undefined = undefined;
-
-    bedList = new Map<string, Bed>();
-
-    cellMap = new Array<Array<{ x: number, y: number }>>();
-    clickedCells = new Array<string>();
-    clickedGridId = "";
-
+        
     constructor() {
         makeAutoObservable(this)
     }
-
-    get beds() {
-        return Array.from(this.bedList.values());
-    }
-
-    setBed(bed: Bed) {
-        this.bedList.set(bed.id, bed);
-    }
+        
 
     loadPlantDTO = async () => {
         this.loading = true;

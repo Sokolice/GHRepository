@@ -1,49 +1,56 @@
 import { observer } from "mobx-react-lite";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
 import { store } from "../../app/stores/store";
+import { setReactionScheduler } from "mobx/dist/internal";
+import { render } from "react-dom";
 
 interface Props {
-    rows: number, 
-    columns: number,
-    id: string
+    Bed: Bed
 }
 
 
-const BedComponent =  observer(function Bed({ rows, columns, id }: Props) {   
-    const r = (rows / 20) * 100;
-    const c = (columns / 20) * 100;
+const BedComponent = observer(function Bed({Bed}: Props) {   
+
+    const [gridCells, setGridCells] = useState(Bed.cells);
+
+
     function handleClick(event: MouseEvent<HTMLDivElement, MouseEvent>) {
 
 
         const thisCell = event.currentTarget;
-        thisCell.classList.add('clicked');
+        const x = Number(thisCell.dataset.x);
+        const y = Number(thisCell.dataset.y);
 
-        store.globalStore.clickedCells.push(thisCell.id);
-        store.globalStore.clickedGridId = thisCell ? thisCell.parentElement.id : "";
-       // alert(event.currentTarget.id);
+        Bed.cells.forEach(row => {
+            row.forEach(cell => {
+                if (cell.x == x && cell.y == y)
+
+                    cell.isActive = cell.isActive ? false : true;
+            });
+        });
+
+        setGridCells([...Bed.cells]);
+
+        /*store.bedsStore.clickedCells.push(thisCell.id);
+        store.bedsStore.clickedGridId = thisCell ? thisCell.parentElement.id : "";*/
+       // alert(event.currentTarget.id)
     }
 
-    function createGrid() {
-        for (let y = 1; y <= c; y++) {
-            const row = [];
-            for (let x = 1; x <= r; x++) {
-                row.push({ x: x, y: y })
-            }
-            store.globalStore.cellMap.push(row);
-        }
-    }
 
-    function renderCell(cell: { x:  number; y: number; }) {
+    function renderCell(cell: Cell) {
         return (
-            <div className='grid-item' onClick={(e) => handleClick(e)}  key={cell.x + '_' + cell.y} id={cell.x + '_' + cell.y}>
+            <div className={'grid-item' + (cell.isActive ? " clicked" : "")} onClick={(e) => handleClick(e)}
+                data-x={cell.x} data-y={cell.y} key={cell.x + '_' + cell.y}
+                id={cell.x + '_' + cell.y}
+            >
             </div>
         )
     }
 
-    function renderRow(row: { x: number; y: number; }[]) {
+    function renderRow(row: Cell[]) {
         const items = []
         items.push(
-            row.map((cell: { x: number; y: number; }) => renderCell(cell)
+            row.map((cell: Cell) => renderCell(cell)
             ));
 
         return items;
@@ -52,19 +59,17 @@ const BedComponent =  observer(function Bed({ rows, columns, id }: Props) {
     function generateStyle(): React.CSSProperties {
         let value = "";
 
-        for (let x = 0; x < c; x++) {
-            value = value + "auto ";
+        for (let x = 0; x < Bed.numOfColumns; x++) {
+            value = value + "50px ";
         }
 
         return { gridTemplateColumns: value }; 
     }
 
-    createGrid();
-
     return (
-        <div className='grid-container' id={`bed_${id}`} key={`bed_${id}`} style={generateStyle()}>
+        <div className='grid-container bed' id={`bed_${Bed.id}`} key={`bed_${Bed.id}`} style={generateStyle()}>
             {
-                store.globalStore.cellMap.map((row) => renderRow(row))
+                gridCells.map((row) => renderRow(row))
             }
         </div>
     )
