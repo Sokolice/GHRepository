@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Persistence;
 
@@ -10,9 +11,11 @@ using api.Persistence;
 namespace api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231206183911_Migration_231206")]
+    partial class Migration_231206
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,9 +124,6 @@ namespace api.Migrations
                     b.Property<int>("NumOfColumns")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("NumOfRows")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Width")
                         .HasColumnType("INTEGER");
 
@@ -134,9 +134,11 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Model.Cell", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("X")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Y")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("BackgroundImage")
                         .IsRequired()
@@ -156,17 +158,11 @@ namespace api.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("X")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Y")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
+                    b.HasKey("X", "Y");
 
                     b.HasIndex("BedId");
 
-                    b.ToTable("Cells");
+                    b.ToTable("Cell");
                 });
 
             modelBuilder.Entity("api.Model.GardeningTask", b =>

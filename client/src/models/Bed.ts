@@ -1,7 +1,9 @@
-interface Bed{
+interface Bed {
+    id: string,
     width: number,
     length: number,
-    id: string,
-    cells: Array<Array<Cell>>,
-    numOfColumns: number
+    cells: Array<Cell>,
+    numOfColumns: number,
+    numOfRows: number,
+    name: string
 }

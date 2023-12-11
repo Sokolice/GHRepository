@@ -1,6 +1,6 @@
-﻿using api.Model;
-using api.Model.DTOs;
-using api.Model.Relations;
+﻿using api.DTOs;
+using api.Model;
+using api.Relations;
 using api.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

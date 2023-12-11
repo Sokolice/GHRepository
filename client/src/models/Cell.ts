@@ -1,7 +1,9 @@
 interface Cell {
+    id:string,
     x: number,
     y: number,
     isActive: boolean,
-    cssClass: string,
+    gridColumn: string,
+    gridRow: string,
     backgroundImage: string
 }

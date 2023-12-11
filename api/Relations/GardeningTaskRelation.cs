@@ -1,6 +1,6 @@
-﻿using api.Model.DTOs;
+﻿using api.DTOs;
 
-namespace api.Model.Relations
+namespace api.Relations
 {
     public class GardeningTaskRelation
     {

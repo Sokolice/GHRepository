@@ -1,4 +1,4 @@
-﻿namespace api.Model.DTOs
+﻿namespace api.DTOs
 {
     public class PlantDTO
     {

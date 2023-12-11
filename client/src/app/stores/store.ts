@@ -2,7 +2,7 @@ import MonthWeekStore from "./monthWeekStore";
 import { createContext, useContext } from "react";
 import PlantRecordStore from "./plantRecordStore";
 import GlobalStore from "./globalStore";
-import BedsStore from "./BedsStore";
+import BedsStore from "./bedsStore";
 
 interface Store {
     monthWeekStore: MonthWeekStore,

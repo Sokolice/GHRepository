@@ -1,5 +1,5 @@
-﻿using api.Model.DTOs;
-using api.Model;
+﻿using api.Model;
+using api.DTOs;
 
 namespace api.Core
 {

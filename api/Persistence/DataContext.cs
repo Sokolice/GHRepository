@@ -15,7 +15,9 @@ namespace api.Persistence
         public DbSet<PlantRecord> PlantRecords { get; set; } = null!;
         public DbSet<MonthWeek> MonthWeeks{ get; set; } = null!;
         public DbSet<GardeningTask> Tasks{ get; set; } = null!;
-        public DbSet<Pest> Pests { get; set; } = null!; 
+        public DbSet<Pest> Pests { get; set; } = null!;
+        public DbSet<Bed> Beds { get; set; } = null!;
+        public DbSet<Cell> Cells { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +51,10 @@ namespace api.Persistence
             modelBuilder.Entity<Plant>()
                 .HasMany(a => a.Pests)
                 .WithMany(b => b.Plants);
+
+            modelBuilder.Entity<Bed>()
+                .HasMany(a => a.Cells);
+                
         }
     }
 }

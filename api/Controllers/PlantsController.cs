@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api.Persistence;
-using api.Model.DTOs;
+using api.DTOs;
 
 namespace api.Controllers
 {

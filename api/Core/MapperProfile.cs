@@ -1,5 +1,5 @@
-﻿using api.Model;
-using api.Model.DTOs;
+﻿using api.DTOs;
+using api.Model;
 using AutoMapper;
 
 namespace api.Core

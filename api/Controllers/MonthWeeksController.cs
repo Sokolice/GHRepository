@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api.Model;
 using api.Persistence;
-using api.Model.DTOs;
-using api.Model.Relations;
+using api.DTOs;
 using AutoMapper;
 using api.Core;
+using api.Relations;
 
 namespace api.Controllers
 {

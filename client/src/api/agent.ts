@@ -57,11 +57,21 @@ const PlantRecords = {
     update: (plantRecord: PlantRecordDTO) => axios.put(`/PlantRecords/${plantRecord.id}`, plantRecord),
 
 }
+const Beds = {
+    getBeds: () => requests.get<BedRelation[]>('/Beds/GetBeds'),
+    create: (bed: BedRelation) => axios.post('/Beds', bed),
+    delete: (id: string) => axios.delete(`/Beds/${id}`),
+    update: (bed: Bed) => axios.put(`/Beds/${bed.id}`, bed),
+    details: (id: string) => requests.get<BedRelation>(`/Beds/${id}`),
+
+}
+
 
 const agent = {
     Plants,
     MonthWeeks,
-    PlantRecords
+    PlantRecords,
+    Beds
 }
 
 export default agent;
