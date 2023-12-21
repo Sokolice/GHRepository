@@ -67,7 +67,7 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
 
     if (store.globalStore.loading)
         return (
-            <LoadingComponent content='Nacitam data' />
+            <LoadingComponent />
     )
 
     return (

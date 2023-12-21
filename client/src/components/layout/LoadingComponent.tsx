@@ -6,7 +6,7 @@ interface Props {
     content?: string;
 }
 
-export default function LoadingComponent({ inverted = true, content = 'Nacitam...' }: Props) {
+export default function LoadingComponent({ inverted = true, content = 'Načítám data' }: Props) {
     return (
         <Dimmer active= { true} inverted = { inverted } >
             <Loader content={ content } />

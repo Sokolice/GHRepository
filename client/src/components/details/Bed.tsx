@@ -162,7 +162,7 @@ const BedComponent = observer(function Bed() {
 
     if (store.globalStore.loading)
         return (
-            <LoadingComponent content='Nacitam data' />
+            <LoadingComponent />
         )
     return (
         <SegmentGroup>        

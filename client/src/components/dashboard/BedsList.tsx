@@ -1,10 +1,7 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import { Button, Card, CardGroup, DropdownItemProps, Form, Segment } from "semantic-ui-react";
-import Bed from "../details/Bed";
+import { Button, Card, CardGroup, Form, Segment } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { PlantDTO } from "../../models/PlantDTO";
-import { runInAction } from "mobx";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../layout/LoadingComponent";
 
@@ -19,9 +16,6 @@ const BedsComponent = observer(function BedsList() {
         width: 0
     })
 
-    
-    
-
     const { bedsStore } = useStore();
     const { loadBeds, beds } = bedsStore;
 
@@ -30,13 +24,9 @@ const BedsComponent = observer(function BedsList() {
                 loadBeds();
     }, [beds, loadBeds])
 
-
-
-
     function AddBed() {
 
         store.bedsStore.createBed(bed.width, bed.length, bed.name);
-        //setBeds(...[store.bedsStore.beds]);
     }
 
 
@@ -51,7 +41,7 @@ const BedsComponent = observer(function BedsList() {
     }
     if (store.globalStore.loading)
         return (
-            <LoadingComponent content='Nacitam data' />
+            <LoadingComponent />
         )
     return (
         <div >
@@ -60,17 +50,17 @@ const BedsComponent = observer(function BedsList() {
                     <Form onSubmit={AddBed}>
                         <Form.Group>
                             <Form.Field>
-                                <Form.Input label='Nazev' placeholder='Nazev' id='name' name='name' onChange={handleChange} />
+                                <Form.Input label='Název' placeholder='Název' id='name' name='name' onChange={handleChange} />
                             </Form.Field>
                             <Form.Field>
-                                <Form.Input label='Delka[m]' placeholder='Delka' id='length' name='length' onChange={handleChange} />
+                                <Form.Input label='Délka[m]' placeholder='Délka' id='length' name='length' onChange={handleChange} />
                             </Form.Field>
                             <Form.Field>
-                                <Form.Input label='Sirka[m]' placeholder='Sirka' id='width' name='width' onChange={handleChange} />
+                                <Form.Input label='Šířka[m]' placeholder='Šířka' id='width' name='width' onChange={handleChange} />
                             </Form.Field>
                         </Form.Group>
                         <Form.Button type='submit'>
-                            Pridat zahon
+                            Přidat záhon
                         </Form.Button>
                     </Form>
                 </Segment>    

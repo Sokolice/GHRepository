@@ -82,20 +82,20 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
                 <Image size='medium' src={`/src/assets/plants/${selectedPlant.imageSrc}`} wrapped />
                 <Modal.Description>
                     <Form.Input type='date' placeholder='Datum sadby' name='datePlanted' label='Datum sadby' value={plantRecord.datePlanted} onChange={handleInputCHhange} />
-                    <Form.Input placeholder='Mnozstvi' name='amountPlanted' type='number' value={plantRecord.amountPlanted} onChange={handleInputCHhange} />                              
+                    <Form.Input placeholder='Množství' name='amountPlanted' type='number' value={plantRecord.amountPlanted} onChange={handleInputCHhange} />                              
                 </Modal.Description>
               </Modal.Content>
             <Modal.Actions>
                 <Button
                     type='submit'
-                    content="Ulozit"
+                    content="Uložit"
                     labelPosition='right'
                     icon='checkmark'
                     positive
                 />
                 <Button
                     onClick={onClose}
-                    content="Zrusit"
+                    content="Zrušit"
                     labelPosition='right'
                     icon='remove'
                     negative

@@ -17,17 +17,17 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void) => {
                 <Card.Content extra>
                 {
                     plant.directSewing ?
-                        <Popup content='Primy vysev' trigger={<Icon name='tree' size='large' color='green' />} /> :
-                        <Popup content='P�edp�stovan�' trigger={<Icon name='home' size='large' color='green' />} />
+                        <Popup content='Přímý výsev' trigger={<Icon name='tree' size='large' color='green' />} /> :
+                        <Popup content='Předpěstování' trigger={<Icon name='home' size='large' color='green' />} />
                 }
 
                 {plant.isHybrid ?
-                    <Popup content='Hybridn� odr�da' trigger={<Icon name='pagelines' size='large' color='brown' />} /> :
+                    <Popup content='Hybridní odrůda' trigger={<Icon name='pagelines' size='large' color='brown' />} /> :
                     null
                 }
                 <Divider horizontal />
                 <ButtonGroup vertical labeled icon>
-                    <Button icon='angle double down' onClick={() => openForm(plant)} content="Zasad me" key={plant.id} />
+                    <Button icon='angle double down' onClick={() => openForm(plant)} content="Zasaď mě" key={plant.id} />
                     <Button icon='info' as={Link} to={`/plants/${plant.id}`} content="Detail" /> 
                 </ButtonGroup>
                 </Card.Content>
