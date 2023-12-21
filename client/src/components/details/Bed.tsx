@@ -1,6 +1,6 @@
 import { runInAction } from "mobx";
 import { observer } from "mobx-react-lite";
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, SyntheticEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { store, useStore } from "../../app/stores/store";
 import LoadingComponent from "../layout/LoadingComponent";
@@ -62,10 +62,13 @@ const BedComponent = observer(function Bed() {
         const maxRow = Math.max(...activeCells.map((a) => a.y));
 
         const toBeDeleted = new Array<Cell>();
+        const toBeDeletedId = new Array<string>();
 
         activeCells.forEach(cell => {
-            if (cell.x != minColumn || cell.y != minRow)
+            if (cell.x != minColumn || cell.y != minRow) {
                 toBeDeleted.push(cell);
+                toBeDeletedId.push(cell.id);
+            }
         });
         runInAction(() => {
             selectedBed.cells = selectedBed.cells.filter(cell => {
@@ -83,13 +86,10 @@ const BedComponent = observer(function Bed() {
             selectedBed.cells.forEach((cell) => {
 
                 if (cell.x == minColumn && cell.y == minRow) {
-                    cell.gridColumn = minColumn + ' / ' + minRow + " / span " + maxC + " / span " + maxR;
-                    cell.gridRow = minRow + '/' + maxRow;
+                    cell.gridArea = minColumn + ' / ' + minRow + " / span " + maxC + " / span " + maxR;
                     cell.backgroundImage = imagePath;
                 }
             });
-
-
         })
 
 
@@ -99,14 +99,10 @@ const BedComponent = observer(function Bed() {
                     cell.isActive = false;
                 }
             });
-
         });
-
-
+        //console.log(toBeDeleted);
+        store.bedsStore.deleteCells(toBeDeletedId);
         store.bedsStore.updateBed(selectedBed);
-
-        //setBeds(...[store.bedsStore.beds]);
-
     }
 
 
@@ -131,7 +127,7 @@ const BedComponent = observer(function Bed() {
     }
     function generateCellStyle(cell: Cell): React.CSSProperties {
 
-        return { gridArea: cell.gridColumn, backgroundImage: cell.backgroundImage, backgroundSize: "cover" };
+        return { gridArea: cell.gridArea, backgroundImage: cell.backgroundImage, backgroundSize: "cover" };
     }
 
     function renderCell(cell: Cell) {
@@ -159,6 +155,11 @@ const BedComponent = observer(function Bed() {
 
         return { gridTemplateColumns: value, gridTemplateRows: rowValue }; 
     }
+
+    /*function saveBed() {
+        store.bedsStore.saveBed(selectedBed);
+    }*/
+
     if (store.globalStore.loading)
         return (
             <LoadingComponent content='Nacitam data' />
@@ -174,7 +175,7 @@ const BedComponent = observer(function Bed() {
                             Vlozit rostlinu
                         </Form.Button>
                 </Form>
-                <Button icon='save' color='blue' content='Ulozit' />
+                {/*<Button icon='save' color='blue' content='Ulozit' onClick={saveBed} />*/}
             </Segment>
             <Segment>
         <div className='grid-container' id={`bed_${selectedBed.id}`} key={`bed_${selectedBed.id}`} style={generateStyle()}>

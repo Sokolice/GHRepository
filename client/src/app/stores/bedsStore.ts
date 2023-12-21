@@ -2,16 +2,18 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../../api/agent";
 import { store } from "./store";
 import { v4 as uiid } from 'uuid';
-import GlobalStore from "./globalStore";
+import MyMapping from "../../models/MyMapping";
 
 export default class BedsStore {
     bedList = new Map<string, Bed>();
-    selectedBed: Bed = <Bed>{ cells: new Array<Cell>(), id: "", length: 0, name: "", width: 0, numOfColumns: 0 };
-
-    //cellMap = new Array<Array<Cell>>();
-    clickedCells = new Array<string>();
-    clickedGridId = "";
-
+    selectedBed: Bed = <Bed>{
+        id: "",
+        length: 0,
+        name: "",
+        width: 0,
+        numOfColumns: 0,
+        cells: new Array<Cell>()
+    };
     constructor() {
         makeAutoObservable(this)
     }
@@ -78,12 +80,15 @@ export default class BedsStore {
         
     }
 
-    updateBed = (bed: Bed) => {
+    updateBed = async (bed: Bed) => {
 
         try {
 
+            store.globalStore.loading = true;
+            await agent.Beds.update(MyMapping.mapBedRelation(bed));
             runInAction(() => {
                 this.bedList.set(bed.id, bed);
+                store.globalStore.loading = false;
             })
         }
         catch (error) {
@@ -91,6 +96,18 @@ export default class BedsStore {
         }
 
     }
+
+    deleteCells = async (ids: Array<string>) => {
+
+        try {
+            await agent.Cells.deleteCells(ids);
+        }
+        catch (error) {
+            console.log(error);
+        }
+
+    }
+
 
     createBed = async(aWidth: number, aLength: number, aName: string) =>{
         const bed = <Bed>{};
@@ -105,7 +122,7 @@ export default class BedsStore {
         for (let x = 1; x <= c; x++) {
             //const row = Array<Cell>();
             for (let y = 1; y <= r; y++) {
-                cells.push({id: uiid(), x: x, y: y, isActive: false, gridColumn: "", gridRow: "", backgroundImage: "" })
+                cells.push({ id: uiid(), x: x, y: y, isActive: false, gridArea: "", backgroundImage: "" })
             }
             //cells.push(row);
         }
@@ -132,9 +149,6 @@ export default class BedsStore {
         }
     }
 
-    saveBed = async (bed: Bed) => {
-        await agent.Beds.create(bed);
-    }
 
     deleteBed = async (id: string) => {
         store.globalStore.loading = true;

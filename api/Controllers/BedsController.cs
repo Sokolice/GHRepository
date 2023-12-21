@@ -1,9 +1,11 @@
-﻿using api.DTOs;
+﻿using api.Core;
+using api.DTOs;
 using api.Model;
 using api.Persistence;
 using api.Relations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -50,16 +52,7 @@ namespace api.Controllers
             var bed = bedRelation;
 
 
-            _context.Beds.Add(new Bed
-            {
-                Id = bedRelation.Bed.Id,
-                Width = bedRelation.Bed.Width,
-                Length = bedRelation.Bed.Length,
-                Name = bedRelation.Bed.Name,
-                Cells = bedRelation.Cells,
-                NumOfColumns = bedRelation.Bed.NumOfColumns,
-                NumOfRows = bedRelation.Bed.NumOfRows
-            });
+            _context.Beds.Add(MyMapping.MapBed(bedRelation));
 
             await _context.SaveChangesAsync();
 
@@ -96,19 +89,42 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            return new BedRelation
-            {
-                Bed = new BedDTO { Id = bed.Id, 
-                                    Length = bed.Length, 
-                                    Width = bed.Width,
-                                    Name = bed.Name,
-                                    NumOfColumns = bed.NumOfColumns,
-                                    NumOfRows = bed.NumOfRows,
-                },
-                Cells = bed.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList(),
-            };
+            return MyMapping.MapBedRelation(bed);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<BedRelation>> UpdatePlantRecord(Guid id, BedRelation bedRelation)
+        {
+            if (id != bedRelation.Bed.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var bed = await _context.Beds.FindAsync(id);
+                if (bed != null)
+                {
+
+                    bed.Name = bedRelation.Bed.Name;
+                    bed.Length = bedRelation.Bed.Length;
+                    bed.Width = bedRelation.Bed.Width;
+                    bed.NumOfRows = bedRelation.Bed.NumOfRows;
+                    bed.NumOfColumns = bedRelation.Bed.NumOfColumns;
+                    bed.Cells = bedRelation.Cells;
+                }
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+            }
+
+            return NoContent();
+        }
+
+        
 
     }
 }

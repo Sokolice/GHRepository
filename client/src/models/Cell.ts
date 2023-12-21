@@ -3,7 +3,6 @@ interface Cell {
     x: number,
     y: number,
     isActive: boolean,
-    gridColumn: string,
-    gridRow: string,
+    gridArea: string,
     backgroundImage: string
 }

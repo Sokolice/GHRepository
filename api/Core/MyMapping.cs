@@ -1,5 +1,6 @@
 ﻿using api.Model;
 using api.DTOs;
+using api.Relations;
 
 namespace api.Core
 {
@@ -45,6 +46,39 @@ namespace api.Core
             }
 
             return plantDTOs;
+        }
+
+        public static Bed MapBed(BedRelation bedRelation)
+        {
+            var bed = new Bed()
+            {
+                Id = bedRelation.Bed.Id,
+                Name = bedRelation.Bed.Name,
+                Length = bedRelation.Bed.Length,
+                Width = bedRelation.Bed.Width,
+                NumOfColumns = bedRelation.Bed.NumOfColumns,
+                NumOfRows = bedRelation.Bed.NumOfRows,
+                Cells = bedRelation.Cells
+            };
+
+            return bed;
+        }
+
+        public static BedRelation MapBedRelation(Bed aBed)
+        {
+            var bedRelation = new BedRelation();
+            bedRelation.Bed = new BedDTO
+            {
+                Id = aBed.Id,
+                Name = aBed.Name,
+                Length = aBed.Length,
+                NumOfColumns = aBed.NumOfColumns,
+                NumOfRows = aBed.NumOfRows,
+                Width = aBed.Width,
+            };
+            bedRelation.Cells = aBed.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList();
+
+            return bedRelation;
         }
     }
 }

@@ -59,11 +59,14 @@ const PlantRecords = {
 }
 const Beds = {
     getBeds: () => requests.get<BedRelation[]>('/Beds/GetBeds'),
-    create: (bed: BedRelation) => axios.post('/Beds', bed),
+    create: (bedRelation: BedRelation) => axios.post('/Beds', bedRelation),
     delete: (id: string) => axios.delete(`/Beds/${id}`),
-    update: (bed: Bed) => axios.put(`/Beds/${bed.id}`, bed),
+    update: (bedRelation: BedRelation) => axios.put(`/Beds/${bedRelation.bed.id}`, bedRelation),
     details: (id: string) => requests.get<BedRelation>(`/Beds/${id}`),
+}
 
+const Cells = {
+    deleteCells: (ids: Array<string>) => axios.patch(`/Cells/DeleteCells`, ids)
 }
 
 
@@ -71,7 +74,8 @@ const agent = {
     Plants,
     MonthWeeks,
     PlantRecords,
-    Beds
+    Beds,
+    Cells
 }
 
 export default agent;

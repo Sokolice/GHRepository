@@ -9,13 +9,11 @@ namespace api.Model
         public int X {  get; set; }
         public int Y { get; set; }  
         public bool IsActive { get; set; }
-        public string GridColumn { get; set; }
-        public string GridRow { get; set; }
+        public string GridArea { get; set; }
         public string BackgroundImage { get; set; }
 
         public Cell() {
-            GridColumn = string.Empty;
-            GridRow = string.Empty;
+            GridArea = string.Empty;
             BackgroundImage = string.Empty;
         }
     }
