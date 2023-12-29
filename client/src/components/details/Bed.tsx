@@ -1,19 +1,21 @@
 import { runInAction } from "mobx";
 import { observer } from "mobx-react-lite";
-import { MouseEvent, SyntheticEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { MouseEvent, ReactNode, SyntheticEvent, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { store, useStore } from "../../app/stores/store";
 import LoadingComponent from "../layout/LoadingComponent";
-import { Button, DropdownItemProps, Form, Segment, SegmentGroup } from "semantic-ui-react";
+import { DropdownItemProps, Form, Label, Segment, SegmentGroup } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
+import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 
 
 
 
 const BedComponent = observer(function Bed() {   
-    const options: DropdownItemProps[] | { key: string; text: string; value: string; image: { avatar: boolean; src: string; }; }[] | undefined = [];
+    const options: DropdownItemProps[] | { key: string; text: string; value: string; image: { avatar: boolean; src: string; }; }[] |undefined=[];
 
     const [plantId, setPlantId] = useState('');
+    const [plantRecordId, setPlantRecordId] = useState('');
     const { bedsStore } = useStore();
     const { selectedBed, loadBed } = bedsStore;
 
@@ -22,30 +24,34 @@ const BedComponent = observer(function Bed() {
     useEffect(() => {
         async function fetchData() {
             if (id)
-                loadBed(id);
+                await loadBed(id);
         }
-
         fetchData();
 
     }, [id, loadBed])
 
-    store.globalStore.plantDTOList.forEach((plant: PlantDTO) => {
+   
+    function loadDropDownItems() {
 
-        options.push({
-            key: plant.id,
-            text: plant.name,
-            value: plant.id,
-            image: { avatar: false, src: `/src/assets/plants/${plant.imageSrc}` }
-        })
-    })
+            store.plantRecordStore.plantRecordMap.forEach((plantRecord: PlantRecordDTO) => {
+            
+                const plant: PlantDTO = store.globalStore.getPlantDTO(plantRecord.plantId);
+
+                options.push({
+                    key: plantRecord.id,
+                    text: plant.name + ": " + plantRecord.datePlanted,
+                    value: plant.id,
+                    image: { avatar: false, src: `/src/assets/plants/${plant.imageSrc}` }
+                })
+            })
+
+            return options;
+    }
+
     function AddPlantImage() {
 
         const imagePath = 'url(/src/assets/plants/' + store.globalStore.getPlantDTO(plantId)?.imageSrc + ")";
         const activeCells = new Array<Cell>();
-
-        //const thisBed: Bed = store.bedsStore.bedList.get("1");
-        
-        //console.log(thisBed);
 
         runInAction(() => {
             selectedBed.cells.forEach((cell) => {
@@ -75,19 +81,16 @@ const BedComponent = observer(function Bed() {
                 return toBeDeleted.indexOf(cell) < 0;
             })
 
-            //console.log(store.bedsStore.beds[0].cells.length);
-
             const maxC = (maxColumn - minColumn) + 1;
-            console.log(maxC);
             const maxR = (maxRow - minRow) + 1;
-            console.log(maxR);
 
-            console.log(minColumn + '/' + minRow + "/ span " + maxC + "/ span " + maxR);
+
             selectedBed.cells.forEach((cell) => {
 
                 if (cell.x == minColumn && cell.y == minRow) {
                     cell.gridArea = minColumn + ' / ' + minRow + " / span " + maxC + " / span " + maxR;
                     cell.backgroundImage = imagePath;
+                    cell.plantRecordId = plantRecordId;
                 }
             });
         })
@@ -106,8 +109,10 @@ const BedComponent = observer(function Bed() {
     }
 
 
-    function handleDropChange(event: SyntheticEvent<HTMLElement, Event>, value) {
-        setPlantId(value.value);
+    function handleDropChange(e: SyntheticEvent<HTMLElement, Event>, value) {
+        setPlantId(value);
+        const key = options?.find(a => a.value == value);
+        setPlantRecordId(key?.key);
     }
     function handleClick(event: MouseEvent<HTMLDivElement, MouseEvent>) {
 
@@ -131,12 +136,29 @@ const BedComponent = observer(function Bed() {
     }
 
     function renderCell(cell: Cell) {
+        function showPlantRecordDetails(): ReactNode {
+
+            if (cell.plantRecordId != "") {
+                const plantRecord: PlantRecordDTO = store.plantRecordStore.getPlantRecord(cell.plantRecordId);
+
+                const plant = store.globalStore.getPlantDTO(plantRecord.plantId);
+                if (plant) {
+                    return <Label as={Link} to='/plantrecords'
+                    > {plant?.name} : {plantRecord.datePlanted} </Label>
+                }
+                else
+                    return 
+            }
+            
+        }
+
         return (
             <div className={'grid-item' + (cell.isActive ? " clicked" : "")} onClick={(e) => handleClick(e)}
                 data-x={cell.x} data-y={cell.y} key={cell.x + '_' + cell.y}
                 id={cell.x + '_' + cell.y}
                 style={generateCellStyle(cell)}
             >
+                {showPlantRecordDetails()}
             </div>
         )
     }
@@ -156,9 +178,6 @@ const BedComponent = observer(function Bed() {
         return { gridTemplateColumns: value, gridTemplateRows: rowValue }; 
     }
 
-    /*function saveBed() {
-        store.bedsStore.saveBed(selectedBed);
-    }*/
 
     if (store.globalStore.loading)
         return (
@@ -168,8 +187,8 @@ const BedComponent = observer(function Bed() {
         <SegmentGroup>        
                 <Segment>
                     <Form onSubmit={AddPlantImage}>
-                        <Form.Field>
-                            <Form.Dropdown options={options} onChange={handleDropChange} />
+                    <Form.Field>
+                        <Form.Dropdown options={loadDropDownItems()} onChange={handleDropChange} placeholder='Vyber' scrolling />
                             </Form.Field>
                         <Form.Button type='submit'>
                             Vlozit rostlinu

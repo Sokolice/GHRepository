@@ -17,18 +17,22 @@ export default class PlantRecordStore {
             Date.parse(a.datePlanted) - Date.parse(b.datePlanted));
     }
 
+    getPlantRecord = (id: string) => {
+        return this.plantRecordMap.get(id);
+    }
+
 
     loadPlantRecords = async () => {
         store.globalStore.loading = true;
         try {
             const plantRecords = await agent.PlantRecords.getPlantRecords();
             
-            runInAction(() => {
+           // runInAction(() => {
                 plantRecords.forEach(plantRecord => {
                     this.setPlantRecord(plantRecord);
                 })
                 store.globalStore.loading = false;
-            });
+            //});
 
         }
         catch (error) {
@@ -38,12 +42,42 @@ export default class PlantRecordStore {
     }
 
     loadPlantRecord = async (id: string)=>{
-        try {
+        //try {
+        console.log("id atribute: " +id);
+        let plantRecord = this.plantRecordMap.get(id);
+        console.log("record z mapy:" + plantRecord?.id);
+            if (plantRecord)
+                return plantRecord;
+            else {
+                try {
+
+                    plantRecord = await agent.PlantRecords.details(id);
+                    this.setPlantRecord(plantRecord);
+                    return plantRecord;
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            }
+
+            /*console.log("plantRecordMap: ");
+            console.log(this.plantRecordMap);
+
+            console.log(this.plantRecordMap.has(String(id))); 
+
+            console.log("plantRecord: " + plantRecord);
+
+
+            const plantRecordFromArray = this.plantRecords.find((plantRecord) => plantRecord.id == id);
+            console.log(this.plantRecords);
+            console.log("plantrecordFromArray: " + plantRecordFromArray?.id);
+
+
             return this.plantRecordMap.get(id);
         }
         catch (error) {
             console.log(error);
-        }
+        }*/
     }
 
     createPlantRecord = async (plantRecord: PlantRecordDTO) => {
@@ -52,9 +86,9 @@ export default class PlantRecordStore {
             //const monthWeeks = await monthWeekAgent.MonthWeeks.sewingGroupByMonth();
 
             await agent.PlantRecords.create(plantRecord);
-            runInAction(() => {
+           // runInAction(() => {
                 this.setPlantRecord(plantRecord);
-            });
+            //});
             
         }
         catch (error) {
@@ -91,13 +125,12 @@ export default class PlantRecordStore {
         }
     }
 
-    setPlantRecord = (plantRecord: PlantRecordDTO) => {
+    private setPlantRecord = (plantRecord: PlantRecordDTO) => {
 
         plantRecord.datePlanted = plantRecord.datePlanted.split('T')[0];
         plantRecord.progress = this.calculatePlantRecordProgress(plantRecord, store.globalStore.getPlantDTO(plantRecord.plantId) as PlantDTO, store.monthWeekStore.monthWeekRelationList);
 
-        this.plantRecordMap.set(plantRecord.id, plantRecord);
-        
+        this.plantRecordMap.set(plantRecord.id, plantRecord);        
     }
 
 

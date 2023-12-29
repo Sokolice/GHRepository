@@ -60,7 +60,6 @@ export default class BedsStore {
             store.globalStore.loading = true;
             try {
                 const bedRelation = await agent.Beds.details(id);
-                console.log(bedRelation);
                 runInAction(() => {
                     this.selectedBed.id = bedRelation.bed.id;
                     this.selectedBed.cells = bedRelation.cells;
@@ -69,8 +68,9 @@ export default class BedsStore {
                     this.selectedBed.name = bedRelation.bed.name;
                     this.selectedBed.numOfColumns = bedRelation.bed.numOfColumns;
                     this.selectedBed.numOfRows = bedRelation.bed.numOfRows;
+
+                    store.globalStore.loading = false;
                 });
-                store.globalStore.loading = false;
 
             }
             catch (error) {
@@ -122,7 +122,7 @@ export default class BedsStore {
         for (let x = 1; x <= c; x++) {
             //const row = Array<Cell>();
             for (let y = 1; y <= r; y++) {
-                cells.push({ id: uiid(), x: x, y: y, isActive: false, gridArea: "", backgroundImage: "" })
+                cells.push({ id: uiid(), x: x, y: y, isActive: false, gridArea: "", backgroundImage: "", plantRecordId:"" })
             }
             //cells.push(row);
         }
@@ -141,9 +141,9 @@ export default class BedsStore {
             await agent.Beds.create(newBed);
             runInAction(() => {
                 this.bedList.set(bed.id, bed);
+                store.globalStore.loading = false;
             })
 
-            store.globalStore.loading = false;
         } catch (error) {
             console.log(error);
         }
@@ -156,9 +156,9 @@ export default class BedsStore {
             await agent.Beds.delete(id);
             runInAction(() => {
                 this.bedList.delete(id);
+                store.globalStore.loading = false;
             });
 
-            store.globalStore.loading = false;
         } catch (error) {
             console.log(error);
         }

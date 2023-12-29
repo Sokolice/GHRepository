@@ -4,5 +4,6 @@ interface Cell {
     y: number,
     isActive: boolean,
     gridArea: string,
-    backgroundImage: string
+    backgroundImage: string,
+    plantRecordId: string
 }

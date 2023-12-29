@@ -55,6 +55,7 @@ const PlantRecords = {
     create: (plantRecord: PlantRecordDTO) => axios.post('/PlantRecords', plantRecord),
     delete: (id: string) => axios.delete(`/PlantRecords/${id}`),
     update: (plantRecord: PlantRecordDTO) => axios.put(`/PlantRecords/${plantRecord.id}`, plantRecord),
+    details: (id: string) => requests.get<PlantRecordDTO>(`/PlantRecords/${id}`),
 
 }
 const Beds = {
