@@ -11,12 +11,12 @@ namespace api.Model
         public bool IsActive { get; set; }
         public string GridArea { get; set; }
         public string BackgroundImage { get; set; }
-
         public string PlantRecordId { get; set; }
 
         public Cell() {
             GridArea = string.Empty;
             BackgroundImage = string.Empty;
+            PlantRecordId = string.Empty;
         }
     }
 }

@@ -4,6 +4,7 @@ import { PlantDTO } from '../models/PlantDTO';
 import { MonthSewedRelation } from '../models/MonthSewedRelation';
 import { PlantRecordDTO } from '../models/PlantRecordDTO';
 import { MonthWeekRelation } from '../models/MonthWeekRelation';
+import { BedRelation } from '../models/BedRelation';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>

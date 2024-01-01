@@ -38,7 +38,7 @@ namespace api.Controllers
                     NumOfRows = a.NumOfRows
                 },
 
-                Cells = a.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList(),
+                Cells = a.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList()
             }
             ).ToList();
 
@@ -103,6 +103,8 @@ namespace api.Controllers
             try
             {
                 var bed = await _context.Beds.FindAsync(id);
+
+
                 if (bed != null)
                 {
 

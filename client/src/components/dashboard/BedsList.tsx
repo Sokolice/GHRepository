@@ -1,9 +1,11 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import { Button, Card, CardGroup, Form, Segment } from "semantic-ui-react";
+import { Button, Card, CardGroup, Form, List, ListItem, Segment } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../layout/LoadingComponent";
+import { PlantDTO } from "../../models/PlantDTO";
+import { Bed } from "../../models/Bed";
 
 
 
@@ -39,6 +41,35 @@ const BedsComponent = observer(function BedsList() {
     function handleBedDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         store.bedsStore.deleteBed(id);
     }
+
+    function listPlantsInBed(bed: Bed) {
+
+        const listItems = new Map<string, PlantDTO>();
+
+        bed.cells.forEach(cell => {
+            if (cell.plantRecordId != "") {
+
+                const plant: PlantDTO = store.globalStore.getPlantDTO(store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId ?? "");
+                listItems.set(plant.id,plant);
+            }
+        })
+
+        return (
+            <List>
+                {
+                    Array.from(listItems.values()).map(item => {
+                        return (
+                            <ListItem key={item.id}>
+                                {item.name}
+                            </ListItem>
+                        )
+                    })
+                }
+            </List>
+        )
+        
+    }
+
     if (store.globalStore.loading)
         return (
             <LoadingComponent />
@@ -75,9 +106,9 @@ const BedsComponent = observer(function BedsList() {
                                 <Card.Header>{bed.name}</Card.Header>
                                 <Card.Header>sirka: {bed.width}</Card.Header>
                                 <Card.Header>delka: {bed.length}</Card.Header>
+                                {listPlantsInBed(bed)}
                                 <Button icon='info' color='blue' as={Link} to={`/beds/${bed.id}`} content="Detail" />
                                 <Button icon='minus' color='red' content='Smazat' onClick={(e) => handleBedDelete(e, bed.id)} />
-
                             </Card.Content>
                         </Card>
                     ))}

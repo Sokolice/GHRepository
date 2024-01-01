@@ -1,4 +1,4 @@
-interface BedDTO {
+export interface BedDTO {
     id: string,
     name: string,
     width: number, 

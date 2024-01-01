@@ -10,7 +10,6 @@ namespace api.Model
         public string Name { get; set; }
         public int Width { get; set; }
         public int Length { get; set; }
-
         public virtual List<Cell> Cells { get; set; }
         public int NumOfColumns {  get; set; }
         public int NumOfRows { get; set; }
@@ -22,7 +21,7 @@ namespace api.Model
             NumOfColumns = 0;
             NumOfRows = 0;
             Width = 0;  
-            Cells =  new List<Cell> { };            
+            Cells =  new List<Cell> { };
         }
 
     }

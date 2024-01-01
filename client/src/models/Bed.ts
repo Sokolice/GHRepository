@@ -1,4 +1,7 @@
-interface Bed {
+import { Cell } from "./Cell";
+import { PlantDTO } from "./PlantDTO";
+
+export interface Bed {
     id: string,
     width: number,
     length: number,

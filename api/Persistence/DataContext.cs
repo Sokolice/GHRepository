@@ -54,7 +54,6 @@ namespace api.Persistence
 
             modelBuilder.Entity<Bed>()
                 .HasMany(a => a.Cells);
-                
         }
     }
 }

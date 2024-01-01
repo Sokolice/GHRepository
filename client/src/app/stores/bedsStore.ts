@@ -3,6 +3,10 @@ import agent from "../../api/agent";
 import { store } from "./store";
 import { v4 as uiid } from 'uuid';
 import MyMapping from "../../models/MyMapping";
+import { BedRelation } from "../../models/BedRelation";
+import { Bed } from "../../models/Bed";
+import { Cell } from "../../models/Cell";
+import { BedDTO } from "../../models/BedDTO";
 
 export default class BedsStore {
     bedList = new Map<string, Bed>();
@@ -135,7 +139,7 @@ export default class BedsStore {
         try {
             const newBed = <BedRelation>{
                 bed: <BedDTO>{ id: bed.id, name: bed.name, length: bed.length, numOfColumns: bed.numOfColumns, width: bed.width, numOfRows: bed.numOfRows },
-                cells: bed.cells
+                cells: bed.cells          
             };
             //console.log(newBed);
             await agent.Beds.create(newBed);

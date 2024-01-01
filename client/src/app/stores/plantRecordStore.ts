@@ -43,11 +43,13 @@ export default class PlantRecordStore {
 
     loadPlantRecord = async (id: string)=>{
         //try {
-        console.log("id atribute: " +id);
+       //console.log("id atribute: " +id);
         let plantRecord = this.plantRecordMap.get(id);
-        console.log("record z mapy:" + plantRecord?.id);
-            if (plantRecord)
-                return plantRecord;
+        //console.log("record z mapy:" + plantRecord?.id);
+        if (plantRecord) {
+            //console.log("existuje")
+            return plantRecord;
+        }
             else {
                 try {
 

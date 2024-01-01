@@ -7,6 +7,7 @@ import LoadingComponent from "../layout/LoadingComponent";
 import { DropdownItemProps, Form, Label, Segment, SegmentGroup } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
+import { Cell } from "../../models/Cell";
 
 
 
@@ -15,7 +16,7 @@ const BedComponent = observer(function Bed() {
     const options: DropdownItemProps[] | { key: string; text: string; value: string; image: { avatar: boolean; src: string; }; }[] |undefined=[];
 
     const [plantId, setPlantId] = useState('');
-    const [plantRecordId, setPlantRecordId] = useState('');
+    const [thisPlantRecordId, setPlantRecordId] = useState('');
     const { bedsStore } = useStore();
     const { selectedBed, loadBed } = bedsStore;
 
@@ -44,13 +45,14 @@ const BedComponent = observer(function Bed() {
                     image: { avatar: false, src: `/src/assets/plants/${plant.imageSrc}` }
                 })
             })
-
             return options;
     }
 
     function AddPlantImage() {
+        //console.log("id:" + plantId);
+        const plant: PlantDTO = store.globalStore.getPlantDTO(plantId);
 
-        const imagePath = 'url(/src/assets/plants/' + store.globalStore.getPlantDTO(plantId)?.imageSrc + ")";
+        const imagePath = 'url(/src/assets/plants/' + plant?.imageSrc + ")";
         const activeCells = new Array<Cell>();
 
         runInAction(() => {
@@ -90,7 +92,7 @@ const BedComponent = observer(function Bed() {
                 if (cell.x == minColumn && cell.y == minRow) {
                     cell.gridArea = minColumn + ' / ' + minRow + " / span " + maxC + " / span " + maxR;
                     cell.backgroundImage = imagePath;
-                    cell.plantRecordId = plantRecordId;
+                    cell.plantRecordId = thisPlantRecordId;
                 }
             });
         })
@@ -103,15 +105,16 @@ const BedComponent = observer(function Bed() {
                 }
             });
         });
-        //console.log(toBeDeleted);
+
         store.bedsStore.deleteCells(toBeDeletedId);
         store.bedsStore.updateBed(selectedBed);
     }
 
 
-    function handleDropChange(e: SyntheticEvent<HTMLElement, Event>, value) {
-        setPlantId(value);
-        const key = options?.find(a => a.value == value);
+    function handleDropChange(e: SyntheticEvent<HTMLElement, Event>, data) {
+        setPlantId(data.value);
+        const key = options?.find(a => a.value == data.value);
+
         setPlantRecordId(key?.key);
     }
     function handleClick(event: MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -140,14 +143,15 @@ const BedComponent = observer(function Bed() {
 
             if (cell.plantRecordId != "") {
                 const plantRecord: PlantRecordDTO = store.plantRecordStore.getPlantRecord(cell.plantRecordId);
-
-                const plant = store.globalStore.getPlantDTO(plantRecord.plantId);
-                if (plant) {
-                    return <Label as={Link} to='/plantrecords'
-                    > {plant?.name} : {plantRecord.datePlanted} </Label>
+                if (plantRecord) {
+                    const plant = store.globalStore.getPlantDTO(plantRecord.plantId);
+                    if (plant) {
+                        return <Label as={Link} to='/plantrecords'
+                        > {plant?.name} : {plantRecord.datePlanted} </Label>
+                    }
+                    else
+                        return
                 }
-                else
-                    return 
             }
             
         }
