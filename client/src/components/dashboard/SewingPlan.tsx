@@ -1,11 +1,12 @@
-import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header, ButtonGroup } from "semantic-ui-react";
+import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header, ButtonGroup, Segment } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../app/stores/store";
+import { store, useStore } from "../../app/stores/store";
 import { useEffect, useState } from "react";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
+import LoadingComponent from "../layout/LoadingComponent";
 
 const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void) => {
     return (
@@ -58,9 +59,10 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: Plant
 
 const SewingPlanComponent = observer(function SewingPlan() {
     const { monthWeekStore } = useStore();
-    const { monthWeekList, loadMonthWeeeks } = monthWeekStore;
+    const { currentMonthRelationList } = monthWeekStore;
 
     const [open, setOpen] = useState(false);
+    const [active, setActive] = useState(false);
 
     const [selectedPlant, setPlant] = useState({
         id: '',
@@ -74,10 +76,10 @@ const SewingPlanComponent = observer(function SewingPlan() {
         repeatedPlanting: 0
     });
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (monthWeekList.length <= 1)
             loadMonthWeeeks();
-    }, [loadMonthWeeeks, monthWeekList])
+    }, [loadMonthWeeeks, monthWeekList])*/
 
     function openForm(plant: PlantDTO) {
         setOpen(true);
@@ -92,18 +94,33 @@ const SewingPlanComponent = observer(function SewingPlan() {
         setOpen(false);
     }
 
+    function switchToCurrentMonth() {
+        setActive(!active);
+
+        store.monthWeekStore.isCurrentMonthActive = !store.monthWeekStore.isCurrentMonthActive;
+        store.monthWeekStore.filterMonthWeeks();
+    }
+    if (store.globalStore.loading)
+        return (
+            <LoadingComponent />
+        )
     return (
         <Container>
-            {
-                monthWeekList.map((m: MonthSewedRelation) => {
-                    return RenderMonthWeek(m, openForm);
-             })
-            }
-            <PlantRecordFormComponent plant={selectedPlant} isOpen={open} onClose={onClose} onOpen={onOpen} plantRecordId={''} />
+            <Container textAlign='center'>
+                <Button toggle active={active} onClick={switchToCurrentMonth}>Aktualni vysev</Button>
+            </Container>
 
+            <Container>
+                {
+                    currentMonthRelationList.map((m: MonthSewedRelation) => {
+                        return RenderMonthWeek(m, openForm);
+                    })
+                }
+                <PlantRecordFormComponent plant={selectedPlant} isOpen={open} onClose={onClose} onOpen={onOpen} plantRecordId={''} />
+            </Container>
         </Container>
-    )
-}
+        )
+    }
 )
 
 export default SewingPlanComponent;
