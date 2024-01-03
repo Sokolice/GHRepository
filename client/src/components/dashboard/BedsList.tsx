@@ -18,13 +18,13 @@ const BedsComponent = observer(function BedsList() {
         width: 0
     })
 
-    const { bedsStore } = useStore();
+    /*const { bedsStore } = useStore();
     const { loadBeds, beds } = bedsStore;
 
     useEffect(() => {
             if (beds.length == 0)
                 loadBeds();
-    }, [beds, loadBeds])
+    }, [beds, loadBeds])*/
 
     function AddBed() {
 
@@ -100,7 +100,7 @@ const BedsComponent = observer(function BedsList() {
             <br />
             <div id="beds">
                 <CardGroup>
-                    {beds.map((bed: Bed) => (
+                    {store.bedsStore.beds.map((bed: Bed) => (
                         <Card key={bed.id}>
                             <Card.Content>
                                 <Card.Header>{bed.name}</Card.Header>
