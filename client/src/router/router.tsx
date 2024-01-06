@@ -19,7 +19,8 @@ export const routes: RouteObject[] = [
             { path: 'plantrecords', element: <PlantRecordsListComponent /> },
             { path: 'plants/:id', element: <PlantDetails /> },
             { path: 'beds', element: <BedsList /> },
-            { path: 'beds/:id', element: <BedComponent /> }
+            { path: 'beds/:id', element: <BedComponent /> },
+            { path: 'settings', element: <Settings /> }
             /*{ path: 'createActivity', element: <ActivityForm key='create' /> },
             { path: 'manage/:id', element: <ActivityForm key='manage' /> }*/
         ]

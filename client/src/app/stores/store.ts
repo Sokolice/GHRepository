@@ -3,19 +3,22 @@ import { createContext, useContext } from "react";
 import PlantRecordStore from "./plantRecordStore";
 import GlobalStore from "./globalStore";
 import BedsStore from "./bedsStore";
+import WeatherStore from "./weatherStore";
 
 interface Store {
     monthWeekStore: MonthWeekStore,
     plantRecordStore: PlantRecordStore,
     globalStore: GlobalStore,
-    bedsStore: BedsStore
+    bedsStore: BedsStore,
+    weatherStore: WeatherStore
 }
 
 export const store: Store = {
     monthWeekStore: new MonthWeekStore(),
     plantRecordStore: new PlantRecordStore(),
     globalStore: new GlobalStore(),
-    bedsStore: new BedsStore()
+    bedsStore: new BedsStore(),
+    weatherStore: new WeatherStore()
 }
 
 export const StoreContext = createContext(store);
