@@ -39,7 +39,7 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void) => {
 const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: PlantDTO) => void) => {
     return (
 
-        <div key={`${monthSewed.month}`}>
+        <Container key={`${monthSewed.month}`} textAlign="center">
 
             <Divider horizontal />
             
@@ -53,7 +53,7 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: Plant
                     monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant, openForm))
                 }
                 </Card.Group>
-            </div>
+            </Container>
     );
 }
 
