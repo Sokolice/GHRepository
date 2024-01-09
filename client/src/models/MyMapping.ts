@@ -7,8 +7,7 @@ export default class MyMapping {
 
         return <BedRelation>{
             bed : bed,
-            cells: bed.cells,
-            plants: bed.plants
+            cells: bed.cells
         } 
 
     }
