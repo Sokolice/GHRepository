@@ -17,7 +17,10 @@ export default function NavBar() {
             </Menu.Item>
                 <Menu.Item as={NavLink} to='/beds' >
                     Záhony
-            </Menu.Item>
+                </Menu.Item>
+                <Menu.Item as={NavLink} to='/settings' >
+                    Nastavení
+                </Menu.Item>
             </Container>
         </Menu>
     )
