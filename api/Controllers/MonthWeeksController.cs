@@ -41,7 +41,7 @@ namespace api.Controllers
             return monthsDictionary.Select(y => new MonthSewedRelation
             {
                 Month = y.Key,
-                SewedPlants = MyMapping.MapPlants(y.Value)
+                SewedPlants = MyMapping.MapPlants(y.Value).OrderBy(a=>a.Name).ToList(),
             }).ToList();
         }
 
