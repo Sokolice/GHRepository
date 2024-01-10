@@ -1,46 +1,41 @@
 import { observer } from "mobx-react-lite";
 
-import { APIProvider, Map, Marker, useMapsLibrary } from '@vis.gl/react-google-maps';
+import { APIProvider, Map,} from '@vis.gl/react-google-maps';
 import { store } from "../../app/stores/store";
-import { Grid, GridColumn, GridRow, Header, Icon, Label } from "semantic-ui-react";
-import { runInAction } from "mobx";
-import { useState } from "react";
+import { Grid, GridColumn, GridRow, Header, Icon } from "semantic-ui-react";
 import axios from "axios";
-import { WeatherObj } from "../../models/WeatherObj";
 import Variables from "../../app/variables";
+import { useEffect } from "react";
 
 const SettingsComponent = observer(function Settings() {
     const defaultPosition = { lat: 49.8344, lng: 18.2790 };
-    const [weatherData, setWeatherData] = useState<WeatherObj>();
 
-    const [warning, setWarning] = useState("");
+    useEffect(() => {
+        if (store.weatherStore.currentForecast == undefined) {
+            fetchData();
+        }
+    }, [store.weatherStore.currentForecast])
 
     const fetchData = async () => {
         try {
             const response = await axios.get(
                 `https://api.openweathermap.org/data/2.5/forecast?lat=${store.weatherStore.defLatitude}&lon=${store.weatherStore.defLongtitude}&appid=${Variables.OPEN_WEATHER_API}&lang=cz&units=metric`
             );
-            setWeatherData(response.data);
+            store.weatherStore.currentForecast =response.data;
             console.log(response.data); //You can see all the weather data in console log
+
+            const belowZero = store.weatherStore.currentForecast?.list.find(a => a.main.temp < 0);
+            const highTemp = store.weatherStore.currentForecast?.list.find(a => a.main.temp > 28);
+
+            if (belowZero)
+                store.weatherStore.warning = "Riziko mrazu, chrante rostliny";
+            if (highTemp)
+                store.weatherStore.warning = "Vysoke teploty, uzpusobte zalivku";
+
         } catch (error) {
             console.error(error);
         }
     };
-    //const markers = useState
-    
-
-    fetchData().then(() => {
-
-        const belowZero = weatherData?.list.find(a => a.main.temp < 0);
-        const highTemp = weatherData?.list.find(a => a.main.temp > 28);
-
-        if (belowZero)
-            setWarning("Riziko mrazu, chrante rostliny");
-        if (highTemp)
-            setWarning("Vysoke teploty, uzposobte zalivku");
-        
-    }
-    );
 
 
     return (
@@ -53,12 +48,12 @@ const SettingsComponent = observer(function Settings() {
             </APIProvider>
             </GridColumn>
             <GridColumn>
-                
-                {weatherData ? (
+
+                {store.weatherStore.currentForecast ? (
                     <>
-                        <GridRow><Header>{weatherData.city.name}</Header></GridRow>
+                        <GridRow><Header>{store.weatherStore.currentForecast.city.name}</Header></GridRow>
                         <GridRow><Header> souradnice: {store.weatherStore.defLatitude} {store.weatherStore.defLongtitude}</Header> </GridRow>
-                        <GridRow><Icon name='warning sign'></Icon>{warning}</GridRow>
+                        <GridRow><Icon name='warning sign'></Icon>{store.weatherStore.warning}</GridRow>
                 
                     </>
                 ) : (

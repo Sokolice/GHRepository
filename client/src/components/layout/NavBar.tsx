@@ -19,7 +19,7 @@ export default function NavBar() {
                     Záhony
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/settings' >
-                    Nastavení
+                    Nastavení pocasi
                 </Menu.Item>
             </Container>
         </Menu>

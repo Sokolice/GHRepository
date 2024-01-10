@@ -50,6 +50,7 @@ const BedsComponent = observer(function BedsList() {
             if (cell.plantRecordId != "") {
 
                 const plant: PlantDTO = store.globalStore.getPlantDTO(store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId ?? "");
+                if(plant)
                 listItems.set(plant.id,plant);
             }
         })
