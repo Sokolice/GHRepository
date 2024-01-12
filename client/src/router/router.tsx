@@ -7,6 +7,7 @@ import PlantDetails from "../components/details/PlantDetails";
 import BedsList from "../components/dashboards/BedsList";
 import BedComponent from "../components/details/Bed";
 import Settings from "../components/dashboards/Settings";
+import RecipeHints from "../components/details/RecipeHints";
 
 
 export const routes: RouteObject[] = [
@@ -20,7 +21,8 @@ export const routes: RouteObject[] = [
             { path: 'plants/:id', element: <PlantDetails /> },
             { path: 'beds', element: <BedsList /> },
             { path: 'beds/:id', element: <BedComponent /> },
-            { path: 'settings', element: <Settings /> }
+            { path: 'settings', element: <Settings /> },
+            { path: 'recipeHints/:name', element: <RecipeHints /> }
             /*{ path: 'createActivity', element: <ActivityForm key='create' /> },
             { path: 'manage/:id', element: <ActivityForm key='manage' /> }*/
         ]

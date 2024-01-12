@@ -4,13 +4,15 @@ import PlantRecordStore from "./plantRecordStore";
 import GlobalStore from "./globalStore";
 import BedsStore from "./bedsStore";
 import WeatherStore from "./weatherStore";
+import RecipesStore from "./recipesStore";
 
 interface Store {
     monthWeekStore: MonthWeekStore,
     plantRecordStore: PlantRecordStore,
     globalStore: GlobalStore,
     bedsStore: BedsStore,
-    weatherStore: WeatherStore
+    weatherStore: WeatherStore,
+    recipesStore: RecipesStore
 }
 
 export const store: Store = {
@@ -18,7 +20,8 @@ export const store: Store = {
     plantRecordStore: new PlantRecordStore(),
     globalStore: new GlobalStore(),
     bedsStore: new BedsStore(),
-    weatherStore: new WeatherStore()
+    weatherStore: new WeatherStore(),
+    recipesStore: new RecipesStore()
 }
 
 export const StoreContext = createContext(store);

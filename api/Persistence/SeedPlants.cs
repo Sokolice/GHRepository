@@ -172,7 +172,7 @@ namespace api.Persistence
                     Description = "Lilek český raný je teplomilná rostlina, která si u nás získává stále větší oblibu. Její původ byste našli v oblasti Číny.\r\n\r\n" +
                     "Jedná se o často pěstovanou odrůdu lilku, známou svým pevným lesklým povrchem, tmavě fialové barvy, a bílou dužinou. Květenství má bílou barvu a objevuje se od června do září. \r\n\r\n" +
                     "Tato odrůda je velice pevná a kompaktní, a je poměrně dobře přizpůsobena i na naše chladnější podnebí."
-                }*/
+                }
                new Plant
                 {
                     Name = "Rajče červené cherry",
@@ -478,7 +478,7 @@ namespace api.Persistence
                     "Její plody jsou 20–25 cm velké a váží 1–2 kg. Velkou předností je vysoký podíl dužiny oproti semeníku.\r\n\r\n" +
                     "Další její výhodou je dlouhá skladovatelnost. Při dobrých podmínkách vydrží v chladu a temnu i celou zimu.\r\n\r\n" +
                     "Dýně Hokkaido má v kuchyni široké využití. Její dužina je velmi chutná, sladká a před zpracováním není nutné dýni loupat. Slupka, stejně jako samotná dužina, obsahuje velké množství vitamínů a minerálů a během tepelné úpravy rychle měkne."
-                }
+                }*/
             };
 
             await context.Plants.AddRangeAsync(plants);

@@ -7,6 +7,7 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import { PlantDTO } from "../../models/PlantDTO";
 import LoadingComponent from "../layout/LoadingComponent";
 import PlantRecordFormComponent from "./PlantRecordForm";
+import { Link } from "react-router-dom";
 
 const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
     handleActivityDelete: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void, openForm: (plantRecord: PlantRecordDTO) => void) => {
@@ -30,6 +31,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
                 <Divider />
                 <Progress percent={plantRecord.progress} progress />
                 <Button icon='minus' color='red' onClick={(e) => handleActivityDelete(e, plantRecord.id)} />
+                <Button icon='utensils' color='blue' as={Link} to={`/recipeHints/${plant.name}`} />
                 <Button icon='undo' onClick={() => openForm(plantRecord)} content="Uprav me" key={plantRecord.id} /> 
             </Card.Content>
         </Card>
