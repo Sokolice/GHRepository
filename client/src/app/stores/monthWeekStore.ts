@@ -4,7 +4,6 @@ import { MonthWeekRelation } from "../../models/MonthWeekRelation";
 import { store } from "./store";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import MyMapping from "../../models/MyMapping";
-import { PlantDTO } from "../../models/PlantDTO";
 
 export default class MonthWeekStore {
 
@@ -12,6 +11,7 @@ export default class MonthWeekStore {
     monthWeekRelationList = new Array<MonthWeekRelation>();
     currentMonthRelationList = new Array<MonthSewedRelation>();
     isCurrentMonthActive = false;
+    hidePlanted = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -52,10 +52,28 @@ export default class MonthWeekStore {
         }
         else
             this.loadMonthWeeeks();
+    }
 
-        
-        //console.log(this.currentMonthRelationList[]);
 
+    filterPlanted = () => {
+
+        if (this.hidePlanted) {
+
+            const plantedIds = store.plantRecordStore.plantRecords.map((item) => item.plantId);
+
+            const newArr = new Array<MonthSewedRelation>();
+
+            this.currentMonthRelationList.forEach(relation => {
+                newArr.push({
+                    month: relation.month,
+                    sewedPlants: relation.sewedPlants.filter(plant => !plantedIds.includes(plant.id))
+                })
+            });
+
+                this.currentMonthRelationList = newArr;
+            }
+        else
+            this.loadMonthWeeeks();
     }
 
     loadMonthWeeekRelations = async () => {

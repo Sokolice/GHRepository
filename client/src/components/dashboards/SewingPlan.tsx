@@ -2,7 +2,7 @@ import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header, Bu
 import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
 import { store, useStore } from "../../app/stores/store";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
@@ -63,6 +63,7 @@ const SewingPlanComponent = observer(function SewingPlan() {
 
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState(false);
+    const [planted, setPlanted] = useState(false);
 
     const [selectedPlant, setPlant] = useState({
         id: '',
@@ -100,6 +101,13 @@ const SewingPlanComponent = observer(function SewingPlan() {
         store.monthWeekStore.isCurrentMonthActive = !store.monthWeekStore.isCurrentMonthActive;
         store.monthWeekStore.filterMonthWeeks();
     }
+
+    function hidePlanted() {
+        setPlanted(!planted);
+
+        store.monthWeekStore.hidePlanted = !store.monthWeekStore.hidePlanted;
+        store.monthWeekStore.filterPlanted();
+    }
     if (store.globalStore.loading)
         return (
             <LoadingComponent />
@@ -108,6 +116,7 @@ const SewingPlanComponent = observer(function SewingPlan() {
         <Container>
             <Container textAlign='center'>
                 <Button toggle active={active} onClick={switchToCurrentMonth}>Aktualni vysev</Button>
+                <Button toggle active={planted} onClick={hidePlanted}>Skryt vysete</Button>
             </Container>
 
             <Container>
