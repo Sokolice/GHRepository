@@ -1312,9 +1312,7 @@ namespace api.Persistence
                     "vysokou biologickou hodnotu a j vhodný i v rámci dietního stravování. Má načervenalé listy, díky čemuž obsahuje i " +
                     "betakaroten a působí tak preventivně proti rakovině kůže. V listech se dále ukrývá velké množství chlorofylu, hořčíku a " +
                     "jeho pravidelná konzumace skvěle posiluje imunitní systém. Rostlina obsahuje vodu, bílkoviny, tuky a vlákniny, dále cenné minerální látky jako K, P, Ca, Mg, Fe, vitamín C, A, B1 a B2."
-                },*/
-
-                ,
+                },
                 new Plant
                 {
                     Name = "Špenát",
@@ -1408,7 +1406,7 @@ namespace api.Persistence
                         monthWeekMap[(Month.May, 1)],
                         monthWeekMap[(Month.May, 2)],
                         monthWeekMap[(Month.May, 3)],
-                        monthWeekMap[(Month.May, 4)],
+                        monthWeekMap[(Month.May, 4)]
 
 
                     },
@@ -1604,7 +1602,7 @@ namespace api.Persistence
                         monthWeekMap[(Month.August, 1)],
                         monthWeekMap[(Month.August, 2)],
                         monthWeekMap[(Month.August, 3)],
-                        monthWeekMap[(Month.August, 4)],
+                        monthWeekMap[(Month.August, 4)]
                     },
                     HarvestMonths = new List<MonthWeek> {
 
@@ -1644,7 +1642,7 @@ namespace api.Persistence
                     Description = "Pažitka pobřežní (Allium schoenoprasum, srov. maďarsky pázsit neboli pažit/trávník) " +
                     "neboli šnytlík (moravsky šnytlich, slezsky szńitloch – z německého Schnittlauch) je druh jednoděložné rostliny " +
                     "používané i jako zelenina z čeledi amarylkovitých. Z botanického hlediska patří do rodu česnek (Allium)."
-                }
+                }*/
 
             };
 
