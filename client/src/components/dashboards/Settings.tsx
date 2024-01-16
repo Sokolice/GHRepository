@@ -22,7 +22,6 @@ const SettingsComponent = observer(function Settings() {
                 `https://api.openweathermap.org/data/2.5/forecast?lat=${store.weatherStore.defLatitude}&lon=${store.weatherStore.defLongtitude}&appid=${Variables.OPEN_WEATHER_API}&lang=cz&units=metric`
             );
             store.weatherStore.currentForecast =response.data;
-            console.log(response.data); //You can see all the weather data in console log
 
             const belowZero = store.weatherStore.currentForecast?.list.find(a => a.main.temp < 0);
             const highTemp = store.weatherStore.currentForecast?.list.find(a => a.main.temp > 28);

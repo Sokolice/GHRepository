@@ -1,9 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button, Card, CardContent, CardGroup, CardHeader, Image, Label } from "semantic-ui-react";
-import { Recipe } from "../../models/Recipe";
-import axios from "axios";
+import { Button, Card, CardContent, CardGroup, CardHeader, Divider, Image } from "semantic-ui-react";
 import { store } from "../../app/stores/store";
 import LoadingComponent from "../layout/LoadingComponent";
 
@@ -28,6 +26,7 @@ const RecipeHints = observer(function RecipeHints() {
     return (
         <>
             <Button icon='pointing left' as={Link} to={'/plantrecords'} content="zpet" />
+            <Divider hidden />
             {store.recipesStore.recipes.length > 0 ? (
                 <CardGroup itemsPerRow={3}>
                     {store.recipesStore.recipes.map((item) => {

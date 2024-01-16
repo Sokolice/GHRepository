@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { observer } from "mobx-react-lite";
-import { Button, Card, Divider, Header, Image, Progress } from "semantic-ui-react";
+import { Button, Card, Divider, Header, Image, Popup, Progress } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { SyntheticEvent, useEffect, useState } from "react";
@@ -30,8 +30,9 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
                 <Card.Header>Mnozstni: </Card.Header>{plantRecord.amountPlanted}
                 <Divider />
                 <Progress percent={plantRecord.progress} progress />
-                <Button icon='minus' color='red' onClick={(e) => handleActivityDelete(e, plantRecord.id)} />
-                <Button icon='utensils' color='blue' as={Link} to={`/recipeHints/${plant.name}`} />
+                <Popup content='Smazat' trigger={<Button icon='minus' color='red' onClick={(e) => handleActivityDelete(e, plantRecord.id)} />} />
+                <Popup content='Recepty' trigger={<Button icon='utensils' color='blue' as={Link} to={`/recipeHints/${plant.name}`} />} />
+                <Divider hidden/>
                 <Button icon='undo' onClick={() => openForm(plantRecord)} content="Uprav me" key={plantRecord.id} /> 
             </Card.Content>
         </Card>
