@@ -1,8 +1,8 @@
-import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header, ButtonGroup, Segment } from "semantic-ui-react";
+import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header} from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
 import { store, useStore } from "../../app/stores/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
@@ -61,6 +61,9 @@ const SewingPlanComponent = observer(function SewingPlan() {
     const { monthWeekStore } = useStore();
     const { currentMonthRelationList } = monthWeekStore;
 
+    const { pestsStore } = useStore();
+    const { pestsList, loadPests } = pestsStore;
+
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState(false);
     const [planted, setPlanted] = useState(false);
@@ -77,10 +80,10 @@ const SewingPlanComponent = observer(function SewingPlan() {
         repeatedPlanting: 0
     });
 
-    /*useEffect(() => {
-        if (monthWeekList.length <= 1)
-            loadMonthWeeeks();
-    }, [loadMonthWeeeks, monthWeekList])*/
+    useEffect(() => {
+        if (pestsList.length <= 0)
+            loadPests();
+    }, [pestsList, loadPests])
 
     function openForm(plant: PlantDTO) {
         setOpen(true);

@@ -8,12 +8,15 @@
 
         public virtual List<Plant> Plants { get; set; }
 
+        public string ImageSrc { get; set; }
+
         public Pest()
         {
             Plants = new List<Plant>();
             Id = Guid.NewGuid();
             Name = string.Empty;
             Advice = string.Empty;
+            ImageSrc = string.Empty;
         }
     }
 }

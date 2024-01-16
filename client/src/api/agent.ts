@@ -5,6 +5,7 @@ import { MonthSewedRelation } from '../models/MonthSewedRelation';
 import { PlantRecordDTO } from '../models/PlantRecordDTO';
 import { MonthWeekRelation } from '../models/MonthWeekRelation';
 import { BedRelation } from '../models/BedRelation';
+import { PestRelation } from '../models/PestRelation';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>
@@ -71,13 +72,18 @@ const Cells = {
     deleteCells: (ids: Array<string>) => axios.patch(`/Cells/DeleteCells`, ids)
 }
 
+const Pests = {
+    getPests: () => requests.get<PestRelation[]>('/Pests')
+}
+
 
 const agent = {
     Plants,
     MonthWeeks,
     PlantRecords,
     Beds,
-    Cells
+    Cells,
+    Pests
 }
 
 export default agent;
