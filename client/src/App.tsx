@@ -5,32 +5,10 @@ import HomePage from './components/home/HomePage';
 import { Outlet, useLocation } from 'react-router-dom';
 import NavBar from './components/layout/NavBar';
 import { observer } from 'mobx-react-lite';
-import { useStore } from './app/stores/store';
-import { useEffect } from 'react';
 
 function App() {
 
-    const { monthWeekStore, globalStore, plantRecordStore, bedsStore } = useStore();
-    const { monthWeekList, loadMonthWeeeks, loadMonthWeeekRelations, monthWeekRelationList } = monthWeekStore;
-    const { loadPlantDTO, plantDTOList } = globalStore;
-    const { loadPlantRecords, plantRecordMap } = plantRecordStore;
-    const { loadBeds, beds } = bedsStore;
-
-    useEffect(() => {
-        if (beds.length <= 0)
-            loadBeds();
-        async function fetchData() {          
-
-            if (plantRecordMap.size <= 0)
-                await loadPlantRecords();
-        }
-
-        fetchData();
-
-    }, [loadMonthWeeeks, loadMonthWeeekRelations, loadPlantRecords, loadPlantDTO, monthWeekList.length, plantDTOList.size, monthWeekRelationList.length, plantRecordMap.size, beds.length, loadBeds])
-
-    
-  
+   
     const location = useLocation();
     return (
         <>

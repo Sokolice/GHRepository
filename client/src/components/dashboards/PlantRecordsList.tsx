@@ -44,6 +44,10 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
 
 const PlantRecordsListComponent = observer(function PlantRecordsList() {
 
+    const { monthWeekStore, plantRecordStore } = useStore();
+    const { loadMonthWeeekRelations, monthWeekRelationList } = monthWeekStore;
+    const { loadPlantRecords, plantRecordMap } = plantRecordStore;
+
     const [open, setOpen] = useState(false);
     const [plantRecord, setRecord] = useState({
         id: '',
@@ -52,7 +56,20 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
         amountPlanted: 0,
         progress: 0
     });
-    
+
+    useEffect(() => {
+        async function fetchData() {
+            if (monthWeekRelationList.length <= 0)
+                await loadMonthWeeekRelations();
+            if (plantRecordMap.size <= 0)
+                await loadPlantRecords();
+        }
+
+        fetchData();
+
+    }, [loadMonthWeeekRelations, loadPlantRecords, monthWeekRelationList.length, plantRecordMap.size])
+
+   
     function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         store.plantRecordStore.deletePlantRecord(id);
     }

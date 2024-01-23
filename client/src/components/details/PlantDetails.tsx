@@ -12,6 +12,11 @@ export default observer(function PlantDetails() {
     const { origin } = useParams();
 
     useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
+
+    useEffect(() => {
         if (id) {
             loadPlant(id);
             store.pestsStore.getCurrentPest(id);

@@ -11,6 +11,9 @@ import { Bed } from "../../models/Bed";
 
 const BedsComponent = observer(function BedsList() {
 
+    const { bedsStore } = useStore();
+    const { loadBeds, beds } = bedsStore;
+
 
     const [bed, setBed] = useState({
         name: "",
@@ -18,13 +21,12 @@ const BedsComponent = observer(function BedsList() {
         width: 0
     })
 
-    /*const { bedsStore } = useStore();
-    const { loadBeds, beds } = bedsStore;
-
     useEffect(() => {
-            if (beds.length == 0)
-                loadBeds();
-    }, [beds, loadBeds])*/
+        if (beds.length <= 0)
+            loadBeds();
+
+    }, [beds.length, loadBeds])
+
 
     function AddBed() {
 

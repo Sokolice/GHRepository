@@ -137,6 +137,7 @@ export default class PlantRecordStore {
 
 
     calculatePlantRecordProgress = (plantRecord: PlantRecordDTO, plant: PlantDTO, monthWeekRelationList: Array<MonthWeekRelation>) => {
+
         const sewedMonthRelation = monthWeekRelationList.find(a => (a.sewedPlants.find(b => (b.id === plant.id))));
         const harvestedMonthRelation = monthWeekRelationList.find(a => (a.harvestedPlants.find(b => (b.id === plant.id))));
 
@@ -149,6 +150,10 @@ export default class PlantRecordStore {
 
 
         const vegetationPeriod = Math.abs(firstHarvestedMonth - firstSewingtMonth);
+
+        console.log(firstHarvestedMonth);
+        console.log(firstSewingtMonth);
+        console.log(vegetationPeriod);
         const planted = new Date(plantRecord.datePlanted).getMonth();
 
 
