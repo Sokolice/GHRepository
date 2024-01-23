@@ -58,11 +58,12 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: Plant
 }
 
 const SewingPlanComponent = observer(function SewingPlan() {
-    const { monthWeekStore } = useStore();
-    const { currentMonthRelationList } = monthWeekStore;
+    const { monthWeekStore, globalStore, pestsStore } = useStore();
+    const { currentMonthRelationList, loadMonthWeeeks, monthWeekRelationList } = monthWeekStore;
 
-    const { pestsStore } = useStore();
     const { pestsList, loadPests } = pestsStore;
+
+    const { loadPlantDTO, plantDTOList } = globalStore;
 
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState(false);
@@ -83,7 +84,11 @@ const SewingPlanComponent = observer(function SewingPlan() {
     useEffect(() => {
         if (pestsList.length <= 0)
             loadPests();
-    }, [pestsList, loadPests])
+        if (monthWeekRelationList.length <= 0)
+            loadMonthWeeeks();
+        if (plantDTOList.size <= 0)
+            loadPlantDTO();
+    }, [pestsList, loadPests, loadPlantDTO, plantDTOList.size, monthWeekRelationList.length, loadMonthWeeeks])
 
     function openForm(plant: PlantDTO) {
         setOpen(true);

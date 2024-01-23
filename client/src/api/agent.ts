@@ -6,6 +6,7 @@ import { PlantRecordDTO } from '../models/PlantRecordDTO';
 import { MonthWeekRelation } from '../models/MonthWeekRelation';
 import { BedRelation } from '../models/BedRelation';
 import { PestRelation } from '../models/PestRelation';
+import { MonthTaskRelation } from '../models/MonthTaskRelation';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>
@@ -76,6 +77,10 @@ const Pests = {
     getPests: () => requests.get<PestRelation[]>('/Pests')
 }
 
+const Tasks = {
+    getTasks: () => requests.get<MonthTaskRelation[]>('/GardeningTasks')
+}
+
 
 const agent = {
     Plants,
@@ -83,7 +88,8 @@ const agent = {
     PlantRecords,
     Beds,
     Cells,
-    Pests
+    Pests,
+    Tasks
 }
 
 export default agent;

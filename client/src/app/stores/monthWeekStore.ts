@@ -1,9 +1,10 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import monthWeekAgent from "../../api/agent";
+import agent from "../../api/agent";
 import { MonthWeekRelation } from "../../models/MonthWeekRelation";
 import { store } from "./store";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import MyMapping from "../../models/MyMapping";
+import { MonthTaskRelation } from "../../models/MonthTaskRelation";
 
 export default class MonthWeekStore {
 
@@ -12,20 +13,18 @@ export default class MonthWeekStore {
     currentMonthRelationList = new Array<MonthSewedRelation>();
     isCurrentMonthActive = false;
     hidePlanted = false;
+    monthWeekTaskRelationList = new Array<MonthTaskRelation>();
+
 
     constructor() {
         makeAutoObservable(this)
-    }
-
-    get monthWeeks() {
-        return this.monthWeekList;
     }
 
     loadMonthWeeeks = async () => {
 
         store.globalStore.loading = true;
         try {            
-            const monthWeeks = await monthWeekAgent.MonthWeeks.sewingGroupByMonth();
+            const monthWeeks = await agent.MonthWeeks.sewingGroupByMonth();
             
             runInAction(() => {
                 this.currentMonthRelationList = monthWeeks;
@@ -79,7 +78,7 @@ export default class MonthWeekStore {
     loadMonthWeeekRelations = async () => {
         store.globalStore.loading = true;
         try {
-            const monthWeekRelations = await monthWeekAgent.MonthWeeks.monthWeeksRelations();
+            const monthWeekRelations = await agent.MonthWeeks.monthWeeksRelations();
             runInAction(() => {
                 this.monthWeekRelationList = monthWeekRelations;
                 store.globalStore.loading = false;
@@ -92,7 +91,20 @@ export default class MonthWeekStore {
 
     }
 
+    loadMonthTasksRelation = async () => {
+        store.globalStore.loading = true;
+        try {
+            const relations = await agent.Tasks.getTasks();
+            runInAction(() => {
+                this.monthWeekTaskRelationList = relations;
 
+                store.globalStore.loading = false;
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 
 
 }

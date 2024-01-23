@@ -4,13 +4,15 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
 
+        public bool IsCompleted { get; set; }
 
+        public bool WasSent { get; set; }
         public GardeningTaskDTO()
         {
             Name = string.Empty;
-            Description = string.Empty;
+            IsCompleted = false;
+            WasSent = false;
         }
     }
 }

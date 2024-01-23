@@ -7,7 +7,6 @@ import NavBar from './components/layout/NavBar';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './app/stores/store';
 import { useEffect } from 'react';
-import bedsStore from './app/stores/bedsStore';
 
 function App() {
 
@@ -18,16 +17,9 @@ function App() {
     const { loadBeds, beds } = bedsStore;
 
     useEffect(() => {
-        if (monthWeekList.length <= 0)
-            loadMonthWeeeks();
-        if (plantDTOList.size <= 0)
-            loadPlantDTO();
         if (beds.length <= 0)
             loadBeds();
         async function fetchData() {          
-           
-            if (monthWeekRelationList.length <= 0)
-                await loadMonthWeeekRelations();
 
             if (plantRecordMap.size <= 0)
                 await loadPlantRecords();

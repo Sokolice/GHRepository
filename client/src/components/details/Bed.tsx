@@ -171,12 +171,12 @@ const BedComponent = observer(function Bed() {
         let value = "";
 
         for (let x = 0; x < selectedBed.numOfColumns; x++) {
-            value = value + "50px ";
+            value = value + "60px ";
         }
 
         let rowValue = ""
         for (let x = 0; x < selectedBed.numOfRows; x++) {
-            rowValue = rowValue + "50px ";
+            rowValue = rowValue + "60px ";
         }
 
         return { gridTemplateColumns: value, gridTemplateRows: rowValue }; 

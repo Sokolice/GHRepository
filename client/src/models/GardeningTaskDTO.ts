@@ -1,5 +1,6 @@
 export interface GardeningTaskDTO {
     id: number,
     name: string,
-    description: string
+    isCompleted: boolean,
+    wasSent: boolean
 }

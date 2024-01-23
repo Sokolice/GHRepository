@@ -2,6 +2,7 @@
 using api.DTOs;
 using api.Relations;
 using System.Numerics;
+using System.Collections.Generic;
 
 namespace api.Core
 {
@@ -15,7 +16,7 @@ namespace api.Core
             {
                 foreach (GardeningTask obj in list)
                 {
-                    var task = new GardeningTaskDTO() { Description = obj.Description, Id = obj.Id, Name = obj.Name };
+                    var task = new GardeningTaskDTO() { Id = obj.Id, Name = obj.Name };
                     gardeningTaskDTOs.Add(task);
                 }
             }
@@ -80,6 +81,21 @@ namespace api.Core
             bedRelation.Cells = aBed.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList();
 
             return bedRelation;
+        }
+
+        public static List<MonthWeekDTO> MapMonthWeeks(List<MonthWeek> list)
+        {
+            var monthweeksDTOs = new List<MonthWeekDTO>();
+            if (list != null)
+            {
+                foreach (MonthWeek obj in list)
+                {
+                    var task = new MonthWeekDTO() {Month = obj.Month, MonthIndex = obj.MonthIndex, Week = obj.Week };
+                    monthweeksDTOs.Add(task);
+                }
+            }
+
+            return monthweeksDTOs;
         }
     }
 }
