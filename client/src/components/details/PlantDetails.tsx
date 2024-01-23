@@ -9,6 +9,7 @@ export default observer(function PlantDetails() {
     const { globalStore } = useStore();
     const { selectedPlant, loadPlant } = globalStore;
     const { id } = useParams();
+    const { origin } = useParams();
 
     useEffect(() => {
         if (id) {
@@ -73,7 +74,7 @@ export default observer(function PlantDetails() {
                 </Item>
 
             </Item.Group>
-            <Button as={Link} to={'/sewingplan'} content="Zpet" icon='pointing left' />
+            <Button as={Link} to={`/${origin}`} content="Zpet" icon='pointing left' />
         </Segment>
     )
 }

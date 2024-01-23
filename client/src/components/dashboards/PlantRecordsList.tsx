@@ -22,7 +22,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
         <Card key={plantRecord.id}>
             <Image src={`/src/assets/plants/${plant.imageSrc}`} wrapped ui={false} />
             <Card.Content>
-                <Card.Header>{plant.name}</Card.Header>
+                <Card.Header >{plant.name}</Card.Header>
             </Card.Content>
             <Card.Content extra>
                 <Card.Header>Datum vysadby: </Card.Header>{new Date(plantRecord.datePlanted).toLocaleString('cs-CZ', options)}
@@ -32,8 +32,10 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
                 <Progress percent={plantRecord.progress} progress />
                 <Popup content='Smazat' trigger={<Button icon='minus' color='red' onClick={(e) => handleActivityDelete(e, plantRecord.id)} />} />
                 <Popup content='Recepty' trigger={<Button icon='utensils' color='blue' as={Link} to={`/recipeHints/${plant.name}`} />} />
-                <Divider hidden/>
+                <Divider hidden />
                 <Button icon='undo' onClick={() => openForm(plantRecord)} content="Uprav me" key={plantRecord.id} /> 
+                <Divider hidden />
+                <Button icon='info' as={Link} to={`/plants/${plant.id}/plantrecords`} content="Detail" />
             </Card.Content>
         </Card>
     )

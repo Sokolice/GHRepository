@@ -19,7 +19,7 @@ export const routes: RouteObject[] = [
             { path: '', element: <HomePage /> },
             { path: 'sewingplan', element: <SewingPlanComponent /> },
             { path: 'plantrecords', element: <PlantRecordsListComponent /> },
-            { path: 'plants/:id', element: <PlantDetails /> },
+            { path: 'plants/:id/:origin', element: <PlantDetails /> },
             { path: 'beds', element: <BedsList /> },
             { path: 'beds/:id', element: <BedComponent /> },
             { path: 'settings', element: <Settings /> },

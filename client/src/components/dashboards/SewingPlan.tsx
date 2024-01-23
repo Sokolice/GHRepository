@@ -29,7 +29,7 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void) => {
                 <Divider horizontal />
                     <Button icon='angle double down' onClick={() => openForm(plant)} content="Zasaď mě" key={plant.id} />
                     <Divider hidden/>
-                    <Button icon='info' as={Link} to={`/plants/${plant.id}`} content="Detail" /> 
+                    <Button icon='info' as={Link} to={`/plants/${plant.id}/sewingplan`} content="Detail" /> 
                 
                 </Card.Content>
         </Card>
