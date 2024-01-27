@@ -58,8 +58,9 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: Plant
 }
 
 const SewingPlanComponent = observer(function SewingPlan() {
-    const { monthWeekStore, globalStore, pestsStore } = useStore();
-    const { currentMonthRelationList, loadMonthWeeeks, monthWeekRelationList } = monthWeekStore;
+    const { monthWeekStore, globalStore, pestsStore, plantRecordStore } = useStore();
+    const { currentMonthRelationList, loadMonthWeeeks, monthWeekRelationList, loadMonthWeeekRelations } = monthWeekStore;
+    const { loadPlantRecords, plantRecordMap } = plantRecordStore;
 
     const { pestsList, loadPests } = pestsStore;
 
@@ -85,10 +86,14 @@ const SewingPlanComponent = observer(function SewingPlan() {
         if (pestsList.length <= 0)
             loadPests();
         if (monthWeekRelationList.length <= 0)
+            loadMonthWeeekRelations();
+        if (currentMonthRelationList.length <= 0)
             loadMonthWeeeks();
         if (plantDTOList.size <= 0)
             loadPlantDTO();
-    }, [pestsList, loadPests, loadPlantDTO, plantDTOList.size, monthWeekRelationList.length, loadMonthWeeeks])
+        if (plantRecordMap.size <= 0)
+            loadPlantRecords();
+    }, [pestsList, loadPests, loadPlantDTO, plantDTOList.size, currentMonthRelationList.length, loadMonthWeeeks, loadPlantRecords, plantRecordMap.size, loadMonthWeeekRelations, monthWeekRelationList.length])
 
     function openForm(plant: PlantDTO) {
         setOpen(true);

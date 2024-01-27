@@ -151,16 +151,19 @@ export default class PlantRecordStore {
 
         const vegetationPeriod = Math.abs(firstHarvestedMonth - firstSewingtMonth);
 
-        console.log(firstHarvestedMonth);
-        console.log(firstSewingtMonth);
-        console.log(vegetationPeriod);
-        const planted = new Date(plantRecord.datePlanted).getMonth();
+        const planted = new Date(plantRecord.datePlanted).getTime();
+
+        const now = new Date(Date.now()).getTime();
+
+        const pased = now - planted;
+
+        const pasedTime = new Date()
+        pasedTime.setTime(pased);
+
+        const pasedMonth = pasedTime.getMonth();
 
 
-        const now = new Date(Date.now()).getMonth();
-
-
-        return Math.round((((now + 1) - (planted + 1)) / (vegetationPeriod))*100);
+        return Math.round((pasedMonth / vegetationPeriod) * 100);
 
     }
 

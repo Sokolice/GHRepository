@@ -10,6 +10,7 @@ export default class MonthWeekStore {
 
     monthWeekList = new Array<MonthSewedRelation>();
     monthWeekRelationList = new Array<MonthWeekRelation>();
+    //grouped list used for filtering in sewing plan
     currentMonthRelationList = new Array<MonthSewedRelation>();
     isCurrentMonthActive = false;
     hidePlanted = false;
@@ -44,8 +45,6 @@ export default class MonthWeekStore {
             const month = today.getMonth() + 1;
 
             const filteredMonthWeeks = this.currentMonthRelationList.filter((item) => MyMapping.mapMonthIndex(item.month) == month);
-
-
 
             this.currentMonthRelationList = filteredMonthWeeks;
         }
