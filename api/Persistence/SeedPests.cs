@@ -36,13 +36,13 @@ namespace api.Persistence
 
             var pests = new List<Pest>
             {
-                /*new Pest
+                new Pest
                 {
                     Name = "Mšice",
                     Advice = "Mšice vysávají šťávu z rostlin. Listy žloputnou a ovadají. V boji proti mšicím lze použít postřiky buď chemické, nebo přírodní. Doma lze vyrobit postřik z česneku, kopřiv nebo mýdlové vody. Přiroyeným predátorem mšic jsou slunéčka sedmitečná",
                     Plants = plantsMsice,
                     ImageSrc = "msice.jpg"
-                },*/
+                },
                 new Pest
                 {
                     Name = "Dřepčík",

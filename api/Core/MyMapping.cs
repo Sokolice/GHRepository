@@ -97,5 +97,37 @@ namespace api.Core
 
             return monthweeksDTOs;
         }
+
+        public static PlantDTO MapPlant(Plant aPlant)
+        {
+            var plantDTO = new PlantDTO
+            {
+                Id = aPlant.Id,
+                Name = aPlant.Name,
+                Description = aPlant.Description,
+                CropRotation = aPlant.CropRotation,
+                DirectSewing = aPlant.DirectSewing,
+                GerminationTemp = aPlant.GerminationTemp,
+                ImageSrc = aPlant.ImageSrc,
+                IsHybrid = aPlant.IsHybrid,
+                RepeatedPlanting = aPlant.RepeatedPlanting
+            };
+
+            return plantDTO;
+        }
+
+        public static List<PlantDTO> MapPlantList(List<Plant> plants){
+
+            List<PlantDTO> mapedPlants = new List<PlantDTO>();
+
+            foreach(var plant in plants)
+            {
+                var mapedPlant = MapPlant(plant);
+
+                mapedPlants.Add(mapedPlant);
+            };
+
+            return mapedPlants;
+        }
     }
 }

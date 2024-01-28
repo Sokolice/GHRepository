@@ -1,13 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Link, useParams } from "react-router-dom";
-import { Button, Header, Item, Label, Segment, Image, Divider } from "semantic-ui-react";
+import { Button, Header, Item, Label, Segment, Image, Divider, Icon } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import LoadingComponent from "../layout/LoadingComponent";
 
 export default observer(function PlantDetails() {
     const { globalStore } = useStore();
-    const { selectedPlant, loadPlant } = globalStore;
+    const { selectedPlant, loadPlant, loadOtherPlants, otherPlants } = globalStore;
     const { id } = useParams();
     const { origin } = useParams();
 
@@ -20,9 +21,15 @@ export default observer(function PlantDetails() {
         if (id) {
             loadPlant(id);
             store.pestsStore.getCurrentPest(id);
+            loadOtherPlants(id);
         }
-    }, [id, loadPlant])
+        
+    }, [id, loadPlant, loadOtherPlants])
 
+    if (store.globalStore.loading)
+        return (
+            <LoadingComponent />
+        )
     return (
         <Segment>
             <Item.Group>
@@ -73,7 +80,31 @@ export default observer(function PlantDetails() {
                                 })
                                 
                                 }
-                            </Item.Group>
+                                </Item.Group>
+                        </Item.Extra>
+                        <Item.Extra>
+                            <Header as='h4'><Icon name='thumbs down' color='red' /> Nesnese:</Header>
+                            {
+                                otherPlants.avoidPlants.map((plant) => {
+                                    return (
+                                        <Item key={plant.id}>
+                                            {plant.name}
+                                        </Item>
+                                    )
+                                })
+                            }
+                        </Item.Extra>
+                        <Item.Extra>
+                            <Header as='h4'><Icon name='thumbs up' color='green' /> Snese:</Header>
+                            {
+                                otherPlants.companionPlants.map((plant) => {
+                                    return (
+                                        <Item key={plant.id}>
+                                            {plant.name}
+                                        </Item>
+                                    )
+                                })
+                            }
                         </Item.Extra>
                     </Item.Content>
                 </Item>

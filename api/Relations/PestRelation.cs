@@ -7,5 +7,11 @@ namespace api.Relations
         public PestDTO PestDTO { get; set; }
 
         public List<PlantDTO> Plants { get; set; }
+
+        public PestRelation()
+        {
+            Plants = new List<PlantDTO>();
+            PestDTO = new PestDTO();
+        }
     }
 }

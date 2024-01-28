@@ -7,6 +7,7 @@ import { MonthWeekRelation } from '../models/MonthWeekRelation';
 import { BedRelation } from '../models/BedRelation';
 import { PestRelation } from '../models/PestRelation';
 import { MonthTaskRelation } from '../models/MonthTaskRelation';
+import { PlantPlantsRelation } from '../models/PlantPlantsRelation';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>
@@ -39,6 +40,7 @@ const requests = {
 const Plants = {
     getPlants: () => requests.get<PlantDTO[]>('/Plants'),
     details: (id: string) => requests.get<PlantDTO>(`/Plants/${id}`),
+    getOtherPlants: (id: string) => requests.get<PlantPlantsRelation>(`/Plants/GetOtherPlants?id=${id}`),
     /*create: (monthweek: MonthWeekRelation) => axios.post('/activities', monthweek),
     update: (monthweek: MonthWeekRelation) => axios.put(`/activities/${monthweek.id}`, monthweek),
     delete: (id: string) => axios.delete(`/activities/${id}`)*/

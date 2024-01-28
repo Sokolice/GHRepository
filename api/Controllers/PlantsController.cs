@@ -3,6 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api.Persistence;
 using api.DTOs;
+using System.ComponentModel;
+using System.Collections.Specialized;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using api.Relations;
+using api.Core;
 
 namespace api.Controllers
 {
@@ -126,6 +131,23 @@ namespace api.Controllers
         private bool PlantExists(Guid id)
         {
             return (_context.Plants?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [HttpGet]
+        [Route("GetOtherPlants")]
+        //[HttpGet("{id}/others")]
+        public PlantPlantsRelation GetOtherPlants(Guid id)
+        {
+            var plant = _context.Plants.Find(id);
+
+            var others = new PlantPlantsRelation
+            {
+                Plant = MyMapping.MapPlant(plant),
+                AvoidPlants =MyMapping.MapPlantList(plant.AvoidPlants),
+                CompanionPlants = MyMapping.MapPlantList(plant.CompanionPlants)
+            };
+
+            return others;            
         }
     }
 }

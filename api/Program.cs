@@ -54,7 +54,7 @@ namespace api
                 var context = services.GetRequiredService<DataContext>();
                 context.Database.Migrate();
 
-               //await SeedGardeningTasks.SeedData(context);
+               //await SeedPlants.SeedData(context);
             }
             catch (Exception ex)
             {

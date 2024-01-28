@@ -3,6 +3,7 @@ import { GardeningTaskDTO } from "../../models/GardeningTaskDTO";
 import { MonthWeekDTO } from "../../models/MonthWeekDTO";
 import { PlantDTO } from "../../models/PlantDTO";
 import agent from "../../api/agent";
+import { PlantPlantsRelation } from "../../models/PlantPlantsRelation";
 export default class GlobalStore {
 
     monthweekDTOlist = new Map<string, MonthWeekDTO>();
@@ -10,6 +11,9 @@ export default class GlobalStore {
     gardeningTaskList = new Map<string, GardeningTaskDTO>();
     loading = false;
     selectedPlant: PlantDTO | undefined = undefined;
+    otherPlants: PlantPlantsRelation = <PlantPlantsRelation>{
+        plant: <PlantDTO>{}, avoidPlants: new Array<PlantDTO>(), companionPlants: new Array<PlantDTO>()
+    };
         
     constructor() {
         makeAutoObservable(this)
@@ -58,6 +62,22 @@ export default class GlobalStore {
                 console.log(error);
                 this.loading = false;
             }
+        }
+    }
+
+    loadOtherPlants = async (id: string) => {
+
+        this.loading = true;
+        try {
+            const plants = await agent.Plants.getOtherPlants(id);
+            runInAction(() => {
+                this.otherPlants = plants
+            });
+            this.loading = false;
+
+        } catch (error) {
+            console.log(error);
+            this.loading = false;
         }
     }
 } 

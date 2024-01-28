@@ -10,5 +10,12 @@ namespace api.Relations
 
         public virtual List<GardeningTaskDTO> GardeningTasks { get; set; }
 
+        public MonthWeekRelation()
+        {
+            MonthWeekDTO = new MonthWeekDTO();
+            SewedPlants = new List<PlantDTO>();
+            HarvestedPlants = new List<PlantDTO>();
+            GardeningTasks = new List<GardeningTaskDTO>();
+        }
     }
 }
