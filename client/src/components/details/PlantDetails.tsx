@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Link, useParams } from "react-router-dom";
-import { Button, Header, Item, Label, Segment, Image, Divider, Icon } from "semantic-ui-react";
+import { Button, Header, Item, Label, Segment, Image, Divider, Icon, Grid, GridColumn } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
@@ -83,28 +83,32 @@ export default observer(function PlantDetails() {
                                 </Item.Group>
                         </Item.Extra>
                         <Item.Extra>
-                            <Header as='h4'><Icon name='thumbs down' color='red' /> Nesnese:</Header>
-                            {
-                                otherPlants.avoidPlants.map((plant) => {
-                                    return (
-                                        <Item key={plant.id}>
-                                            {plant.name}
-                                        </Item>
-                                    )
-                                })
-                            }
-                        </Item.Extra>
-                        <Item.Extra>
-                            <Header as='h4'><Icon name='thumbs up' color='green' /> Snese:</Header>
-                            {
-                                otherPlants.companionPlants.map((plant) => {
-                                    return (
-                                        <Item key={plant.id}>
-                                            {plant.name}
-                                        </Item>
-                                    )
-                                })
-                            }
+                            <Grid columns={2} divided>
+                                <GridColumn>
+                                    <Header as='h4'><Icon name='thumbs down' color='red' /> Nesnese:</Header>
+                                    {
+                                        otherPlants.avoidPlants.map((plant) => {
+                                            return (
+                                                <Item key={plant.id}>
+                                                    {plant.name}
+                                                </Item>
+                                            )
+                                        })
+                                    }
+                                </GridColumn>
+                                <GridColumn>
+                                    <Header as='h4'><Icon name='thumbs up' color='green' /> Snese:</Header>
+                                    {
+                                        otherPlants.companionPlants.map((plant) => {
+                                            return (
+                                                <Item key={plant.id}>
+                                                    {plant.name}
+                                                </Item>
+                                            )
+                                        })
+                                    }
+                                </GridColumn>
+                            </Grid>                            
                         </Item.Extra>
                     </Item.Content>
                 </Item>
