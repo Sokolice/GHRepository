@@ -46,20 +46,25 @@ namespace api.Controllers
 
         // GET: api/Plants/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Plant>> GetPlant(Guid id)
+        public PlantDTO GetPlant(Guid id)
         {
-            if (_context.Plants == null)
-            {
-                return NotFound();
-            }
-            var plant = await _context.Plants.FindAsync(id);
+            var plant = _context.Plants.Find(id);
 
-            if (plant == null)
+            var plantDTO = new PlantDTO
             {
-                return NotFound();
-            }
+                Id = plant.Id,
+                CropRotation = plant.CropRotation,
+                Description = plant.Description,
+                DirectSewing = plant.DirectSewing,
+                GerminationTemp = plant.GerminationTemp,
+                ImageSrc = plant.ImageSrc,
+                IsHybrid = plant.IsHybrid,
+                Name = plant.Name,
+                RepeatedPlanting = plant.RepeatedPlanting
+            };
 
-            return plant;
+
+            return plantDTO;
         }
 
         // PUT: api/Plants/5

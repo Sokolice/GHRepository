@@ -26,7 +26,7 @@ export default observer(function PlantDetails() {
         
     }, [id, loadPlant, loadOtherPlants])
 
-    if (store.globalStore.loading)
+    if (store.globalStore.loading || !selectedPlant)
         return (
             <LoadingComponent />
         )
