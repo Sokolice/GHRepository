@@ -45,11 +45,11 @@ export default class MonthWeekStore {
             const month = today.getMonth() + 1;
 
             const filteredMonthWeeks = this.currentMonthRelationList.filter((item) => MyMapping.mapMonthIndex(item.month) == month);
-
+            this.monthWeekList = this.currentMonthRelationList;
             this.currentMonthRelationList = filteredMonthWeeks;
         }
         else
-            this.loadMonthWeeeks();
+            this.currentMonthRelationList = this.monthWeekList;
     }
 
 
@@ -68,10 +68,11 @@ export default class MonthWeekStore {
                 })
             });
 
+                this.monthWeekList = this.currentMonthRelationList;
                 this.currentMonthRelationList = newArr;
             }
         else
-            this.loadMonthWeeeks();
+            this.currentMonthRelationList = this.monthWeekList;
     }
 
     loadMonthWeeekRelations = async () => {
