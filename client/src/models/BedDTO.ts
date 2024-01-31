@@ -4,5 +4,6 @@ export interface BedDTO {
     width: number, 
     length: number, 
     numOfColumns: number,
-    numOfRows: number
+    numOfRows: number,
+    isDesign: boolean
 }

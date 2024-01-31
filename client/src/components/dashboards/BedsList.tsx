@@ -1,5 +1,5 @@
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import { Button, Card, CardGroup, Form, List, ListItem, Segment } from "semantic-ui-react";
+import { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from "react";
+import { Button, Card, CardContent, CardGroup, Checkbox, Divider, Form, FormField, Label, List, ListItem, Segment } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
@@ -18,7 +18,8 @@ const BedsComponent = observer(function BedsList() {
     const [bed, setBed] = useState({
         name: "",
         length: 0,
-        width: 0
+        width: 0,
+        isDesign: false
     })
 
     useEffect(() => {
@@ -29,15 +30,17 @@ const BedsComponent = observer(function BedsList() {
 
 
     function AddBed() {
-
-        store.bedsStore.createBed(bed.width, bed.length, bed.name);
+        console.log(bed);
+        store.bedsStore.createBed(bed.width, bed.length, bed.name, bed.isDesign);
     }
 
-
-    
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
         setBed({ ...bed, [name]: value })
+    }
+
+    const checkedChange = (e) => {
+        setBed({ ...bed, isDesign: e.target.checked })
     }
 
     function handleBedDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
@@ -93,6 +96,9 @@ const BedsComponent = observer(function BedsList() {
                                 <Form.Input label='Šířka[m]' placeholder='Šířka' id='width' name='width' onChange={handleChange} />
                             </Form.Field>
                         </Form.Group>
+                        <FormField>
+                            <Checkbox label='Tvorba návrhu' id='isDesign' name='isDesign' onClick={checkedChange}/>
+                        </FormField>
                         <Form.Button type='submit'>
                             Přidat záhon
                         </Form.Button>
@@ -105,6 +111,10 @@ const BedsComponent = observer(function BedsList() {
                 <CardGroup>
                     {store.bedsStore.beds.map((bed: Bed) => (
                         <Card key={bed.id}>
+                            {bed.isDesign ? (
+
+                                <Label attached='top' color='blue'>Návrh</Label>) : null
+                            }
                             <Card.Content>
                                 <Card.Header>{bed.name}</Card.Header>
                                 <Card.Header>sirka: {bed.width}</Card.Header>
@@ -112,7 +122,10 @@ const BedsComponent = observer(function BedsList() {
                                 {listPlantsInBed(bed)}
                                 <Button icon='info' color='blue' as={Link} to={`/beds/${bed.id}`} content="Detail" />
                                 <Button icon='minus' color='red' content='Smazat' onClick={(e) => handleBedDelete(e, bed.id)} />
+                                                                
                             </Card.Content>
+                            
+                           
                         </Card>
                     ))}
                 </CardGroup>

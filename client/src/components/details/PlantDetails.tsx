@@ -11,6 +11,7 @@ export default observer(function PlantDetails() {
     const { selectedPlant, loadPlant, loadOtherPlants, otherPlants } = globalStore;
     const { id } = useParams();
     const { origin } = useParams();
+    const { bed } = useParams();
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -114,7 +115,7 @@ export default observer(function PlantDetails() {
                 </Item>
 
             </Item.Group>
-            <Button as={Link} to={`/${origin}`} content="Zpet" icon='pointing left' />
+            <Button as={Link} to={origin == null ? '/' : bed == null ? `/${origin}` : `/${origin}/${bed}`} content="Zpet" icon='pointing left' />
         </Segment>
     )
 }

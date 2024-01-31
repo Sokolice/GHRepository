@@ -13,6 +13,7 @@ namespace api.Model
         public virtual List<Cell> Cells { get; set; }
         public int NumOfColumns {  get; set; }
         public int NumOfRows { get; set; }
+        public bool isDesign { get; set; }
 
         public Bed()
         {
@@ -22,6 +23,7 @@ namespace api.Model
             NumOfRows = 0;
             Width = 0;  
             Cells =  new List<Cell> { };
+            isDesign = false;
         }
 
     }

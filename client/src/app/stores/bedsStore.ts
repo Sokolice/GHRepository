@@ -16,7 +16,9 @@ export default class BedsStore {
         name: "",
         width: 0,
         numOfColumns: 0,
-        cells: new Array<Cell>()
+        numOfRows:0,
+        cells: new Array<Cell>(),
+        isDesign:false
     };
     constructor() {
         makeAutoObservable(this)
@@ -41,7 +43,8 @@ export default class BedsStore {
                             numOfColumns: bedRecord.bed.numOfColumns,
                             numOfRows: bedRecord.bed.numOfRows,
                             width: bedRecord.bed.width,
-                            cells: bedRecord.cells
+                            cells: bedRecord.cells,
+                            isDesign: bedRecord.bed.isDesign
                         });
                 })
                 store.globalStore.loading = false;
@@ -72,6 +75,7 @@ export default class BedsStore {
                     this.selectedBed.name = bedRelation.bed.name;
                     this.selectedBed.numOfColumns = bedRelation.bed.numOfColumns;
                     this.selectedBed.numOfRows = bedRelation.bed.numOfRows;
+                    this.selectedBed.isDesign = bedRelation.bed.isDesign
 
                     store.globalStore.loading = false;
                 });
@@ -113,7 +117,7 @@ export default class BedsStore {
     }
 
 
-    createBed = async(aWidth: number, aLength: number, aName: string) =>{
+    createBed = async (aWidth: number, aLength: number, aName: string, aIsDesign: boolean) => {
         const bed = <Bed>{};
         bed.id = uiid();
         bed.name = aName;
@@ -135,10 +139,11 @@ export default class BedsStore {
         bed.cells = cells;
         bed.numOfColumns = c;
         bed.numOfRows = r;
+        bed.isDesign = aIsDesign;
         store.globalStore.loading = true;
         try {
             const newBed = <BedRelation>{
-                bed: <BedDTO>{ id: bed.id, name: bed.name, length: bed.length, numOfColumns: bed.numOfColumns, width: bed.width, numOfRows: bed.numOfRows },
+                bed: <BedDTO>{ id: bed.id, name: bed.name, length: bed.length, numOfColumns: bed.numOfColumns, width: bed.width, numOfRows: bed.numOfRows, isDesign: bed.isDesign },
                 cells: bed.cells          
             };
             //console.log(newBed);

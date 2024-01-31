@@ -6,5 +6,6 @@ export interface Bed {
     cells: Array<Cell>,
     numOfColumns: number,
     numOfRows: number,
-    name: string
+    name: string,
+    isDesign: boolean
 }

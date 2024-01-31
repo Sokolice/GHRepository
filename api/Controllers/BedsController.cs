@@ -35,7 +35,8 @@ namespace api.Controllers
                     Length = a.Length,
                     Name = a.Name,
                     NumOfColumns = a.NumOfColumns,
-                    NumOfRows = a.NumOfRows
+                    NumOfRows = a.NumOfRows,
+                    isDesign = a.isDesign
                 },
 
                 Cells = a.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList()
@@ -114,6 +115,7 @@ namespace api.Controllers
                     bed.NumOfRows = bedRelation.Bed.NumOfRows;
                     bed.NumOfColumns = bedRelation.Bed.NumOfColumns;
                     bed.Cells = bedRelation.Cells;
+                    bed.isDesign = bedRelation.Bed.isDesign;
                 }
 
                 await _context.SaveChangesAsync();

@@ -60,7 +60,8 @@ namespace api.Core
                 Width = bedRelation.Bed.Width,
                 NumOfColumns = bedRelation.Bed.NumOfColumns,
                 NumOfRows = bedRelation.Bed.NumOfRows,
-                Cells = bedRelation.Cells
+                Cells = bedRelation.Cells,
+                isDesign = bedRelation.Bed.isDesign
             };
 
             return bed;
@@ -77,6 +78,7 @@ namespace api.Core
                 NumOfColumns = aBed.NumOfColumns,
                 NumOfRows = aBed.NumOfRows,
                 Width = aBed.Width,
+                isDesign = aBed.isDesign
             };
             bedRelation.Cells = aBed.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList();
 

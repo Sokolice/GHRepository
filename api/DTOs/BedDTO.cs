@@ -10,5 +10,6 @@ namespace api.DTOs
         public int Length { get; set; }
         public int NumOfColumns { get; set; }
         public int NumOfRows { get; set; }
+        public bool isDesign {  get; set; }
     }
 }

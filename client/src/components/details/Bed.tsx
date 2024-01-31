@@ -17,23 +17,40 @@ const BedComponent = observer(function Bed() {
 
     const [plantId, setPlantId] = useState('');
     const [thisPlantRecordId, setPlantRecordId] = useState('');
-    const { bedsStore } = useStore();
+    const { bedsStore, globalStore, plantRecordStore } = useStore();
     const { selectedBed, loadBed } = bedsStore;
+    const { loadPlantRecords, plantRecordMap } = plantRecordStore;
+
+    const { loadPlantDTO, plantDTOList } = globalStore;
 
     const { id } = useParams();
 
     useEffect(() => {
+        if (plantDTOList.size <= 0)
+            loadPlantDTO();
+        if (plantRecordMap.size <= 0)
+            loadPlantRecords();
         async function fetchData() {
             if (id)
                 await loadBed(id);
         }
         fetchData();
 
-    }, [id, loadBed])
+    }, [id, loadBed, loadPlantRecords, plantRecordMap.size, loadPlantDTO, plantDTOList.size])
 
    
     function loadDropDownItems() {
-
+        if (selectedBed.isDesign) {
+            store.globalStore.plantDTOList.forEach((plant) => {
+                options.push({
+                    key: plant.id,
+                    text: plant.name,
+                    value: plant.id,
+                    image: { avatar: false, src: `/src/assets/plants/${plant.imageSrc}` }
+                })
+            })
+        }
+        else { 
             store.plantRecordStore.plantRecordMap.forEach((plantRecord: PlantRecordDTO) => {
             
                 const plant: PlantDTO = store.globalStore.getPlantDTO(plantRecord.plantId);
@@ -45,6 +62,7 @@ const BedComponent = observer(function Bed() {
                     image: { avatar: false, src: `/src/assets/plants/${plant.imageSrc}` }
                 })
             })
+        }
             return options;
     }
 
@@ -142,12 +160,15 @@ const BedComponent = observer(function Bed() {
         function showPlantRecordDetails(): ReactNode {
 
             if (cell.plantRecordId != "") {
+               
                 const plantRecord: PlantRecordDTO = store.plantRecordStore.getPlantRecord(cell.plantRecordId);
-                if (plantRecord) {
-                    const plant = store.globalStore.getPlantDTO(plantRecord.plantId);
+                const id = selectedBed.isDesign ? cell.plantRecordId : plantRecord.plantId
+                if (id) {
+                    const plant = store.globalStore.getPlantDTO(id);
                     if (plant) {
-                        return <Label as={Link} to='/plantrecords'
-                        > {plant?.name} : {plantRecord.datePlanted} </Label>
+                        return <Label as={Link} to={selectedBed.isDesign ? `/plants/${id}/beds/${selectedBed.id}` : '/plantrecords'} >
+                            {plant?.name} {selectedBed.isDesign ? null : ": " + plantRecord.datePlanted}
+                        </Label>
                     }
                     else
                         return
@@ -183,24 +204,30 @@ const BedComponent = observer(function Bed() {
     }
 
 
-    if (store.globalStore.loading)
+    if (store.globalStore.loading || !selectedBed)
         return (
             <LoadingComponent />
         )
     return (
         <SegmentGroup>        
-                <Segment>
+            <Segment>
                     <Form onSubmit={AddPlantImage}>
                     <Form.Field>
-                        <Form.Dropdown options={loadDropDownItems()} onChange={handleDropChange} placeholder='Vyber' scrolling />
+                        <Form.Dropdown options={loadDropDownItems()} onChange={handleDropChange} placeholder='Výběr' scrolling />
                             </Form.Field>
                         <Form.Button type='submit'>
-                            Vlozit rostlinu
-                        </Form.Button>
+                            Vložit rostlinu
+                    </Form.Button>
                 </Form>
                 {/*<Button icon='save' color='blue' content='Ulozit' onClick={saveBed} />*/}
             </Segment>
             <Segment>
+                {selectedBed.isDesign ? (
+                    <Label color='blue' ribbon>
+                        Návrh
+                    </Label>) : null
+                }
+               
         <div className='grid-container' id={`bed_${selectedBed.id}`} key={`bed_${selectedBed.id}`} style={generateStyle()}>
             {
                 selectedBed.cells.map((cell) => renderCell(cell))
