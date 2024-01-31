@@ -17,6 +17,10 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
         month: "long",
         day: "numeric",
     };
+    if (!plant)
+        return (
+            <LoadingComponent />
+        )
 
     return (
         <Card key={plantRecord.id}>
@@ -44,9 +48,11 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
 
 const PlantRecordsListComponent = observer(function PlantRecordsList() {
 
-    const { plantRecordStore } = useStore();
+    const { plantRecordStore, globalStore, monthWeekStore } = useStore();
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
+    const { currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
 
+    const { loadPlantDTO, plantDTOList } = globalStore;
     const [open, setOpen] = useState(false);
     const [plantRecord, setRecord] = useState({
         id: '',
@@ -57,14 +63,13 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
     });
 
     useEffect(() => {
-        async function fetchData() {
-            if (plantRecordMap.size <= 0)
-                await loadPlantRecords();
-        }
-
-        fetchData();
-
-    }, [loadPlantRecords, plantRecordMap.size])
+        if (plantDTOList.size <= 0)
+            loadPlantDTO();
+        if (plantRecordMap.size <= 0)
+            loadPlantRecords();
+        if (currentMonthRelationList.length <= 0)
+            loadMonthWeeeks();
+    }, [loadPlantRecords, plantRecordMap.size, loadPlantDTO, plantDTOList.size, currentMonthRelationList.length, loadMonthWeeeks])
 
    
     function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
