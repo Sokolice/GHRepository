@@ -1,1 +1,1 @@
-![Home Page](/docs/home.jpg)
+![Home Page](/docs/home.png)
