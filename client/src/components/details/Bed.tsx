@@ -4,7 +4,7 @@ import { MouseEvent, ReactNode, SyntheticEvent, useEffect, useState } from "reac
 import { Link, useParams } from "react-router-dom";
 import { store, useStore } from "../../app/stores/store";
 import LoadingComponent from "../layout/LoadingComponent";
-import { DropdownItemProps, Form, Label, Segment, SegmentGroup } from "semantic-ui-react";
+import { Button, DropdownItemProps, Form, Label, Segment, SegmentGroup } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { Cell } from "../../models/Cell";
@@ -87,19 +87,21 @@ const BedComponent = observer(function Bed() {
         const minRow = Math.min(...activeCells.map((a) => a.y));
         const maxRow = Math.max(...activeCells.map((a) => a.y));
 
-        const toBeDeleted = new Array<Cell>();
-        const toBeDeletedId = new Array<string>();
+        //const toBeDeleted = new Array<Cell>();
+        //const toBeDeletedId = new Array<string>();
 
-        activeCells.forEach(cell => {
+        /*activeCells.forEach(cell => {
             if (cell.x != minColumn || cell.y != minRow) {
-                toBeDeleted.push(cell);
-                toBeDeletedId.push(cell.id);
+                cell.isHidden = true;
+                //toBeDeleted.push(cell);
+                //toBeDeletedId.push(cell.id);
             }
-        });
+        });*/
+
         runInAction(() => {
-            selectedBed.cells = selectedBed.cells.filter(cell => {
+            /*selectedBed.cells = selectedBed.cells.filter(cell => {
                 return toBeDeleted.indexOf(cell) < 0;
-            })
+            })*/
 
             const maxC = (maxColumn - minColumn) + 1;
             const maxR = (maxRow - minRow) + 1;
@@ -107,10 +109,17 @@ const BedComponent = observer(function Bed() {
 
             selectedBed.cells.forEach((cell) => {
 
+                if ((cell.x != minColumn || cell.y != minRow) && cell.isActive) {
+                    cell.isHidden = true;
+                    cell.plantRecordId = thisPlantRecordId;
+                    cell.objectID = minColumn + "-" + minRow + "-" + thisPlantRecordId;
+                }
+
                 if (cell.x == minColumn && cell.y == minRow) {
                     cell.gridArea = minColumn + ' / ' + minRow + " / span " + maxC + " / span " + maxR;
                     cell.backgroundImage = imagePath;
                     cell.plantRecordId = thisPlantRecordId;
+                    cell.objectID = minColumn + "-" + minRow + "-" + thisPlantRecordId;
                 }
             });
         })
@@ -124,7 +133,7 @@ const BedComponent = observer(function Bed() {
             });
         });
 
-        store.bedsStore.deleteCells(toBeDeletedId);
+        //store.bedsStore.deleteCells(toBeDeletedId);
         store.bedsStore.updateBed(selectedBed);
     }
 
@@ -150,13 +159,35 @@ const BedComponent = observer(function Bed() {
             });
         });
 
+        store.bedsStore.updateBed(selectedBed);
+
     }
     function generateCellStyle(cell: Cell): React.CSSProperties {
 
         return { gridArea: cell.gridArea, backgroundImage: cell.backgroundImage, backgroundSize: "cover" };
     }
 
+    function deleteClick(objectID: string) {
+
+        selectedBed.cells.forEach(cell => {
+            if (cell.objectID == objectID)
+            {
+                runInAction(() => {
+                    cell.backgroundImage = "";
+                    cell.gridArea = " ";
+                    cell.isHidden = false;
+                    cell.plantRecordId = "";
+                    cell.objectID = "";
+                    cell.isActive = false;
+                })
+            }
+        })
+    }
+
     function renderCell(cell: Cell) {
+
+        if (cell.isHidden)
+            return;
         function showPlantRecordDetails(): ReactNode {
 
             if (cell.plantRecordId != "") {
@@ -184,6 +215,7 @@ const BedComponent = observer(function Bed() {
                 style={generateCellStyle(cell)}
             >
                 {showPlantRecordDetails()}
+                {cell.plantRecordId != "" ? <Button icon='minus' size='tiny' onClick={() => deleteClick(cell.objectID)} /> : null} 
             </div>
         )
     }
@@ -230,7 +262,8 @@ const BedComponent = observer(function Bed() {
                
         <div className='grid-container' id={`bed_${selectedBed.id}`} key={`bed_${selectedBed.id}`} style={generateStyle()}>
             {
-                selectedBed.cells.map((cell) => renderCell(cell))
+                selectedBed.cells.map((cell) => 
+                renderCell(cell))
             }
                 </div>
             </Segment>

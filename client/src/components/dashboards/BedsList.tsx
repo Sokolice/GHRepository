@@ -30,7 +30,6 @@ const BedsComponent = observer(function BedsList() {
 
 
     function AddBed() {
-        console.log(bed);
         store.bedsStore.createBed(bed.width, bed.length, bed.name, bed.isDesign);
     }
 
@@ -54,7 +53,9 @@ const BedsComponent = observer(function BedsList() {
         bed.cells.forEach(cell => {
             if (cell.plantRecordId != "") {
 
-                const plant: PlantDTO = store.globalStore.getPlantDTO(store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId ?? "");
+                const plant: PlantDTO = store.globalStore.getPlantDTO(
+                    bed.isDesign ? cell.plantRecordId : store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId
+                        ?? "");
                 if(plant)
                 listItems.set(plant.id,plant);
             }

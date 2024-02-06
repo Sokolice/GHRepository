@@ -5,5 +5,7 @@ export interface Cell {
     isActive: boolean,
     gridArea: string,
     backgroundImage: string,
-    plantRecordId: string
+    plantRecordId: string,
+    isHidden: boolean,
+    objectID: string
 }
