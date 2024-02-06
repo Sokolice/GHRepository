@@ -11,8 +11,10 @@ import { Bed } from "../../models/Bed";
 
 const BedsComponent = observer(function BedsList() {
 
-    const { bedsStore } = useStore();
+    const { bedsStore, plantRecordStore, globalStore } = useStore();
     const { loadBeds, beds } = bedsStore;
+    const { loadPlantRecords, plantRecordMap } = plantRecordStore;
+    const { loadPlantDTO, plantDTOList } = globalStore;
 
 
     const [bed, setBed] = useState({
@@ -23,10 +25,14 @@ const BedsComponent = observer(function BedsList() {
     })
 
     useEffect(() => {
+        if (plantDTOList.size <= 0)
+            loadPlantDTO();
+        if (plantRecordMap.size <= 0)
+            loadPlantRecords();
         if (beds.length <= 0)
             loadBeds();
 
-    }, [beds.length, loadBeds])
+    }, [beds.length, loadBeds, plantRecordMap, loadPlantRecords, plantDTOList, loadPlantDTO])
 
 
     function AddBed() {

@@ -159,7 +159,6 @@ const BedComponent = observer(function Bed() {
             });
         });
 
-        store.bedsStore.updateBed(selectedBed);
 
     }
     function generateCellStyle(cell: Cell): React.CSSProperties {
@@ -182,6 +181,8 @@ const BedComponent = observer(function Bed() {
                 })
             }
         })
+
+        store.bedsStore.updateBed(selectedBed);
     }
 
     function renderCell(cell: Cell) {

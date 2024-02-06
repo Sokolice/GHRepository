@@ -10,7 +10,7 @@ import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
 
 const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
-    handleActivityDelete: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void, openForm: (plantRecord: PlantRecordDTO) => void) => {
+    handlePlantRecordDelete: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void, openForm: (plantRecord: PlantRecordDTO) => void) => {
 
     const options = {
         year: "numeric",
@@ -34,7 +34,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
                 <Card.Header>Mnozstni: </Card.Header>{plantRecord.amountPlanted}
                 <Divider />
                 <Progress percent={plantRecord.progress} progress />
-                <Popup content='Smazat' trigger={<Button icon='minus' color='red' onClick={(e) => handleActivityDelete(e, plantRecord.id)} />} />
+                <Popup content='Smazat' trigger={<Button icon='minus' color='red' onClick={(e) => handlePlantRecordDelete(e, plantRecord.id)} />} />
                 <Popup content='Recepty' trigger={<Button icon='utensils' color='blue' as={Link} to={`/recipeHints/${plant.name}`} />} />
                 <Divider hidden />
                 <Button icon='undo' onClick={() => openForm(plantRecord)} content="Uprav me" key={plantRecord.id} /> 
@@ -72,7 +72,7 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
     }, [loadPlantRecords, plantRecordMap.size, loadPlantDTO, plantDTOList.size, currentMonthRelationList.length, loadMonthWeeeks])
 
    
-    function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+    function handlePlantRecordDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         store.plantRecordStore.deletePlantRecord(id);
     }
 
@@ -99,7 +99,7 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
             {
                 store.plantRecordStore.plantRecords.map((plantRecord: PlantRecordDTO) =>
                 {
-                    return RenderPlantRecord(plantRecord, store.globalStore.getPlantDTO(plantRecord.plantId), handleActivityDelete, openForm)
+                    return RenderPlantRecord(plantRecord, store.globalStore.getPlantDTO(plantRecord.plantId), handlePlantRecordDelete, openForm)
                 })
             }
 

@@ -125,6 +125,28 @@ export default class PlantRecordStore {
         } catch (error) {
             console.log(error);
         }
+        let update = false;
+        store.bedsStore.bedList.forEach(bed => {
+            bed.cells.forEach(cell => {
+                if (cell.plantRecordId == id) {
+                    runInAction(() => {
+                        cell.backgroundImage = "";
+                        cell.gridArea = " ";
+                        cell.isHidden = false;
+                        cell.plantRecordId = "";
+                        cell.objectID = "";
+                        cell.isActive = false;
+                    })
+                    update = true;
+                }
+
+            })
+            if (update) {
+                store.bedsStore.updateBed(bed);
+                update = false;
+            }
+        })
+
     }
 
     private setPlantRecord = (plantRecord: PlantRecordDTO) => {
