@@ -216,7 +216,7 @@ const BedComponent = observer(function Bed() {
                 style={generateCellStyle(cell)}
             >
                 {showPlantRecordDetails()}
-                {cell.plantRecordId != "" ? <Button icon='minus' size='tiny' onClick={() => deleteClick(cell.objectID)} /> : null} 
+                {cell.plantRecordId != "" ? <Button icon='minus' size='tiny' onClick={() => deleteClick(cell.objectID)} className='no_print' /> : null} 
             </div>
         )
     }
@@ -234,6 +234,10 @@ const BedComponent = observer(function Bed() {
         }
 
         return { gridTemplateColumns: value, gridTemplateRows: rowValue }; 
+    }
+
+    function print(){
+        window.print();
     }
 
 
@@ -261,12 +265,19 @@ const BedComponent = observer(function Bed() {
                     </Label>) : null
                 }
                
-        <div className='grid-container' id={`bed_${selectedBed.id}`} key={`bed_${selectedBed.id}`} style={generateStyle()}>
+                <div className='grid-container printable' id={`bed_${selectedBed.id}`} key={`bed_${selectedBed.id}`} style={generateStyle()}>
             {
                 selectedBed.cells.map((cell) => 
                 renderCell(cell))
             }
-                </div>
+                    </div>
+
+                <div className='hidden center'>
+                    {"delka " + selectedBed.length + " m ---- " + "šířka" + selectedBed.width + " m"}
+                    </div>
+                </Segment>
+            <Segment>
+                <Button onClick={() => print()} content='Tisk' />
             </Segment>
         </SegmentGroup>
     )

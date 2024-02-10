@@ -65,4 +65,25 @@ body{
 .bed{
     margin-bottom:20px;
 }
+
+.hidden {
+    visibility: hidden
+}
 /*end home page styles*/
+@media print {
+
+    body, .no_print {
+        visibility: hidden;
+    }
+
+    .printable {
+        visibility: visible;
+    }
+
+    .hidden.center {
+        visibility: visible;
+        border: 0px !important;
+        box-shadow: none !important;
+        text-align: center;
+    }
+}

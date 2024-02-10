@@ -75,6 +75,7 @@ export default class MonthWeekStore {
             this.currentMonthRelationList = this.monthWeekList;
     }
 
+    //using for calculationg progress 
     loadMonthWeeekRelations = async () => {
         store.globalStore.loading = true;
         try {
@@ -83,7 +84,6 @@ export default class MonthWeekStore {
                 this.monthWeekRelationList = monthWeekRelations;
                 store.globalStore.loading = false;
             });
-
         }
         catch (error) {
             console.log(error);

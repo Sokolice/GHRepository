@@ -50,7 +50,7 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
 
     const { plantRecordStore, globalStore, monthWeekStore } = useStore();
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
-    const { currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
+    const { monthWeekRelationList, loadMonthWeeekRelations } = monthWeekStore;
 
     const { loadPlantDTO, plantDTOList } = globalStore;
     const [open, setOpen] = useState(false);
@@ -63,13 +63,14 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
     });
 
     useEffect(() => {
+
+        if (monthWeekRelationList.length <= 0)
+            loadMonthWeeekRelations();
         if (plantDTOList.size <= 0)
             loadPlantDTO();
         if (plantRecordMap.size <= 0)
             loadPlantRecords();
-        if (currentMonthRelationList.length <= 0)
-            loadMonthWeeeks();
-    }, [loadPlantRecords, plantRecordMap.size, loadPlantDTO, plantDTOList.size, currentMonthRelationList.length, loadMonthWeeeks])
+    }, [loadPlantRecords, plantRecordMap.size, loadPlantDTO, plantDTOList.size, monthWeekRelationList.length, loadMonthWeeekRelations])
 
    
     function handlePlantRecordDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
