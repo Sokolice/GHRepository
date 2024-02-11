@@ -6,6 +6,8 @@
         public Guid PlantId { get; set; }
         public DateTime DatePlanted { get; set; }
         public int AmountPlanted { get; set; }
+        public DateTime PresumedHarvest { get; set; }
+
 
         public PlantRecordDTO()
         {

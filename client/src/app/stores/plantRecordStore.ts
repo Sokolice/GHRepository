@@ -91,7 +91,9 @@ export default class PlantRecordStore {
         try {
             //const monthWeeks = await monthWeekAgent.MonthWeeks.sewingGroupByMonth();
 
-            await agent.PlantRecords.create(plantRecord);
+            const response = await agent.PlantRecords.create(plantRecord);
+
+            console.log(response);
            // runInAction(() => {
                 this.setPlantRecord(plantRecord);
             //});

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Persistence;
 
@@ -10,9 +11,11 @@ using api.Persistence;
 namespace api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240211144741_Migration_240211_02")]
+    partial class Migration_240211_02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,9 +293,6 @@ namespace api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("PlantId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("PresumedHarvest")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
