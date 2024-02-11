@@ -75,14 +75,7 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: Plant
 }
 
 const SewingPlanComponent = observer(function SewingPlan() {
-    const { monthWeekStore, globalStore, pestsStore, plantRecordStore } = useStore();
-    const { currentMonthRelationList, loadMonthWeeeks, monthWeekRelationList, loadMonthWeeekRelations } = monthWeekStore;
-    const { loadPlantRecords, plantRecordMap } = plantRecordStore;
-
-    const { pestsList, loadPests } = pestsStore;
-
-    const { loadPlantDTO, plantDTOList } = globalStore;
-
+   
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState(false);
     const [planted, setPlanted] = useState(false);
@@ -98,19 +91,6 @@ const SewingPlanComponent = observer(function SewingPlan() {
         imageSrc: '',
         repeatedPlanting: 0
     });
-
-    useEffect(() => {
-        if (pestsList.length <= 0)
-            loadPests();
-        if (monthWeekRelationList.length <= 0)
-            loadMonthWeeekRelations();
-        if (currentMonthRelationList.length <= 0)
-            loadMonthWeeeks();
-        if (plantDTOList.size <= 0)
-            loadPlantDTO();
-        if (plantRecordMap.size <= 0)
-            loadPlantRecords();
-    }, [pestsList, loadPests, loadPlantDTO, plantDTOList.size, currentMonthRelationList.length, loadMonthWeeeks, loadPlantRecords, plantRecordMap.size, loadMonthWeeekRelations, monthWeekRelationList.length])
 
     function openForm(plant: PlantDTO) {
         setOpen(true);
@@ -151,7 +131,7 @@ const SewingPlanComponent = observer(function SewingPlan() {
 
             <Container>
                 {
-                    currentMonthRelationList.map((m: MonthSewedRelation) => {
+                    store.monthWeekStore.currentMonthRelationList.map((m: MonthSewedRelation) => {
                         return RenderMonthWeek(m, openForm);
                     })
                 }

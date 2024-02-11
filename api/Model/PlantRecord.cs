@@ -10,6 +10,8 @@ namespace api.Model
         public virtual Plant Plant { get; set; }
         public DateTime DatePlanted { get; set; }
         public int AmountPlanted { get; set; }
+        public DateTime PresumedHarvest { get; set; }
+
 
         public PlantRecord()
         {

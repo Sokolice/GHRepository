@@ -4,6 +4,7 @@ using api.Relations;
 using api.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using api.Core;
 
 namespace api.Controllers
 {
@@ -36,19 +37,28 @@ namespace api.Controllers
         [HttpPost]
         public async Task<ActionResult<PlantRecordDTO>> PostPlantRecord(PlantRecordDTO plantRecord)
         {
-            _context.PlantRecords.Add(new PlantRecord
+            var plant = _context.Plants.Find(plantRecord.PlantId);
+
+            var firstHarvestMonth = plant.HarvestMonths.OrderBy(a => a.MonthIndex).FirstOrDefault();
+
+            var presumedHarvest = plantRecord.DatePlanted.AddMonths(firstHarvestMonth.MonthIndex - 1);
+
+            var newPlantRecord = new PlantRecord
             {
                 Id = plantRecord.Id,
                 AmountPlanted = plantRecord.AmountPlanted,
                 DatePlanted = plantRecord.DatePlanted,
                 PlantId = plantRecord.PlantId,
-                Plant = _context.Plants.First(a => a.Id == plantRecord.PlantId)
-            }) ;
+                Plant = _context.Plants.First(a => a.Id == plantRecord.PlantId),
+                PresumedHarvest = presumedHarvest
+            };
+
+            _context.PlantRecords.Add(newPlantRecord);
 
             await _context.SaveChangesAsync();
 
 
-            return new OkObjectResult(plantRecord);
+            return MyMapping.MapPlantRecord(newPlantRecord);
         }
 
         [HttpDelete("{id}")]
