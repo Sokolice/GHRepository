@@ -17,26 +17,9 @@ const HomePageComponent = observer(function HomePage() {
 
     const [ready, setReady] = useState(false);
 
-    useEffect(() => {
+    
 
-        const customEffect = async () => {
-                if (monthWeekRelationList.length <= 0)
-                    await loadMonthWeeekRelations();
-                if (plantDTOList.size <= 0)
-                    await loadPlantDTO();
-                if (plantRecordMap.size <= 0)
-                    await loadPlantRecords();
-                setReady(true); 
-        };
-
-        customEffect();
-    }, [loadMonthWeeekRelations, loadPlantDTO, loadPlantRecords, monthWeekRelationList.length, plantDTOList.size, plantRecordMap.size]);
-
-
-    useEffect(() => {
-        if (ready)
-            calcMissingSowingAmount();
-    }, [ready]);
+   
     
     if (loading)
         return (
