@@ -131,19 +131,6 @@ namespace api.Core
 
             return mapedPlants;
         }
-
-        public static PlantRecordDTO MapPlantRecord(PlantRecord aPlant)
-        {
-            var plantDTO = new PlantRecordDTO
-            {
-                Id = aPlant.Id,
-                AmountPlanted = aPlant.AmountPlanted,
-                DatePlanted = aPlant.DatePlanted,
-                PlantId = aPlant.PlantId,
-                PresumedHarvest = aPlant.PresumedHarvest,
-            };
-
-            return plantDTO;
-        }
+                
     }
 }

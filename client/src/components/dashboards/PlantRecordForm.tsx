@@ -22,7 +22,8 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
         plantId: '',
         datePlanted: '',
         amountPlanted: 0,
-        progress:0
+        progress: 0,
+        presumedHarvest: '0001-01-01'
     });
 
     const [selectedPlant, setPlant] = useState({

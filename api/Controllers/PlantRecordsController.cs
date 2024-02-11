@@ -28,8 +28,14 @@ namespace api.Controllers
                 Id = a.Id,
                 AmountPlanted = a.AmountPlanted,
                 DatePlanted = a.DatePlanted,
-                PlantId = a.PlantId    
+                PlantId = a.PlantId,
+                PresumedHarvest = a.PresumedHarvest                
             }).ToList();
+
+            foreach(var record in plantsRecord)
+            {
+               PlantRecordDTO.calculateProgress(record);
+            }
 
             return plantsRecord;
         }
@@ -42,6 +48,9 @@ namespace api.Controllers
             var firstHarvestMonth = plant.HarvestMonths.OrderBy(a => a.MonthIndex).FirstOrDefault();
 
             var presumedHarvest = plantRecord.DatePlanted.AddMonths(firstHarvestMonth.MonthIndex - 1);
+            plantRecord.PresumedHarvest = presumedHarvest;
+            
+            PlantRecordDTO.calculateProgress(plantRecord);
 
             var newPlantRecord = new PlantRecord
             {
@@ -53,12 +62,13 @@ namespace api.Controllers
                 PresumedHarvest = presumedHarvest
             };
 
+
             _context.PlantRecords.Add(newPlantRecord);
 
             await _context.SaveChangesAsync();
 
 
-            return MyMapping.MapPlantRecord(newPlantRecord);
+            return plantRecord;
         }
 
         [HttpDelete("{id}")]
