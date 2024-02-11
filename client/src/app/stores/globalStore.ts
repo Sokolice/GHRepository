@@ -4,6 +4,9 @@ import { MonthWeekDTO } from "../../models/MonthWeekDTO";
 import { PlantDTO } from "../../models/PlantDTO";
 import agent from "../../api/agent";
 import { PlantPlantsRelation } from "../../models/PlantPlantsRelation";
+import { store } from "./store";
+import MyMapping from "../MyMapping";
+import { MonthWeekRelation } from "../../models/MonthWeekRelation";
 export default class GlobalStore {
 
     monthweekDTOlist = new Map<string, MonthWeekDTO>();
@@ -14,6 +17,8 @@ export default class GlobalStore {
     otherPlants: PlantPlantsRelation = <PlantPlantsRelation>{
         plant: <PlantDTO>{}, avoidPlants: new Array<PlantDTO>(), companionPlants: new Array<PlantDTO>()
     };
+    canBeSowedThisWeekPlantsList = new Array<string>();
+    missingSowingAmount = 0;
         
     constructor() {
         makeAutoObservable(this)
@@ -79,5 +84,55 @@ export default class GlobalStore {
             console.log(error);
             this.loading = false;
         }
+    }
+
+    calcMissingSowingAmount = async () => {
+        
+        runInAction(() => {
+            this.loading = true;
+        })
+
+        /*if (this.plantDTOList.size == 0)
+            await this.loadPlantDTO();
+        if (store.plantRecordStore.plantRecordMap.size == 0)
+            await store.plantRecordStore.loadPlantRecords();
+        if (store.monthWeekStore.monthWeekRelationList.length == 0)
+            await store.monthWeekStore.loadMonthWeeekRelations();*/
+            
+        if (this.plantDTOList.size > 0 && store.plantRecordStore.plantRecordMap.size > 0) {
+            runInAction(() => {
+                this.missingSowingAmount = 0;
+            })
+
+            const plantedIds = store.plantRecordStore.plantRecords.map((item) => item.plantId);
+            const today = new Date();
+            const month = today.getMonth() + 1;
+
+            
+          
+            const date = today.getDate();
+
+            const weekOfMonth = Math.ceil(date / 7);
+
+            const canBeSowedThisWeekList = store.monthWeekStore.monthWeekRelationList.filter(item => item.monthWeekDTO.monthIndex == month && item.monthWeekDTO.week == weekOfMonth);
+
+            canBeSowedThisWeekList.forEach(item => {
+                item.sewedPlants.forEach(plant => {
+                    console.log(plant.name);
+                    if (!plantedIds.includes(plant.id)) {                       
+                        runInAction(() => {
+                            this.missingSowingAmount++;
+                            this.canBeSowedThisWeekPlantsList.push(plant.id);
+                        })
+                    }
+                }
+                )
+            })
+
+            console.log(this.missingSowingAmount);
+        }
+        runInAction(() => {
+            this.loading = false;
+        })
     }
 } 

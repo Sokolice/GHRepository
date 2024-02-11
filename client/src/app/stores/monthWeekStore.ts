@@ -3,8 +3,8 @@ import agent from "../../api/agent";
 import { MonthWeekRelation } from "../../models/MonthWeekRelation";
 import { store } from "./store";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
-import MyMapping from "../../models/MyMapping";
 import { MonthTaskRelation } from "../../models/MonthTaskRelation";
+import MyMapping from "../MyMapping";
 
 export default class MonthWeekStore {
 

@@ -1,5 +1,5 @@
-import { Bed } from "./Bed"
-import { BedRelation } from "./BedRelation"
+import { Bed } from "../models/Bed"
+import { BedRelation } from "../models/BedRelation"
 
 export default class MyMapping {
 
@@ -17,23 +17,23 @@ export default class MyMapping {
         switch (month) {
             case "Leden":
                 return 1;
-            case "Únor":
+            case "Ãšnor":
                 return 2;
-            case "Bøezen":
+            case "BÅ™ezen":
                 return 3;
             case "Duben":
                 return 4;
-            case "Kvìten":
+            case "KvÄ›ten":
                 return 5;
-            case "Èerven":
+            case "ÄŒerven":
                 return 6;
-            case "Èervenec":
+            case "ÄŒervenec":
                 return 7;
             case "Srpen":
                 return 8;
-            case "Záøí":
+            case "ZÃ¡Å™Ã­":
                 return 9;
-            case "Øíjen":
+            case "Å˜Ã­jen":
                 return 10;
             case "Listopad":
                 return 11;

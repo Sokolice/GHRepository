@@ -23,7 +23,9 @@ export default class PlantRecordStore {
 
 
     loadPlantRecords = async () => {
-        store.globalStore.loading = true;
+        runInAction(() => {
+            store.globalStore.loading = true;
+        })
         try {
             const plantRecords = await agent.PlantRecords.getPlantRecords();
             
@@ -31,7 +33,9 @@ export default class PlantRecordStore {
                 plantRecords.forEach(plantRecord => {
                     this.setPlantRecord(plantRecord);
                 })
+            runInAction(() => {
                 store.globalStore.loading = false;
+            })
             //});
 
         }

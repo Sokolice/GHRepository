@@ -2,7 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../../api/agent";
 import { store } from "./store";
 import { v4 as uiid } from 'uuid';
-import MyMapping from "../../models/MyMapping";
+import MyMapping from "../MyMapping";
 import { BedRelation } from "../../models/BedRelation";
 import { Bed } from "../../models/Bed";
 import { Cell } from "../../models/Cell";
@@ -130,7 +130,7 @@ export default class BedsStore {
         for (let x = 1; x <= c; x++) {
             //const row = Array<Cell>();
             for (let y = 1; y <= r; y++) {
-                cells.push({ id: uiid(), x: x, y: y, isActive: false, gridArea: "", backgroundImage: "", plantRecordId:"" })
+                cells.push({ id: uiid(), x: x, y: y, isActive: false, gridArea: "", backgroundImage: "", plantRecordId: "", isHidden: false, objectID: "" })
             }
             //cells.push(row);
         }

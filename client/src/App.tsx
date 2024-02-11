@@ -5,10 +5,11 @@ import HomePage from './components/home/HomePage';
 import { Outlet, useLocation } from 'react-router-dom';
 import NavBar from './components/layout/NavBar';
 import { observer } from 'mobx-react-lite';
+import { useStore } from './app/stores/store';
+import { useEffect } from 'react';
 
 function App() {
-
-   
+    
     const location = useLocation();
     return (
         <>

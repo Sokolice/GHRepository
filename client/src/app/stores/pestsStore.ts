@@ -16,7 +16,7 @@ export default class PestsStore {
     }
 
     loadPests = async () => {
-
+        console.log("pests");
         store.globalStore.loading = true;
         const pests = await agent.Pests.getPests();
 

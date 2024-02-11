@@ -7,13 +7,28 @@ import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../layout/LoadingComponent";
+import MyMapping from "../../app/MyMapping";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 
-const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void) => {
+const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void, toSowMonth: boolean) => {
+
     return (
             <Card key={plant.id}>
                 <Image src={`/src/assets/plants/${plant.imageSrc}`} wrapped ui={false} />
                 <Card.Content>
-                    <Card.Header>{plant.name}</Card.Header>
+                <Card.Header>
+                    {plant.name} &nbsp;
+                    {toSowMonth && store.globalStore.canBeSowedThisWeekPlantsList.includes(plant.id)
+                        ?
+                        <Popup content='Lze vysévat tento týden' trigger={
+                            <Label color='red'>
+                                <FontAwesomeIcon icon={faSeedling} />
+                            </Label>
+                        } />
+                        : null
+                    }
+                </Card.Header>
                 </Card.Content>
                 <Card.Content extra>
                 {
@@ -37,6 +52,8 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void) => {
 }
 
 const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: PlantDTO) => void) => {
+
+    const thisMonth = new Date().getMonth() + 1;
     return (
 
         <Container key={`${monthSewed.month}`} textAlign="center">
@@ -50,7 +67,7 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: Plant
             <Divider horizontal />
                 <Card.Group itemsPerRow={6} >
                 {
-                    monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant, openForm))
+                    monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant, openForm, thisMonth == MyMapping.mapMonthIndex(monthSewed.month)))
                 }
                 </Card.Group>
             </Container>

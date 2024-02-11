@@ -1325,8 +1325,8 @@ namespace api.Persistence
                     SewingMonths = new List<MonthWeek> {
 
 
-                        monthWeekMap[(Month.February, 1)],
-                        monthWeekMap[(Month.February, 2)],
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
 
                         monthWeekMap[(Month.March, 1)],
                         monthWeekMap[(Month.March, 2)],
@@ -2611,8 +2611,6 @@ namespace api.Persistence
                     GerminationTemp = 20,
                     SewingMonths = new List<MonthWeek> {
 
-                        monthWeekMap[(Month.February, 1)],
-                        monthWeekMap[(Month.February, 2)],
                         monthWeekMap[(Month.February, 3)],
                         monthWeekMap[(Month.February, 4)],
 
@@ -3147,13 +3145,6 @@ namespace api.Persistence
                     GerminationTemp = 15,
                     SewingMonths = new List<MonthWeek> {
 
-                        monthWeekMap[(Month.January, 1)],
-                        monthWeekMap[(Month.January, 2)],
-                        monthWeekMap[(Month.January, 3)],
-                        monthWeekMap[(Month.January, 4)],
-
-                        monthWeekMap[(Month.February, 1)],
-                        monthWeekMap[(Month.February, 2)],
                         monthWeekMap[(Month.February, 3)],
                         monthWeekMap[(Month.February, 4)],
 
