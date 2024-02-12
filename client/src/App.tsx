@@ -12,12 +12,15 @@ function App() {
     const { bedsStore, plantRecordStore, globalStore, monthWeekStore, pestsStore } = useStore();
     const { loadBeds, beds } = bedsStore;
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
-    const { loadPlantDTO, plantDTOList } = globalStore;
+    const { loadPlantDTO, plantDTOList, loadStats } = globalStore;
     const { monthWeekRelationList, loadMonthWeeekRelations, currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
     const { pestsList, loadPests } = pestsStore;
 
 
     useEffect(() => {
+
+        loadStats();
+
         if (pestsList.length <= 0)
             loadPests();
         if (monthWeekRelationList.length <= 0)
@@ -30,6 +33,8 @@ function App() {
             loadPlantRecords();
         if (beds.length <= 0)
             loadBeds();
+        
+
     }, [beds.length, loadBeds, plantRecordMap, loadPlantRecords, plantDTOList, loadPlantDTO, monthWeekRelationList.length, loadMonthWeeekRelations, pestsList.length, loadPests, currentMonthRelationList.length, loadMonthWeeeks])
 
 

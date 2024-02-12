@@ -23,14 +23,15 @@ export default class MonthWeekStore {
 
     loadMonthWeeeks = async () => {
 
-        store.globalStore.loading = true;
+        store.globalStore.setLoading(true);
         try {            
             const monthWeeks = await agent.MonthWeeks.sewingGroupByMonth();
             
             runInAction(() => {
                 this.currentMonthRelationList = monthWeeks;
-                store.globalStore.loading = false;
             });
+
+            store.globalStore.setLoading(false);
         }
         catch (error) {
             console.log(error);
@@ -77,13 +78,14 @@ export default class MonthWeekStore {
 
     //using for calculationg progress 
     loadMonthWeeekRelations = async () => {
-        store.globalStore.loading = true;
+        store.globalStore.setLoading(true);
         try {
             const monthWeekRelations = await agent.MonthWeeks.monthWeeksRelations();
             runInAction(() => {
                 this.monthWeekRelationList = monthWeekRelations;
-                store.globalStore.loading = false;
             });
+
+            store.globalStore.setLoading(false);
         }
         catch (error) {
             console.log(error);
@@ -92,14 +94,14 @@ export default class MonthWeekStore {
     }
 
     loadMonthTasksRelation = async () => {
-        store.globalStore.loading = true;
+        store.globalStore.setLoading(true);
         try {
             const relations = await agent.Tasks.getTasks();
             runInAction(() => {
                 this.monthWeekTaskRelationList = relations;
-
-                store.globalStore.loading = false;
             });
+
+            store.globalStore.setLoading(false);
         }
         catch (error) {
             console.log(error);

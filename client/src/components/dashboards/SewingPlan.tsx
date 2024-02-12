@@ -1,15 +1,15 @@
 import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header} from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
-import { store, useStore } from "../../app/stores/store";
-import { useEffect, useState } from "react";
+import { store } from "../../app/stores/store";
+import { useState } from "react";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../layout/LoadingComponent";
 import MyMapping from "../../app/MyMapping";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSeedling } from "@fortawesome/free-solid-svg-icons";
+import { faSeedling, faRepeat } from "@fortawesome/free-solid-svg-icons";
 
 const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void, toSowMonth: boolean) => {
 
@@ -19,11 +19,20 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void, toSow
                 <Card.Content>
                 <Card.Header>
                     {plant.name} &nbsp;
-                    {toSowMonth && store.globalStore.canBeSowedThisWeekPlantsList.includes(plant.id)
+                    {toSowMonth && store.globalStore.stats?.canBeSowedThisWeek.includes(plant.id)
                         ?
                         <Popup content='Lze vysévat tento týden' trigger={
                             <Label color='red'>
                                 <FontAwesomeIcon icon={faSeedling} />
+                            </Label>
+                        } />
+                        : null
+                    }
+                    {store.globalStore.stats?.canBeSowedRepeatedly.includes(plant.id)
+                        ?
+                        <Popup content='Opakovaný výsev' trigger={
+                            <Label color='red'>
+                                <FontAwesomeIcon icon={faRepeat} />
                             </Label>
                         } />
                         : null

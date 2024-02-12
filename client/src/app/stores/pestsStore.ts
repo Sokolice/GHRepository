@@ -17,14 +17,14 @@ export default class PestsStore {
 
     loadPests = async () => {
         console.log("pests");
-        store.globalStore.loading = true;
+        store.globalStore.setLoading(true);
         const pests = await agent.Pests.getPests();
 
         runInAction(() => {
             this.pestsList = pests;
-
-            store.globalStore.loading = false;
         })
+
+        store.globalStore.setLoading(false);
     }
 
     getCurrentPest = (plantId: string) => {

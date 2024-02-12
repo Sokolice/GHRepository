@@ -30,7 +30,7 @@ export default class BedsStore {
     loadBeds = async () => {
         try {
 
-            store.globalStore.loading = true;
+            store.globalStore.setLoading(true);
             const bedRecords = await agent.Beds.getBeds();
             //console.log(bedRecords);
             runInAction(() => {
@@ -47,7 +47,7 @@ export default class BedsStore {
                             isDesign: bedRecord.bed.isDesign
                         });
                 })
-                store.globalStore.loading = false;
+                store.globalStore.setLoading(false);
             });
 
         }
@@ -64,7 +64,7 @@ export default class BedsStore {
             this.selectedBed = bed;
         }
         else {
-            store.globalStore.loading = true;
+            store.globalStore.setLoading(true);
             try {
                 const bedRelation = await agent.Beds.details(id);
                 runInAction(() => {
@@ -76,10 +76,9 @@ export default class BedsStore {
                     this.selectedBed.numOfColumns = bedRelation.bed.numOfColumns;
                     this.selectedBed.numOfRows = bedRelation.bed.numOfRows;
                     this.selectedBed.isDesign = bedRelation.bed.isDesign
-
-                    store.globalStore.loading = false;
                 });
 
+                store.globalStore.setLoading(false);
             }
             catch (error) {
                 console.log(error);
@@ -92,12 +91,13 @@ export default class BedsStore {
 
         try {
 
-            store.globalStore.loading = true;
+            store.globalStore.setLoading(true);
             await agent.Beds.update(MyMapping.mapBedRelation(bed));
             runInAction(() => {
                 this.bedList.set(bed.id, bed);
-                store.globalStore.loading = false;
             })
+
+            store.globalStore.setLoading(false);
         }
         catch (error) {
             console.log(error);
@@ -108,7 +108,10 @@ export default class BedsStore {
     deleteCells = async (ids: Array<string>) => {
 
         try {
+
+            store.globalStore.setLoading(true);
             await agent.Cells.deleteCells(ids);
+            store.globalStore.setLoading(false);
         }
         catch (error) {
             console.log(error);
@@ -140,18 +143,20 @@ export default class BedsStore {
         bed.numOfColumns = c;
         bed.numOfRows = r;
         bed.isDesign = aIsDesign;
-        store.globalStore.loading = true;
+
+        store.globalStore.setLoading(true);
+
         try {
             const newBed = <BedRelation>{
                 bed: <BedDTO>{ id: bed.id, name: bed.name, length: bed.length, numOfColumns: bed.numOfColumns, width: bed.width, numOfRows: bed.numOfRows, isDesign: bed.isDesign },
                 cells: bed.cells          
             };
-            //console.log(newBed);
             await agent.Beds.create(newBed);
             runInAction(() => {
                 this.bedList.set(bed.id, bed);
-                store.globalStore.loading = false;
             })
+
+            store.globalStore.setLoading(false);
 
         } catch (error) {
             console.log(error);

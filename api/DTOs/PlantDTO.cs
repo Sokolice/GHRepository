@@ -19,6 +19,8 @@
 
         public int RepeatedPlanting { get; set; }
 
+        public bool CanBeSowedThisWeek { get; set; }
+
 
         public PlantDTO()
         {

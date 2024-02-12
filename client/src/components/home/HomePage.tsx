@@ -2,20 +2,15 @@ import { Link } from "react-router-dom";
 import { Container, Header, Segment, Card, Grid, GridColumn, Image, CardContent, CardHeader, Label, Icon, Popup } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSeedling } from '@fortawesome/free-solid-svg-icons'
+import { faSeedling, faSquareCheck, faRepeat } from '@fortawesome/free-solid-svg-icons'
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
 import LoadingComponent from "../layout/LoadingComponent";
 
 const HomePageComponent = observer(function HomePage() {
 
-    const { globalStore, plantRecordStore, monthWeekStore } = useStore();
-    const { calcMissingSowingAmount, missingSowingAmount, loading} = globalStore;
-    const { loadPlantDTO, plantDTOList } = globalStore;
-    const { loadPlantRecords, plantRecordMap } = plantRecordStore;
-    const { monthWeekRelationList, loadMonthWeeekRelations } = monthWeekStore;
+    const { globalStore} = useStore();
+    const { missingSowingAmount, loading, stats} = globalStore;
 
-    const [ready, setReady] = useState(false);
 
     
 
@@ -39,16 +34,25 @@ const HomePageComponent = observer(function HomePage() {
                             <CardContent>
                                 <CardHeader>
                                     Přehled výsevu &nbsp;
-                                    {missingSowingAmount > 0
+                                    {stats?.missingSowingThisWeekAmount > 0
                                         ?
                                         <Popup content='Tento týden možno vysadit' trigger={
                                             <Label as={Link} to='/sewingplan' color='red'>
-                                                <FontAwesomeIcon icon={faSeedling} /> {missingSowingAmount}
+                                                <FontAwesomeIcon icon={faSeedling} /> {stats?.missingSowingThisWeekAmount}
                                             </Label>
                                         } />
                                      
-                                    : null
-                            }
+                                        : null
+                                    }{stats?.canBeSowedRepeatedlyAmount > 0
+                                        ?
+                                        <Popup content='Opakovaný výsev' trigger={
+                                            <Label as={Link} to='/sewingplan' color='red'>
+                                                <FontAwesomeIcon icon={faRepeat} /> {stats?.canBeSowedRepeatedlyAmount}
+                                            </Label>
+                                        } />
+
+                                        : null
+                                    }
                                     
                                 </CardHeader>
                             </CardContent>
@@ -82,7 +86,17 @@ const HomePageComponent = observer(function HomePage() {
                                 src='../src/assets/other/todo.jpg' as={Link} to='/calendar' />
                             <CardContent>
                                 <CardHeader>
-                                    Zahradnické úkoly
+                                    Zahradnické úkoly&nbsp;
+                                    {stats?.missingTaskThisWeekAmount > 0
+                                        ?
+                                        <Popup content='Zbývá úkolů pro tento týden' trigger={
+                                            <Label as={Link} to='/calendar' color='red'>
+                                                <FontAwesomeIcon icon={faSquareCheck} /> {stats?.missingTaskThisWeekAmount}
+                                            </Label>
+                                        } />
+
+                                        : null
+                                    }
                                 </CardHeader>
                             </CardContent>
                         </Card>

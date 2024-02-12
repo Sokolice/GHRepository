@@ -38,7 +38,7 @@ namespace api.Controllers
                 ImageSrc = a.ImageSrc,
                 IsHybrid = a.IsHybrid,
                 Name = a.Name,
-                RepeatedPlanting = a.RepeatedPlanting
+                RepeatedPlanting = a.RepeatedPlanting,
             }).ToList();
             
             return plantsDTO;

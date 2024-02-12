@@ -3220,6 +3220,43 @@ namespace api.Persistence
                     "Z vařené řepy se připravují saláty se smetanou, majonézou, marinádou apod. Oba druhy salátů jsou dobrým doplňkem pečeného masa a minutek. " +
                     "Uvařenou mladou červenou řepu stačí jen osolit, pokapat citronem a máslem – je to dobrá příloha pro ty, kdo nemají rádi kyselé saláty."
                 }*/
+                 new Plant
+                {
+                    Name = "Celer bulvový Albin",
+                    IsHybrid = false,
+                    DirectSewing = false,
+                    GerminationTemp = 20,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.January, 1)],
+                        monthWeekMap[(Month.January, 2)],
+                        monthWeekMap[(Month.January, 3)],
+                        monthWeekMap[(Month.January, 4)],
+
+                        monthWeekMap[(Month.February, 1)],
+                        monthWeekMap[(Month.February, 2)],
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
+
+                    },
+                    HarvestMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]
+                    },
+                    CropRotation = 1,
+                    ImageSrc = "celer.jpg",
+                    Description = "List celeru působí protizánětlivě a močopudně, působí příznivě na činnost ledvin, povzbuzuje chuť k jídlu, " +
+                    "je vhodný pro revmatiky a diabetiky, uklidňuje a podporuje trávení, zpevňuje cévy. Doporučuje se při obezitě, neboť urychluje " +
+                    "látkovou výměnu, a působí i jako zdraví neškodné afrodiziakum.[zdroj?]"
+                }
             };
 
 
@@ -3296,7 +3333,7 @@ namespace api.Persistence
             };*/
 
 
-            //await context.Plants.AddRangeAsync(plants);
+            await context.Plants.AddRangeAsync(plants);
             await context.SaveChangesAsync();
 
 

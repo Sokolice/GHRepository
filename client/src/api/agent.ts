@@ -8,6 +8,7 @@ import { BedRelation } from '../models/BedRelation';
 import { PestRelation } from '../models/PestRelation';
 import { MonthTaskRelation } from '../models/MonthTaskRelation';
 import { PlantPlantsRelation } from '../models/PlantPlantsRelation';
+import { Stats } from '../models/Stats';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>
@@ -83,6 +84,10 @@ const Tasks = {
     getTasks: () => requests.get<MonthTaskRelation[]>('/GardeningTasks')
 }
 
+const Stats = {
+    getStats: () => requests.get<Stats>('/Stats/GetStats')
+}
+
 
 const agent = {
     Plants,
@@ -91,7 +96,8 @@ const agent = {
     Beds,
     Cells,
     Pests,
-    Tasks
+    Tasks,
+    Stats
 }
 
 export default agent;
