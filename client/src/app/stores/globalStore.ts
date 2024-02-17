@@ -24,7 +24,10 @@ export default class GlobalStore {
     loadStats = async () => {
         this.setLoading(true);
         try {
-            this.stats = await agent.Stats.getStats();
+            const allStats = await agent.Stats.getStats();
+            runInAction(() => {
+                this.stats = allStats;
+            });
             this.setLoading(false);
         }
         catch (error) {

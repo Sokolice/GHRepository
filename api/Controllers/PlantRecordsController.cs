@@ -41,25 +41,22 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PlantRecordDTO>> PostPlantRecord(PlantRecordDTO plantRecord)
+        public async Task<ActionResult<PlantRecordDTO>> PostPlantRecord(PlantRecordDTO plantRecordDTO)
         {
-            var plant = _context.Plants.Find(plantRecord.PlantId);
 
-            var firstHarvestMonth = plant.HarvestMonths.OrderBy(a => a.MonthIndex).FirstOrDefault();
+            var plant = _context.Plants.Find(plantRecordDTO.PlantId);
 
-            var presumedHarvest = plantRecord.DatePlanted.AddMonths(firstHarvestMonth.MonthIndex - 1);
-            plantRecord.PresumedHarvest = presumedHarvest;
+            PlantRecordDTO.CalculatePresumedHarvest(plantRecordDTO, plant);
             
-            PlantRecordDTO.calculateProgress(plantRecord);
+            PlantRecordDTO.calculateProgress(plantRecordDTO);
 
             var newPlantRecord = new PlantRecord
             {
-                Id = plantRecord.Id,
-                AmountPlanted = plantRecord.AmountPlanted,
-                DatePlanted = plantRecord.DatePlanted,
-                PlantId = plantRecord.PlantId,
-                Plant = _context.Plants.First(a => a.Id == plantRecord.PlantId),
-                PresumedHarvest = presumedHarvest
+                Id = plantRecordDTO.Id,
+                AmountPlanted = plantRecordDTO.AmountPlanted,
+                DatePlanted = plantRecordDTO.DatePlanted,
+                PlantId = plantRecordDTO.PlantId,
+                Plant = _context.Plants.First(a => a.Id == plantRecordDTO.PlantId)
             };
 
 
@@ -68,7 +65,7 @@ namespace api.Controllers
             await _context.SaveChangesAsync();
 
 
-            return plantRecord;
+            return plantRecordDTO;
         }
 
         [HttpDelete("{id}")]

@@ -118,6 +118,22 @@ namespace api.Core
             return plantDTO;
         }
 
+        public static PlantRecordDTO MapPlantRecord(PlantRecord aPlant)
+        {
+            var plantRecordDTO = new PlantRecordDTO
+            {
+                Id = aPlant.Id,
+                AmountPlanted = aPlant.AmountPlanted,
+                DatePlanted = aPlant.DatePlanted,
+                PlantId = aPlant.PlantId
+            };
+
+            PlantRecordDTO.CalculatePresumedHarvest(plantRecordDTO, aPlant.Plant);
+            PlantRecordDTO.calculateProgress(plantRecordDTO);
+
+            return plantRecordDTO;
+        }
+
         public static List<PlantDTO> MapPlantList(List<Plant> plants){
 
             List<PlantDTO> mapedPlants = new List<PlantDTO>();
@@ -131,6 +147,21 @@ namespace api.Core
 
             return mapedPlants;
         }
-                
+
+        public static List<PlantRecordDTO> MapPlantRecordsList(List<PlantRecord> plants)
+        {
+
+            List<PlantRecordDTO> mapedPlants = new List<PlantRecordDTO>();
+
+            foreach (var plant in plants)
+            {
+                var mapedPlant = MapPlantRecord(plant);
+
+                mapedPlants.Add(mapedPlant);
+            };
+
+            return mapedPlants;
+        }
+
     }
 }

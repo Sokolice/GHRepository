@@ -1,4 +1,7 @@
-﻿namespace api.DTOs
+﻿using api.Model;
+using Microsoft.EntityFrameworkCore;
+
+namespace api.DTOs
 {
     public class PlantRecordDTO
     {
@@ -31,6 +34,15 @@
                 record.Progress = Convert.ToInt32(progress);
             else
                 record.Progress = 0;
+        }
+
+        public static void CalculatePresumedHarvest(PlantRecordDTO plantRecord, Plant plant)
+        {
+
+            var firstHarvestMonth = plant.HarvestMonths.OrderBy(a => a.MonthIndex).FirstOrDefault();
+
+            var presumedHarvest = plantRecord.DatePlanted.AddMonths(firstHarvestMonth.MonthIndex - 1);
+            plantRecord.PresumedHarvest = presumedHarvest;
         }
     }
 }

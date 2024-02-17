@@ -21,7 +21,7 @@ namespace api.Controllers
         public async Task<Stats> GetStats()
         {
             var stats = new Stats(_context);
-            stats.ThisWeekSowingCalculation();
+            await stats.ThisWeekSowingCalculation();
 
             return stats;
         }

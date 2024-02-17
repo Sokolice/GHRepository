@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Container, Header, Segment, Card, Grid, GridColumn, Image, CardContent, CardHeader, Label, Icon, Popup } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSeedling, faSquareCheck, faRepeat } from '@fortawesome/free-solid-svg-icons'
+import { faSeedling, faSquareCheck, faRepeat, faWheatAwn, faSnowflake, faFire, faCloudRain } from '@fortawesome/free-solid-svg-icons'
 import { observer } from "mobx-react-lite";
 import LoadingComponent from "../layout/LoadingComponent";
 
@@ -36,7 +36,7 @@ const HomePageComponent = observer(function HomePage() {
                                     Přehled výsevu &nbsp;
                                     {stats?.missingSowingThisWeekAmount > 0
                                         ?
-                                        <Popup content='Tento týden možno vysadit' trigger={
+                                        <Popup content='Tento týden zbývá vysadit' trigger={
                                             <Label as={Link} to='/sewingplan' color='red'>
                                                 <FontAwesomeIcon icon={faSeedling} /> {stats?.missingSowingThisWeekAmount}
                                             </Label>
@@ -64,7 +64,47 @@ const HomePageComponent = observer(function HomePage() {
                                 src='../src/assets/other/raised_bed.jpg' as={Link} to='/plantrecords' />
                             <CardContent>
                                 <CardHeader>
-                                    Roste
+                                    Roste &nbsp;
+                                    {stats?.readyToHarvestAmount > 0
+                                        ?
+                                        <Popup content='Ke sklizni' trigger={
+                                            <Label as={Link} to='/plantrecords' color='red'>
+                                                <FontAwesomeIcon icon={faWheatAwn} /> {stats?.readyToHarvestAmount}
+                                            </Label>
+                                        } />
+
+                                        : null
+                                    }
+                                    {stats?.freezeAlert 
+                                        ?
+                                        <Popup content='Nebezpečí mrazu' trigger={
+                                            <Label as={Link} to='/plantrecords' color='red'>
+                                                <FontAwesomeIcon icon={faSnowflake} /> 
+                                            </Label>
+                                        } />
+
+                                        : null
+                                    }
+                                    {stats?.highTemperatureAlert
+                                        ?
+                                        <Popup content='Nebezpečí vysokých teplot' trigger={
+                                            <Label as={Link} to='/plantrecords' color='red'>
+                                                <FontAwesomeIcon icon={faFire} />
+                                            </Label>
+                                        } />
+
+                                        : null
+                                    }
+                                    {stats?.rainPeriodAlert
+                                        ?
+                                        <Popup content='Dlouhodobý déšť' trigger={
+                                            <Label as={Link} to='/plantrecords' color='red'>
+                                                <FontAwesomeIcon icon={faCloudRain} />
+                                            </Label>
+                                        } />
+
+                                        : null
+                                    }
                                 </CardHeader>
                             </CardContent>
                         </Card>

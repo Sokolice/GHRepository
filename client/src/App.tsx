@@ -12,7 +12,7 @@ function App() {
     const { bedsStore, plantRecordStore, globalStore, monthWeekStore, pestsStore } = useStore();
     const { loadBeds, beds } = bedsStore;
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
-    const { loadPlantDTO, plantDTOList, loadStats } = globalStore;
+    const { loadPlantDTO, plantDTOList, loadStats, stats } = globalStore;
     const { monthWeekRelationList, loadMonthWeeekRelations, currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
     const { pestsList, loadPests } = pestsStore;
 
@@ -33,9 +33,7 @@ function App() {
             loadPlantRecords();
         if (beds.length <= 0)
             loadBeds();
-        
-
-    }, [beds.length, loadBeds, plantRecordMap, loadPlantRecords, plantDTOList, loadPlantDTO, monthWeekRelationList.length, loadMonthWeeekRelations, pestsList.length, loadPests, currentMonthRelationList.length, loadMonthWeeeks])
+    }, [beds.length, loadBeds, plantRecordMap, loadPlantRecords, plantDTOList, loadPlantDTO, monthWeekRelationList.length, loadMonthWeeekRelations, pestsList.length, loadPests, currentMonthRelationList.length, loadMonthWeeeks, loadStats])
 
 
     const location = useLocation();
