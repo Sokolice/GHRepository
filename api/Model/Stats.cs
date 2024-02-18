@@ -9,6 +9,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Drawing.Drawing2D;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace api.Model
 {
@@ -16,6 +17,8 @@ namespace api.Model
     {
         private readonly DataContext _context;
 
+        public Guid Id { get; set; }
+        public DateTime Date {  get; set; }
         public bool FreezeAlert { get; set; }
         public bool HighTemperatureAlert { get; set; }
         public bool RainPeriodAlert { get; set; }
@@ -23,20 +26,27 @@ namespace api.Model
         public int MissingTaskThisWeekAmount { get; set; }
         public int CanBeSowedRepeatedlyAmount { get; set; }
         public int ReadyToHarvestAmount { get; set; }
-        public List<Guid> CanBeSowedThisWeek { get; set; }
-        public List<Guid> CanBeSowedRepeatedly { get; set; }
-        public List<Guid> ReadyToHarvest { get; set; }
+        public string CanBeSowedThisWeek { get; set; }
+        public string CanBeSowedRepeatedly { get; set; }
+        public string ReadyToHarvest { get; set; }
 
 
 
         public Stats(DataContext context)
         {
             _context = context;
-            CanBeSowedThisWeek = new List<Guid>();
-            CanBeSowedRepeatedly = new List<Guid>();
-            ReadyToHarvest = new List<Guid>();
+            Id = Guid.NewGuid();
+            Date = DateTime.Now;
+            CanBeSowedThisWeek = string.Empty;
+            CanBeSowedRepeatedly = string.Empty;
+            ReadyToHarvest = string.Empty;
             CanBeSowedRepeatedlyAmount = 0;
             ReadyToHarvestAmount = 0;
+        }
+
+        public Stats()
+        {
+            
         }
 
 
@@ -51,10 +61,10 @@ namespace api.Model
                 .Include(p => p.PlantRecords)
                 .Where(a => a.SewingMonths.Any(sm => sm.MonthIndex == month && sm.Week == weekOfMonth)).ToList();
             
-            CanBeSowedThisWeek = plants
+            CanBeSowedThisWeek = string.Join(",", plants
                                 .Where(a => a.PlantRecords.Count == 0)
-                                .Select(p => p.Id)
-                                .ToList();
+                                .Select(p => p.Id.ToString())
+                                .ToArray());
 
             MissingSowingThisWeekAmount = plants
                                             .Where(a => a.PlantRecords.Count == 0)
@@ -76,11 +86,37 @@ namespace api.Model
                 if ((today - record.DatePlanted).TotalDays >= 14)
                     CanBeSowedRepeatedlyAmount++;
 
-                CanBeSowedRepeatedly.Add(record.PlantId);
+                CanBeSowedRepeatedly = string.Join(",", CanBeSowedRepeatedly, record.PlantId);
             }
 
-            await CheckWeatherAsync();
+            var now = DateTime.Now;
+            var last = now;
+            var lastStats = new Stats();
+            if (_context.Stats != null)
+            {
+                lastStats = _context.Stats.OrderByDescending(a => a.Date).FirstOrDefault();
+                if(lastStats != null)
+                {
+                    last = lastStats.Date;
+                }
+
+            }
+
+            if ((now - last).Hours >= 24 || last == now)
+                await CheckWeatherAsync();
+            else
+            {
+                FreezeAlert = lastStats.FreezeAlert;
+                HighTemperatureAlert = lastStats.HighTemperatureAlert;
+                RainPeriodAlert = lastStats.RainPeriodAlert;
+
+            }
+
+
             ReadyToHarvestStats();
+
+            _context.Add(this);
+            await _context.SaveChangesAsync();
         }
 
 
@@ -128,7 +164,7 @@ namespace api.Model
             {
                 if(recordDTO.Progress >= 100)
                 {
-                    ReadyToHarvest.Add(recordDTO.Id);
+                    ReadyToHarvest = string.Join(",", ReadyToHarvest, recordDTO.PlantId);
                     ReadyToHarvestAmount++;
                 }
             }

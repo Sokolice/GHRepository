@@ -19,6 +19,8 @@ namespace api.Persistence
         public DbSet<Bed> Beds { get; set; } = null!;
         public DbSet<Cell> Cells { get; set; } = null!;
 
+        public DbSet<Stats> Stats { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //lazy loading
