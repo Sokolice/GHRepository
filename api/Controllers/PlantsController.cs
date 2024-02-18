@@ -148,8 +148,8 @@ namespace api.Controllers
             var others = new PlantPlantsRelation
             {
                 Plant = MyMapping.MapPlant(plant),
-                AvoidPlants =MyMapping.MapPlantList(plant.AvoidPlants),
-                CompanionPlants = MyMapping.MapPlantList(plant.CompanionPlants)
+                AvoidPlants =MyMapping.MapPlantList(plant.AvoidPlants).OrderBy(a=>a.Name).ToList(),
+                CompanionPlants = MyMapping.MapPlantList(plant.CompanionPlants).OrderBy(a => a.Name).ToList()
             };
 
             return others;            

@@ -3260,7 +3260,7 @@ namespace api.Persistence
             };
 
 
-            var cD = context.Plants.Where(a=> a.Name.Contains("Dýně") || a.Name.Contains("Cuketa")).ToList();
+            /*var cD = context.Plants.Where(a=> a.Name.Contains("Dýně") || a.Name.Contains("Cuketa")).ToList();
 
             foreach (var plant in cD) 
             {
@@ -3380,6 +3380,233 @@ namespace api.Persistence
                                             b.Name.Contains("Rajče")).ToList();
             }
 
+            var kales = context.Plants.Where(a => a.Name.Contains("Kapusta") || a.Name.Contains("Kadeřávek")).ToList();
+
+
+            foreach (var plant in kales)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Celer") ||
+                                            b.Name.Contains("Řepa") ||
+                                            b.Name.Contains("Kopr") ||
+                                            b.Name.Contains("Rozmarýn")).ToList();
+            }
+
+            foreach (var plant in kales)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Ředkvička") ||
+                                            b.Name.Contains("Rajče") ||
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Cibule")).ToList();
+            }
+
+            var kohlerabi = context.Plants.Where(a => a.Name.Contains("Kedluben")).ToList();
+
+
+            foreach (var plant in kohlerabi)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Celer") ||
+                                            b.Name.Contains("Pór") ||
+                                            b.Name.Contains("Cibule") ||
+                                            b.Name.Contains("Řepa") ||
+                                            b.Name.Contains("Salát") ||
+                                            b.Name.Contains("Špenát") ||
+                                            b.Name.Contains("Mrkev") ||
+                                            b.Name.Contains("Okurka") ||
+                                            b.Name.Contains("Paprika") ||
+                                            b.Name.Contains("Rajče") ||
+                                            b.Name.Contains("Hrách") ||
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Ředkvička")).ToList();
+            }
+
+            var carrot = context.Plants.Where(a => a.Name.Contains("Mrkev")).ToList();
+
+
+            foreach (var plant in carrot)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Cibule") ||
+                                            b.Name.Contains("Rajče") ||
+                                            b.Name.Contains("Hrách") ||
+                                            b.Name.Contains("Pažitka") ||
+                                            b.Name.Contains("Pór") ||
+                                            b.Name.Contains("Ředkvička") ||
+                                            b.Name.Contains("Česnek") ||
+                                            b.Name.Contains("Kopr") ||
+                                            b.Name.Contains("Salát") ||
+                                            b.Name.Contains("Pak choi") ||
+                                            b.Name.Contains("Mangold")).ToList();
+            }
+
+            foreach (var plant in carrot)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Kapusta") ||
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Cibule")).ToList();
+            }
+
+            var cucumber = context.Plants.Where(a => a.Name.Contains("Okurka")).ToList();
+
+
+            foreach (var plant in cucumber)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Hrách") ||
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Kopr") ||
+                                            b.Name.Contains("Celer") ||
+                                            b.Name.Contains("Salát") ||
+                                            b.Name.Contains("Cibule") ||
+                                            b.Name.Contains("Řepa") ||
+                                            b.Name.Contains("Bazalka") ||
+                                            b.Name.Contains("Pór") ||
+                                            b.Name.Contains("Brokolice") ||
+                                            b.Name.Contains("Květák") ||
+                                            b.Name.Contains("Kedluben") ||
+                                            b.Name.Contains("Kadeřávek") ||
+                                            b.Name.Contains("Kapusta")).ToList();
+            }
+
+            foreach (var plant in cucumber)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Rajče") ||
+                                            b.Name.Contains("Ředkvička") ||
+                                            b.Name.Contains("Česnek")).ToList();
+            }
+
+            var pepper = context.Plants.Where(a => a.Name.Contains("Paprika")).ToList();
+
+
+            foreach (var plant in pepper)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Mrkev") ||
+                                            b.Name.Contains("Kedluben") ||
+                                            b.Name.Contains("Okurka") ||
+                                            b.Name.Contains("Rajče")).ToList();
+            }
+
+            foreach (var plant in pepper)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Fazol")).ToList();
+            }
+
+            var tomato = context.Plants.Where(a => a.Name.Contains("Rajče")).ToList();
+
+
+            foreach (var plant in tomato)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Bazalka") ||
+                                            b.Name.Contains("Mrkev") ||
+                                            b.Name.Contains("Ředkvička") ||
+                                            b.Name.Contains("Řepa") ||
+                                            b.Name.Contains("Salát") ||
+                                            b.Name.Contains("Cibule") ||
+                                            b.Name.Contains("Česnek") ||
+                                            b.Name.Contains("Petržel") ||
+                                            b.Name.Contains("Pažitka")).ToList();
+            }
+
+            foreach (var plant in tomato)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Hrách")).ToList();
+            }
+
+            var radish = context.Plants.Where(a => a.Name.Contains("Ředkvička")).ToList();
+
+
+            foreach (var plant in radish)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Salát") ||
+                                            b.Name.Contains("Rajče") ||
+                                            b.Name.Contains("Kedluben") ||
+                                            b.Name.Contains("Mrkev") ||
+                                            b.Name.Contains("Hrách") ||
+                                            b.Name.Contains("Špenát") ||
+                                            b.Name.Contains("Fazol")).ToList();
+            }
+
+            foreach (var plant in radish)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Okurka") ||
+                                            b.Name.Contains("Kapusta") ||
+                                            b.Name.Contains("Kadeřávek") ||
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Tykev") ||
+                                            b.Name.Contains("Dýně")).ToList();
+            }
+
+            var squash = context.Plants.Where(a => a.Name.Contains("Tykev")).ToList();
+
+            foreach (var plant in squash)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Kukuřice") ||
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Hrách") ||
+                                            b.Name.Contains("Cibule") ||
+                                            b.Name.Contains("Špenát")).ToList();
+            };
+            foreach (var plant in squash)
+            {
+                plant.AvoidPlants = context.Plants.Where(b => b.Name.Contains("Rajče")).ToList();
+            };
+
+            var lettuce = context.Plants.Where(a => a.Name.Contains("Salát")).ToList();
+
+
+            foreach (var plant in lettuce)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Okurka") ||
+                                            b.Name.Contains("Rajče") ||
+                                            b.Name.Contains("Mrkev") ||
+                                            b.Name.Contains("Řepa") ||
+                                            b.Name.Contains("Kopr") ||
+                                            b.Name.Contains("Hrách") ||
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Brokolice") ||
+                                            b.Name.Contains("Květák") ||
+                                            b.Name.Contains("Kedluben") ||
+                                            b.Name.Contains("Kadeřávek") ||
+                                            b.Name.Contains("Kapusta") ||
+                                            b.Name.Contains("Ředkvička") ||
+                                            b.Name.Contains("Pór")).ToList();
+            }
+
+            foreach (var plant in lettuce)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Celer") ||
+                                            b.Name.Contains("Petržel")).ToList();
+            }
+
+            var spinach = context.Plants.Where(a => a.Name.Contains("Špenát")).ToList();
+
+
+            foreach (var plant in spinach)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Okurka") ||
+                                            b.Name.Contains("Rajče") ||
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Brokolice") ||
+                                            b.Name.Contains("Květák") ||
+                                            b.Name.Contains("Kedluben") ||
+                                            b.Name.Contains("Kadeřávek") ||
+                                            b.Name.Contains("Kapusta") ||
+                                            b.Name.Contains("Ředkvička")).ToList();
+            }
+
+            foreach (var plant in spinach)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Cibule") ||
+                                            b.Name.Contains("Česnek") ||
+                                            b.Name.Contains("Řepa") ||
+                                            b.Name.Contains("Okurka")).ToList();
+            }*/
 
             await context.Plants.AddRangeAsync(plants);
             await context.SaveChangesAsync();

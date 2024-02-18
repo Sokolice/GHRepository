@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Link, useParams } from "react-router-dom";
-import { Button, Header, Item, Label, Segment, Image, Divider, Icon, Grid, GridColumn } from "semantic-ui-react";
+import { Button, Header, Item, Label, Segment, Divider, Icon, Grid, GridColumn } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
@@ -11,7 +11,7 @@ export default observer(function PlantDetails() {
     const { selectedPlant, loadPlant, loadOtherPlants, otherPlants } = globalStore;
     const { id } = useParams();
     const { origin } = useParams();
-    const { bed } = useParams();
+    const { otherId } = useParams();
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -53,61 +53,69 @@ export default observer(function PlantDetails() {
                                 null
                             }
                         </Item.Extra>
-                        <Item.Extra>
-                            <Header as='h4'> Skudci:</Header>
+                        {store.pestsStore.currentPests.length > 0 ?
+                            <Item.Extra>
+                                <Header as='h4'> Skudci:</Header>
                                 <Item.Group>
-                                {
-                                store.pestsStore.currentPests.map((pest) => {
-                                    return (
+                                    {
+                                        store.pestsStore.currentPests.map((pest) => {
+                                            return (
 
-                                        <Item key={pest.pestDTO.id}>
-                                            <Item.Image size='small' src={`/src/assets/pests/${pest.pestDTO.imageSrc}`} />
-                                            <Item.Content>
-                                                <Item.Description>
-                                                    <b>Nazev: </b>
-                                                    <p>
-                                                        {pest.pestDTO.name}
-                                                    </p>
-                                                    <Divider hidden/>
-                                                        <b>Rady: </b>
+                                                <Item key={pest.pestDTO.id}>
+                                                    <Item.Image size='small' src={`/src/assets/pests/${pest.pestDTO.imageSrc}`} />
+                                                    <Item.Content>
+                                                        <Item.Description>
+                                                            <b>Nazev: </b>
+                                                            <p>
+                                                                {pest.pestDTO.name}
+                                                            </p>
+                                                            <Divider hidden />
+                                                            <b>Rady: </b>
 
-                                                    <p>
-                                                        {pest.pestDTO.advice}
-                                                    </p>
-                                                </Item.Description>
-                                            </Item.Content>
-                                        </Item>
-                                    )
-                                })
-                                
-                                }
+                                                            <p>
+                                                                {pest.pestDTO.advice}
+                                                            </p>
+                                                        </Item.Description>
+                                                    </Item.Content>
+                                                </Item>
+                                            )
+                                        })
+
+                                    }
                                 </Item.Group>
-                        </Item.Extra>
+                            </Item.Extra>
+                            : null
+                        }
                         <Item.Extra>
                             <Grid columns={2} divided>
                                 <GridColumn>
                                     <Header as='h4'><Icon name='thumbs down' color='red' /> Nesnese:</Header>
+                                    <Item.Group>
                                     {
                                         otherPlants.avoidPlants.map((plant) => {
                                             return (
-                                                <Item key={plant.id}>
+                                                <Item key={plant.id} as={Link} to={`/plants/${plant.id}/plants/${id}` }>
                                                     {plant.name}
                                                 </Item>
                                             )
                                         })
-                                    }
+                                        }
+
+                                    </Item.Group>
                                 </GridColumn>
                                 <GridColumn>
                                     <Header as='h4'><Icon name='thumbs up' color='green' /> Snese:</Header>
+                                    <Item.Group>
                                     {
                                         otherPlants.companionPlants.map((plant) => {
                                             return (
-                                                <Item key={plant.id}>
+                                                <Item key={plant.id} as={Link} to={`/plants/${plant.id}/plants/${id}`}>
                                                     {plant.name}
                                                 </Item>
                                             )
                                         })
-                                    }
+                                        }
+                                    </Item.Group>
                                 </GridColumn>
                             </Grid>                            
                         </Item.Extra>
@@ -115,7 +123,7 @@ export default observer(function PlantDetails() {
                 </Item>
 
             </Item.Group>
-            <Button as={Link} to={origin == null ? '/' : bed == null ? `/${origin}` : `/${origin}/${bed}`} content="Zpet" icon='pointing left' />
+            <Button as={Link} to={origin == null ? '/' : otherId == null ? `/${origin}` : `/${origin}/${otherId}`} content="Zpet" icon='pointing left' />
         </Segment>
     )
 }

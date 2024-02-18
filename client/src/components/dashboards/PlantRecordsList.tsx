@@ -33,9 +33,9 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
                 <Card.Header >{plant.name}</Card.Header>
             </Card.Content>
             <Card.Content extra>
-                <Card.Header>Datum vsadby: </Card.Header>{new Date(plantRecord.datePlanted).toLocaleString('cs-CZ', options)}
+                <Card.Header>Datum výsadby: </Card.Header>{new Date(plantRecord.datePlanted).toLocaleString('cs-CZ', options)}
                 <Divider />
-                <Card.Header>Mnozstni: </Card.Header>{plantRecord.amountPlanted}
+                <Card.Header>Množství: </Card.Header>{plantRecord.amountPlanted}
                 <Divider />
                 {plantRecord.progress >= 100 ?
                     <Progress percent={plantRecord.progress} progress success />
@@ -45,7 +45,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
                 <Popup content='Smazat' trigger={<Button icon='minus' color='red' onClick={(e) => handlePlantRecordDelete(e, plantRecord.id)} />} />
                 <Popup content='Recepty' trigger={<Button icon='utensils' color='blue' as={Link} to={`/recipeHints/${plant.name}`} />} />
                 <Divider hidden />
-                <Button icon='undo' onClick={() => openForm(plantRecord)} content="Uprav me" key={plantRecord.id} /> 
+                <Button icon='undo' onClick={() => openForm(plantRecord)} content="Uprav mne" key={plantRecord.id} /> 
                 <Divider hidden />
                 <Button icon='info' as={Link} to={`/plants/${plant.id}/plantrecords`} content="Detail" />
             </Card.Content>
@@ -101,7 +101,7 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
                                 <Label color='red'>
                                     <FontAwesomeIcon icon={faSnowflake} />
                                 </Label>
-                            Hrozi mrazy! Zakryj rotliny neodolavajici mrazu
+                            Hrozí mrazy! Zakryj rotliny neodolávající mrazu
                         </ItemHeader>
                     </ItemContent>
                 </Item>
