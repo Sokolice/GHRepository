@@ -3219,7 +3219,7 @@ namespace api.Persistence
                     Description = "Syrová řepa se dobře uplatní v salátech. Chutná s česnekem, křenem, zelím, jablky, pomeranči a ořechy. " +
                     "Z vařené řepy se připravují saláty se smetanou, majonézou, marinádou apod. Oba druhy salátů jsou dobrým doplňkem pečeného masa a minutek. " +
                     "Uvařenou mladou červenou řepu stačí jen osolit, pokapat citronem a máslem – je to dobrá příloha pro ty, kdo nemají rádi kyselé saláty."
-                }*/
+                }
                  new Plant
                 {
                     Name = "Celer bulvový Albin",
@@ -3256,7 +3256,7 @@ namespace api.Persistence
                     Description = "List celeru působí protizánětlivě a močopudně, působí příznivě na činnost ledvin, povzbuzuje chuť k jídlu, " +
                     "je vhodný pro revmatiky a diabetiky, uklidňuje a podporuje trávení, zpevňuje cévy. Doporučuje se při obezitě, neboť urychluje " +
                     "látkovou výměnu, a působí i jako zdraví neškodné afrodiziakum.[zdroj?]"
-                }
+                }*/
             };
 
 
@@ -3331,6 +3331,54 @@ namespace api.Persistence
                 plant.AvoidPlants = context.Plants.Where(b => b.Name.Contains("Fazol") ||
                                             b.Name.Contains("Hrách")).ToList();
             };*/
+
+            var beans = context.Plants.Where(a => a.Name.Contains("Fazol")).ToList();
+
+
+            foreach (var plant in beans)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Ředkvička") ||
+                                            b.Name.Contains("Okurka") ||
+                                            b.Name.Contains("Kapusta") ||
+                                            b.Name.Contains("Kedlubna") ||
+                                            b.Name.Contains("Salát") ||
+                                            b.Name.Contains("Květák") ||
+                                            b.Name.Contains("Celer") ||
+                                            b.Name.Contains("Rajče") ||
+                                            b.Name.Contains("Špenát") ||
+                                            b.Name.Contains("Řepa")).ToList();
+            }
+            
+            foreach (var plant in beans)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Hrách") ||
+                                            b.Name.Contains("Cibule") ||
+                                            b.Name.Contains("Pór") ||
+                                            b.Name.Contains("Česnek")).ToList();
+            }
+
+            var peas = context.Plants.Where(a => a.Name.Contains("Hrách")).ToList();
+
+
+            foreach (var plant in peas)
+            {
+                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Kedluben") ||
+                                            b.Name.Contains("Mrkev") ||
+                                            b.Name.Contains("Okurka") ||
+                                            b.Name.Contains("Ředkvička") ||
+                                            b.Name.Contains("Salát")).ToList();
+            }
+
+            foreach (var plant in peas)
+            {
+                plant.AvoidPlants = context.Plants.Where(b =>
+                                            b.Name.Contains("Fazol") ||
+                                            b.Name.Contains("Cibule") ||
+                                            b.Name.Contains("Pór") ||
+                                            b.Name.Contains("Česnek") ||
+                                            b.Name.Contains("Rajče")).ToList();
+            }
 
 
             await context.Plants.AddRangeAsync(plants);

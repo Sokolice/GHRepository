@@ -1,16 +1,18 @@
 ﻿using api.DTOs;
+using api.Model;
 
 namespace api.Relations
 {
     public class MonthTaskRelation
     {
-        public MonthWeekDTO MonthWeekDTO { get; set; }
-        public virtual List<GardeningTaskDTO> GardeningTasks { get; set; }
+        public string Month { get; set; }
+        public virtual List<WeekTaskRelation> WeekTaskRelations { get; set; }
+        public int Index { get; internal set; }
 
         public MonthTaskRelation()
         {
-            MonthWeekDTO = new MonthWeekDTO();
-            GardeningTasks= new List<GardeningTaskDTO>();
+           Month = string.Empty;
+           WeekTaskRelations = new List<WeekTaskRelation>();
         }
 
     }

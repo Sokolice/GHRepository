@@ -21,7 +21,7 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void, toSow
                     {plant.name} &nbsp;
                     {toSowMonth && store.globalStore.stats?.canBeSowedThisWeek.includes(plant.id)
                         ?
-                        <Popup content='Lze vysévat tento týden' trigger={
+                        <Popup content='Zbývá vysadit tento týden' trigger={
                             <Label color='red'>
                                 <FontAwesomeIcon icon={faSeedling} />
                             </Label>

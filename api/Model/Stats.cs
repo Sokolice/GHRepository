@@ -52,6 +52,7 @@ namespace api.Model
                 .Where(a => a.SewingMonths.Any(sm => sm.MonthIndex == month && sm.Week == weekOfMonth)).ToList();
             
             CanBeSowedThisWeek = plants
+                                .Where(a => a.PlantRecords.Count == 0)
                                 .Select(p => p.Id)
                                 .ToList();
 
@@ -97,7 +98,13 @@ namespace api.Model
             }
 
             JObject apiResponse = JObject.Parse(result);
-            IList<JToken> apiResults = apiResponse["daily"].Children().ToList();
+
+            if (!apiResponse.TryGetValue("daily", out var daily))
+            {
+                throw new Exception("missing data in response from OpenWeather API");
+            }
+
+            IList<JToken> apiResults = daily.Children().ToList();
 
             List<DailyObj> weatherObjects = new List<DailyObj>();
             foreach (JToken r in apiResults)

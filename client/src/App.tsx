@@ -12,7 +12,7 @@ function App() {
     const { bedsStore, plantRecordStore, globalStore, monthWeekStore, pestsStore } = useStore();
     const { loadBeds, beds } = bedsStore;
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
-    const { loadPlantDTO, plantDTOList, loadStats, stats } = globalStore;
+    const { loadPlantDTO, plantDTOList, loadStats } = globalStore;
     const { monthWeekRelationList, loadMonthWeeekRelations, currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
     const { pestsList, loadPests } = pestsStore;
 

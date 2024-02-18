@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Container, Header, Segment, Card, Grid, GridColumn, Image, CardContent, CardHeader, Label, Icon, Popup } from "semantic-ui-react";
+import { Container, Header, Segment, Card, Grid, GridColumn, Image, CardContent, CardHeader, Label, Popup } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling, faSquareCheck, faRepeat, faWheatAwn, faSnowflake, faFire, faCloudRain } from '@fortawesome/free-solid-svg-icons'
@@ -9,7 +9,7 @@ import LoadingComponent from "../layout/LoadingComponent";
 const HomePageComponent = observer(function HomePage() {
 
     const { globalStore} = useStore();
-    const { missingSowingAmount, loading, stats} = globalStore;
+    const { loading, stats} = globalStore;
 
 
     

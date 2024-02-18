@@ -23,20 +23,48 @@ namespace api.Controllers
         {
             var monthweeks = _context.MonthWeeks.Include(x => x.GardeningTasks).ToList();
 
-            var monthsDictionary = monthweeks.OrderBy(a => a.Week).OrderBy(b => b.MonthIndex).Where(c=>c.GardeningTasks.Count > 0).ToList();
-               
-            return monthsDictionary.Select(t => new MonthTaskRelation
-            {
-                GardeningTasks = MyMapping.MapGardeningTasks(t.GardeningTasks),
-                MonthWeekDTO = new MonthWeekDTO
-                {
-                    Month = t.Month,
-                    MonthIndex = t.MonthIndex,
-                    Week = t.Week,
-                }
+            var tasks = monthweeks
+                .GroupBy(a=> (a.Week, a.Month))
+                .GroupBy(a=> (a.First().Month, a.First().MonthIndex))
+                .Select(a=> new MonthTaskRelation{
+                    Month = a.Key.Month,
+                    Index = a.Key.MonthIndex,
+                    WeekTaskRelations = a.Select(b => new WeekTaskRelation
+                    {
+                        Week = b.Key.Week,
+                        GardeningTasks = b.SelectMany(c => c.GardeningTasks).Select(c => new GardeningTaskDTO
+                        {
+                            Id = c.Id,
+                            IsCompleted = c.IsCompleted,
+                            Name = c.Name,
+                            WasSent = c.WasSent                            
+                        }).ToList(),
+                    }).ToList()
+            }).OrderBy(a=> a.Index).ToList();
 
-            }).ToList();
+            return tasks;
+        }
 
+        [HttpPost]
+        public async Task<GardeningTaskDTO> PostGardeningTasks(GardeningTaskDTO gardeningTask)
+        {
+
+            var task = _context.Tasks.Find(gardeningTask.Id);
+            task.IsCompleted = gardeningTask.IsCompleted;
+
+            await _context.SaveChangesAsync();
+
+            return gardeningTask;
+        }
+
+        [Route("ShareTasks")]
+        [HttpPost]
+        public async Task<IResult> ShareTasks(WeekTaskRelation weekTaskRelation)
+        {
+
+
+
+            return Results.Ok();
         }
     }
 }

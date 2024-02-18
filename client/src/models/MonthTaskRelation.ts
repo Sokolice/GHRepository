@@ -1,7 +1,12 @@
 import { GardeningTaskDTO } from "./GardeningTaskDTO";
-import { MonthWeekDTO } from "./MonthWeekDTO";
 
 export interface MonthTaskRelation {
-    monthWeekDTO: MonthWeekDTO,
+    month: string,
+    index: number,
+    weekTaskRelations: Array<WeekTaskRelation>
+}
+
+export interface WeekTaskRelation {
+    week: number,
     gardeningTasks: Array<GardeningTaskDTO>
 }

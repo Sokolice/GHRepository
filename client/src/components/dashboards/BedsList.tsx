@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState } from "react";
-import { Button, Card, CardContent, CardGroup, Checkbox, Divider, Form, FormField, Label, List, ListItem, Segment } from "semantic-ui-react";
-import { store, useStore } from "../../app/stores/store";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { Button, Card, CardGroup, Checkbox, Form, FormField, Label, List, ListItem, Segment } from "semantic-ui-react";
+import { store } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../layout/LoadingComponent";
@@ -51,7 +51,7 @@ const BedsComponent = observer(function BedsList() {
                     bed.isDesign ? cell.plantRecordId : store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId
                         ?? "");
                 if(plant)
-                listItems.set(plant.id,plant);
+                    listItems.set(plant.id,plant);
             }
         })
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Menu } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 
@@ -19,10 +18,7 @@ export default function NavBar() {
                     Záhony
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/calendar' >
-                    Kalendar
-                </Menu.Item>
-                <Menu.Item as={NavLink} to='/settings' >
-                    Nastavení pocasi
+                    Kalendář
                 </Menu.Item>
             </Container>
         </Menu>

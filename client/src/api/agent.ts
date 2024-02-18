@@ -6,9 +6,10 @@ import { PlantRecordDTO } from '../models/PlantRecordDTO';
 import { MonthWeekRelation } from '../models/MonthWeekRelation';
 import { BedRelation } from '../models/BedRelation';
 import { PestRelation } from '../models/PestRelation';
-import { MonthTaskRelation } from '../models/MonthTaskRelation';
+import { MonthTaskRelation, WeekTaskRelation } from '../models/MonthTaskRelation';
 import { PlantPlantsRelation } from '../models/PlantPlantsRelation';
 import { Stats } from '../models/Stats';
+import { GardeningTaskDTO } from '../models/GardeningTaskDTO';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>
@@ -81,7 +82,9 @@ const Pests = {
 }
 
 const Tasks = {
-    getTasks: () => requests.get<MonthTaskRelation[]>('/GardeningTasks')
+    getTasks: () => requests.get<MonthTaskRelation[]>('/GardeningTasks'),
+    setTask: (task: GardeningTaskDTO) => requests.post<GardeningTaskDTO>('/GardeningTasks', task),
+    shareTasks: (weekTasks: WeekTaskRelation) => requests.post<WeekTaskRelation>('/GardeningTasks/ShareTasks', weekTasks)
 }
 
 const Stats = {

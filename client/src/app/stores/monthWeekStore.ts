@@ -3,8 +3,9 @@ import agent from "../../api/agent";
 import { MonthWeekRelation } from "../../models/MonthWeekRelation";
 import { store } from "./store";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
-import { MonthTaskRelation } from "../../models/MonthTaskRelation";
+import { MonthTaskRelation, WeekTaskRelation } from "../../models/MonthTaskRelation";
 import MyMapping from "../MyMapping";
+import { GardeningTaskDTO } from "../../models/GardeningTaskDTO";
 
 export default class MonthWeekStore {
 
@@ -14,7 +15,7 @@ export default class MonthWeekStore {
     currentMonthRelationList = new Array<MonthSewedRelation>();
     isCurrentMonthActive = false;
     hidePlanted = false;
-    monthWeekTaskRelationList = new Array<MonthTaskRelation>();
+    monthTaskRelations = new Array<MonthTaskRelation>();
 
 
     constructor() {
@@ -98,9 +99,9 @@ export default class MonthWeekStore {
         try {
             const relations = await agent.Tasks.getTasks();
             runInAction(() => {
-                this.monthWeekTaskRelationList = relations;
+                this.monthTaskRelations = relations;
             });
-
+            console.log(relations);
             store.globalStore.setLoading(false);
         }
         catch (error) {
@@ -108,5 +109,12 @@ export default class MonthWeekStore {
         }
     }
 
+    setMonthTaskRelation = async (task: GardeningTaskDTO) => {
+        await agent.Tasks.setTask(task);
+    }
+
+    shareWeekTasks = async (tasks: WeekTaskRelation) => {
+        await agent.Tasks.shareTasks(tasks);
+    }
 
 }

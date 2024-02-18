@@ -1,40 +1,59 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { store, useStore } from "../../app/stores/store";
-import {  Checkbox, Container, Item, Label } from "semantic-ui-react";
+import {  Button, Container, Header, Item, ItemGroup } from "semantic-ui-react";
 import LoadingComponent from "../layout/LoadingComponent";
+import TaskCheck from "../details/TaskCheck";
+import { WeekTaskRelation } from "../../models/MonthTaskRelation";
 
 const CalendarList = observer(function CalendarView() {
 
 
     const { monthWeekStore } = useStore();
-    const { monthWeekTaskRelationList, loadMonthTasksRelation } = monthWeekStore;
+    const { monthTaskRelations, loadMonthTasksRelation, shareWeekTasks } = monthWeekStore;
     useEffect(() => {
-        if (monthWeekTaskRelationList.length <= 0) {
+        if (monthTaskRelations.length <= 0) {
 
             loadMonthTasksRelation();
         }
-    }, [monthWeekTaskRelationList.length, loadMonthTasksRelation])
+    }, [monthTaskRelations.length, loadMonthTasksRelation])
+
+    function shareClick(week: WeekTaskRelation) {
+        shareWeekTasks(week);
+    }
+
+
     if (store.globalStore.loading)
         return (
             <LoadingComponent />
         )
     return (
-        <Container>
+        <Container key={"1"}>
             {
-                monthWeekTaskRelationList.map((item) => {
+                monthTaskRelations.map((month) => {
                     return (
                         <>
-                            <Label>{item.monthWeekDTO.month} - {item.monthWeekDTO.week}</Label>
+                            <Header as="h2" key={month.index}>{month.month}</Header>
+
+                            <ItemGroup key={month.month}>
                             {
-                                item.gardeningTasks.map((task) => {
+                                month.weekTaskRelations.map((week) => {
                                     return (
-                                        <Item key={task.id}>
-                                            <Checkbox label={task.name} checked={task.isCompleted} />
-                                        </Item>
+                                        <ItemGroup key={month.month + "_" + week.week}>
+                                            <Button content={`${week.week} .Týden`} icon='share square' labelPosition='right' onClick={()=>shareClick(week)} />
+                                            {week.gardeningTasks.map(task => {
+                                                return (
+                                                    <Item key={task.id}>
+                                                        <TaskCheck task={task} key={task.id} />
+                                                    </Item>
+                                                )
+                                            })}
+                                        </ItemGroup>
                                     )
-                                    })
+                                })
                             }
+                            </ItemGroup>
+                                        
                         </>
                     )
                 })

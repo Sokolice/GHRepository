@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { observer } from "mobx-react-lite";
-import { Button, Card, Container, Divider, Header, Image, Popup, Progress, Item, ItemContent, ItemHeader, Icon, Label } from "semantic-ui-react";
+import { Button, Card, Container, Divider, Image, Popup, Progress, Item, ItemContent, ItemHeader, Label } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { PlantDTO } from "../../models/PlantDTO";
 import LoadingComponent from "../layout/LoadingComponent";
 import PlantRecordFormComponent from "./PlantRecordForm";
@@ -33,7 +33,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
                 <Card.Header >{plant.name}</Card.Header>
             </Card.Content>
             <Card.Content extra>
-                <Card.Header>Datum vysadby: </Card.Header>{new Date(plantRecord.datePlanted).toLocaleString('cs-CZ', options)}
+                <Card.Header>Datum vsadby: </Card.Header>{new Date(plantRecord.datePlanted).toLocaleString('cs-CZ', options)}
                 <Divider />
                 <Card.Header>Mnozstni: </Card.Header>{plantRecord.amountPlanted}
                 <Divider />
