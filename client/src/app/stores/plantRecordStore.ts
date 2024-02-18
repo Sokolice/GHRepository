@@ -64,6 +64,8 @@ export default class PlantRecordStore {
     }
 
     createPlantRecord = async (plantRecord: PlantRecordDTO) => {
+
+        store.globalStore.setLoading(true);
         plantRecord.id = uiid();
         try {
             const response = await agent.PlantRecords.create(plantRecord);
@@ -76,6 +78,8 @@ export default class PlantRecordStore {
         catch (error) {
             console.log(error);
         }
+
+        store.globalStore.setLoading(false);
     }
 
     updatePlantRecord = async (plantRecord: PlantRecordDTO) => {
@@ -126,8 +130,6 @@ export default class PlantRecordStore {
                 update = false;
             }
         })
-
-
         store.globalStore.setLoading(false);
     }
 

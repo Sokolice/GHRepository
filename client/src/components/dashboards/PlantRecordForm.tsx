@@ -73,7 +73,9 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
     }
     return (
 
-        <Modal as={Form}
+        <Modal
+            dimmer='blurring' 
+            as={Form}
             onSubmit={handleSubmit}
             onClose={onClose}
             onOpen={onOpen}

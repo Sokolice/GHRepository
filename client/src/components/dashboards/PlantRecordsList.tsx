@@ -10,9 +10,9 @@ import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSnowflake } from "@fortawesome/free-solid-svg-icons";
+import ConfirmationDeleteComponent from "../details/ConfirmationDelete";
 
-const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
-    handlePlantRecordDelete: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void, openForm: (plantRecord: PlantRecordDTO) => void) => {
+const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO, openForm: (plantRecord: PlantRecordDTO) => void, openDeleteForm: (id: string) => void) => {
 
     const options = {
         year: "numeric",
@@ -42,7 +42,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO,
                 :
                     <Progress percent={plantRecord.progress} progress />
                 }
-                <Popup content='Smazat' trigger={<Button icon='minus' color='red' onClick={(e) => handlePlantRecordDelete(e, plantRecord.id)} />} />
+                <Popup content='Smazat' trigger={<Button icon='minus' color='red' onClick={() => openDeleteForm(plantRecord.id)} />} />
                 <Popup content='Recepty' trigger={<Button icon='utensils' color='blue' as={Link} to={`/recipeHints/${plant.name}`} />} />
                 <Divider hidden />
                 <Button icon='undo' onClick={() => openForm(plantRecord)} content="Uprav mne" key={plantRecord.id} /> 
@@ -59,6 +59,7 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
     const { stats } = globalStore;
    
     const [open, setOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
     const [plantRecord, setRecord] = useState({
         id: '',
         plantId: '',
@@ -66,16 +67,23 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
         amountPlanted: 0,
         progress: 0
     });
-
-   
-   
-    function handlePlantRecordDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
-        store.plantRecordStore.deletePlantRecord(id);
-    }
-
-    function openForm(plantRecord: PlantRecordDTO) {
+    const [recordId, setRecordId] = useState("");
+   function openForm(plantRecord: PlantRecordDTO) {
         setOpen(true);
         setRecord(plantRecord);
+    }
+
+    function openDeleteForm(id: string) {
+        setDeleteOpen(true);
+        setRecordId(id);
+    }
+
+    function onDeleteOpen() {
+        setDeleteOpen(true);
+    }
+
+    function onDeleteClose() {
+        setDeleteOpen(false);
     }
 
     function onOpen() {
@@ -113,11 +121,12 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
                 <Card.Group itemsPerRow='6'>
                     {
                         store.plantRecordStore.plantRecords.map((plantRecord: PlantRecordDTO) => {
-                            return RenderPlantRecord(plantRecord, store.globalStore.getPlantDTO(plantRecord.plantId), handlePlantRecordDelete, openForm)
+                            return RenderPlantRecord(plantRecord, store.globalStore.getPlantDTO(plantRecord.plantId), openForm, openDeleteForm)
                         })
                     }
 
                     <PlantRecordFormComponent plant={store.globalStore.getPlantDTO(plantRecord.plantId)} isOpen={open} onClose={onClose} onOpen={onOpen} plantRecordId={plantRecord.id} />
+                    <ConfirmationDeleteComponent isOpen={deleteOpen} onClose={onDeleteClose} onOpen={onDeleteOpen} plantRecordId={recordId} />
                 </Card.Group>
             </Container>
 
