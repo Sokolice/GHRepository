@@ -19,6 +19,10 @@ namespace api.Model
 
         public virtual List<Plant> AvoidPlants { get; set; }
 
+        public virtual List<Plant> CompanionPlants2 { get; set; }
+
+        public virtual List<Plant> AvoidPlants2 { get; set; }
+
         //trat ve ktere se pestuje 
         public int CropRotation { get; set; }
 

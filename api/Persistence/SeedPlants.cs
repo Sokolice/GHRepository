@@ -3260,7 +3260,7 @@ namespace api.Persistence
             };
 
 
-            /*var cD = context.Plants.Where(a=> a.Name.Contains("Dýně") || a.Name.Contains("Cuketa")).ToList();
+            var cD = context.Plants.Where(a=> a.Name.Contains("Dýně") || a.Name.Contains("Cuketa")).ToList();
 
             foreach (var plant in cD) 
             {
@@ -3330,7 +3330,7 @@ namespace api.Persistence
             {
                 plant.AvoidPlants = context.Plants.Where(b => b.Name.Contains("Fazol") ||
                                             b.Name.Contains("Hrách")).ToList();
-            };*/
+            };
 
             var beans = context.Plants.Where(a => a.Name.Contains("Fazol")).ToList();
 

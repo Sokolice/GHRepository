@@ -23,16 +23,18 @@ namespace api.Persistence
         {
             //lazy loading
             modelBuilder.Entity<Plant>()
-                .HasMany(a => a.CompanionPlants);
+                .HasMany(a => a.CompanionPlants)
+                .WithMany(a => a.CompanionPlants2)
+                .UsingEntity(join => join.ToTable("PlantCompanionPlant"));
 
             modelBuilder.Entity<Plant>()
-                .HasMany(a => a.AvoidPlants);
-
+                .HasMany(a => a.AvoidPlants)
+                .WithMany(a => a.AvoidPlants2)
+                .UsingEntity(join => join.ToTable("PlantAvoidPlant"));
 
             modelBuilder.Entity<Plant>()
                 .HasMany(a => a.SewingMonths)
                 .WithMany(b=> b.SewedPlant);
-
 
             modelBuilder.Entity<Plant>()
                 .HasMany(a => a.HarvestMonths)
@@ -42,7 +44,6 @@ namespace api.Persistence
                 .HasMany(a => a.PlantRecords)
                 .WithOne(b => b.Plant)
                 .HasForeignKey(c => c.PlantId);
-
 
             modelBuilder.Entity<GardeningTask>()
                 .HasMany(a => a.MonthWeeks)
