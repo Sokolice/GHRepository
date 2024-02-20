@@ -44,7 +44,8 @@ export default class BedsStore {
                             numOfRows: bedRecord.bed.numOfRows,
                             width: bedRecord.bed.width,
                             cells: bedRecord.cells,
-                            isDesign: bedRecord.bed.isDesign
+                            isDesign: bedRecord.bed.isDesign,
+                            cropRotation: bedRecord.bed.cropRotation
                         });
                 })
                 store.globalStore.setLoading(false);
@@ -75,7 +76,8 @@ export default class BedsStore {
                     this.selectedBed.name = bedRelation.bed.name;
                     this.selectedBed.numOfColumns = bedRelation.bed.numOfColumns;
                     this.selectedBed.numOfRows = bedRelation.bed.numOfRows;
-                    this.selectedBed.isDesign = bedRelation.bed.isDesign
+                    this.selectedBed.isDesign = bedRelation.bed.isDesign;
+                    this.selectedBed.cropRotation = bedRelation.bed.cropRotation;
                 });
 
                 store.globalStore.setLoading(false);
@@ -120,7 +122,7 @@ export default class BedsStore {
     }
 
 
-    createBed = async (aWidth: number, aLength: number, aName: string, aIsDesign: boolean) => {
+    createBed = async (aWidth: number, aLength: number, aName: string, aIsDesign: boolean, aCropRotation: number) => {
         const bed = <Bed>{};
         bed.id = uiid();
         bed.name = aName;
@@ -143,12 +145,13 @@ export default class BedsStore {
         bed.numOfColumns = c;
         bed.numOfRows = r;
         bed.isDesign = aIsDesign;
+        bed.cropRotation = aCropRotation;
 
         store.globalStore.setLoading(true);
 
         try {
             const newBed = <BedRelation>{
-                bed: <BedDTO>{ id: bed.id, name: bed.name, length: bed.length, numOfColumns: bed.numOfColumns, width: bed.width, numOfRows: bed.numOfRows, isDesign: bed.isDesign },
+                bed: <BedDTO>{ id: bed.id, name: bed.name, length: bed.length, numOfColumns: bed.numOfColumns, width: bed.width, numOfRows: bed.numOfRows, isDesign: bed.isDesign, cropRotation: bed.cropRotation },
                 cells: bed.cells          
             };
             await agent.Beds.create(newBed);

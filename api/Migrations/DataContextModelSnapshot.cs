@@ -126,6 +126,9 @@ namespace api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("CropRotation")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Length")
                         .HasColumnType("INTEGER");
 

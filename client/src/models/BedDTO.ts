@@ -5,5 +5,6 @@ export interface BedDTO {
     length: number, 
     numOfColumns: number,
     numOfRows: number,
-    isDesign: boolean
+    isDesign: boolean,
+    cropRotation:number
 }

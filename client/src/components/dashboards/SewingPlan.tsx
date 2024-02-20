@@ -134,8 +134,8 @@ const SewingPlanComponent = observer(function SewingPlan() {
     return (
         <Container>
             <Container textAlign='center'>
-                <Button toggle active={active} onClick={switchToCurrentMonth}>Aktualni vysev</Button>
-                <Button toggle active={planted} onClick={hidePlanted}>Skryt vysete</Button>
+                <Button toggle active={active} onClick={switchToCurrentMonth}>Aktuální výsev</Button>
+                <Button toggle active={planted} onClick={hidePlanted}>Skrýt vyseté</Button>
             </Container>
 
             <Container>

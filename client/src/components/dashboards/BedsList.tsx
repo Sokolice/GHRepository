@@ -1,5 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { Button, Card, CardGroup, Checkbox, Form, FormField, Label, List, ListItem, Segment } from "semantic-ui-react";
+import { Button, Card, CardGroup, Checkbox, Dropdown, Form, FormField, Label, List, ListItem, Segment } from "semantic-ui-react";
 import { store } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
@@ -18,13 +18,14 @@ const BedsComponent = observer(function BedsList() {
         name: "",
         length: 0,
         width: 0,
-        isDesign: false
+        isDesign: false,
+        cropRotation: 0
     })
 
-    
+    const [isRotationDisabled, setIsRotationDisabled] = useState(true);
 
     function AddBed() {
-        store.bedsStore.createBed(bed.width, bed.length, bed.name, bed.isDesign);
+        store.bedsStore.createBed(bed.width, bed.length, bed.name, bed.isDesign, bed.cropRotation);
     }
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -38,6 +39,9 @@ const BedsComponent = observer(function BedsList() {
 
     function handleBedDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         store.bedsStore.deleteBed(id);
+    }
+    const cropRotationChange = (e) => {
+        setIsRotationDisabled(!isRotationDisabled);
     }
 
     function listPlantsInBed(bed: Bed) {
@@ -55,6 +59,8 @@ const BedsComponent = observer(function BedsList() {
             }
         })
 
+        
+
         return (
             <List>
                 {
@@ -70,6 +76,16 @@ const BedsComponent = observer(function BedsList() {
         )
         
     }
+
+    function handleDropChange(e: SyntheticEvent<HTMLElement, Event>, data) {
+        setBed({ ...bed, cropRotation: data.value });
+    }
+
+    const options = [
+        { key: 1, text: '1. trať', value: 1 },
+        { key: 2, text: '2. trať', value: 2 },
+        { key: 3, text: '3. trať', value: 3 },
+    ]
 
     if (store.globalStore.loading)
         return (
@@ -93,6 +109,12 @@ const BedsComponent = observer(function BedsList() {
                         </Form.Group>
                         <FormField>
                             <Checkbox label='Tvorba návrhu' id='isDesign' name='isDesign' onClick={checkedChange}/>
+                        </FormField>
+                        <FormField>
+                            <Checkbox label='Pěstování v tratích ' id='isCropRotation' name='isCropRotation' onClick={cropRotationChange} />
+                        </FormField>
+                        <FormField>
+                            <Dropdown placeholder='Trať' options={options} scrolling disabled={isRotationDisabled} id='cropRotation' onChange={handleDropChange } />
                         </FormField>
                         <Form.Button type='submit'>
                             Přidat záhon

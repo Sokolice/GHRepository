@@ -61,7 +61,8 @@ namespace api.Core
                 NumOfColumns = bedRelation.Bed.NumOfColumns,
                 NumOfRows = bedRelation.Bed.NumOfRows,
                 Cells = bedRelation.Cells,
-                isDesign = bedRelation.Bed.isDesign
+                isDesign = bedRelation.Bed.isDesign,
+                CropRotation = bedRelation.Bed.CropRotation
             };
 
             return bed;
@@ -78,7 +79,8 @@ namespace api.Core
                 NumOfColumns = aBed.NumOfColumns,
                 NumOfRows = aBed.NumOfRows,
                 Width = aBed.Width,
-                isDesign = aBed.isDesign
+                isDesign = aBed.isDesign,
+                CropRotation = aBed.CropRotation
             };
             bedRelation.Cells = aBed.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList();
 

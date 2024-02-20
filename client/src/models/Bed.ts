@@ -7,5 +7,6 @@ export interface Bed {
     numOfColumns: number,
     numOfRows: number,
     name: string,
-    isDesign: boolean
+    isDesign: boolean,
+    cropRotation: number
 }

@@ -11,5 +11,6 @@ namespace api.DTOs
         public int NumOfColumns { get; set; }
         public int NumOfRows { get; set; }
         public bool isDesign {  get; set; }
+        public int CropRotation { get; set; }
     }
 }

@@ -4,7 +4,7 @@ import { MouseEvent, ReactNode, SyntheticEvent, useEffect, useState } from "reac
 import { Link, useParams } from "react-router-dom";
 import { store, useStore } from "../../app/stores/store";
 import LoadingComponent from "../layout/LoadingComponent";
-import { Button, DropdownItemProps, Form, Label, Segment, SegmentGroup } from "semantic-ui-react";
+import { Button, Divider, DropdownItemProps, Form, Label, Segment, SegmentGroup } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { Cell } from "../../models/Cell";
@@ -251,14 +251,20 @@ const BedComponent = observer(function Bed() {
                     <Form onSubmit={AddPlantImage}>
                     <Form.Field>
                         <Form.Dropdown options={loadDropDownItems()} onChange={handleDropChange} placeholder='Výběr' scrolling />
-                            </Form.Field>
-                        <Form.Button type='submit'>
+                    </Form.Field>
+                    <Form.Button type='submit'>
                             Vložit rostlinu
                     </Form.Button>
                 </Form>
                 {/*<Button icon='save' color='blue' content='Ulozit' onClick={saveBed} />*/}
             </Segment>
             <Segment>
+                {selectedBed.cropRotation > 0 ? (
+                    <Label color='green' ribbon>
+                        Pěstování v {selectedBed.cropRotation}. trati
+                    </Label>) : null
+                }
+                <Divider hidden />
                 {selectedBed.isDesign ? (
                     <Label color='blue' ribbon>
                         Návrh

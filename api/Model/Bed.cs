@@ -14,6 +14,8 @@ namespace api.Model
         public int NumOfColumns {  get; set; }
         public int NumOfRows { get; set; }
         public bool isDesign { get; set; }
+        public int CropRotation { get; set; }
+
 
         public Bed()
         {
@@ -24,6 +26,7 @@ namespace api.Model
             Width = 0;  
             Cells =  new List<Cell> { };
             isDesign = false;
+            CropRotation = 0;
         }
 
     }

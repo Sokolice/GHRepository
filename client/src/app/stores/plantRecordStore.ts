@@ -78,7 +78,7 @@ export default class PlantRecordStore {
         catch (error) {
             console.log(error);
         }
-
+        store.globalStore.loadStats();
         store.globalStore.setLoading(false);
     }
 
