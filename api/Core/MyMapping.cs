@@ -99,25 +99,7 @@ namespace api.Core
 
             return monthweeksDTOs;
         }
-
-        public static PlantDTO MapPlant(Plant aPlant)
-        {
-            var plantDTO = new PlantDTO
-            {
-                Id = aPlant.Id,
-                Name = aPlant.Name,
-                Description = aPlant.Description,
-                CropRotation = aPlant.CropRotation,
-                DirectSewing = aPlant.DirectSewing,
-                GerminationTemp = aPlant.GerminationTemp,
-                ImageSrc = aPlant.ImageSrc,
-                IsHybrid = aPlant.IsHybrid,
-                RepeatedPlanting = aPlant.RepeatedPlanting
-            };
-
-            return plantDTO;
-        }
-
+                
         public static PlantRecordDTO MapPlantRecord(PlantRecord aPlant)
         {
             var plantRecordDTO = new PlantRecordDTO
@@ -140,7 +122,7 @@ namespace api.Core
 
             foreach(var plant in plants)
             {
-                var mapedPlant = MapPlant(plant);
+                var mapedPlant = new PlantDTO(plant);
 
                 mapedPlants.Add(mapedPlant);
             };

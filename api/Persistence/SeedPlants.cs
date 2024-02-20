@@ -1,5 +1,9 @@
 ﻿using api.Model;
+using Newtonsoft.Json.Schema;
 using System.Linq;
+using api.Core;
+using Extensions = api.Core.Extensions;
+using System.Xml.Linq;
 
 namespace api.Persistence
 {
@@ -173,7 +177,7 @@ namespace api.Persistence
                     Description = "Lilek český raný je teplomilná rostlina, která si u nás získává stále větší oblibu. Její původ byste našli v oblasti Číny.\r\n\r\n" +
                     "Jedná se o často pěstovanou odrůdu lilku, známou svým pevným lesklým povrchem, tmavě fialové barvy, a bílou dužinou. Květenství má bílou barvu a objevuje se od června do září. \r\n\r\n" +
                     "Tato odrůda je velice pevná a kompaktní, a je poměrně dobře přizpůsobena i na naše chladnější podnebí."
-                }
+                },
                new Plant
                 {
                     Name = "Rajče červené cherry",
@@ -3256,362 +3260,496 @@ namespace api.Persistence
                     Description = "List celeru působí protizánětlivě a močopudně, působí příznivě na činnost ledvin, povzbuzuje chuť k jídlu, " +
                     "je vhodný pro revmatiky a diabetiky, uklidňuje a podporuje trávení, zpevňuje cévy. Doporučuje se při obezitě, neboť urychluje " +
                     "látkovou výměnu, a působí i jako zdraví neškodné afrodiziakum.[zdroj?]"
+                },
+
+                new Plant
+                {
+                    Name = "Kedluben raný Blankyt",
+                    IsHybrid = false,
+                    DirectSewing = false,
+                    GerminationTemp = 15,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
+
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                    },
+                    HarvestMonths = new List<MonthWeek> {
+
+                       monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]
+
+                    },
+                    CropRotation = 2,
+                    ImageSrc = "blankyt.jpg",
+                    Description = "Kedluben Blankyt je modrá, raná, slaběji olistěná odrůda. " +
+                    "Je vhodná pro pěstování z výsadby i z přímého výsevu počátkem dubna. " +
+                    "Bulvy jsou odolné k praskání a dřevnatění. Vegetační doba od výsevu do sklizně je 85 – 95 dní2. " +
+                    "Má také velmi jemnou chuť a je vhodný pro vaření, pečení nebo saláty. Rostlina má také velmi silnou vůni, která je podobná květu fialky." +
+                    " Kedluben Blankyt je odolný vůči chladu a může růst i v oblastech s nízkými teplotami."
+                },
+                 new Plant
+                {
+                    Name = "Lilek Violetta Lunga 3",
+                    IsHybrid = false,
+                    DirectSewing = false,
+                    GerminationTemp = 25,
+                    SewingMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
+
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                    },
+                    HarvestMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
+                    CropRotation = 1,
+                    ImageSrc = "lilek2.jpg",
+                    Description = "Violetta lunga 3 je středně raná, velmi výnosná odrůda lilku se silnou, stabilní a vysokou strukturou rostlin. " +
+                    "Tvoří dlouhé, kyjovité, tmavě fialové plody se zeleným kalichem. Délka plodu 25 - 30 cm. Jemná aromatická dužina. " +
+                    "Ideální lilek pro klasická středomořská jídla. Pro pěstování ve skleníku a na teplých místech i venku na záhonu."
+                },
+                 new Plant
+                {
+                    Name = "Ředkvička Rudi",
+                    IsHybrid = false,
+                    DirectSewing = true,
+                    GerminationTemp = 10,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)]
+
+                    },
+                    HarvestMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
+                    CropRotation = 3,
+                    ImageSrc = "rudi.jpg",
+                    Description = "Ředkvička je kořenová zelenina botanicky klasifikovaná jako varieta ředkev setá letní (Raphanus sativus var. sativus). " +
+                    "Kořen je kulovitý nebo válcovitý, různě zbarvený. Barva se pohybuje od bílé až k červeným nebo fialově zabarveným. " +
+                    "Existují i odrůdy červenobílé nebo žluté kulaté a bílé protáhlé. Dužnina bílá, u červených ředkviček někdy s nádechem do růžova, u starších kusů se skelným nádechem. " +
+                    "Chuť ředkvičky je pálivá, někdy vodová – závisí obecně na zálivce a počasí během vegetace. Prodává se na tržištích na jaře a na podzim ve svazečcích, někdy též loupaná. " +
+                    "Ředkvička pěstovaná volně na venkovním záhonu při dlouhých letních dnech vyhání do květu a bulva je pak malá a pálivá.",
+                    RepeatedPlanting = 14 
+                 },
+                 new Plant
+                {
+                    Name = "Ředkvička Riesenbutter",
+                    IsHybrid = false,
+                    DirectSewing = true,
+                    GerminationTemp = 6,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]
+
+                    },
+                    HarvestMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]},
+                    CropRotation = 3,
+                    ImageSrc = "riesenbutter.jpg",
+                    Description = "Ředkvička je kořenová zelenina botanicky klasifikovaná jako varieta ředkev setá letní (Raphanus sativus var. sativus). " +
+                    "Kořen je kulovitý nebo válcovitý, různě zbarvený. Barva se pohybuje od bílé až k červeným nebo fialově zabarveným. " +
+                    "Existují i odrůdy červenobílé nebo žluté kulaté a bílé protáhlé. Dužnina bílá, u červených ředkviček někdy s nádechem do růžova, u starších kusů se skelným nádechem. " +
+                    "Chuť ředkvičky je pálivá, někdy vodová – závisí obecně na zálivce a počasí během vegetace. Prodává se na tržištích na jaře a na podzim ve svazečcích, někdy též loupaná. " +
+                    "Ředkvička pěstovaná volně na venkovním záhonu při dlouhých letních dnech vyhání do květu a bulva je pak malá a pálivá.",
+                    RepeatedPlanting = 14
+                 }
+                 ,
+                new Plant
+                {
+                    Name = "Řepa Golden eye",
+                    IsHybrid = false,
+                    DirectSewing = true,
+                    GerminationTemp = 10,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)]},
+
+                    HarvestMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
+                    CropRotation = 23,
+                    ImageSrc="golden.jpg",
+                    Description = "Jedná se o nádhernou oranžovou řepu s jasně žlutou dužinou. " +
+                    "Odrůda salátové řepy roste do kulatých, šťavnatých bulviček s příjemně ovocnou, " +
+                    "sladkou chutí. Zelené listy se žlutými žilkami je vhodné zpracovat jako mangold. " +
+                    "Salátová řepa se skvěle hodí do salátů i pomazánek. Je výborna jak za syrového, " +
+                    "tak i vařeného stavu. Taktéž ji lze péct či nakládat."
+                }
+                ,
+                new Plant
+                {
+                    Name = "Meloun Charentais",
+                    IsHybrid = false,
+                    DirectSewing = false,
+                    GerminationTemp = 22,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)]
+                    },
+
+                    HarvestMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
+                    CropRotation = 1,
+                    ImageSrc="charentais.jpg",
+                    Description = "Cukrový meloun Charentais je velmi chutnou, ačkoliv u nás stále málo známou, starou francouzskou odrůdou. " +
+                    "Plody této odrůdy jsou velké, oválného tvaru. Kůrka je barvy světle zelené s tmavě zelenými pruhy, postupně se dle dozrávání přebarvuje do světle žluté se zelenými pruhy. " +
+                    "Řadí se mezi středně rané odrůdy, doba od naklíčení po sběr plodů trvá 75–85 dnů. Jako většina melounů potřebuje slunečné stanoviště a dostatek vody. Preferuje kypré půdy."
+                },
+                new Plant
+                {
+                    Name = "Salát ledový",
+                    IsHybrid = false,
+                    DirectSewing = true,
+                    GerminationTemp = 10,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+                    },
+                    HarvestMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)]
+
+                    },
+                    CropRotation = 3,
+                    ImageSrc = "ledovy.jpg",
+                    Description = "Ledový salát patří do čeledi hvězdnicovitých (Asteraceae). " +
+                    "Na rozdíl od mnoha jiných druhů salátů, které se sklízejí list po listu, vytváří tento salát hlávku. " +
+                    "Ta vyrůstá ze středového koštálu, na kterém se místy řidčeji, místy hustěji překrývají jednotlivé listy, společně vytvářející listovou růžici."
+                },
+                new Plant
+                {
+                    Name = "Salát hlávkový Attraktion",
+                    IsHybrid = false,
+                    DirectSewing = true,
+                    GerminationTemp = 10,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+},
+                    HarvestMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                    },
+                    CropRotation = 3,
+                    ImageSrc = "hlavkovy.jpg",  
+                    Description = "Velké zelené listy s osvěžující chutí naplňují ideální představu salátu. " +
+                    "Jen málokdo však ví, že hlávkový salát lze i tepelně upravovat. " +
+                    "Botanický název hlávkového salátu je „locika setá“. " +
+                    "Typickou chuť dodávají hlávkovému salátu kyseliny, které jsou v něm obsaženy, jako je např. kyselina citronová. " +
+                    "Za jeho lehkou nahořklost pak odpovídají jiné obsažené látky, konkrétně laktucin a laktukopikrin."
+                },
+                
+               new Plant
+                {
+                    Name = "Dýně okrasné",
+                    IsHybrid = false,
+                    DirectSewing = false,
+                    GerminationTemp = 20,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                    },
+                    HarvestMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
+                    CropRotation = 1,
+                    ImageSrc = "okrasne.jpg",
+                    Description = "Směs okrasných dýní."
                 }*/
             };
 
 
-            /*var cD = context.Plants.Where(a=> a.Name.Contains("Dýně") || a.Name.Contains("Cuketa")).ToList();
-
-            foreach (var plant in cD) 
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Kukuřice") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Hrách") ||
-                                            b.Name.Contains("Cibule") ||
-                                            b.Name.Contains("Špenát")).ToList();
-            };
-            foreach (var plant in cD)
-            {
-                plant.AvoidPlants = context.Plants.Where(b => b.Name.Contains("Rajče")).ToList();
-            };
-
-            var celery = context.Plants.Where(a => a.Name.Contains("Celer")).ToList();
-
-
-            foreach (var plant in celery)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Pór") ||
-                                            b.Name.Contains("Kedluben") ||
-                                            b.Name.Contains("Kadeřávek") ||
-                                            b.Name.Contains("Okurka") ||
-                                            b.Name.Contains("Paprika") ||
-                                            b.Name.Contains("Květák") ||
-                                            b.Name.Contains("Mrkev")).ToList();
-            };
-            foreach (var plant in celery)
-            {
-                plant.AvoidPlants = context.Plants.Where(b => b.Name.Contains("Kukuřice")).ToList();
-            };
-
-
-            var onions = context.Plants.Where(a => a.Name.Contains("Cibule")).ToList();
-
-
-            foreach (var plant in onions)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Mrkev") ||
-                                            b.Name.Contains("Řepa") ||
-                                            b.Name.Contains("Ředkvička") ||
-                                            b.Name.Contains("Salát") ||
-                                            b.Name.Contains("Petžel") ||
-                                            b.Name.Contains("Okurka") ||
-                                            b.Name.Contains("Rajče")).ToList();
-            };
-            foreach (var plant in onions)
-            {
-                plant.AvoidPlants = context.Plants.Where(b => b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Hrách") ||
-                                            b.Name.Contains("Kadeřávek") ||
-                                            b.Name.Contains("Kapusta")).ToList();
-            };
-
-            var garlics = context.Plants.Where(a => a.Name.Contains("Česnek")).ToList();
-
-
-            foreach (var plant in garlics)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Salát") ||
-                                            b.Name.Contains("Řepa") ).ToList();
-            };
-            foreach (var plant in garlics)
-            {
-                plant.AvoidPlants = context.Plants.Where(b => b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Hrách")).ToList();
-            };
-
-            var beans = context.Plants.Where(a => a.Name.Contains("Fazol")).ToList();
-
-
-            foreach (var plant in beans)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Ředkvička") ||
-                                            b.Name.Contains("Okurka") ||
-                                            b.Name.Contains("Kapusta") ||
-                                            b.Name.Contains("Kedlubna") ||
-                                            b.Name.Contains("Salát") ||
-                                            b.Name.Contains("Květák") ||
-                                            b.Name.Contains("Celer") ||
-                                            b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Špenát") ||
-                                            b.Name.Contains("Řepa")).ToList();
-            }
             
-            foreach (var plant in beans)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Hrách") ||
-                                            b.Name.Contains("Cibule") ||
-                                            b.Name.Contains("Pór") ||
-                                            b.Name.Contains("Česnek")).ToList();
-            }
-
-            var peas = context.Plants.Where(a => a.Name.Contains("Hrách")).ToList();
-
-
-            foreach (var plant in peas)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Kedluben") ||
-                                            b.Name.Contains("Mrkev") ||
-                                            b.Name.Contains("Okurka") ||
-                                            b.Name.Contains("Ředkvička") ||
-                                            b.Name.Contains("Salát")).ToList();
-            }
-
-            foreach (var plant in peas)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Cibule") ||
-                                            b.Name.Contains("Pór") ||
-                                            b.Name.Contains("Česnek") ||
-                                            b.Name.Contains("Rajče")).ToList();
-            }
-
-            var kales = context.Plants.Where(a => a.Name.Contains("Kapusta") || a.Name.Contains("Kadeřávek")).ToList();
-
-
-            foreach (var plant in kales)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Celer") ||
-                                            b.Name.Contains("Řepa") ||
-                                            b.Name.Contains("Kopr") ||
-                                            b.Name.Contains("Rozmarýn")).ToList();
-            }
-
-            foreach (var plant in kales)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Ředkvička") ||
-                                            b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Cibule")).ToList();
-            }
-
-            var kohlerabi = context.Plants.Where(a => a.Name.Contains("Kedluben")).ToList();
-
-
-            foreach (var plant in kohlerabi)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Celer") ||
-                                            b.Name.Contains("Pór") ||
-                                            b.Name.Contains("Cibule") ||
-                                            b.Name.Contains("Řepa") ||
-                                            b.Name.Contains("Salát") ||
-                                            b.Name.Contains("Špenát") ||
-                                            b.Name.Contains("Mrkev") ||
-                                            b.Name.Contains("Okurka") ||
-                                            b.Name.Contains("Paprika") ||
-                                            b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Hrách") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Ředkvička")).ToList();
-            }
-
-            var carrot = context.Plants.Where(a => a.Name.Contains("Mrkev")).ToList();
-
-
-            foreach (var plant in carrot)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Cibule") ||
-                                            b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Hrách") ||
-                                            b.Name.Contains("Pažitka") ||
-                                            b.Name.Contains("Pór") ||
-                                            b.Name.Contains("Ředkvička") ||
-                                            b.Name.Contains("Česnek") ||
-                                            b.Name.Contains("Kopr") ||
-                                            b.Name.Contains("Salát") ||
-                                            b.Name.Contains("Pak choi") ||
-                                            b.Name.Contains("Mangold")).ToList();
-            }
-
-            foreach (var plant in carrot)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Kapusta") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Cibule")).ToList();
-            }
-
-            var cucumber = context.Plants.Where(a => a.Name.Contains("Okurka")).ToList();
-
-
-            foreach (var plant in cucumber)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Hrách") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Kopr") ||
-                                            b.Name.Contains("Celer") ||
-                                            b.Name.Contains("Salát") ||
-                                            b.Name.Contains("Cibule") ||
-                                            b.Name.Contains("Řepa") ||
-                                            b.Name.Contains("Bazalka") ||
-                                            b.Name.Contains("Pór") ||
-                                            b.Name.Contains("Brokolice") ||
-                                            b.Name.Contains("Květák") ||
-                                            b.Name.Contains("Kedluben") ||
-                                            b.Name.Contains("Kadeřávek") ||
-                                            b.Name.Contains("Kapusta")).ToList();
-            }
-
-            foreach (var plant in cucumber)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Ředkvička") ||
-                                            b.Name.Contains("Česnek")).ToList();
-            }
-
-            var pepper = context.Plants.Where(a => a.Name.Contains("Paprika")).ToList();
-
-
-            foreach (var plant in pepper)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Mrkev") ||
-                                            b.Name.Contains("Kedluben") ||
-                                            b.Name.Contains("Okurka") ||
-                                            b.Name.Contains("Rajče")).ToList();
-            }
-
-            foreach (var plant in pepper)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Fazol")).ToList();
-            }
-
-            var tomato = context.Plants.Where(a => a.Name.Contains("Rajče")).ToList();
-
-
-            foreach (var plant in tomato)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Bazalka") ||
-                                            b.Name.Contains("Mrkev") ||
-                                            b.Name.Contains("Ředkvička") ||
-                                            b.Name.Contains("Řepa") ||
-                                            b.Name.Contains("Salát") ||
-                                            b.Name.Contains("Cibule") ||
-                                            b.Name.Contains("Česnek") ||
-                                            b.Name.Contains("Petržel") ||
-                                            b.Name.Contains("Pažitka")).ToList();
-            }
-
-            foreach (var plant in tomato)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Hrách")).ToList();
-            }
-
-            var radish = context.Plants.Where(a => a.Name.Contains("Ředkvička")).ToList();
-
-
-            foreach (var plant in radish)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Salát") ||
-                                            b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Kedluben") ||
-                                            b.Name.Contains("Mrkev") ||
-                                            b.Name.Contains("Hrách") ||
-                                            b.Name.Contains("Špenát") ||
-                                            b.Name.Contains("Fazol")).ToList();
-            }
-
-            foreach (var plant in radish)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Okurka") ||
-                                            b.Name.Contains("Kapusta") ||
-                                            b.Name.Contains("Kadeřávek") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Tykev") ||
-                                            b.Name.Contains("Dýně")).ToList();
-            }
-
-            var squash = context.Plants.Where(a => a.Name.Contains("Tykev")).ToList();
-
-            foreach (var plant in squash)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Kukuřice") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Hrách") ||
-                                            b.Name.Contains("Cibule") ||
-                                            b.Name.Contains("Špenát")).ToList();
-            };
-            foreach (var plant in squash)
-            {
-                plant.AvoidPlants = context.Plants.Where(b => b.Name.Contains("Rajče")).ToList();
-            };
-
-            var lettuce = context.Plants.Where(a => a.Name.Contains("Salát")).ToList();
-
-
-            foreach (var plant in lettuce)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Okurka") ||
-                                            b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Mrkev") ||
-                                            b.Name.Contains("Řepa") ||
-                                            b.Name.Contains("Kopr") ||
-                                            b.Name.Contains("Hrách") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Brokolice") ||
-                                            b.Name.Contains("Květák") ||
-                                            b.Name.Contains("Kedluben") ||
-                                            b.Name.Contains("Kadeřávek") ||
-                                            b.Name.Contains("Kapusta") ||
-                                            b.Name.Contains("Ředkvička") ||
-                                            b.Name.Contains("Pór")).ToList();
-            }
-
-            foreach (var plant in lettuce)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Celer") ||
-                                            b.Name.Contains("Petržel")).ToList();
-            }
-
-            var spinach = context.Plants.Where(a => a.Name.Contains("Špenát")).ToList();
-
-
-            foreach (var plant in spinach)
-            {
-                plant.CompanionPlants = context.Plants.Where(b => b.Name.Contains("Okurka") ||
-                                            b.Name.Contains("Rajče") ||
-                                            b.Name.Contains("Fazol") ||
-                                            b.Name.Contains("Brokolice") ||
-                                            b.Name.Contains("Květák") ||
-                                            b.Name.Contains("Kedluben") ||
-                                            b.Name.Contains("Kadeřávek") ||
-                                            b.Name.Contains("Kapusta") ||
-                                            b.Name.Contains("Ředkvička")).ToList();
-            }
-
-            foreach (var plant in spinach)
-            {
-                plant.AvoidPlants = context.Plants.Where(b =>
-                                            b.Name.Contains("Cibule") ||
-                                            b.Name.Contains("Česnek") ||
-                                            b.Name.Contains("Řepa") ||
-                                            b.Name.Contains("Okurka")).ToList();
-            }*/
 
             await context.Plants.AddRangeAsync(plants);
+
+            foreach(var plant in plants)
+            {
+                var shortName = plant.Name.Substring(0, plant.Name.IndexOf(" "));
+
+                var keyCompanion = Extensions.CompanionPlants.FirstOrDefault(a => a.Key == shortName).Value;
+
+                if(keyCompanion != null) { 
+
+                var companions = keyCompanion.ToList();
+
+                foreach(var companion in companions)
+                {
+                    if (companion != "")
+                    {
+                        var p = context.Plants.Where(a=> a.Name.Contains(companion)).FirstOrDefault();
+                        plant.CompanionPlants.Add(p);
+                    }
+                }
+
+                }
+                var keyAvoids = Extensions.AvoidPlants.FirstOrDefault(a => a.Key == shortName).Value;
+
+                if(keyAvoids != null) { 
+
+                var avoids = keyAvoids.ToList();
+
+                foreach (var avoid in avoids)
+                {
+                    if(avoid != "") { 
+                        var p = context.Plants.Where(a => a.Name.Contains(avoid)).FirstOrDefault();
+                        plant.AvoidPlants.Add(p);
+                    }
+                }
+                }
+            }
+
             await context.SaveChangesAsync();
-
-
         }
     }
 }

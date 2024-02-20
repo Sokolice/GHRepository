@@ -30,7 +30,6 @@ namespace api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
             var app = builder.Build();
 
@@ -54,7 +53,7 @@ namespace api
                 var context = services.GetRequiredService<DataContext>();
                 context.Database.Migrate();
 
-              // await SeedPlants.SeedData(context);
+               //await SeedPlants.SeedData(context);
             }
             catch (Exception ex)
             {

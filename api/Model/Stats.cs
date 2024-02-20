@@ -19,6 +19,7 @@ namespace api.Model
 
         public Guid Id { get; set; }
         public DateTime Date {  get; set; }
+        public DateTime WeatherChecked { get; set; }
         public bool FreezeAlert { get; set; }
         public bool HighTemperatureAlert { get; set; }
         public bool RainPeriodAlert { get; set; }
@@ -91,25 +92,30 @@ namespace api.Model
 
             var now = DateTime.Now;
             var last = now;
-            var lastStats = new Stats();
+            var lastStatsWeather = new Stats();
             if (_context.Stats != null)
             {
-                lastStats = _context.Stats.OrderByDescending(a => a.Date).FirstOrDefault();
-                if(lastStats != null)
+                lastStatsWeather = _context.Stats.OrderByDescending(a => a.WeatherChecked).FirstOrDefault();
+                if(lastStatsWeather != null)
                 {
-                    last = lastStats.Date;
+                    last = lastStatsWeather.WeatherChecked;
                 }
 
             }
 
-            if ((now - last).Hours >= 24 || last == now)
+            if ((now - last).Hours > 4 || last == now)
+            {
+                WeatherChecked = DateTime.Now;
                 await CheckWeatherAsync();
+            }
             else
             {
-                FreezeAlert = lastStats.FreezeAlert;
-                HighTemperatureAlert = lastStats.HighTemperatureAlert;
-                RainPeriodAlert = lastStats.RainPeriodAlert;
-
+                if (lastStatsWeather != null)
+                {
+                    FreezeAlert = lastStatsWeather.FreezeAlert;
+                    HighTemperatureAlert = lastStatsWeather.HighTemperatureAlert;
+                    RainPeriodAlert = lastStatsWeather.RainPeriodAlert;
+                }
             }
 
 

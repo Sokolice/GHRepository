@@ -1,4 +1,6 @@
-﻿namespace api.DTOs
+﻿using api.Model;
+
+namespace api.DTOs
 {
     public class PlantDTO
     {
@@ -19,9 +21,6 @@
 
         public int RepeatedPlanting { get; set; }
 
-        public bool CanBeSowedThisWeek { get; set; }
-
-
         public PlantDTO()
         {
             Id = new Guid();
@@ -29,6 +28,19 @@
             Description = string.Empty;
             ImageSrc = string.Empty;
             RepeatedPlanting = 0;
+        }
+
+        public PlantDTO(Plant aPlant)
+        {
+            Id = aPlant.Id;
+            Name = aPlant.Name;
+            IsHybrid = aPlant.IsHybrid;
+            DirectSewing = aPlant.DirectSewing;
+            GerminationTemp = aPlant.GerminationTemp;
+            CropRotation = aPlant.CropRotation;
+            Description = aPlant.Description;
+            ImageSrc = aPlant.ImageSrc;
+            RepeatedPlanting = aPlant.RepeatedPlanting;
         }
     }
 }

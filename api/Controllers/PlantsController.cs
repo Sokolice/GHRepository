@@ -28,18 +28,8 @@ namespace api.Controllers
         {
             var plants = _context.Plants.ToList();
 
-            var plantsDTO = plants.Select(a => new PlantDTO
-            {
-                CropRotation = a.CropRotation,
-                Description = a.Description,
-                DirectSewing = a.DirectSewing,
-                GerminationTemp = a.GerminationTemp,
-                Id = a.Id,
-                ImageSrc = a.ImageSrc,
-                IsHybrid = a.IsHybrid,
-                Name = a.Name,
-                RepeatedPlanting = a.RepeatedPlanting,
-            }).ToList();
+            var plantsDTO = plants.Select(a => new PlantDTO(a))
+                                  .ToList();
             
             return plantsDTO;
         }
@@ -50,18 +40,7 @@ namespace api.Controllers
         {
             var plant = _context.Plants.Find(id);
 
-            var plantDTO = new PlantDTO
-            {
-                Id = plant.Id,
-                CropRotation = plant.CropRotation,
-                Description = plant.Description,
-                DirectSewing = plant.DirectSewing,
-                GerminationTemp = plant.GerminationTemp,
-                ImageSrc = plant.ImageSrc,
-                IsHybrid = plant.IsHybrid,
-                Name = plant.Name,
-                RepeatedPlanting = plant.RepeatedPlanting
-            };
+            var plantDTO = new PlantDTO(plant);
 
 
             return plantDTO;
@@ -147,7 +126,7 @@ namespace api.Controllers
 
             var others = new PlantPlantsRelation
             {
-                Plant = MyMapping.MapPlant(plant),
+                Plant = new PlantDTO(plant),
                 AvoidPlants =MyMapping.MapPlantList(plant.AvoidPlants).OrderBy(a=>a.Name).ToList(),
                 CompanionPlants = MyMapping.MapPlantList(plant.CompanionPlants).OrderBy(a => a.Name).ToList()
             };
