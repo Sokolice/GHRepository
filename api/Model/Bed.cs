@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Security.Policy;
 
-namespace api.Model
+namespace API.Model
 {
     public class Bed
     {

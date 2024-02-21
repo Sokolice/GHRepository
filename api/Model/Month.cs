@@ -1,4 +1,4 @@
-﻿namespace api.Model
+﻿namespace API.Model
 {
     public class Month
     {

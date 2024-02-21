@@ -1,11 +1,11 @@
-﻿using api.Model;
+﻿using API.Model;
 using Newtonsoft.Json.Schema;
 using System.Linq;
-using api.Core;
-using Extensions = api.Core.Extensions;
+using API.Core;
+using Extensions = API.Core.Extensions;
 using System.Xml.Linq;
 
-namespace api.Persistence
+namespace API.Persistence
 {
     public class SeedPlants
     {
@@ -1911,7 +1911,7 @@ namespace api.Persistence
                 },
                 new Plant
                 {
-                    Name = "BIO Paprika Korosko",
+                    Name = "Paprika Korosko BIO",
                     IsHybrid = false,
                     DirectSewing = false,
                     GerminationTemp = 28,
@@ -3705,7 +3705,48 @@ namespace api.Persistence
                     CropRotation = 1,
                     ImageSrc = "okrasne.jpg",
                     Description = "Směs okrasných dýní."
-                }*/
+                },*/
+                
+                new Plant
+                {
+                    Name = "Paprika polní",
+                    IsHybrid = false,
+                    DirectSewing = false,
+                    GerminationTemp = 28,
+                    SewingMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
+
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)],
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)]  },
+                    HarvestMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]},
+                    CropRotation = 1,
+                    ImageSrc = "paprika.jpg",
+                    Description = "Paprika (Capsicum) je rod rostlin z čeledi lilkovité (Solanaceae). " +
+                    "Jsou to vytrvalé keře nebo i malé stromy s jednoduchými střídavými listy a pravidelnými pětičetnými květy, " +
+                    "které jsou opylované hmyzem. Plodem je dužnatá bobule. Semena v přírodě rozšiřují ptáci. "
+                }
             };
 
 

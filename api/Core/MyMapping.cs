@@ -1,10 +1,10 @@
-﻿using api.Model;
-using api.DTOs;
-using api.Relations;
+﻿using API.Model;
+using API.DTOs;
+using API.Relations;
 using System.Numerics;
 using System.Collections.Generic;
 
-namespace api.Core
+namespace API.Core
 {
     public static class MyMapping
     {

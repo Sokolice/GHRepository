@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using api.Model;
-using api.Persistence;
-using api.DTOs;
+using API.Model;
+using API.Persistence;
+using API.DTOs;
 using AutoMapper;
-using api.Core;
-using api.Relations;
+using API.Core;
+using API.Relations;
 
-namespace api.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

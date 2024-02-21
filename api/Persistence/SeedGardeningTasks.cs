@@ -1,6 +1,6 @@
-﻿using api.Model;
+﻿using API.Model;
 
-namespace api.Persistence
+namespace API.Persistence
 {
     public class SeedGardeningTasks
     {

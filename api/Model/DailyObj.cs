@@ -1,7 +1,7 @@
-﻿using api;
+﻿using API;
 using Newtonsoft.Json;
 
-namespace api.Model
+namespace API.Model
 {
     public class DailyObj
     {

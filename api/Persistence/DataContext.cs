@@ -1,8 +1,8 @@
-﻿using api.Model;
+﻿using API.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 
-namespace api.Persistence
+namespace API.Persistence
 {
     public class DataContext : DbContext
     {

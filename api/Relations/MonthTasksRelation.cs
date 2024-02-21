@@ -1,7 +1,7 @@
-﻿using api.DTOs;
-using api.Model;
+﻿using API.DTOs;
+using API.Model;
 
-namespace api.Relations
+namespace API.Relations
 {
     public class MonthTaskRelation
     {

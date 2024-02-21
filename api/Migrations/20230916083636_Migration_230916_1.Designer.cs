@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using api.Persistence;
+using API.Persistence;
 
 #nullable disable
 
-namespace api.Migrations
+namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20230916083636_Migration_230916_1")]

@@ -1,7 +1,7 @@
-﻿using api.Core;
-using api.DTOs;
-using api.Persistence;
-using api.Relations;
+﻿using API.Core;
+using API.DTOs;
+using API.Persistence;
+using API.Relations;
 using Humanizer;
 using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +11,7 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace api.Model
+namespace API.Model
 {
     public class Stats
     {

@@ -1,6 +1,6 @@
-﻿using api.Model;
+﻿using API.Model;
 
-namespace api.DTOs
+namespace API.DTOs
 {
     public class BedDTO
     {

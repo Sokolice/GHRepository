@@ -1,10 +1,10 @@
-﻿using api.Model;
+﻿using API.Model;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 
-namespace api.Persistence
+namespace API.Persistence
 {
     public class SeedMonthWeek
     {

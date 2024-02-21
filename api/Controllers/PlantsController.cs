@@ -1,15 +1,15 @@
-﻿using api.Model;
+﻿using API.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using api.Persistence;
-using api.DTOs;
+using API.Persistence;
+using API.DTOs;
 using System.ComponentModel;
 using System.Collections.Specialized;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using api.Relations;
-using api.Core;
+using API.Relations;
+using API.Core;
 
-namespace api.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

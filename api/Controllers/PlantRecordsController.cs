@@ -1,12 +1,12 @@
-﻿using api.DTOs;
-using api.Model;
-using api.Relations;
-using api.Persistence;
+﻿using API.DTOs;
+using API.Model;
+using API.Relations;
+using API.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using api.Core;
+using API.Core;
 
-namespace api.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

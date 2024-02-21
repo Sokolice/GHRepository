@@ -1,9 +1,9 @@
-﻿using api.DTOs;
-using api.Model;
-using api.Persistence;
+﻿using API.DTOs;
+using API.Model;
+using API.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
-namespace api.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,7 +1,7 @@
-﻿using api.Model;
+﻿using API.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.DTOs
+namespace API.DTOs
 {
     public class PlantRecordDTO
     {

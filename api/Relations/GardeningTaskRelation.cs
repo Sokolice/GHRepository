@@ -1,6 +1,6 @@
-﻿using api.DTOs;
+﻿using API.DTOs;
 
-namespace api.Relations
+namespace API.Relations
 {
     public class GardeningTaskRelation
     {

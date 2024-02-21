@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using api.Persistence;
+using API.Persistence;
 using System.Web.Http;
-using api.Core;
+using API.Core;
 
-namespace api
+namespace API
 {
     public class Program
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 
-namespace api.Model
+namespace API.Model
 {
     [PrimaryKey(nameof(Month), nameof(Week))]
     public class MonthWeek
