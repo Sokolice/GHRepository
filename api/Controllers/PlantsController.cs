@@ -133,5 +133,20 @@ namespace API.Controllers
 
             return others;            
         }
+
+        [HttpGet]
+        [Route("GetAllPlantsRelations")]
+        //[HttpGet("{id}/others")]
+        public List<PlantPlantsRelation> GetAllPlantsRelations()
+        {
+            var others = _context.Plants.Select(a => new PlantPlantsRelation
+            {
+                Plant = new PlantDTO(a),
+                AvoidPlants = MyMapping.MapPlantList(a.AvoidPlants).ToList(),
+                CompanionPlants = MyMapping.MapPlantList(a.CompanionPlants).ToList()
+            }).ToList();
+
+            return others;
+        }
     }
 }

@@ -7,6 +7,7 @@ import { BedRelation } from "../../models/BedRelation";
 import { Bed } from "../../models/Bed";
 import { Cell } from "../../models/Cell";
 import { BedDTO } from "../../models/BedDTO";
+import { PlantDTO } from "../../models/PlantDTO";
 
 export default class BedsStore {
     bedList = new Map<string, Bed>();
@@ -35,6 +36,20 @@ export default class BedsStore {
             //console.log(bedRecords);
             runInAction(() => {
                 bedRecords.forEach(bedRecord => {
+
+                    const ids = new Map<string, PlantDTO>();
+
+                    bedRecord.cells.forEach(cell => {
+                        if (cell.plantRecordId != "") {
+
+                            const plant: PlantDTO = store.globalStore.getPlantDTO(
+                                bedRecord.bed.isDesign ? cell.plantRecordId : store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId
+                                    ?? "");
+                            if (plant)
+                                ids.set(plant.id, plant);
+                        }
+                    })
+
                     this.bedList.set(bedRecord.bed.id,
                         <Bed>{
                             id: bedRecord.bed.id,
@@ -45,7 +60,8 @@ export default class BedsStore {
                             width: bedRecord.bed.width,
                             cells: bedRecord.cells,
                             isDesign: bedRecord.bed.isDesign,
-                            cropRotation: bedRecord.bed.cropRotation
+                            cropRotation: bedRecord.bed.cropRotation,
+                            plants: ids
                         });
                 })
                 store.globalStore.setLoading(false);
@@ -60,7 +76,8 @@ export default class BedsStore {
 
     loadBed = async (id: string) => {
 
-        let bed = this.bedList.get(id);
+        const bed = this.bedList.get(id);
+        //console.log("bed: " + bed);
         if (bed) {
             this.selectedBed = bed;
         }
@@ -68,6 +85,19 @@ export default class BedsStore {
             store.globalStore.setLoading(true);
             try {
                 const bedRelation = await agent.Beds.details(id);
+
+
+                const ids = new Map<string, PlantDTO>();
+                bedRelation.cells.forEach(cell => {
+                    if (cell.plantRecordId != "") {
+
+                        const plant: PlantDTO = store.globalStore.getPlantDTO(
+                            bedRelation.bed.isDesign ? cell.plantRecordId : store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId
+                                ?? "");
+                        if (plant)
+                            ids.set(plant.id, plant);
+                    }
+                })
                 runInAction(() => {
                     this.selectedBed.id = bedRelation.bed.id;
                     this.selectedBed.cells = bedRelation.cells;
@@ -78,6 +108,7 @@ export default class BedsStore {
                     this.selectedBed.numOfRows = bedRelation.bed.numOfRows;
                     this.selectedBed.isDesign = bedRelation.bed.isDesign;
                     this.selectedBed.cropRotation = bedRelation.bed.cropRotation;
+                    this.selectedBed.plants = ids;
                 });
 
                 store.globalStore.setLoading(false);
@@ -146,6 +177,7 @@ export default class BedsStore {
         bed.numOfRows = r;
         bed.isDesign = aIsDesign;
         bed.cropRotation = aCropRotation;
+        bed.plants = new Map<string, PlantDTO>();
 
         store.globalStore.setLoading(true);
 

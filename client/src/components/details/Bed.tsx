@@ -4,28 +4,32 @@ import { MouseEvent, ReactNode, SyntheticEvent, useEffect, useState } from "reac
 import { Link, useParams } from "react-router-dom";
 import { store, useStore } from "../../app/stores/store";
 import LoadingComponent from "../layout/LoadingComponent";
-import { Button, Divider, DropdownItemProps, Form, Label, Segment, SegmentGroup } from "semantic-ui-react";
+import { Button, Divider, DropdownItemProps, Form, FormGroup, Label, Segment, SegmentGroup } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { Cell } from "../../models/Cell";
+import { DropItem } from "../../models/DropItem";
 
 
 
 
-const BedComponent = observer(function Bed() {   
-    const options: DropdownItemProps[] | { key: string; text: string; value: string; image: { avatar: boolean; src: string; }; }[] |undefined=[];
+const BedComponent = observer(function Bed() {
+    const options: DropdownItemProps[] | DropItem [] | undefined=[];
 
     const [plantId, setPlantId] = useState('');
     const [thisPlantRecordId, setPlantRecordId] = useState('');
-    const { bedsStore, globalStore, plantRecordStore } = useStore();
+    const { bedsStore, globalStore, plantRecordStore, plantStore } = useStore();
     const { selectedBed, loadBed } = bedsStore;
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
+    const { allPlantsRelations, loadAllPlantsRelations } = plantStore;
 
     const { loadPlantDTO, plantDTOList } = globalStore;
 
     const { id } = useParams();
 
     useEffect(() => {
+        if (allPlantsRelations.length <= 0)
+            loadAllPlantsRelations();
         if (plantDTOList.size <= 0)
             loadPlantDTO();
         if (plantRecordMap.size <= 0)
@@ -36,38 +40,71 @@ const BedComponent = observer(function Bed() {
         }
         fetchData();
 
-    }, [id, loadBed, loadPlantRecords, plantRecordMap.size, loadPlantDTO, plantDTOList.size])
+    }, [id, loadBed, loadPlantRecords, plantRecordMap.size, loadPlantDTO, plantDTOList.size, allPlantsRelations.length, loadAllPlantsRelations])
 
+    
+
+    function pushToOptions(key: string, text: string, value: string, image: string, avoid: boolean, companion: boolean) {
+
+        const opt: DropItem = {
+            key: key,
+            text: text,
+            value: value,
+            image: {avatar: false, src: `/src/assets/plants/${image}`}
+        }
+
+        if (avoid)
+            opt.label = { color: 'red', circular: true, empty: true };
+
+        if (companion)
+            opt.label = { color: 'green', circular: true, empty: true };
+            
+
+        options.push(opt);
+    }
    
     function loadDropDownItems() {
-        if (selectedBed.isDesign) {
-            store.globalStore.plantDTOList.forEach((plant) => {
-                options.push({
-                    key: plant.id,
-                    text: plant.name,
-                    value: plant.id,
-                    image: { avatar: false, src: `/src/assets/plants/${plant.imageSrc}` }
-                })
+        if (selectedBed.cropRotation > 0 && selectedBed.isDesign) {
+            console.log("trat a navrh");
+            store.globalStore.plantDTOList.forEach((p) => {
+                //console.log(p.name + " trat: " + p.cropRotation);
+                if (p.cropRotation == selectedBed.cropRotation || (p.cropRotation == 23 && (selectedBed.cropRotation == 2 || selectedBed.cropRotation == 3))) {
+                    let avoid = false;
+                    let companion = false;
+
+                    selectedBed.plants.forEach(planted => {
+                        console.log(planted.name);
+                        const relation = store.plantStore.getPlantRelation(planted.id);
+
+
+                        const findAvoid = relation?.avoidPlants.find(a => a.id == p.id);
+                        if (findAvoid != undefined) 
+                            avoid = true;
+
+                        const findCompanion = relation?.companionPlants.find(a => a.id == p.id);
+
+                        if (findCompanion != undefined)
+                            companion = true;
+                    })
+                    //find relation for plant in bed and set avoid or companion to true
+
+                    pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion) 
+                }
             })
         }
         else { 
             store.plantRecordStore.plantRecordMap.forEach((plantRecord: PlantRecordDTO) => {
-            
+                //console.log(plantRecord);
+                //console.log(store.globalStore.plantDTOList);
                 const plant: PlantDTO = store.globalStore.getPlantDTO(plantRecord.plantId);
 
-                options.push({
-                    key: plantRecord.id,
-                    text: plant.name + ": " + plantRecord.datePlanted,
-                    value: plant.id,
-                    image: { avatar: false, src: `/src/assets/plants/${plant.imageSrc}` }
-                })
+                pushToOptions(plantRecord.id, plant.name, plant.id, plant.imageSrc,false, false); 
             })
         }
             return options;
     }
 
     function AddPlantImage() {
-        //console.log("id:" + plantId);
         const plant: PlantDTO = store.globalStore.getPlantDTO(plantId);
 
         const imagePath = 'url(/src/assets/plants/' + plant?.imageSrc + ")";
@@ -86,23 +123,9 @@ const BedComponent = observer(function Bed() {
         const maxColumn = Math.max(...activeCells.map((a) => a.x));
         const minRow = Math.min(...activeCells.map((a) => a.y));
         const maxRow = Math.max(...activeCells.map((a) => a.y));
-
-        //const toBeDeleted = new Array<Cell>();
-        //const toBeDeletedId = new Array<string>();
-
-        /*activeCells.forEach(cell => {
-            if (cell.x != minColumn || cell.y != minRow) {
-                cell.isHidden = true;
-                //toBeDeleted.push(cell);
-                //toBeDeletedId.push(cell.id);
-            }
-        });*/
+        
 
         runInAction(() => {
-            /*selectedBed.cells = selectedBed.cells.filter(cell => {
-                return toBeDeleted.indexOf(cell) < 0;
-            })*/
-
             const maxC = (maxColumn - minColumn) + 1;
             const maxR = (maxRow - minRow) + 1;
 
@@ -132,8 +155,6 @@ const BedComponent = observer(function Bed() {
                 }
             });
         });
-
-        //store.bedsStore.deleteCells(toBeDeletedId);
         store.bedsStore.updateBed(selectedBed);
     }
 
@@ -190,10 +211,14 @@ const BedComponent = observer(function Bed() {
         if (cell.isHidden)
             return;
         function showPlantRecordDetails(): ReactNode {
-
+            //console.log(cell.plantRecordId);
             if (cell.plantRecordId != "") {
+                //console.log(cell.plantRecordId);
                
                 const plantRecord: PlantRecordDTO = store.plantRecordStore.getPlantRecord(cell.plantRecordId);
+
+                //console.log(store.plantRecordStore.plantRecordMap);
+
                 const id = selectedBed.isDesign ? cell.plantRecordId : plantRecord.plantId
                 if (id) {
                     const plant = store.globalStore.getPlantDTO(id);
@@ -248,13 +273,16 @@ const BedComponent = observer(function Bed() {
     return (
         <SegmentGroup>        
             <Segment>
+                
                     <Form onSubmit={AddPlantImage}>
+                    <FormGroup inline>
                     <Form.Field>
                         <Form.Dropdown options={loadDropDownItems()} onChange={handleDropChange} placeholder='Výběr' scrolling />
                     </Form.Field>
                     <Form.Button type='submit'>
                             Vložit rostlinu
-                    </Form.Button>
+                        </Form.Button>
+                    </FormGroup>
                 </Form>
                 {/*<Button icon='save' color='blue' content='Ulozit' onClick={saveBed} />*/}
             </Segment>

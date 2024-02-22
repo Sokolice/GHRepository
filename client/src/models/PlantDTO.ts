@@ -4,7 +4,7 @@ export interface PlantDTO {
     isHybrid: boolean
     directSewing: boolean
     germinationTemp: number
-    cropRotatoin: number
+    cropRotation: number
     description: string
     imageSrc: string
     repeatedPlanting: number

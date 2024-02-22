@@ -1,5 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { Button, Card, CardGroup, Checkbox, Dropdown, Form, FormField, Label, List, ListItem, Segment } from "semantic-ui-react";
+import { Button, Card, CardGroup, Checkbox, Divider, Dropdown, Form, FormField, Label, List, ListItem, Segment } from "semantic-ui-react";
 import { store } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
@@ -46,20 +46,7 @@ const BedsComponent = observer(function BedsList() {
 
     function listPlantsInBed(bed: Bed) {
 
-        const listItems = new Map<string, PlantDTO>();
-
-        bed.cells.forEach(cell => {
-            if (cell.plantRecordId != "") {
-
-                const plant: PlantDTO = store.globalStore.getPlantDTO(
-                    bed.isDesign ? cell.plantRecordId : store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId
-                        ?? "");
-                if(plant)
-                    listItems.set(plant.id,plant);
-            }
-        })
-
-        
+        const listItems = bed.plants;        
 
         return (
             <List>
@@ -128,21 +115,22 @@ const BedsComponent = observer(function BedsList() {
                 <CardGroup>
                     {store.bedsStore.beds.map((bed: Bed) => (
                         <Card key={bed.id}>
-                            {bed.isDesign ? (
-
-                                <Label attached='top' color='blue'>Návrh</Label>) : null
-                            }
+                            
                             <Card.Content>
+                                {bed.cropRotation > 0 || bed.isDesign ? (
+
+                                    <Label attached='top' color='blue'>{bed.cropRotation > 0 ? bed.cropRotation + " trať" : null}  {bed.isDesign ? "Návrh" : null}</Label>
+                                        ) : null
+                                }
+                                
                                 <Card.Header>{bed.name}</Card.Header>
                                 <Card.Header>sirka: {bed.width}</Card.Header>
                                 <Card.Header>delka: {bed.length}</Card.Header>
                                 {listPlantsInBed(bed)}
                                 <Button icon='info' color='blue' as={Link} to={`/beds/${bed.id}`} content="Detail" />
                                 <Button icon='minus' color='red' content='Smazat' onClick={(e) => handleBedDelete(e, bed.id)} />
-                                                                
+                                                    
                             </Card.Content>
-                            
-                           
                         </Card>
                     ))}
                 </CardGroup>

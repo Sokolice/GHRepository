@@ -1,4 +1,5 @@
 import { Cell } from "./Cell";
+import { PlantDTO } from "./PlantDTO";
 export interface Bed {
     id: string,
     width: number,
@@ -8,5 +9,6 @@ export interface Bed {
     numOfRows: number,
     name: string,
     isDesign: boolean,
-    cropRotation: number
+    cropRotation: number,
+    plants: Map<string, PlantDTO>
 }

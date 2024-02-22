@@ -96,6 +96,8 @@ export default class GlobalStore {
         }
     }
 
+    
+
     setLoading = (state: boolean) => {
         runInAction(() => {
             this.loading = state;

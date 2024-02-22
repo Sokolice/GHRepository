@@ -43,6 +43,7 @@ const Plants = {
     getPlants: () => requests.get<PlantDTO[]>('/Plants'),
     details: (id: string) => requests.get<PlantDTO>(`/Plants/${id}`),
     getOtherPlants: (id: string) => requests.get<PlantPlantsRelation>(`/Plants/GetOtherPlants?id=${id}`),
+    getAllPlantsRelations: () => requests.get<PlantPlantsRelation[]>('/Plants/GetAllPlantsRelations'),
     /*create: (monthweek: MonthWeekRelation) => axios.post('/activities', monthweek),
     update: (monthweek: MonthWeekRelation) => axios.put(`/activities/${monthweek.id}`, monthweek),
     delete: (id: string) => axios.delete(`/activities/${id}`)*/
