@@ -13,7 +13,9 @@ export default class BedsStore {
     selectedBed: BedRelation = {
         bed: <BedDTO>{},
         cells: [],
-        plants: []
+        plants: [],
+        avoidPlantsIds: [],
+        companionPlantsIds: []
     };
     constructor() {
         makeAutoObservable(this)
@@ -165,7 +167,9 @@ export default class BedsStore {
                     cropRotation: bed.cropRotation
                 },
                 cells: bed.cells,
-                plants: new Array<PlantDTO>
+                plants: new Array<PlantDTO>,
+                avoidPlants: new Array<string>,
+                companionPlants: new Array<string>
             };
             await agent.Beds.create(newBed);
             runInAction(() => {

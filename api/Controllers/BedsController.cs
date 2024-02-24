@@ -28,6 +28,12 @@ namespace API.Controllers
 
             var bedsDTO = beds.Select(a => new BedRelation(a)).ToList();
 
+            foreach(var bed in bedsDTO)
+            {
+                bed.GetAllCompanionPlants(_context);
+                bed.GetAllAvoidPlants(_context);
+            }
+
             return bedsDTO;
         }
 

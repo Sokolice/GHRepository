@@ -41,7 +41,7 @@ namespace API.Controllers
             return monthsDictionary.Select(y => new MonthSewedRelation
             {
                 Month = y.Key,
-                SewedPlants = MyMapping.MapPlants(y.Value).OrderBy(a=>a.Name).ToList(),
+                SewedPlants = MyMapping.MapPlantsFromDTO(y.Value).OrderBy(a=>a.Name).ToList(),
             }).ToList();
         }
 
@@ -54,9 +54,9 @@ namespace API.Controllers
             var monthWeeksRelations = _context.MonthWeeks.OrderBy(a => a.MonthIndex).Select(x => new MonthWeekRelation
             {
                 GardeningTasks = MyMapping.MapGardeningTasks(x.GardeningTasks),
-                HarvestedPlants = MyMapping.MapPlants(x.HarvestedPlant),
+                HarvestedPlants = MyMapping.MapPlantsFromDTO(x.HarvestedPlant),
                 MonthWeekDTO = new MonthWeekDTO{Month = x.Month, MonthIndex = x.MonthIndex, Week = x.Week},
-                SewedPlants = MyMapping.MapPlants(x.SewedPlant)
+                SewedPlants = MyMapping.MapPlantsFromDTO(x.SewedPlant)
             }).ToList();
 
             return monthWeeksRelations;

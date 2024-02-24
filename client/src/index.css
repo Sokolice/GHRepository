@@ -44,11 +44,9 @@ body{
 }
 
 .grid-item {
-    /*width: 32px;
-    height: 32px;*/
+    position: relative;
     border: solid 1px #888;
     margin: 1px;
-    padding: 20px 0;
 }
 .grid-item:focus{
     background-color:blueviolet;
@@ -68,6 +66,15 @@ body{
 
 .hidden {
     visibility: hidden
+}
+.dell_Cell {
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    background-color: rgba(219, 40, 40, 0.8) !important;
+}
+.lbl-name {
+    background-color: rgba(232, 232, 232, 0.8) !important;
 }
 /*end home page styles*/
 @media print {

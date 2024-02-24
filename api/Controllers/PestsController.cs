@@ -31,7 +31,7 @@ namespace API.Controllers
                     Id = a.Id,
                     ImageSrc = a.ImageSrc
                 },
-                Plants = MyMapping.MapPlants(a.Plants)
+                Plants = MyMapping.MapPlantsFromDTO(a.Plants)
                 
             }).ToList();
 

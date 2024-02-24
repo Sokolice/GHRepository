@@ -25,7 +25,7 @@ namespace API.Core
             return gardeningTaskDTOs;
         }
 
-        public static List<PlantDTO> MapPlants(List<Plant> list)
+        public static List<PlantDTO> MapPlantsFromDTO(List<Plant> list)
         {
             var plantDTOs = new List<PlantDTO>();
             if (list != null)
@@ -53,21 +53,8 @@ namespace API.Core
             }
 
             return monthweeksDTOs;
-        }          
+        }         
 
-        public static List<PlantDTO> MapPlantList(List<Plant> plants){
-
-            List<PlantDTO> mapedPlants = new List<PlantDTO>();
-
-            foreach(var plant in plants)
-            {
-                var mapedPlant = new PlantDTO(plant);
-
-                mapedPlants.Add(mapedPlant);
-            };
-
-            return mapedPlants;
-        }
 
         public static List<PlantRecordDTO> MapPlantRecordsList(List<PlantRecord> plants)
         {

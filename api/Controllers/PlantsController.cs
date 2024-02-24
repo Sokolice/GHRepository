@@ -127,8 +127,8 @@ namespace API.Controllers
             var others = new PlantPlantsRelation
             {
                 Plant = new PlantDTO(plant),
-                AvoidPlants =MyMapping.MapPlantList(plant.AvoidPlants).OrderBy(a=>a.Name).ToList(),
-                CompanionPlants = MyMapping.MapPlantList(plant.CompanionPlants).OrderBy(a => a.Name).ToList()
+                AvoidPlants =MyMapping.MapPlantsFromDTO(plant.AvoidPlants).OrderBy(a=>a.Name).ToList(),
+                CompanionPlants = MyMapping.MapPlantsFromDTO(plant.CompanionPlants).OrderBy(a => a.Name).ToList()
             };
 
             return others;            
@@ -142,8 +142,8 @@ namespace API.Controllers
             var others = _context.Plants.Select(a => new PlantPlantsRelation
             {
                 Plant = new PlantDTO(a),
-                AvoidPlants = MyMapping.MapPlantList(a.AvoidPlants).ToList(),
-                CompanionPlants = MyMapping.MapPlantList(a.CompanionPlants).ToList()
+                AvoidPlants = MyMapping.MapPlantsFromDTO(a.AvoidPlants).ToList(),
+                CompanionPlants = MyMapping.MapPlantsFromDTO(a.CompanionPlants).ToList()
             }).ToList();
 
             return others;

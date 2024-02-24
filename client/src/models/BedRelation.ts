@@ -5,5 +5,7 @@ import { PlantDTO } from "./PlantDTO";
 export interface BedRelation {
     bed: BedDTO,
     cells: Array<Cell>,
-    plants: Array<PlantDTO>
+    plants: Array<PlantDTO>,
+    avoidPlantsIds: Array<string>,
+    companionPlantsIds: Array<string>
 }

@@ -64,32 +64,53 @@ const BedComponent = observer(function Bed() {
     }
    
     function loadDropDownItems() {
+        console.log("avoid " + selectedBed.avoidPlantsIds.length);
+        console.log("copanion " + selectedBed.companionPlantsIds.length);
         if (selectedBed?.bed.cropRotation > 0 && selectedBed?.bed.isDesign) {
-            console.log("trat a navrh");
             store.globalStore.plantDTOList.forEach((p) => {
                 //console.log(p.name + " trat: " + p.cropRotation);
-                if (p.cropRotation == selectedBed.bed.cropRotation || (p.cropRotation == 23 && (selectedBed.bed.cropRotation == 2 || selectedBed.cropRotation == 3))) {
+                if (p.cropRotation == selectedBed.bed.cropRotation || (p.cropRotation == 23 && (selectedBed.bed.cropRotation == 2 || selectedBed.bed.cropRotation == 3))) {
                     let avoid = false;
                     let companion = false;
 
-                    selectedBed.plants.forEach(planted => {
-                        console.log(planted.name);
-                        const relation = store.plantStore.getPlantRelation(planted.id);
-
-
-                        const findAvoid = relation?.avoidPlants.find(a => a.id == p.id);
-                        if (findAvoid != undefined) 
+                    if (selectedBed.avoidPlantsIds.length > 0)
+                        if (selectedBed.avoidPlantsIds.includes(p.id))
                             avoid = true;
 
-                        const findCompanion = relation?.companionPlants.find(a => a.id == p.id);
-
-                        if (findCompanion != undefined)
+                    if (selectedBed.companionPlantsIds.length > 0)
+                        if (selectedBed.companionPlantsIds.includes(p.id))
                             companion = true;
-                    })
-                    //find relation for plant in bed and set avoid or companion to true
-
-                    pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion) 
+                    pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion)
                 }
+                else {
+                    let avoid = false;
+                    let companion = false;
+
+                    if (selectedBed.avoidPlantsIds.length > 0)
+                        if (selectedBed.avoidPlantsIds.includes(p.id))
+                            avoid = true;
+
+                    if (selectedBed.companionPlantsIds.length > 0)
+                        if (selectedBed.companionPlantsIds.includes(p.id))
+                            companion = true;
+                    pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion)
+                }
+            })
+        }
+        else if (selectedBed.bed.isDesign) {
+            store.globalStore.plantDTOList.forEach((p) => {
+                //console.log(p.name + " trat: " + p.cropRotation);
+                    let avoid = false;
+                    let companion = false;
+
+                if (selectedBed.avoidPlantsIds.length > 0)
+                    if (selectedBed.avoidPlantsIds.includes(p.id))
+                            avoid = true;
+
+                if (selectedBed.companionPlantsIds.length > 0)
+                    if (selectedBed.companionPlantsIds.includes(p.id))
+                            companion = true;
+                    pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion)                
             })
         }
         else { 
@@ -97,8 +118,17 @@ const BedComponent = observer(function Bed() {
                 //console.log(plantRecord);
                 //console.log(store.globalStore.plantDTOList);
                 const plant: PlantDTO = store.globalStore.getPlantDTO(plantRecord.plantId);
+                console.log(plant);
+                let avoid = false;
+                let companion = false;
 
-                pushToOptions(plantRecord.id, plant.name, plant.id, plant.imageSrc,false, false); 
+                if (selectedBed.avoidPlantsIds.includes(plant.id))
+                    avoid = true;
+
+                if (selectedBed.companionPlantsIds.includes(plant.id))
+                    companion = true;
+
+                pushToOptions(plantRecord.id, plant.name, plant.id, plant.imageSrc, avoid, companion); 
             })
         }
             return options;
@@ -224,7 +254,7 @@ const BedComponent = observer(function Bed() {
                 if (id) {
                     const plant = store.globalStore.getPlantDTO(id);
                     if (plant) {
-                        return <Label as={Link} to={selectedBed?.bed.isDesign ? `/plants/${id}/beds/${selectedBed.bed.id}` : '/plantrecords'} >
+                        return <Label className="lbl-name" as={Link} to={selectedBed?.bed.isDesign ? `/plants/${id}/beds/${selectedBed.bed.id}` : '/plantrecords'} >
                             {plant?.name} {selectedBed?.bed.isDesign ? null : ": " + plantRecord.datePlanted}
                         </Label>
                     }
@@ -236,13 +266,19 @@ const BedComponent = observer(function Bed() {
         }
 
         return (
-            <div className={'grid-item' + (cell.isActive ? " clicked" : "")} onClick={(e) => handleClick(e)}
-                data-x={cell.x} data-y={cell.y} key={cell.x + '_' + cell.y}
+            <div className={'grid-item' + (cell.isActive ? " clicked" : "")}
+                onClick={(e) => handleClick(e)}
+                data-x={cell.x}
+                data-y={cell.y}
+                key={cell.x + '_' + cell.y}
                 id={cell.x + '_' + cell.y}
                 style={generateCellStyle(cell)}
             >
                 {showPlantRecordDetails()}
-                {cell.plantRecordId != "" ? <Button icon='minus' size='tiny' onClick={() => deleteClick(cell.objectID)} className='no_print' /> : null} 
+                {cell.plantRecordId != "" ?
+                    <Button icon='minus'  size='tiny' onClick={() => deleteClick(cell.objectID)} className='no_print, dell_Cell' />
+                    :
+                    null} 
             </div>
         )
     }
