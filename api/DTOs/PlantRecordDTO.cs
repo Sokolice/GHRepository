@@ -1,5 +1,6 @@
 ﻿using API.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 
 namespace API.DTOs
 {
@@ -19,30 +20,37 @@ namespace API.DTOs
             PlantId = Guid.NewGuid();
         }
 
-
-
-        public static void calculateProgress(PlantRecordDTO record)
+        public PlantRecordDTO(PlantRecord aPlantRecord)
         {
-            var min = record.DatePlanted.Ticks;
-            var max = record.PresumedHarvest.Ticks;
+            Id = aPlantRecord.Id;
+            AmountPlanted = aPlantRecord.AmountPlanted;
+            DatePlanted = aPlantRecord.DatePlanted;
+            PlantId = aPlantRecord.PlantId;
+        }
+
+
+
+        public void calculateProgress()
+        {
+            var min = DatePlanted.Ticks;
+            var max = PresumedHarvest.Ticks;
 
             var today = DateTime.Today.Ticks;
 
             var progress = (((today - min) * 100) / (max - min));
 
             if ((max - min) > 0)
-                record.Progress = Convert.ToInt32(progress);
+                Progress = Convert.ToInt32(progress);
             else
-                record.Progress = 0;
+                Progress = 0;
         }
 
-        public static void CalculatePresumedHarvest(PlantRecordDTO plantRecord, Plant plant)
+        public void CalculatePresumedHarvest(Plant plant)
         {
 
             var firstHarvestMonth = plant.HarvestMonths.OrderBy(a => a.MonthIndex).FirstOrDefault();
 
-            var presumedHarvest = plantRecord.DatePlanted.AddMonths(firstHarvestMonth.MonthIndex - 1);
-            plantRecord.PresumedHarvest = presumedHarvest;
+            PresumedHarvest = DatePlanted.AddMonths(firstHarvestMonth.MonthIndex - 1);
         }
     }
 }

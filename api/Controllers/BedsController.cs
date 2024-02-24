@@ -26,23 +26,7 @@ namespace API.Controllers
         {
             var beds = _context.Beds.ToList();
 
-            var bedsDTO = beds.Select(a => new BedRelation
-            {
-                Bed = new BedDTO
-                {
-                    Id = a.Id,
-                    Width = a.Width,
-                    Length = a.Length,
-                    Name = a.Name,
-                    NumOfColumns = a.NumOfColumns,
-                    NumOfRows = a.NumOfRows,
-                    isDesign = a.isDesign,
-                    CropRotation = a.CropRotation
-                },
-
-                Cells = a.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList()
-            }
-            ).ToList();
+            var bedsDTO = beds.Select(a => new BedRelation(a)).ToList();
 
             return bedsDTO;
         }
@@ -50,11 +34,9 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<BedRelation>> PostBed(BedRelation bedRelation)
         {
-
-            var bed = bedRelation;
-
-
-            _context.Beds.Add(MyMapping.MapBed(bedRelation));
+            var bed = new Bed(bedRelation);
+            
+            _context.Beds.Add(bed);
 
             await _context.SaveChangesAsync();
 
@@ -91,7 +73,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            return MyMapping.MapBedRelation(bed);
+            return new BedRelation(bed);
         }
 
         [HttpPut("{id}")]
@@ -106,18 +88,21 @@ namespace API.Controllers
             {
                 var bed = await _context.Beds.FindAsync(id);
 
+                
 
                 if (bed != null)
                 {
-
                     bed.Name = bedRelation.Bed.Name;
                     bed.Length = bedRelation.Bed.Length;
                     bed.Width = bedRelation.Bed.Width;
                     bed.NumOfRows = bedRelation.Bed.NumOfRows;
                     bed.NumOfColumns = bedRelation.Bed.NumOfColumns;
                     bed.Cells = bedRelation.Cells;
-                    bed.isDesign = bedRelation.Bed.isDesign;
+                    bed.IsDesign = bedRelation.Bed.IsDesign;
                     bed.CropRotation = bedRelation.Bed.CropRotation;
+
+                    bed.Plants = _context.Plants.Where(a => bedRelation.Plants.Select(b => b.Id).ToList().Contains(a.Id)).ToList();
+
                 }
 
                 await _context.SaveChangesAsync();

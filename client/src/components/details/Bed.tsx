@@ -64,11 +64,11 @@ const BedComponent = observer(function Bed() {
     }
    
     function loadDropDownItems() {
-        if (selectedBed.cropRotation > 0 && selectedBed.isDesign) {
+        if (selectedBed?.bed.cropRotation > 0 && selectedBed?.bed.isDesign) {
             console.log("trat a navrh");
             store.globalStore.plantDTOList.forEach((p) => {
                 //console.log(p.name + " trat: " + p.cropRotation);
-                if (p.cropRotation == selectedBed.cropRotation || (p.cropRotation == 23 && (selectedBed.cropRotation == 2 || selectedBed.cropRotation == 3))) {
+                if (p.cropRotation == selectedBed.bed.cropRotation || (p.cropRotation == 23 && (selectedBed.bed.cropRotation == 2 || selectedBed.cropRotation == 3))) {
                     let avoid = false;
                     let companion = false;
 
@@ -111,7 +111,7 @@ const BedComponent = observer(function Bed() {
         const activeCells = new Array<Cell>();
 
         runInAction(() => {
-            selectedBed.cells.forEach((cell) => {
+            selectedBed?.cells.forEach((cell) => {
                 if (cell.isActive) {
                     activeCells.push(cell);
                 }
@@ -130,7 +130,7 @@ const BedComponent = observer(function Bed() {
             const maxR = (maxRow - minRow) + 1;
 
 
-            selectedBed.cells.forEach((cell) => {
+            selectedBed?.cells.forEach((cell) => {
 
                 if ((cell.x != minColumn || cell.y != minRow) && cell.isActive) {
                     cell.isHidden = true;
@@ -149,12 +149,13 @@ const BedComponent = observer(function Bed() {
 
 
         runInAction(() => {
-            selectedBed.cells.forEach((cell) => {
+            selectedBed?.cells.forEach((cell) => {
                 if (cell.isActive) {
                     cell.isActive = false;
                 }
             });
         });
+        selectedBed?.plants.push(plant);
         store.bedsStore.updateBed(selectedBed);
     }
 
@@ -172,7 +173,7 @@ const BedComponent = observer(function Bed() {
         const x = Number(thisCell.dataset.x);
         const y = Number(thisCell.dataset.y);
 
-        runInAction(() => { 
+        runInAction(() => {
             selectedBed.cells.forEach(cell => {
                     if (cell.x == x && cell.y == y)
 
@@ -219,12 +220,12 @@ const BedComponent = observer(function Bed() {
 
                 //console.log(store.plantRecordStore.plantRecordMap);
 
-                const id = selectedBed.isDesign ? cell.plantRecordId : plantRecord.plantId
+                const id = selectedBed?.bed.isDesign ? cell.plantRecordId : plantRecord.plantId
                 if (id) {
                     const plant = store.globalStore.getPlantDTO(id);
                     if (plant) {
-                        return <Label as={Link} to={selectedBed.isDesign ? `/plants/${id}/beds/${selectedBed.id}` : '/plantrecords'} >
-                            {plant?.name} {selectedBed.isDesign ? null : ": " + plantRecord.datePlanted}
+                        return <Label as={Link} to={selectedBed?.bed.isDesign ? `/plants/${id}/beds/${selectedBed.bed.id}` : '/plantrecords'} >
+                            {plant?.name} {selectedBed?.bed.isDesign ? null : ": " + plantRecord.datePlanted}
                         </Label>
                     }
                     else
@@ -249,12 +250,12 @@ const BedComponent = observer(function Bed() {
     function generateStyle(): React.CSSProperties {
         let value = "";
 
-        for (let x = 0; x < selectedBed.numOfColumns; x++) {
+        for (let x = 0; x < selectedBed?.bed.numOfColumns; x++) {
             value = value + "60px ";
         }
 
         let rowValue = ""
-        for (let x = 0; x < selectedBed.numOfRows; x++) {
+        for (let x = 0; x < selectedBed?.bed.numOfRows; x++) {
             rowValue = rowValue + "60px ";
         }
 
@@ -287,19 +288,19 @@ const BedComponent = observer(function Bed() {
                 {/*<Button icon='save' color='blue' content='Ulozit' onClick={saveBed} />*/}
             </Segment>
             <Segment>
-                {selectedBed.cropRotation > 0 ? (
+                {selectedBed.bed.cropRotation > 0 ? (
                     <Label color='green' ribbon>
-                        Pěstování v {selectedBed.cropRotation}. trati
+                        Pěstování v {selectedBed.bed.cropRotation}. trati
                     </Label>) : null
                 }
                 <Divider hidden />
-                {selectedBed.isDesign ? (
+                {selectedBed.bed.isDesign ? (
                     <Label color='blue' ribbon>
                         Návrh
                     </Label>) : null
                 }
-               
-                <div className='grid-container printable' id={`bed_${selectedBed.id}`} key={`bed_${selectedBed.id}`} style={generateStyle()}>
+
+                <div className='grid-container printable' id={`bed_${selectedBed.bed.id}`} key={`bed_${selectedBed.bed.id}`} style={generateStyle()}>
             {
                 selectedBed.cells.map((cell) => 
                 renderCell(cell))
@@ -307,7 +308,7 @@ const BedComponent = observer(function Bed() {
                     </div>
 
                 <div className='hidden center'>
-                    {"delka " + selectedBed.length + " m ---- " + "šířka" + selectedBed.width + " m"}
+                    {"delka " + selectedBed.bed.length + " m ---- " + "šířka" + selectedBed.bed.width + " m"}
                     </div>
                 </Segment>
             <Segment>

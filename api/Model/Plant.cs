@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using API.DTOs;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Model
 {
@@ -50,7 +51,6 @@ namespace API.Model
             PlantRecords = new List<PlantRecord>();
             Pests = new List<Pest>();
         }
-
     }
 
 

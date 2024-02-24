@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using API.Core;
+using API.Relations;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Policy;
 
 namespace API.Model
@@ -13,9 +15,9 @@ namespace API.Model
         public virtual List<Cell> Cells { get; set; }
         public int NumOfColumns {  get; set; }
         public int NumOfRows { get; set; }
-        public bool isDesign { get; set; }
+        public bool IsDesign { get; set; }
         public int CropRotation { get; set; }
-
+        public virtual List<Plant> Plants { get; set; }
 
         public Bed()
         {
@@ -25,8 +27,21 @@ namespace API.Model
             NumOfRows = 0;
             Width = 0;  
             Cells =  new List<Cell> { };
-            isDesign = false;
+            IsDesign = false;
             CropRotation = 0;
+        }
+
+        public Bed(BedRelation aBedRelation)
+        {
+            Id = aBedRelation.Bed.Id;
+            Name = aBedRelation.Bed.Name;
+            Length = aBedRelation.Bed.Length;
+            Width = aBedRelation.Bed.Width;
+            NumOfColumns = aBedRelation.Bed.NumOfColumns;
+            NumOfRows = aBedRelation.Bed.NumOfRows;
+            Cells = aBedRelation.Cells;
+            IsDesign = aBedRelation.Bed.IsDesign;
+            CropRotation = aBedRelation.Bed.CropRotation;
         }
 
     }

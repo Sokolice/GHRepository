@@ -1,11 +1,12 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { Button, Card, CardGroup, Checkbox, Divider, Dropdown, Form, FormField, Label, List, ListItem, Segment } from "semantic-ui-react";
+import { Button, Card, CardGroup, Checkbox, Dropdown, Form, FormField, Label, List, ListItem, Segment } from "semantic-ui-react";
 import { store } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../layout/LoadingComponent";
-import { PlantDTO } from "../../models/PlantDTO";
 import { Bed } from "../../models/Bed";
+import { BedRelation } from "../../models/BedRelation";
+import { PlantDTO } from "../../models/PlantDTO";
 
 
 
@@ -44,14 +45,11 @@ const BedsComponent = observer(function BedsList() {
         setIsRotationDisabled(!isRotationDisabled);
     }
 
-    function listPlantsInBed(bed: Bed) {
-
-        const listItems = bed.plants;        
-
+    function listPlantsInBed(plants: PlantDTO[]) {
         return (
             <List>
                 {
-                    Array.from(listItems.values()).map(item => {
+                    plants.map(item => {
                         return (
                             <ListItem key={item.id}>
                                 {item.name}
@@ -113,22 +111,22 @@ const BedsComponent = observer(function BedsList() {
             <br />
             <div id="beds">
                 <CardGroup>
-                    {store.bedsStore.beds.map((bed: Bed) => (
-                        <Card key={bed.id}>
+                    {store.bedsStore.beds.map((bedRelation: BedRelation) => (
+                        <Card key={bedRelation.bed.id}>
                             
                             <Card.Content>
-                                {bed.cropRotation > 0 || bed.isDesign ? (
+                                {bedRelation.bed.cropRotation > 0 || bedRelation.bed.isDesign ? (
 
-                                    <Label attached='top' color='blue'>{bed.cropRotation > 0 ? bed.cropRotation + " trať" : null}  {bed.isDesign ? "Návrh" : null}</Label>
+                                    <Label attached='top' color='blue'>{bedRelation.bed.cropRotation > 0 ? bedRelation.bed.cropRotation + " trať" : null}  {bedRelation.bed.isDesign ? "Návrh" : null}</Label>
                                         ) : null
                                 }
                                 
-                                <Card.Header>{bed.name}</Card.Header>
-                                <Card.Header>sirka: {bed.width}</Card.Header>
-                                <Card.Header>delka: {bed.length}</Card.Header>
-                                {listPlantsInBed(bed)}
-                                <Button icon='info' color='blue' as={Link} to={`/beds/${bed.id}`} content="Detail" />
-                                <Button icon='minus' color='red' content='Smazat' onClick={(e) => handleBedDelete(e, bed.id)} />
+                                <Card.Header>{bedRelation.bed.name}</Card.Header>
+                                <Card.Header>sirka: {bedRelation.bed.width}</Card.Header>
+                                <Card.Header>delka: {bedRelation.bed.length}</Card.Header>
+                                {listPlantsInBed(bedRelation.plants)}
+                                <Button icon='info' color='blue' as={Link} to={`/beds/${bedRelation.bed.id}`} content="Detail" />
+                                <Button icon='minus' color='red' content='Smazat' onClick={(e) => handleBedDelete(e, bedRelation.bed.id)} />
                                                     
                             </Card.Content>
                         </Card>

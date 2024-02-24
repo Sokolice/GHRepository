@@ -2,7 +2,6 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../../api/agent";
 import { store } from "./store";
 import { v4 as uiid } from 'uuid';
-import MyMapping from "../MyMapping";
 import { BedRelation } from "../../models/BedRelation";
 import { Bed } from "../../models/Bed";
 import { Cell } from "../../models/Cell";
@@ -10,16 +9,11 @@ import { BedDTO } from "../../models/BedDTO";
 import { PlantDTO } from "../../models/PlantDTO";
 
 export default class BedsStore {
-    bedList = new Map<string, Bed>();
-    selectedBed: Bed = <Bed>{
-        id: "",
-        length: 0,
-        name: "",
-        width: 0,
-        numOfColumns: 0,
-        numOfRows:0,
-        cells: new Array<Cell>(),
-        isDesign:false
+    bedList = new Map<string, BedRelation>();
+    selectedBed: BedRelation = {
+        bed: <BedDTO>{},
+        cells: [],
+        plants: []
     };
     constructor() {
         makeAutoObservable(this)
@@ -32,37 +26,23 @@ export default class BedsStore {
         try {
 
             store.globalStore.setLoading(true);
-            const bedRecords = await agent.Beds.getBeds();
-            //console.log(bedRecords);
+            const bedRelations = await agent.Beds.getBeds();
+            console.log(bedRelations);
             runInAction(() => {
-                bedRecords.forEach(bedRecord => {
+                bedRelations.forEach(bedRelation => {
 
-                    const ids = new Map<string, PlantDTO>();
-
-                    bedRecord.cells.forEach(cell => {
+                    /*bedRelation.cells.forEach(cell => {
                         if (cell.plantRecordId != "") {
 
                             const plant: PlantDTO = store.globalStore.getPlantDTO(
-                                bedRecord.bed.isDesign ? cell.plantRecordId : store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId
+                                bedRelation.bed.isDesign ? cell.plantRecordId : store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId
                                     ?? "");
                             if (plant)
-                                ids.set(plant.id, plant);
+                                bedRelation.plants.push(plant);
                         }
-                    })
+                    })*/
 
-                    this.bedList.set(bedRecord.bed.id,
-                        <Bed>{
-                            id: bedRecord.bed.id,
-                            name: bedRecord.bed.name,
-                            length: bedRecord.bed.length,
-                            numOfColumns: bedRecord.bed.numOfColumns,
-                            numOfRows: bedRecord.bed.numOfRows,
-                            width: bedRecord.bed.width,
-                            cells: bedRecord.cells,
-                            isDesign: bedRecord.bed.isDesign,
-                            cropRotation: bedRecord.bed.cropRotation,
-                            plants: ids
-                        });
+                    this.bedList.set(bedRelation.bed.id, bedRelation);
                 })
                 store.globalStore.setLoading(false);
             });
@@ -77,7 +57,7 @@ export default class BedsStore {
     loadBed = async (id: string) => {
 
         const bed = this.bedList.get(id);
-        //console.log("bed: " + bed);
+        console.log("bed: " + bed);
         if (bed) {
             this.selectedBed = bed;
         }
@@ -99,16 +79,7 @@ export default class BedsStore {
                     }
                 })
                 runInAction(() => {
-                    this.selectedBed.id = bedRelation.bed.id;
-                    this.selectedBed.cells = bedRelation.cells;
-                    this.selectedBed.length = bedRelation.bed.length;
-                    this.selectedBed.width = bedRelation.bed.width;
-                    this.selectedBed.name = bedRelation.bed.name;
-                    this.selectedBed.numOfColumns = bedRelation.bed.numOfColumns;
-                    this.selectedBed.numOfRows = bedRelation.bed.numOfRows;
-                    this.selectedBed.isDesign = bedRelation.bed.isDesign;
-                    this.selectedBed.cropRotation = bedRelation.bed.cropRotation;
-                    this.selectedBed.plants = ids;
+                    this.selectedBed = bedRelation;
                 });
 
                 store.globalStore.setLoading(false);
@@ -120,14 +91,14 @@ export default class BedsStore {
         
     }
 
-    updateBed = async (bed: Bed) => {
+    updateBed = async (bedRelation: BedRelation) => {
 
         try {
 
             store.globalStore.setLoading(true);
-            await agent.Beds.update(MyMapping.mapBedRelation(bed));
+            await agent.Beds.update(bedRelation);
             runInAction(() => {
-                this.bedList.set(bed.id, bed);
+                this.bedList.set(bedRelation.bed.id, bedRelation);
             })
 
             store.globalStore.setLoading(false);
@@ -183,12 +154,22 @@ export default class BedsStore {
 
         try {
             const newBed = <BedRelation>{
-                bed: <BedDTO>{ id: bed.id, name: bed.name, length: bed.length, numOfColumns: bed.numOfColumns, width: bed.width, numOfRows: bed.numOfRows, isDesign: bed.isDesign, cropRotation: bed.cropRotation },
-                cells: bed.cells          
+                bed: <BedDTO>{
+                    id: bed.id,
+                    name: bed.name,
+                    length: bed.length,
+                    numOfColumns: bed.numOfColumns,
+                    width: bed.width,
+                    numOfRows: bed.numOfRows,
+                    isDesign: bed.isDesign,
+                    cropRotation: bed.cropRotation
+                },
+                cells: bed.cells,
+                plants: new Array<PlantDTO>
             };
             await agent.Beds.create(newBed);
             runInAction(() => {
-                this.bedList.set(bed.id, bed);
+                this.bedList.set(bed.id, newBed);
             })
 
             store.globalStore.setLoading(false);

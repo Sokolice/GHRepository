@@ -3,6 +3,7 @@ using API.DTOs;
 using API.Relations;
 using System.Numerics;
 using System.Collections.Generic;
+using Microsoft.OpenApi.Validations;
 
 namespace API.Core
 {
@@ -31,61 +32,13 @@ namespace API.Core
             {
                 foreach (Plant obj in list)
                 {
-                    var plant = new PlantDTO() {
-                        CropRotation = obj.CropRotation,
-                        Description = obj.Description,
-                        DirectSewing    = obj.DirectSewing,
-                        GerminationTemp = obj.GerminationTemp,  
-                        Id  = obj.Id,
-                        Name = obj.Name,    
-                        ImageSrc = obj.ImageSrc,
-                        IsHybrid = obj.IsHybrid,
-                        RepeatedPlanting = obj.RepeatedPlanting                         
-                    };
-
-                    plantDTOs.Add(plant);
+                    plantDTOs.Add(new PlantDTO(obj));
                 }
             }
 
             return plantDTOs;
         }
 
-        public static Bed MapBed(BedRelation bedRelation)
-        {
-            var bed = new Bed()
-            {
-                Id = bedRelation.Bed.Id,
-                Name = bedRelation.Bed.Name,
-                Length = bedRelation.Bed.Length,
-                Width = bedRelation.Bed.Width,
-                NumOfColumns = bedRelation.Bed.NumOfColumns,
-                NumOfRows = bedRelation.Bed.NumOfRows,
-                Cells = bedRelation.Cells,
-                isDesign = bedRelation.Bed.isDesign,
-                CropRotation = bedRelation.Bed.CropRotation
-            };
-
-            return bed;
-        }
-
-        public static BedRelation MapBedRelation(Bed aBed)
-        {
-            var bedRelation = new BedRelation();
-            bedRelation.Bed = new BedDTO
-            {
-                Id = aBed.Id,
-                Name = aBed.Name,
-                Length = aBed.Length,
-                NumOfColumns = aBed.NumOfColumns,
-                NumOfRows = aBed.NumOfRows,
-                Width = aBed.Width,
-                isDesign = aBed.isDesign,
-                CropRotation = aBed.CropRotation
-            };
-            bedRelation.Cells = aBed.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList();
-
-            return bedRelation;
-        }
 
         public static List<MonthWeekDTO> MapMonthWeeks(List<MonthWeek> list)
         {
@@ -100,23 +53,7 @@ namespace API.Core
             }
 
             return monthweeksDTOs;
-        }
-                
-        public static PlantRecordDTO MapPlantRecord(PlantRecord aPlant)
-        {
-            var plantRecordDTO = new PlantRecordDTO
-            {
-                Id = aPlant.Id,
-                AmountPlanted = aPlant.AmountPlanted,
-                DatePlanted = aPlant.DatePlanted,
-                PlantId = aPlant.PlantId
-            };
-
-            PlantRecordDTO.CalculatePresumedHarvest(plantRecordDTO, aPlant.Plant);
-            PlantRecordDTO.calculateProgress(plantRecordDTO);
-
-            return plantRecordDTO;
-        }
+        }          
 
         public static List<PlantDTO> MapPlantList(List<Plant> plants){
 
@@ -139,9 +76,7 @@ namespace API.Core
 
             foreach (var plant in plants)
             {
-                var mapedPlant = MapPlantRecord(plant);
-
-                mapedPlants.Add(mapedPlant);
+                mapedPlants.Add(new PlantRecordDTO(plant));
             };
 
             return mapedPlants;

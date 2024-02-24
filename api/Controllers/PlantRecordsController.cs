@@ -23,18 +23,18 @@ namespace API.Controllers
         [Route("GetPlantRecords")]
         public List<PlantRecordDTO> GetPlantRecords()
         {
-            var plantsRecord = _context.PlantRecords.Select(a => new PlantRecordDTO
-            {
-                Id = a.Id,
-                AmountPlanted = a.AmountPlanted,
-                DatePlanted = a.DatePlanted,
-                PlantId = a.PlantId,
-                PresumedHarvest = a.PresumedHarvest                
-            }).ToList();
+            var plantsRecord = _context.PlantRecords.Select(a => new PlantRecordDTO(a))
+                                                    .ToList();
 
             foreach(var record in plantsRecord)
             {
-               PlantRecordDTO.calculateProgress(record);
+                if (record.PresumedHarvest.ToString() == "01.01.0001 0:00:00")
+                {
+                    var plant = _context.Plants.Find(record.PlantId);
+                    record.CalculatePresumedHarvest(plant);
+
+                }
+                record.calculateProgress();
             }
 
             return plantsRecord;
@@ -46,9 +46,9 @@ namespace API.Controllers
 
             var plant = _context.Plants.Find(plantRecordDTO.PlantId);
 
-            PlantRecordDTO.CalculatePresumedHarvest(plantRecordDTO, plant);
-            
-            PlantRecordDTO.calculateProgress(plantRecordDTO);
+            plantRecordDTO.CalculatePresumedHarvest(plant);
+
+            plantRecordDTO.calculateProgress();
 
             var newPlantRecord = new PlantRecord
             {
@@ -135,12 +135,7 @@ namespace API.Controllers
                 return NotFound();
             }
             
-            return new PlantRecordDTO { 
-                AmountPlanted = plantRecord.AmountPlanted, 
-                DatePlanted = plantRecord.DatePlanted,
-                Id = plantRecord.Id,
-                PlantId = plantRecord.PlantId
-            };
+            return new PlantRecordDTO(plantRecord);
         }
 
     }
