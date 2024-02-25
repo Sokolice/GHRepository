@@ -4,7 +4,7 @@ import { MouseEvent, ReactNode, SyntheticEvent, useEffect, useState } from "reac
 import { Link, useParams } from "react-router-dom";
 import { store, useStore } from "../../app/stores/store";
 import LoadingComponent from "../layout/LoadingComponent";
-import { Button, Divider, DropdownItemProps, Form, FormGroup, Label, Segment, SegmentGroup } from "semantic-ui-react";
+import { Button, Divider, DropdownItemProps, Form, FormGroup, Header, Label, Segment, SegmentGroup } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { Cell } from "../../models/Cell";
@@ -310,7 +310,7 @@ const BedComponent = observer(function Bed() {
     return (
         <SegmentGroup>        
             <Segment>
-                
+                <Header>{selectedBed.bed.name}</Header>
                     <Form onSubmit={AddPlantImage}>
                     <FormGroup inline>
                     <Form.Field>

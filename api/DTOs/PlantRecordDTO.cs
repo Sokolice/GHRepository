@@ -14,10 +14,14 @@ namespace API.DTOs
 
         public int Progress { get; set; }
 
+        public string Note { get; set; }
+
         public PlantRecordDTO()
         {
             Id = Guid.NewGuid();
             PlantId = Guid.NewGuid();
+            Note = string.Empty;
+            
         }
 
         public PlantRecordDTO(PlantRecord aPlantRecord)
@@ -26,6 +30,7 @@ namespace API.DTOs
             AmountPlanted = aPlantRecord.AmountPlanted;
             DatePlanted = aPlantRecord.DatePlanted;
             PlantId = aPlantRecord.PlantId;
+            Note = aPlantRecord.Note;
         }
 
 

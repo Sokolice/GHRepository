@@ -64,7 +64,7 @@ export default class PlantRecordStore {
     }
 
     createPlantRecord = async (plantRecord: PlantRecordDTO) => {
-
+        console.log(plantRecord);
         store.globalStore.setLoading(true);
         plantRecord.id = uiid();
         try {

@@ -44,6 +44,11 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO, openFor
                 }
                 <Popup content='Smazat' trigger={<Button icon='minus' color='red' onClick={() => openDeleteForm(plantRecord.id)} />} />
                 <Popup content='Recepty' trigger={<Button icon='utensils' color='blue' as={Link} to={`/recipeHints/${plant.name}`} />} />
+                {plantRecord.note != "" ?
+                    <Popup content={plantRecord.note} trigger={<Button icon='comment' color='teal' />} />
+
+                :
+                    null}
                 <Divider hidden />
                 <Button icon='undo' onClick={() => openForm(plantRecord)} content="Uprav mne" key={plantRecord.id} /> 
                 <Divider hidden />

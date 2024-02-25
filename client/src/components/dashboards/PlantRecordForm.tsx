@@ -23,7 +23,8 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
         datePlanted: '',
         amountPlanted: 0,
         progress: 0,
-        presumedHarvest: '0001-01-01'
+        presumedHarvest: '0001-01-01',
+        note: ''
     });
 
     const [selectedPlant, setPlant] = useState({
@@ -67,7 +68,8 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
         onClose();
     }
 
-    function handleInputCHhange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        console.log(event.target.value);
         const { name, value } = event.target;
         setRecord({ ...plantRecord, [name]: value });
     }
@@ -84,8 +86,9 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
             <Modal.Content image>
                 <Image size='medium' src={`/src/assets/plants/${selectedPlant.imageSrc}`} wrapped />
                 <Modal.Description>
-                    <Form.Input type='date' placeholder='Datum sadby' name='datePlanted' label='Datum sadby' value={plantRecord.datePlanted} onChange={handleInputCHhange} />
-                    <Form.Input placeholder='Množství' name='amountPlanted' type='number' value={plantRecord.amountPlanted} onChange={handleInputCHhange} />                              
+                    <Form.Input type='date' placeholder='Datum sadby' name='datePlanted' label='Datum sadby' value={plantRecord.datePlanted} onChange={handleInputChange} />
+                    <Form.Input placeholder='Množství' name='amountPlanted' type='number' value={plantRecord.amountPlanted} onChange={handleInputChange} />
+                    <Form.TextArea placeholder='Poznámka' id="note" name="note" label="Poznámka" onChange={handleInputChange} value={plantRecord.note} />
                 </Modal.Description>
               </Modal.Content>
             <Modal.Actions>

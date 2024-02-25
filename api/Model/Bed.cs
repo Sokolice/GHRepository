@@ -18,6 +18,7 @@ namespace API.Model
         public bool IsDesign { get; set; }
         public int CropRotation { get; set; }
         public virtual List<Plant> Plants { get; set; }
+        public string Note {  get; set; }
 
         public Bed()
         {
@@ -29,6 +30,7 @@ namespace API.Model
             Cells =  new List<Cell> { };
             IsDesign = false;
             CropRotation = 0;
+            Note = string.Empty;
         }
 
         public Bed(BedRelation aBedRelation)
@@ -42,6 +44,7 @@ namespace API.Model
             Cells = aBedRelation.Cells;
             IsDesign = aBedRelation.Bed.IsDesign;
             CropRotation = aBedRelation.Bed.CropRotation;
+            Note = aBedRelation.Bed.Note;
         }
 
     }

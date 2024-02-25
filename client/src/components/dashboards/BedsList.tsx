@@ -4,7 +4,6 @@ import { store } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../layout/LoadingComponent";
-import { Bed } from "../../models/Bed";
 import { BedRelation } from "../../models/BedRelation";
 import { PlantDTO } from "../../models/PlantDTO";
 
@@ -20,16 +19,18 @@ const BedsComponent = observer(function BedsList() {
         length: 0,
         width: 0,
         isDesign: false,
-        cropRotation: 0
+        cropRotation: 0,
+        note:""
     })
 
     const [isRotationDisabled, setIsRotationDisabled] = useState(true);
 
     function AddBed() {
-        store.bedsStore.createBed(bed.width, bed.length, bed.name, bed.isDesign, bed.cropRotation);
+        store.bedsStore.createBed(bed.width, bed.length, bed.name, bed.isDesign, bed.cropRotation, bed.note);
     }
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        console.log(event.target.value);
         const { name, value } = event.target;
         setBed({ ...bed, [name]: value })
     }
@@ -86,10 +87,13 @@ const BedsComponent = observer(function BedsList() {
                                 <Form.Input label='Název' placeholder='Název' id='name' name='name' onChange={handleChange} />
                             </Form.Field>
                             <Form.Field>
-                                <Form.Input label='Délka[m]' placeholder='Délka' id='length' name='length' onChange={handleChange} />
+                                <Form.Input type="number" label='Délka[m]' placeholder='Délka' id='length' name='length' onChange={handleChange} />
                             </Form.Field>
                             <Form.Field>
-                                <Form.Input label='Šířka[m]' placeholder='Šířka' id='width' name='width' onChange={handleChange} />
+                                <Form.Input type="number" label='Šířka[m]' placeholder='Šířka' id='width' name='width' onChange={handleChange} />
+                            </Form.Field>
+                            <Form.Field>
+                                <Form.TextArea placeholder='Poznámka' id="note" name="note" label="Poznámka" onChange={handleChange}/>
                             </Form.Field>
                         </Form.Group>
                         <FormField>
@@ -122,8 +126,19 @@ const BedsComponent = observer(function BedsList() {
                                 }
                                 
                                 <Card.Header>{bedRelation.bed.name}</Card.Header>
-                                <Card.Header>sirka: {bedRelation.bed.width}</Card.Header>
-                                <Card.Header>delka: {bedRelation.bed.length}</Card.Header>
+                                <Card.Meta>
+                                    <Card.Header>šířka: {bedRelation.bed.width}m</Card.Header>
+                                    <Card.Header>délka: {bedRelation.bed.length}m</Card.Header>
+                                </Card.Meta>
+                                {bedRelation.bed.note != "" ?
+                                    <Card.Description>
+                                        Poznámka: {bedRelation.bed.note}
+                                    </Card.Description>
+                                    : null
+                                } 
+
+
+                                
                                 {listPlantsInBed(bedRelation.plants)}
                                 <Button icon='info' color='blue' as={Link} to={`/beds/${bedRelation.bed.id}`} content="Detail" />
                                 <Button icon='minus' color='red' content='Smazat' onClick={(e) => handleBedDelete(e, bedRelation.bed.id)} />

@@ -12,12 +12,14 @@ namespace API.Model
         public int AmountPlanted { get; set; }
         public DateTime PresumedHarvest { get; set; }
 
+        public string Note { get; set; }
 
         public PlantRecord()
         {
             Id = Guid.NewGuid();
             Plant = new Plant();
             PlantId = Guid.NewGuid();
+            Note = string.Empty;            
         }
     }
 }

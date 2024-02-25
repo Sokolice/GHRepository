@@ -3,7 +3,6 @@ import agent from "../../api/agent";
 import { store } from "./store";
 import { v4 as uiid } from 'uuid';
 import { BedRelation } from "../../models/BedRelation";
-import { Bed } from "../../models/Bed";
 import { Cell } from "../../models/Cell";
 import { BedDTO } from "../../models/BedDTO";
 import { PlantDTO } from "../../models/PlantDTO";
@@ -126,13 +125,11 @@ export default class BedsStore {
     }
 
 
-    createBed = async (aWidth: number, aLength: number, aName: string, aIsDesign: boolean, aCropRotation: number) => {
-        const bed = <Bed>{};
-        bed.id = uiid();
-        bed.name = aName;
+    createBed = async (width: number, length: number, name: string, isDesign: boolean, cropRotation: number, note: string) => {
+       
 
-        const r = (aWidth / 20) * 100;
-        const c = (aLength / 20) * 100;
+        const r = (width / 20) * 100;
+        const c = (length / 20) * 100;
 
         const cells = new Array<Cell>();
 
@@ -143,37 +140,30 @@ export default class BedsStore {
             }
             //cells.push(row);
         }
-        bed.width = aWidth;
-        bed.length = aLength;
-        bed.cells = cells;
-        bed.numOfColumns = c;
-        bed.numOfRows = r;
-        bed.isDesign = aIsDesign;
-        bed.cropRotation = aCropRotation;
-        bed.plants = new Map<string, PlantDTO>();
 
         store.globalStore.setLoading(true);
 
         try {
             const newBed = <BedRelation>{
                 bed: <BedDTO>{
-                    id: bed.id,
-                    name: bed.name,
-                    length: bed.length,
-                    numOfColumns: bed.numOfColumns,
-                    width: bed.width,
-                    numOfRows: bed.numOfRows,
-                    isDesign: bed.isDesign,
-                    cropRotation: bed.cropRotation
+                    id: uiid(),
+                    name: name,
+                    length: length,
+                    numOfColumns: c,
+                    width: width,
+                    numOfRows: r,
+                    isDesign: isDesign,
+                    cropRotation: cropRotation,
+                    note: note
                 },
-                cells: bed.cells,
+                cells: cells,
                 plants: new Array<PlantDTO>,
-                avoidPlants: new Array<string>,
-                companionPlants: new Array<string>
+                avoidPlantsIds: new Array<string>,
+                companionPlantsIds: new Array<string>
             };
             await agent.Beds.create(newBed);
             runInAction(() => {
-                this.bedList.set(bed.id, newBed);
+                this.bedList.set(newBed.bed.id, newBed);
             })
 
             store.globalStore.setLoading(false);

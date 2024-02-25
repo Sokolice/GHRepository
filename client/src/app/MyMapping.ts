@@ -1,16 +1,4 @@
-import { Bed } from "../models/Bed"
-import { BedRelation } from "../models/BedRelation"
-
 export default class MyMapping {
-
-    static mapBedRelation = (bed: Bed)=> {
-
-        return <BedRelation>{
-            bed : bed,
-            cells: bed.cells
-        } 
-
-    }
 
     static mapMonthIndex = (month: string)=>{
 

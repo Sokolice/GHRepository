@@ -41,22 +41,23 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PlantRecordDTO>> PostPlantRecord(PlantRecordDTO plantRecordDTO)
+        public async Task<ActionResult<PlantRecordDTO>> PostPlantRecord(PlantRecordDTO aPlantRecordDTO)
         {
 
-            var plant = _context.Plants.Find(plantRecordDTO.PlantId);
+            var plant = _context.Plants.Find(aPlantRecordDTO.PlantId);
 
-            plantRecordDTO.CalculatePresumedHarvest(plant);
+            aPlantRecordDTO.CalculatePresumedHarvest(plant);
 
-            plantRecordDTO.calculateProgress();
+            aPlantRecordDTO.calculateProgress();
 
             var newPlantRecord = new PlantRecord
             {
-                Id = plantRecordDTO.Id,
-                AmountPlanted = plantRecordDTO.AmountPlanted,
-                DatePlanted = plantRecordDTO.DatePlanted,
-                PlantId = plantRecordDTO.PlantId,
-                Plant = _context.Plants.First(a => a.Id == plantRecordDTO.PlantId)
+                Id = aPlantRecordDTO.Id,
+                AmountPlanted = aPlantRecordDTO.AmountPlanted,
+                DatePlanted = aPlantRecordDTO.DatePlanted,
+                PlantId = aPlantRecordDTO.PlantId,
+                Plant = _context.Plants.First(a => a.Id == aPlantRecordDTO.PlantId),
+                Note = aPlantRecordDTO.Note
             };
 
 
@@ -65,7 +66,7 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
 
 
-            return plantRecordDTO;
+            return aPlantRecordDTO;
         }
 
         [HttpDelete("{id}")]

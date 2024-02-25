@@ -12,6 +12,7 @@ namespace API.DTOs
         public int NumOfRows { get; set; }
         public bool IsDesign {  get; set; }
         public int CropRotation { get; set; }
+        public string Note { get; internal set; }
 
         public BedDTO(Bed aBed)
         {
@@ -22,12 +23,14 @@ namespace API.DTOs
             NumOfColumns = aBed.NumOfColumns;
             NumOfRows = aBed.NumOfRows;
             IsDesign = aBed.IsDesign;
-            CropRotation = aBed.CropRotation;                
+            CropRotation = aBed.CropRotation;  
+            Note = aBed.Note;
         }
 
         public BedDTO()
         {
             Name = string.Empty;
+            Note = string.Empty;
         }
     }
 }
