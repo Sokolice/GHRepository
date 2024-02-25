@@ -12,7 +12,7 @@ namespace API.DTOs
         public int NumOfRows { get; set; }
         public bool IsDesign {  get; set; }
         public int CropRotation { get; set; }
-        public string Note { get; internal set; }
+        public string Note { get; set; }
 
         public BedDTO(Bed aBed)
         {

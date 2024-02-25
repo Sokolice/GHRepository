@@ -126,7 +126,8 @@ export default class BedsStore {
 
 
     createBed = async (width: number, length: number, name: string, isDesign: boolean, cropRotation: number, note: string) => {
-       
+
+        console.log(note);
 
         const r = (width / 20) * 100;
         const c = (length / 20) * 100;
@@ -134,11 +135,9 @@ export default class BedsStore {
         const cells = new Array<Cell>();
 
         for (let x = 1; x <= c; x++) {
-            //const row = Array<Cell>();
             for (let y = 1; y <= r; y++) {
                 cells.push({ id: uiid(), x: x, y: y, isActive: false, gridArea: "", backgroundImage: "", plantRecordId: "", isHidden: false, objectID: "" })
             }
-            //cells.push(row);
         }
 
         store.globalStore.setLoading(true);
