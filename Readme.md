@@ -15,26 +15,26 @@ And has some cool features:
 - weather warnings
 
 ## Technologies used
-Client is written in React using TypeScript. There are two BackEnd APIs. One is used for data access and another is used for generating Recipe ideas.
+Client is written in React using TypeScript. There are two Backend APIs. One is used for data access and another is used for generating Recipe ideas.
 ### Client - React
 - MobX
 - Axois
 - Semantic UI for React
 - FontAwesome
 
-### BackEnd
-- .NET API for accessing SQLite Database
-- .NET API for creating recipes ideas
+### Backend - .Net C#
+- .Net API for accessing SQLite Database
+- .Net API for creating recipes ideas
 - OpenWeather API for generating weather warnings
 
 ## Project Description
-Gardener Helper consists of four parts. Sewing plan, list of planted vegetables, bed creation and list of gardening tips and tasks.
-
-On main page you can see variety of notifications.
+Gardener Helper consists of four parts. Sewing plan, list of planted vegetables, bed creation and list of gardening tips and tasks. There are variety of notifications on main page such as:
+- ![Missing Plants](/docs/missing.png) number of plants which can be sown this week and are not yet 
+- ![To Do](/docs/todo.png) unfinished tasks for this week 
 
 ![Home Page](/docs/home.png)
 
-### Sewing plan
+### Sewing plan / Přehled výsevu
 
 ![Home Page](/docs/sewing_plan.png)
 
