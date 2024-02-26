@@ -5,6 +5,8 @@ import { PlantDTO } from "../../models/PlantDTO";
 import agent from "../../api/agent";
 import { PlantPlantsRelation } from "../../models/PlantPlantsRelation";
 import { Stats } from "../../models/Stats";
+import { HarvestDTO } from "../../models/HarvestDTO";
+import { v4 as uiid } from 'uuid';
 export default class GlobalStore {
 
     monthweekDTOlist = new Map<string, MonthWeekDTO>();
@@ -102,6 +104,22 @@ export default class GlobalStore {
         runInAction(() => {
             this.loading = state;
         })
+    }
+
+
+    saveHarvest = async (harvest: HarvestDTO)=>{
+
+        this.setLoading(true);
+
+        try {
+            harvest.id = uiid();
+            await agent.Plants.harvest(harvest);
+
+            this.setLoading(false);
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
     
 } 

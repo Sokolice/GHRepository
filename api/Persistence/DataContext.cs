@@ -20,6 +20,7 @@ namespace API.Persistence
         public DbSet<Cell> Cells { get; set; } = null!;
 
         public DbSet<Stats> Stats { get; set; } = null!;
+        public DbSet<Harvest> Harvests { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

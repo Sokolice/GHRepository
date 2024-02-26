@@ -148,5 +148,23 @@ namespace API.Controllers
 
             return others;
         }
+
+        [HttpPost]
+        [Route("Harvest")]
+        public async Task<ActionResult<HarvestDTO>> Harvest(HarvestDTO aHarvest)
+        {
+            _context.Harvests.Add(new Harvest
+            {
+                Id = aHarvest.Id,
+                Amount = aHarvest.Amount,
+                Date = aHarvest.Date,
+                Note = aHarvest.Note,
+                Rating = aHarvest.Rating,
+                Plant = _context.Plants.Find(aHarvest.PlantId)
+            });
+
+            await _context.SaveChangesAsync();
+            return aHarvest;
+        }
     }
 }

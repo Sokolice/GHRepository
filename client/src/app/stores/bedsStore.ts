@@ -28,7 +28,6 @@ export default class BedsStore {
 
             store.globalStore.setLoading(true);
             const bedRelations = await agent.Beds.getBeds();
-            console.log(bedRelations);
             runInAction(() => {
                 bedRelations.forEach(bedRelation => {
 
