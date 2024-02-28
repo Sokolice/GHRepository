@@ -57,7 +57,6 @@ export default class BedsStore {
     loadBed = async (id: string) => {
 
         const bed = this.bedList.get(id);
-        console.log("bed: " + bed);
         if (bed) {
             this.selectedBed = bed;
         }
@@ -125,9 +124,6 @@ export default class BedsStore {
 
 
     createBed = async (width: number, length: number, name: string, isDesign: boolean, cropRotation: number, note: string) => {
-
-        console.log(note);
-
         const r = (width / 20) * 100;
         const c = (length / 20) * 100;
 

@@ -64,8 +64,6 @@ const BedComponent = observer(function Bed() {
     }
    
     function loadDropDownItems() {
-        console.log("avoid " + selectedBed.avoidPlantsIds.length);
-        console.log("copanion " + selectedBed.companionPlantsIds.length);
         if (selectedBed?.bed.cropRotation > 0 && selectedBed?.bed.isDesign) {
             store.globalStore.plantDTOList.forEach((p) => {
                 //console.log(p.name + " trat: " + p.cropRotation);
@@ -118,7 +116,6 @@ const BedComponent = observer(function Bed() {
                 //console.log(plantRecord);
                 //console.log(store.globalStore.plantDTOList);
                 const plant: PlantDTO = store.globalStore.getPlantDTO(plantRecord.plantId);
-                console.log(plant);
                 let avoid = false;
                 let companion = false;
 

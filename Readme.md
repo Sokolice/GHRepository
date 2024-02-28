@@ -21,16 +21,19 @@ Client is written in React using TypeScript. There are two Backend APIs. One is 
 - Axois
 - Semantic UI for React
 - FontAwesome
+- Formik
 
 ### Backend - .Net C#
-- .Net API for accessing SQLite Database
+- .Net API for accessing SQLite Database using Entity Framework
 - .Net API for creating recipes ideas
 - OpenWeather API for generating weather warnings
 
 ## Project Description
 Gardener Helper consists of four parts. Sewing plan, list of planted vegetables, bed creation and list of gardening tips and tasks. There are variety of notifications on main page such as:
-- ![Missing Plants](/docs/missing.png) number of plants which can be sown this week and are not yet 
-- ![To Do](/docs/todo.png) unfinished tasks for this week 
+
+![Missing Plants](/docs/missing.png) number of plants which can be sown this week and are not yet 
+
+![To Do](/docs/todo.png) unfinished tasks for this week 
 
 ![Home Page](/docs/home.png)
 

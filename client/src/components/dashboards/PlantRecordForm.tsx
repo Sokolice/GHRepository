@@ -69,7 +69,6 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        console.log(event.target.value);
         const { name, value } = event.target;
         setRecord({ ...plantRecord, [name]: value });
     }
