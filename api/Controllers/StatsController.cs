@@ -1,29 +1,29 @@
 ﻿using API.DTOs;
 using API.Model;
 using API.Persistence;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StatsController : Controller
+    public class StatsController : BaseApiController
     {
-        private readonly DataContext _context;
+        private readonly IStatsService _statsService;
 
-        public StatsController(DataContext context)
+        public StatsController(IStatsService statsService)
         {
-            _context = context;
+            _statsService = statsService;
         }
 
         [HttpGet]
         [Route("GetStats")]
-        public async Task<Stats> GetStats()
+        public async Task<ActionResult<Stats>> GetStats()
         {
-            var stats = new Stats(_context);
-            await stats.ThisWeekSowingCalculation();
+            var result = await _statsService.GetStats();
 
-            return stats;
+            return HandleResult(result);
         }
     }
 }

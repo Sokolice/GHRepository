@@ -3,6 +3,7 @@ using API.DTOs;
 using API.Model;
 using API.Persistence;
 using API.Relations;
+using API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,114 +12,56 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BedsController : ControllerBase
+    public class BedsController : BaseApiController
     {
-        private readonly DataContext _context;
+        private readonly IBedsService _bedsService;
 
-        public BedsController(DataContext context)
+        public BedsController(IBedsService bedsService)
         {
-            _context = context;
+            _bedsService = bedsService;
         }
 
         [HttpGet]
         [Route("GetBeds")]
-        public List<BedRelation> GetBeds()
+        public async Task<ActionResult<List<BedRelation>>> GetBeds()
         {
-            var beds = _context.Beds.ToList();
 
-            var bedsDTO = beds.Select(a => new BedRelation(a)).ToList();
+            var result = await _bedsService.GetBeds();
 
-            foreach(var bed in bedsDTO)
-            {
-                bed.GetAllCompanionPlants(_context);
-                bed.GetAllAvoidPlants(_context);
-            }
-
-            return bedsDTO;
+            return HandleResult(result);
         }
 
         [HttpPost]
         public async Task<ActionResult<BedRelation>> PostBed(BedRelation bedRelation)
         {
-            var bed = new Bed(bedRelation);
-            
-            _context.Beds.Add(bed);
+            var result  = await _bedsService.PostBed(bedRelation);
 
-            await _context.SaveChangesAsync();
-
-            return new OkObjectResult(bedRelation);
+            return HandleResult(result);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<BedRelation>> DeleteBed(Guid id)
+        public async Task<ActionResult<Guid>> DeleteBed(Guid id)
         {
-            if (_context.Beds == null)
-            {
-                return NotFound();
-            }
-            var bed = await _context.Beds.FindAsync(id);
-            if (bed == null)
-            {
-                return NotFound();
-            }
-            _context.Cells.RemoveRange(bed.Cells);
-            _context.Beds.Remove(bed);
-            await _context.SaveChangesAsync();
+            var result = await _bedsService.DeleteBed(id);
 
-            return new OkObjectResult(id);
+            return HandleResult(result);
         }
 
 
         [HttpGet("{id}")]
         public async Task<ActionResult<BedRelation>> GetBed(Guid id)
         {
-            var bed = await _context.Beds.FindAsync(id);
+            var result = await _bedsService.GetBed(id);
 
-            if (bed == null)
-            {
-                return NotFound();
-            }
-
-            return new BedRelation(bed);
+            return HandleResult(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<BedRelation>> UpdatePlantRecord(Guid id, BedRelation bedRelation)
+        public async Task<ActionResult<BedRelation>> UpdateBed(Guid id, BedRelation bedRelation)
         {
-            if (id != bedRelation.Bed.Id)
-            {
-                return BadRequest();
-            }
+            var result = await _bedsService.UpdateBed(id, bedRelation);
 
-            try
-            {
-                var bed = await _context.Beds.FindAsync(id);
-
-                
-
-                if (bed != null)
-                {
-                    bed.Name = bedRelation.Bed.Name;
-                    bed.Length = bedRelation.Bed.Length;
-                    bed.Width = bedRelation.Bed.Width;
-                    bed.NumOfRows = bedRelation.Bed.NumOfRows;
-                    bed.NumOfColumns = bedRelation.Bed.NumOfColumns;
-                    bed.Cells = bedRelation.Cells;
-                    bed.IsDesign = bedRelation.Bed.IsDesign;
-                    bed.CropRotation = bedRelation.Bed.CropRotation;
-
-                    bed.Plants = _context.Plants.Where(a => bedRelation.Plants.Select(b => b.Id).ToList().Contains(a.Id)).ToList();
-
-                }
-
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-
-            }
-
-            return NoContent();
+            return HandleResult(result);
         }
 
         

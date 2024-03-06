@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using API.Persistence;
-using System.Web.Http;
-using API.Core;
+using API.Services;
 
 namespace API
 {
@@ -12,6 +11,15 @@ namespace API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddTransient<IPestsService, PestsService>();
+            builder.Services.AddTransient<ICellsService, CellsService>();
+            builder.Services.AddTransient<IBedsService, BedsService>();
+            builder.Services.AddTransient<IGardeningTasksService, GardeningTasksService>();
+            builder.Services.AddTransient<IMonthWeeksService, MonthWeeksService>();
+            builder.Services.AddTransient<IPlantRecordsService, PlantRecordsService>();
+            builder.Services.AddTransient<IPlantsService, PlantsService>();
+            builder.Services.AddTransient<IHarvestService, HarvestService>();
+            builder.Services.AddTransient<IStatsService, StatsService>();
 
             builder.Services.AddControllers();
             builder.Services.AddCors(opt =>

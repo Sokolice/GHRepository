@@ -1,38 +1,29 @@
-﻿using API.Persistence;
+﻿using API.Core;
+using API.Persistence;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CellsController : ControllerBase
+    public class CellsController : BaseApiController
     {
-        private readonly DataContext _context;
+        private readonly ICellsService _cellsService;
 
-        public CellsController(DataContext context)
+        public CellsController(ICellsService cellsService)
         {
-            _context = context;
+            _cellsService = cellsService;
         }
 
 
         [HttpPatch]
         [Route("DeleteCells")]
-        public async Task<IActionResult> DeleteCells(List<Guid> ids)
+        public async Task<ActionResult> DeleteCells(List<Guid> ids)
         {
-            try
-            {
-                var cells = _context.Cells.Where(c => ids.Contains(c.Id));
+            var result = await _cellsService.DeleteCells(ids);
 
-                _context.Cells.RemoveRange(cells);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-            return NoContent();
+           return HandleResult(result);
         }
 
     }

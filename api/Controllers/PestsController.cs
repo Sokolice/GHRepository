@@ -1,41 +1,28 @@
 ﻿using API.Core;
-using API.DTOs;
-using API.Persistence;
 using API.Relations;
+using API.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PestsController : Controller
+    public class PestsController : BaseApiController
     {
-        private readonly DataContext _context;
+        private readonly IPestsService _pestsService;
 
-        public PestsController(DataContext context)
+        public PestsController(IPestsService pestsService)
         {
-            _context = context;
+            _pestsService = pestsService;
         }
 
         [HttpGet]
-        public List<PestRelation> GetPests()
+        public async Task<ActionResult<List<PestRelation>>> GetPests()
         {
-            var plants = _context.Pests.ToList();
+            var result = await _pestsService.GetPests();
 
-            var pests = _context.Pests.Select(a => new PestRelation
-            {
-                PestDTO = new PestDTO 
-                { 
-                    Advice = a.Advice, 
-                    Name = a.Name,
-                    Id = a.Id,
-                    ImageSrc = a.ImageSrc
-                },
-                Plants = MyMapping.MapPlantsFromDTO(a.Plants)
-                
-            }).ToList();
-
-            return pests;
+            return HandleResult(result);
         }
     }
 }

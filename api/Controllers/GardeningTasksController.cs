@@ -2,6 +2,7 @@
 using API.DTOs;
 using API.Persistence;
 using API.Relations;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,59 +10,35 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GardeningTasksController : Controller
+    public class GardeningTasksController : BaseApiController
     {
-        private readonly DataContext _context;
+        private readonly IGardeningTasksService _tasksService;
 
-        public GardeningTasksController(DataContext context)
+        public GardeningTasksController(IGardeningTasksService aTaskService)
         {
-            _context = context;
+            _tasksService = aTaskService;
         }
 
         [HttpGet]
-        public List<MonthTaskRelation> GetTasks()
+        public async Task<ActionResult<List<MonthTaskRelation>>> GetTasks()
         {
-            var monthweeks = _context.MonthWeeks.Include(x => x.GardeningTasks).ToList();
+           var result = await _tasksService.GetTasks();
 
-            var tasks = monthweeks
-                .GroupBy(a=> (a.Week, a.Month))
-                .GroupBy(a=> (a.First().Month, a.First().MonthIndex))
-                .Select(a=> new MonthTaskRelation{
-                    Month = a.Key.Month,
-                    Index = a.Key.MonthIndex,
-                    WeekTaskRelations = a.Select(b => new WeekTaskRelation
-                    {
-                        Week = b.Key.Week,
-                        GardeningTasks = b.SelectMany(c => c.GardeningTasks).Select(c => new GardeningTaskDTO
-                        {
-                            Id = c.Id,
-                            IsCompleted = c.IsCompleted,
-                            Name = c.Name,
-                            WasSent = c.WasSent                            
-                        }).ToList(),
-                    }).ToList()
-            }).OrderBy(a=> a.Index).ToList();
-
-            return tasks;
+            return HandleResult(result);
         }
 
         [HttpPost]
-        public async Task<GardeningTaskDTO> PostGardeningTasks(GardeningTaskDTO gardeningTask)
+        public async Task<ActionResult<GardeningTaskDTO>> PostGardeningTasks(GardeningTaskDTO gardeningTask)
         {
+            var result = await _tasksService.PostGardeningTasks(gardeningTask);
 
-            var task = _context.Tasks.Find(gardeningTask.Id);
-            task.IsCompleted = gardeningTask.IsCompleted;
-
-            await _context.SaveChangesAsync();
-
-            return gardeningTask;
+            return HandleResult(result);
         }
 
         [Route("ShareTasks")]
         [HttpPost]
         public async Task<IResult> ShareTasks(WeekTaskRelation weekTaskRelation)
         {
-
 
 
             return Results.Ok();

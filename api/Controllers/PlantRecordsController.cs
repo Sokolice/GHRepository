@@ -5,138 +5,65 @@ using API.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Core;
+using API.Services;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlantRecordsController: ControllerBase
+    public class PlantRecordsController: BaseApiController
     {
-        private readonly DataContext _context;
+        private readonly IPlantRecordsService _plantRecordService;
 
-        public PlantRecordsController(DataContext context)
+        public PlantRecordsController(IPlantRecordsService plantRecordService)
         {
-            _context = context;
+            _plantRecordService = plantRecordService;
         }
 
         [HttpGet]
         [Route("GetPlantRecords")]
-        public List<PlantRecordDTO> GetPlantRecords()
+        public async Task<ActionResult<List<PlantRecordDTO>>> GetPlantRecords()
         {
-            var plantsRecord = _context.PlantRecords.Select(a => new PlantRecordDTO(a))
-                                                    .ToList();
+            var result = await _plantRecordService.GetPlantRecords();
 
-            foreach(var record in plantsRecord)
-            {
-                if (record.PresumedHarvest.ToString() == "01.01.0001 0:00:00")
-                {
-                    var plant = _context.Plants.Find(record.PlantId);
-                    record.CalculatePresumedHarvest(plant);
-
-                }
-                record.calculateProgress();
-            }
-
-            return plantsRecord;
+            return HandleResult(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<PlantRecordDTO>> PostPlantRecord(PlantRecordDTO aPlantRecordDTO)
+        public async Task<ActionResult<PlantRecordDTO>> PostPlantRecord(PlantRecordDTO plantRecordDTO)
         {
 
-            var plant = _context.Plants.Find(aPlantRecordDTO.PlantId);
+            var result = await _plantRecordService.PostPlantRecord(plantRecordDTO);
 
-            aPlantRecordDTO.CalculatePresumedHarvest(plant);
+            return HandleResult(result);
 
-            aPlantRecordDTO.calculateProgress();
-
-            var newPlantRecord = new PlantRecord
-            {
-                Id = aPlantRecordDTO.Id,
-                AmountPlanted = aPlantRecordDTO.AmountPlanted,
-                DatePlanted = aPlantRecordDTO.DatePlanted,
-                PlantId = aPlantRecordDTO.PlantId,
-                Plant = _context.Plants.First(a => a.Id == aPlantRecordDTO.PlantId),
-                Note = aPlantRecordDTO.Note
-            };
-
-
-            _context.PlantRecords.Add(newPlantRecord);
-
-            await _context.SaveChangesAsync();
-
-
-            return aPlantRecordDTO;
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<PlantRecordDTO>> DeletePlantRecord(Guid id)
         {
-            if (_context.PlantRecords == null)
-            {
-                return NotFound();
-            }
-            var plant = await _context.PlantRecords.FindAsync(id);
-            if (plant == null)
-            {
-                return NotFound();
-            }
+            var result = await _plantRecordService.DeletePlantRecord(id);
 
-            _context.PlantRecords.Remove(plant);
-            await _context.SaveChangesAsync();
-
-            return new OkObjectResult(id);
+            return HandleResult(result);
         }
 
 
         [HttpPut("{id}")]
         public async Task<ActionResult<PlantRecordDTO>> UpdatePlantRecord(Guid id, PlantRecordDTO plantRecord)
         {
-            if (id != plantRecord.Id)
-            {
-                return BadRequest();
-            }
+            var result = await _plantRecordService.UpdatePlantRecord(id, plantRecord);
 
-            //_context.Entry(monthWeek).State = EntityState.Modified;
+            return HandleResult(result);
 
-            try
-            {
-                var record = await _context.PlantRecords.FindAsync(id);
-                if(record != null) 
-                {
-                    record.AmountPlanted = plantRecord.AmountPlanted;
-                    record.DatePlanted = plantRecord.DatePlanted;
-
-                    var plant = await _context.Plants.FindAsync(plantRecord.PlantId);
-
-                    if(plant != null){
-                        record.Plant = plant;
-                    }
-
-                    record.PlantId = plantRecord.PlantId;
-                }
-
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-               
-            }
-
-            return NoContent();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PlantRecordDTO>> GetPlant(Guid id)
         {
-            var plantRecord = await _context.PlantRecords.FindAsync(id);
 
-            if (plantRecord == null)
-            {
-                return NotFound();
-            }
-            
-            return new PlantRecordDTO(plantRecord);
+            var result = await _plantRecordService.GetPlant(id);
+
+            return HandleResult(result);
         }
 
     }

@@ -33,18 +33,18 @@ namespace API.Model
             Note = string.Empty;
         }
 
-        public Bed(BedRelation aBedRelation)
+        public Bed(BedRelation bedRelation)
         {
-            Id = aBedRelation.Bed.Id;
-            Name = aBedRelation.Bed.Name;
-            Length = aBedRelation.Bed.Length;
-            Width = aBedRelation.Bed.Width;
-            NumOfColumns = aBedRelation.Bed.NumOfColumns;
-            NumOfRows = aBedRelation.Bed.NumOfRows;
-            Cells = aBedRelation.Cells;
-            IsDesign = aBedRelation.Bed.IsDesign;
-            CropRotation = aBedRelation.Bed.CropRotation;
-            Note = aBedRelation.Bed.Note;
+            Id = bedRelation.Bed.Id;
+            Name = bedRelation.Bed.Name;
+            Length = bedRelation.Bed.Length;
+            Width = bedRelation.Bed.Width;
+            NumOfColumns = bedRelation.Bed.NumOfColumns;
+            NumOfRows = bedRelation.Bed.NumOfRows;
+            Cells = bedRelation.Cells;
+            IsDesign = bedRelation.Bed.IsDesign;
+            CropRotation = bedRelation.Bed.CropRotation;
+            Note = bedRelation.Bed.Note;
         }
 
     }
