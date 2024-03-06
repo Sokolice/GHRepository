@@ -108,10 +108,7 @@ namespace API.Services
             record.Plant = plant;
             record.PlantId = plantRecord.PlantId;
 
-            var result = await _context.SaveChangesAsync() > 0;
-
-            if (!result)
-                return Result<PlantRecordDTO>.Failure("Failed to save plant record", false);
+            await _context.SaveChangesAsync();
 
             return Result<PlantRecordDTO>.Success(plantRecord);
         }

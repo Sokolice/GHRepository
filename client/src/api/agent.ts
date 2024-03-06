@@ -45,7 +45,7 @@ const Plants = {
     details: (id: string) => requests.get<PlantDTO>(`/Plants/${id}`),
     getOtherPlants: (id: string) => requests.get<PlantPlantsRelation>(`/Plants/GetOtherPlants?id=${id}`),
     getAllPlantsRelations: () => requests.get<PlantPlantsRelation[]>('/Plants/GetAllPlantsRelations'),
-    harvest: (harvest: HarvestDTO) => requests.post<HarvestDTO>('Plants/Harvest', harvest)
+    harvest: (harvest: HarvestDTO) => requests.post<HarvestDTO>('Harvest', harvest)
     /*create: (monthweek: MonthWeekRelation) => axios.post('/activities', monthweek),
     update: (monthweek: MonthWeekRelation) => axios.put(`/activities/${monthweek.id}`, monthweek),
     delete: (id: string) => axios.delete(`/activities/${id}`)*/

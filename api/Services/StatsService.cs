@@ -75,9 +75,10 @@ namespace API.Services
             foreach (var record in records)
             {
                 if ((today - record.DatePlanted).TotalDays >= 14)
+                {
                     stats.CanBeSowedRepeatedlyAmount++;
-
-                stats.CanBeSowedRepeatedly = string.Join(",", stats.CanBeSowedRepeatedly, record.PlantId);
+                    stats.CanBeSowedRepeatedly = string.Join(",", stats.CanBeSowedRepeatedly, record.PlantId);
+                }
             }
 
         }

@@ -52,10 +52,8 @@ namespace API.Services
 
             task.IsCompleted = gardeningTask.IsCompleted;
 
-            var result = await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
 
-            if (!result)
-                return Result<GardeningTaskDTO>.Failure("Failed to save task", false);
 
             return Result<GardeningTaskDTO>.Success(gardeningTask);
         }

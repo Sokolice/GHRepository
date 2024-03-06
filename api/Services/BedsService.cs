@@ -96,10 +96,7 @@ namespace API.Services
                 bed.Plants = _context.Plants.Where(a => bedRelation.Plants.Select(b => b.Id).ToList().Contains(a.Id)).ToList();
 
                
-              var result =   await _context.SaveChangesAsync() > 0;
-
-            if (!result)
-                return Result<BedRelation>.Failure("Failed to save bed.", false);
+            await _context.SaveChangesAsync();
 
             return Result<BedRelation>.Success(bedRelation);
         }
