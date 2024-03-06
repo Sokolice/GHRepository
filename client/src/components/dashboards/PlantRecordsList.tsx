@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Button, Card, Container, Divider, Image, Popup, Progress, Item, ItemContent, ItemHeader, Label } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlantDTO } from "../../models/PlantDTO";
 import LoadingComponent from "../layout/LoadingComponent";
 import PlantRecordFormComponent from "./PlantRecordForm";
@@ -62,6 +62,10 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO, openFor
 
 
 const PlantRecordsListComponent = observer(function PlantRecordsList() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     const { globalStore } = useStore();
     const { stats } = globalStore;
    

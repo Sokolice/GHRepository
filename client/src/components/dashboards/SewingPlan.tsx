@@ -2,7 +2,7 @@ import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header} fr
 import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
 import { store } from "../../app/stores/store";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
@@ -63,9 +63,11 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void, toSow
 const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: PlantDTO) => void) => {
 
     const thisMonth = new Date().getMonth() + 1;
+
+
     return (
 
-        <Container key={`${monthSewed.month}`} textAlign="center">
+        <Container key={`${monthSewed.month}`} id={`month_${MyMapping.mapMonthIndex(monthSewed.month)}`} textAlign="center">
 
             <Divider horizontal />
             
@@ -84,7 +86,9 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: Plant
 }
 
 const SewingPlanComponent = observer(function SewingPlan() {
-   
+
+    const thisMonth = new Date().getMonth() + 1;
+
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState(false);
     const [planted, setPlanted] = useState(false);
@@ -100,6 +104,12 @@ const SewingPlanComponent = observer(function SewingPlan() {
         imageSrc: '',
         repeatedPlanting: 0
     });
+
+    useEffect(() => {
+        const element = document.getElementById("month_" + thisMonth)
+        if (element)
+            element.scrollIntoView({ behavior: 'smooth' })
+    }, [])
 
     function openForm(plant: PlantDTO) {
         setOpen(true);
