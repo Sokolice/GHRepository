@@ -12,14 +12,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSnowflake, faWheatAwn } from "@fortawesome/free-solid-svg-icons";
 import ConfirmationDeleteComponent from "../details/ConfirmationDelete";
 import HarvestComponent from "../details/HarvestComponent";
+import { dateOptions } from "../../app/options/dateOptions";
 
 const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO, openForm: (plantRecord: PlantRecordDTO) => void, openDeleteForm: (id: string) => void, openHarvestForm: (plant: PlantDTO) => void) => {
 
-    const options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    };
+    
 
    
     if (!plant)
@@ -34,7 +31,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO, openFor
                 <Card.Header >{plant.name}</Card.Header>
             </Card.Content>
             <Card.Content extra>
-                <Card.Header>Datum výsadby: </Card.Header>{new Date(plantRecord.datePlanted).toLocaleString('cs-CZ', options)}
+                <Card.Header>Datum výsadby: </Card.Header>{plantRecord.datePlanted.toLocaleString('cs-CZ', dateOptions)}
                 <Divider />
                 <Card.Header>Množství: </Card.Header>{plantRecord.amountPlanted}
                 <Divider />

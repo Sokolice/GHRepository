@@ -5,6 +5,7 @@ import 'semantic-ui-css/semantic.min.css'
 import { StoreContext, store } from './app/stores/store.ts'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router/router'
+import 'react-datepicker/dist/react-datepicker.css'
 
 
 const root = ReactDOM.createRoot(

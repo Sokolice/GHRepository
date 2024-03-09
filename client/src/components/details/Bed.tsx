@@ -9,6 +9,7 @@ import { PlantDTO } from "../../models/PlantDTO";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { Cell } from "../../models/Cell";
 import { DropItem } from "../../models/DropItem";
+import { dateOptions } from "../../app/options/dateOptions";
 
 
 
@@ -125,7 +126,7 @@ const BedComponent = observer(function Bed() {
                 if (selectedBed.companionPlantsIds.includes(plant.id))
                     companion = true;
 
-                pushToOptions(plantRecord.id, plant.name, plant.id, plant.imageSrc, avoid, companion); 
+                pushToOptions(plantRecord.id, plant.name + " - " + plantRecord.datePlanted.toLocaleString('cs-CZ', dateOptions), plant.id, plant.imageSrc, avoid, companion); 
             })
         }
             return options;
@@ -309,14 +310,14 @@ const BedComponent = observer(function Bed() {
             <Segment>
                 <Header>{selectedBed.bed.name}</Header>
                     <Form onSubmit={AddPlantImage}>
-                    <FormGroup inline>
                     <Form.Field>
                         <Form.Dropdown options={loadDropDownItems()} onChange={handleDropChange} placeholder='Výběr' scrolling />
                     </Form.Field>
-                    <Form.Button type='submit'>
-                            Vložit rostlinu
-                        </Form.Button>
-                    </FormGroup>
+                    <Form.Button type='submit' content="Přidat rostlinu"
+                        labelPosition='right'
+                        icon='checkmark'
+                        positive />
+                            
                 </Form>
                 {/*<Button icon='save' color='blue' content='Ulozit' onClick={saveBed} />*/}
             </Segment>

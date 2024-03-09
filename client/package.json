@@ -23,6 +23,7 @@
     "mobx": "^6.10.2",
     "mobx-react-lite": "^4.0.5",
     "react": "^18.2.0",
+    "react-datepicker": "^6.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "semantic-ui-css": "^2.5.0",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@types/google-map-react": "^2.1.10",
     "@types/react": "^18.2.15",
+    "@types/react-datepicker": "^6.0.3",
     "@types/react-dom": "^18.2.7",
     "@types/uuid": "^9.0.5",
     "@typescript-eslint/eslint-plugin": "^6.0.0",

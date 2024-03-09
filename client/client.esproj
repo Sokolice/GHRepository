@@ -12,5 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="api\" />
+    <Folder Include="src\app\options\" />
   </ItemGroup>
 </Project>

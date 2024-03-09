@@ -1,7 +1,7 @@
 export interface PlantRecordDTO {
     id: string,
     plantId: string,
-    datePlanted: string,
+    datePlanted: Date | null,
     amountPlanted: number,
     progress: number,
     presumedHarvest: string,

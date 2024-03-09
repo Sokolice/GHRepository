@@ -12,7 +12,7 @@ export default class PlantRecordStore {
 
     get plantRecords() {
         return Array.from(this.plantRecordMap.values()).sort((a, b) =>
-            Date.parse(a.datePlanted) - Date.parse(b.datePlanted));
+            a.datePlanted!.getTime() - b.datePlanted!.getTime());
     }
     
     getPlantRecord = (id: string) => {
@@ -41,26 +41,25 @@ export default class PlantRecordStore {
 
     }
 
-    loadPlantRecord = async (id: string)=>{
-        //try {
-       //console.log("id atribute: " +id);
+    loadPlantRecord = async (id: string) => {
         let plantRecord = this.plantRecordMap.get(id);
-        //console.log("record z mapy:" + plantRecord?.id);
         if (plantRecord) {
-            //console.log("existuje")
             return plantRecord;
         }
-            else {
+        else {
+            store.globalStore.setLoading(true);
                 try {
 
                     plantRecord = await agent.PlantRecords.details(id);
                     this.setPlantRecord(plantRecord);
+                    store.globalStore.setLoading(false);
                     return plantRecord;
                 }
                 catch (error) {
                     console.log(error);
                 }
-            }
+        }
+
     }
 
     createPlantRecord = async (plantRecord: PlantRecordDTO) => {
@@ -134,7 +133,7 @@ export default class PlantRecordStore {
 
     private setPlantRecord = (plantRecord: PlantRecordDTO) => {
         runInAction(() => {
-            plantRecord.datePlanted = plantRecord.datePlanted.split('T')[0];
+            plantRecord.datePlanted = new Date(plantRecord.datePlanted!);
             this.plantRecordMap.set(plantRecord.id, plantRecord);        
         })
     }
