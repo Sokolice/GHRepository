@@ -30,18 +30,6 @@ export default class BedsStore {
             const bedRelations = await agent.Beds.getBeds();
             runInAction(() => {
                 bedRelations.forEach(bedRelation => {
-
-                    /*bedRelation.cells.forEach(cell => {
-                        if (cell.plantRecordId != "") {
-
-                            const plant: PlantDTO = store.globalStore.getPlantDTO(
-                                bedRelation.bed.isDesign ? cell.plantRecordId : store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId
-                                    ?? "");
-                            if (plant)
-                                bedRelation.plants.push(plant);
-                        }
-                    })*/
-
                     this.bedList.set(bedRelation.bed.id, bedRelation);
                 })
                 store.globalStore.setLoading(false);

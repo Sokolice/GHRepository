@@ -53,11 +53,9 @@ const BedsFormComponent = observer(function BedsForm() {
     const validationSchema = Yup.object({
         name: Yup.string().required(),
         length: Yup.number()
-            .integer()
             .min(1, "Délka musí být vetší než 0")
             .required('Délka musí být zadána'),
         width: Yup.number()
-            .integer()
             .min(1, "Šířka musí být vetší než 0")
             .required('Šířka musí být zadána')
     })

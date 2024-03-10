@@ -6,8 +6,8 @@ namespace API.DTOs
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public int Width { get; set; }
-        public int Length { get; set; }
+        public decimal Width { get; set; }
+        public decimal Length { get; set; }
         public int NumOfColumns { get; set; }
         public int NumOfRows { get; set; }
         public bool IsDesign {  get; set; }
