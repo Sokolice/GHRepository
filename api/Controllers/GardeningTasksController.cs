@@ -3,11 +3,13 @@ using API.DTOs;
 using API.Persistence;
 using API.Relations;
 using API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class GardeningTasksController : BaseApiController

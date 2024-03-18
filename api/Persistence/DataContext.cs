@@ -1,10 +1,12 @@
-﻿using API.Model;
+﻿using API.Domain;
+using API.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 
 namespace API.Persistence
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
@@ -24,6 +26,7 @@ namespace API.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             //lazy loading
             modelBuilder.Entity<Plant>()
                 .HasMany(a => a.CompanionPlants)

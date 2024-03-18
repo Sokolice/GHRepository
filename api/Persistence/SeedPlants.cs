@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Schema;
 using System.Linq;
 using API.Core;
-using Extensions = API.Core.Extensions;
+using PlantsExtensions = API.Core.PlantsExtensions;
 using System.Xml.Linq;
 
 namespace API.Persistence
@@ -3758,7 +3758,7 @@ namespace API.Persistence
             {
                 var shortName = plant.Name.Substring(0, plant.Name.IndexOf(" "));
 
-                var keyCompanion = Extensions.CompanionPlants.FirstOrDefault(a => a.Key == shortName).Value;
+                var keyCompanion = PlantsExtensions.CompanionPlants.FirstOrDefault(a => a.Key == shortName).Value;
 
                 if(keyCompanion != null) { 
 
@@ -3774,7 +3774,7 @@ namespace API.Persistence
                 }
 
                 }
-                var keyAvoids = Extensions.AvoidPlants.FirstOrDefault(a => a.Key == shortName).Value;
+                var keyAvoids = PlantsExtensions.AvoidPlants.FirstOrDefault(a => a.Key == shortName).Value;
 
                 if(keyAvoids != null) { 
 

@@ -1,6 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using API.Persistence;
 using API.Services;
+using API.Extensions;
+using Microsoft.AspNetCore.Identity;
+using API.Domain;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace API
 {
@@ -21,7 +26,12 @@ namespace API
             builder.Services.AddTransient<IHarvestService, HarvestService>();
             builder.Services.AddTransient<IStatsService, StatsService>();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(opt =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                opt.Filters.Add(new AuthorizeFilter(policy));
+            }
+                );
             builder.Services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -38,6 +48,8 @@ namespace API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddIdentityServices(builder.Configuration);
+
 
             var app = builder.Build();
 
@@ -50,6 +62,8 @@ namespace API
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
 
@@ -59,9 +73,11 @@ namespace API
             try
             {
                 var context = services.GetRequiredService<DataContext>();
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 context.Database.Migrate();
 
-               //await SeedPlants.SeedData(context);
+                await SeedUser.SeedData(context, userManager);
+                //await SeedPlants.SeedData(context);
             }
             catch (Exception ex)
             {

@@ -1,6 +1,6 @@
 ﻿namespace API.Core
 {
-    public static class Extensions
+    public static class PlantsExtensions
     {
         public static Dictionary<string, List<string>> CompanionPlants = new Dictionary<string, List<string>>
         {

@@ -1,11 +1,13 @@
 ﻿using API.DTOs;
 using API.Model;
 using API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     public class HarvestController : BaseApiController
     {
         private readonly IHarvestService _harvestService;
