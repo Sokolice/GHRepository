@@ -8,6 +8,7 @@ import RecipesStore from "./recipesStore";
 import PestsStore from "./pestsStore";
 import PlantStore from "./plantStore";
 import UserStore from "./userStore";
+import ModalStore from "./modalStore";
 
 interface Store {
     monthWeekStore: MonthWeekStore,
@@ -18,7 +19,8 @@ interface Store {
     recipesStore: RecipesStore,
     pestsStore: PestsStore,
     plantStore: PlantStore,
-    userStore: UserStore
+    userStore: UserStore,
+    modalStore: ModalStore
 }
 
 export const store: Store = {
@@ -30,7 +32,8 @@ export const store: Store = {
     recipesStore: new RecipesStore(),
     pestsStore: new PestsStore(),
     plantStore: new PlantStore(),
-    userStore: new UserStore()
+    userStore: new UserStore(),
+    modalStore: new ModalStore()
 }
 
 export const StoreContext = createContext(store);

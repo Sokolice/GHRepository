@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from './app/stores/store';
 import { useEffect } from 'react';
 import LoadingComponent from './components/layout/LoadingComponent';
+import ModalContainer from './components/modals/ModalContainer';
 
 function App() {
     const location = useLocation();
@@ -52,6 +53,7 @@ function App() {
     if (!globalStore.appLoaded) return <LoadingComponent/>
     return (
         <>
+            <ModalContainer/>
             {(location.pathname === '/') ? <HomePage /> : (
                 
                 <>

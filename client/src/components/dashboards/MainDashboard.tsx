@@ -15,10 +15,7 @@ const MainDashboard = observer(function MainDashboard() {
         return (
             <LoadingComponent content="Loading" />
         )
-    return (
-        <Segment inverted textAlign="center" vertical className="masthead">
-            <Container>
-
+    return (<>
                 <Header as='h1' inverted>
                     Zahradníkův pomocník
                 </Header>
@@ -137,9 +134,8 @@ const MainDashboard = observer(function MainDashboard() {
                             </CardContent>
                         </Card>
                     </GridColumn>
-                </Grid>
-            </Container>
-        </Segment>
+        </Grid>
+    </>
     )
 
 })
