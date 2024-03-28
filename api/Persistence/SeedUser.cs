@@ -7,18 +7,20 @@ namespace API.Persistence
     {
         public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
-            if(!userManager.Users.Any())
-            {
                 var users = new List<AppUser>
                 {
-                    new AppUser{DisplayName = "Admin", UserName="admin"}
+                    new AppUser
+                    {
+                        DisplayName = "Admin", 
+                        UserName="admin",
+                        Email="admin@admin.cz"
+                    }
                 };
 
                 foreach(var user in users)
                 {
-                    await userManager.CreateAsync(user, "Admin123");
+                   var result =  await userManager.CreateAsync(user, "Admin123");                
                 }
-            }
         }
     }
 }

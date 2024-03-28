@@ -1,9 +1,12 @@
-import { Container, Menu } from 'semantic-ui-react';
-import { NavLink } from 'react-router-dom';
+import { Container, Dropdown, DropdownItem, DropdownMenu, Menu } from 'semantic-ui-react';
+import { Link, NavLink } from 'react-router-dom';
+import { useStore } from '../../app/stores/store';
+import { observer } from 'mobx-react-lite';
 
 
-export default function NavBar() {
-
+ const NavBar = observer(function NavBar() {
+    const { userStore } = useStore();
+    const { user, logout } = userStore;
     return (
         <Menu inverted fixed='top'>
             <Container>
@@ -20,7 +23,17 @@ export default function NavBar() {
                 <Menu.Item as={NavLink} to='/calendar' >
                     Kalendář
                 </Menu.Item>
+                <Menu.Item position='right'>
+                    <Dropdown pointing='left' text={user?.displayName}>
+                        <DropdownMenu>
+                            <DropdownItem as={Link} to={`/profiles/${user?.userName}`} text='Muj profil' icon='user' />
+                            <DropdownItem onClick={logout} text='Odhlasit' icon='power' />
+                        </DropdownMenu>
+                    </Dropdown>
+                </Menu.Item>
             </Container>
         </Menu>
     )
-}
+ })
+
+export default NavBar;

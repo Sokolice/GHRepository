@@ -41,7 +41,7 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("resgister")]
+        [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
         {
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDTO.UserName))

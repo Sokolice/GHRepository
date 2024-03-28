@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { GardeningTaskDTO } from "../../models/GardeningTaskDTO";
 import { MonthWeekDTO } from "../../models/MonthWeekDTO";
 import { PlantDTO } from "../../models/PlantDTO";
@@ -17,10 +17,30 @@ export default class GlobalStore {
     otherPlants: PlantPlantsRelation = <PlantPlantsRelation>{
         plant: <PlantDTO>{}, avoidPlants: new Array<PlantDTO>(), companionPlants: new Array<PlantDTO>()
     };
-    stats: Stats | undefined;    
-
+    stats: Stats | undefined;
+    token: string | null = localStorage.getItem('jwt');
+    appLoaded = false;
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
+        reaction(
+            () => this.token, 
+            token => {
+                if (token) {
+                    localStorage.setItem('jwt', token)
+                }
+                else {
+                    localStorage.removeItem('jwt')
+                }
+            }
+        )
+    }
+
+    setToken = (token: string) => {
+        this.token = token;
+    }
+
+    setAppLoaded = () => {
+        this.appLoaded = true;
     }
 
     loadStats = async () => {

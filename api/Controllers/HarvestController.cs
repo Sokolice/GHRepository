@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     public class HarvestController : BaseApiController
     {
         private readonly IHarvestService _harvestService;

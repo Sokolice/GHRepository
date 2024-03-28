@@ -6,8 +6,10 @@ import PlantRecordsListComponent from "../components/dashboards/PlantRecordsList
 import PlantDetails from "../components/details/PlantDetails";
 import BedComponent from "../components/details/Bed";
 import RecipeHints from "../components/details/RecipeHints";
-import CalendarList from "../components/dashboards/calendar";
+import CalendarList from "../components/dashboards/Calendar";
 import BedsPage from "../components/dashboards/BedsPage";
+import LoginComponent from "../components/users/login";
+import MainDashboard from "../components/dashboards/MainDashboard";
 
 
 export const routes: RouteObject[] = [
@@ -16,6 +18,8 @@ export const routes: RouteObject[] = [
         element: <App />,
         children: [
             { path: '', element: <HomePage /> },
+            { path: 'main', element: <MainDashboard /> },
+            { path: 'login', element: <LoginComponent /> },
             { path: 'sewingplan', element: <SewingPlanComponent /> },
             { path: 'plantrecords', element: <PlantRecordsListComponent /> },
             { path: 'plants/:id/:origin', element: <PlantDetails /> },

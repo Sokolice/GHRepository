@@ -11,6 +11,8 @@ import { PlantPlantsRelation } from '../models/PlantPlantsRelation';
 import { Stats } from '../models/Stats';
 import { GardeningTaskDTO } from '../models/GardeningTaskDTO';
 import { HarvestDTO } from '../models/HarvestDTO';
+import { User, UserFormValues } from '../models/user';
+import { store } from '../app/stores/store';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>
@@ -19,6 +21,11 @@ const sleep = (delay: number) => {
 
 axios.defaults.baseURL = 'http://localhost:5180/api/';
 
+axios.interceptors.request.use(config => {
+    const token = store.globalStore.token;
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+})
 
 axios.interceptors.response.use(async response => {
     try {
@@ -94,6 +101,11 @@ const Stats = {
     getStats: () => requests.get<Stats>('/Stats/GetStats')
 }
 
+const Account = {
+    currentUser: () => requests.get<User>('/account'),
+    login: (user: UserFormValues) => requests.post<User>('/account/login', user),
+    register: (user: UserFormValues) => requests.post('account/register', user)
+}
 
 const agent = {
     Plants,
@@ -103,7 +115,8 @@ const agent = {
     Cells,
     Pests,
     Tasks,
-    Stats
+    Stats,
+    Account
 }
 
 export default agent;

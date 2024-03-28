@@ -5,7 +5,7 @@ interface Props {
     placeholder?: string,
     name: string,
     label?: string,
-    type: string,
+    type?: string,
     onClick?:() => void
 }
 export default function MyInput(props: Props) {

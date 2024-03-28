@@ -7,47 +7,61 @@ import NavBar from './components/layout/NavBar';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './app/stores/store';
 import { useEffect } from 'react';
+import LoadingComponent from './components/layout/LoadingComponent';
 
 function App() {
-    const { bedsStore, plantRecordStore, globalStore, monthWeekStore, pestsStore } = useStore();
+    const location = useLocation();
+    const { bedsStore, plantRecordStore, globalStore, monthWeekStore, pestsStore, userStore } = useStore();
     const { loadBeds, beds } = bedsStore;
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
     const { loadPlantDTO, plantDTOList, loadStats } = globalStore;
     const { monthWeekRelationList, loadMonthWeeekRelations, currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
     const { pestsList, loadPests } = pestsStore;
+    const { isLoggedIn } = userStore;
 
+    useEffect(() => {
+        if (globalStore.token) {
+            userStore.getUser().finally(() => globalStore.setAppLoaded())
+        }
+        else {
+            globalStore.setAppLoaded()
+        }
+    }, [globalStore, userStore])
 
     useEffect(() => {
 
-        loadStats();
+        if (isLoggedIn) {
 
-        if (pestsList.length <= 0)
-            loadPests();
-        if (monthWeekRelationList.length <= 0)
-            loadMonthWeeekRelations();
-        if (currentMonthRelationList.length <= 0)
-            loadMonthWeeeks();
-        if (plantDTOList.size <= 0)
-            loadPlantDTO();
-        if (plantRecordMap.size <= 0)
-            loadPlantRecords();
-        if (beds.length <= 0)
-            loadBeds();
-    }, [beds.length, loadBeds, plantRecordMap, loadPlantRecords, plantDTOList, loadPlantDTO, monthWeekRelationList.length, loadMonthWeeekRelations, pestsList.length, loadPests, currentMonthRelationList.length, loadMonthWeeeks, loadStats])
+            loadStats();
 
+            if (pestsList.length <= 0)
+                loadPests();
+            if (monthWeekRelationList.length <= 0)
+                loadMonthWeeekRelations();
+            if (currentMonthRelationList.length <= 0)
+                loadMonthWeeeks();
+            if (plantDTOList.size <= 0)
+                loadPlantDTO();
+            if (plantRecordMap.size <= 0)
+                loadPlantRecords();
+            if (beds.length <= 0)
+                loadBeds();
+        }
+    }, [beds.length, loadBeds, plantRecordMap, loadPlantRecords, plantDTOList, loadPlantDTO, monthWeekRelationList.length, loadMonthWeeekRelations, pestsList.length, loadPests, currentMonthRelationList.length, loadMonthWeeeks, loadStats, isLoggedIn])
 
-    const location = useLocation();
+    if (!globalStore.appLoaded) return <LoadingComponent/>
     return (
         <>
-            {location.pathname === '/' ? <HomePage /> : (
+            {(location.pathname === '/') ? <HomePage /> : (
+                
                 <>
                     <NavBar />
                     <Container style={{ marginTop: '7em' }}>
                         <Outlet />
                     </Container>
-                </>
-            )}
-
+                </>)
+            }
+            
         </>
     )
 }
