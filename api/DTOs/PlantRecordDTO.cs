@@ -52,10 +52,10 @@ namespace API.DTOs
 
         public void CalculatePresumedHarvest(Plant plant)
         {
-
+            var firstSewedMonth = plant.SewingMonths.OrderBy(a => a.MonthIndex).FirstOrDefault();
             var firstHarvestMonth = plant.HarvestMonths.OrderBy(a => a.MonthIndex).FirstOrDefault();
 
-            PresumedHarvest = DatePlanted.AddMonths(firstHarvestMonth.MonthIndex);
+            PresumedHarvest = DatePlanted.AddMonths(firstHarvestMonth.MonthIndex - firstSewedMonth.MonthIndex);
         }
     }
 }
