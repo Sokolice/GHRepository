@@ -6,9 +6,10 @@ import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import LoadingComponent from "../layout/LoadingComponent";
 
-export default observer(function PlantDetails() {
-    const { globalStore } = useStore();
-    const { selectedPlant, loadPlant, loadOtherPlants, otherPlants } = globalStore;
+const  PlantDetails = observer(function PlantDetails() {
+    const { plantStore, pestsStore } = useStore();
+    const { selectedPlant, loadOtherPlants, otherPlants, loadPlant } = plantStore;
+    const { getCurrentPest } = pestsStore;
     const { id } = useParams();
     const { origin } = useParams();
     const { otherId } = useParams();
@@ -17,16 +18,13 @@ export default observer(function PlantDetails() {
         window.scrollTo(0, 0)
     }, [])
 
-
     useEffect(() => {
         if (id) {
             loadPlant(id);
-            store.pestsStore.getCurrentPest(id);
+            getCurrentPest(id);
             loadOtherPlants(id);
         }
-        
-    }, [id, loadPlant, loadOtherPlants])
-
+    }, [id])
     if (store.globalStore.loading || !selectedPlant)
         return (
             <LoadingComponent />
@@ -128,3 +126,5 @@ export default observer(function PlantDetails() {
     )
 }
 )
+
+export default PlantDetails;

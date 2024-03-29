@@ -1,21 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { store, useStore } from "../../app/stores/store";
-import { Button, Divider, Form, Header, Label } from "semantic-ui-react";
+import { useStore } from "../../app/stores/store";
+import { Button, Divider, Form, Header } from "semantic-ui-react";
 
 interface Props {
-    plantRecordId: string
+    handleSubmit: () => void
 }
 
-const ConfirmationDeleteComponent = observer(function ConfirmationDelete({ plantRecordId }: Props) {
-    const { modalStore } = useStore();
-    function handleSubmit() {
-        //console.log("submit");
-        //e.preventDefault();
-        if (plantRecordId != '') {
-            store.plantRecordStore.deletePlantRecord(plantRecordId);
-        }
-    }
-
+const ConfirmationDeleteComponent = observer(function ConfirmationDelete({ handleSubmit }: Props) {
+    const { modalStore, globalStore } = useStore();
     return (
         <Form            
             onSubmit={handleSubmit}>
@@ -25,19 +17,21 @@ const ConfirmationDeleteComponent = observer(function ConfirmationDelete({ plant
                 Určitě chcete smazat tento záznam?
             </Header>
             <Divider />
+
+            <Button
+                loading={globalStore.loading}
+                type='submit'
+                content="Ano"
+                labelPosition='right'
+                icon='remove'
+                positive
+            />
             <Button
                 onClick={() => { modalStore.closeModal() }}
                     content="Ne"
                     labelPosition='right'
                     icon='checkmark'
                     negative
-                />
-            <Button
-                    type='submit'
-                    content="Ano"
-                    labelPosition='right'
-                    icon='remove'
-                    positive
                 />
         </Form>
     )

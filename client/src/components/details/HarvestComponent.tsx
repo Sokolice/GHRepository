@@ -3,13 +3,14 @@ import { Button, Form, Image, Header, Rating, Divider, Grid, GridRow, GridColumn
 import { PlantDTO } from "../../models/PlantDTO";
 import { ChangeEvent, useState } from "react";
 import { store, useStore } from "../../app/stores/store";
+import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 
 interface Props {
     plantDTO: PlantDTO
 }
 
 const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
-    const { modalStore } = useStore();
+    const { modalStore, globalStore } = useStore();
     const [harvest, setHarvest] = useState({
         id: '',
         plantId: '',
@@ -43,7 +44,7 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
 
                     <GridColumn width={10}>
                         <Form.Input name='amount' placeholder='gramy' id='amount' label='Množství' onChange={handleInputChange}></Form.Input>
-                        <Form.Input name='date' placeholder='Datum' id='date' label='Datum' type='date' onChange={handleInputChange}></Form.Input>
+                        <Form.Input name='date' placeholder='Datum' id='date' type='date' onChange={handleInputChange}></Form.Input>
                         <Form.TextArea placeholder='Poznámka' id="note" name="note" label="Poznámka" onChange={handleInputChange} />
                         <Rating name='rating' id='rating' maxRating={5} defaultRating={0} icon='star' size='huge' onRate={handleChangeOnRate} />
 
@@ -51,19 +52,21 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
                 </GridRow>
                 <GridRow>
                     <GridColumn width={16}>
+
                         <Button
-                            onClick={() => { modalStore.closeModal() }}
-                            content="Ne"
-                            labelPosition='right'
-                            icon='checkmark'
-                            negative
-                        />
-                        <Button
+                            loading={globalStore.loading}
                             type='submit'
-                            content="Ano"
+                            content="Uložit"
                             labelPosition='right'
                             icon='remove'
                             positive
+                        />
+                        <Button
+                            onClick={() => { modalStore.closeModal() }}
+                            content="Zrušit"
+                            labelPosition='right'
+                            icon='checkmark'
+                            negative
                         />
 
                     </GridColumn>

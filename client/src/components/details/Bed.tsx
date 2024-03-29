@@ -4,7 +4,7 @@ import { MouseEvent, ReactNode, SyntheticEvent, useEffect, useState } from "reac
 import { Link, useParams } from "react-router-dom";
 import { store, useStore } from "../../app/stores/store";
 import LoadingComponent from "../layout/LoadingComponent";
-import { Button, Divider, DropdownItemProps, Form, FormGroup, Header, Label, Segment, SegmentGroup } from "semantic-ui-react";
+import { Button, Divider, DropdownItemProps, Form, Header, Label, Segment, SegmentGroup } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { Cell } from "../../models/Cell";
@@ -19,12 +19,10 @@ const BedComponent = observer(function Bed() {
 
     const [plantId, setPlantId] = useState('');
     const [thisPlantRecordId, setPlantRecordId] = useState('');
-    const { bedsStore, globalStore, plantRecordStore, plantStore } = useStore();
+    const { bedsStore, plantRecordStore, plantStore } = useStore();
     const { selectedBed, loadBed } = bedsStore;
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
-    const { allPlantsRelations, loadAllPlantsRelations } = plantStore;
-
-    const { loadPlantDTO, plantDTOList } = globalStore;
+    const { allPlantsRelations, loadAllPlantsRelations, loadPlantDTO, plantDTOList } = plantStore;
 
     const { id } = useParams();
 
@@ -66,7 +64,7 @@ const BedComponent = observer(function Bed() {
    
     function loadDropDownItems() {
         if (selectedBed?.bed.cropRotation > 0 && selectedBed?.bed.isDesign) {
-            store.globalStore.plantDTOList.forEach((p) => {
+            plantStore.plantDTOList.forEach((p) => {
                 //console.log(p.name + " trat: " + p.cropRotation);
                 if (p.cropRotation == selectedBed.bed.cropRotation || (p.cropRotation == 23 && (selectedBed.bed.cropRotation == 2 || selectedBed.bed.cropRotation == 3))) {
                     let avoid = false;
@@ -97,7 +95,7 @@ const BedComponent = observer(function Bed() {
             })
         }
         else if (selectedBed.bed.isDesign) {
-            store.globalStore.plantDTOList.forEach((p) => {
+            plantStore.plantDTOList.forEach((p) => {
                 //console.log(p.name + " trat: " + p.cropRotation);
                     let avoid = false;
                     let companion = false;
@@ -116,7 +114,7 @@ const BedComponent = observer(function Bed() {
             store.plantRecordStore.plantRecordMap.forEach((plantRecord: PlantRecordDTO) => {
                 //console.log(plantRecord);
                 //console.log(store.globalStore.plantDTOList);
-                const plant: PlantDTO = store.globalStore.getPlantDTO(plantRecord.plantId);
+                const plant: PlantDTO = plantStore.getPlantDTO(plantRecord.plantId);
                 let avoid = false;
                 let companion = false;
 
@@ -133,7 +131,7 @@ const BedComponent = observer(function Bed() {
     }
 
     function AddPlantImage() {
-        const plant: PlantDTO = store.globalStore.getPlantDTO(plantId);
+        const plant: PlantDTO = plantStore.getPlantDTO(plantId);
 
         const imagePath = 'url(/src/assets/plants/' + plant?.imageSrc + ")";
         const activeCells = new Array<Cell>();
@@ -250,7 +248,7 @@ const BedComponent = observer(function Bed() {
 
                 const id = selectedBed?.bed.isDesign ? cell.plantRecordId : plantRecord.plantId
                 if (id) {
-                    const plant = store.globalStore.getPlantDTO(id);
+                    const plant = plantStore.getPlantDTO(id);
                     if (plant) {
                         return <Label className="lbl-name" as={Link} to={selectedBed?.bed.isDesign ? `/plants/${id}/beds/${selectedBed.bed.id}` : '/plantrecords'} >
                             {plant?.name} {selectedBed?.bed.isDesign ? null : ": " + plantRecord.datePlanted}

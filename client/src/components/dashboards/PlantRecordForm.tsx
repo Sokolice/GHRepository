@@ -7,7 +7,7 @@ import { store, useStore } from "../../app/stores/store";
 import { Formik, Form } from "formik";
 import LoadingComponent from "../layout/LoadingComponent";
 import * as Yup from 'yup';
-import MyTextInput from "../../app/common/form/MyInput";
+import MyInput from "../../app/common/form/MyInput";
 import MyTextArea from "../../app/common/form/MyTextArea";
 import MyDateInput from "../../app/common/form/MyDateInput";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
@@ -85,7 +85,7 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
                                     placeholderText='Datum výsadby'
                                     dateFormat='dd.MM.yyyy'
                                 />
-                                <MyTextInput name='amountPlanted' placeholder='Množství' type='number' label='Množství' />
+                                <MyInput name='amountPlanted' placeholder='Množství' type='number' label='Množství' />
                                 <MyTextArea name='note' placeholder='Poznámka' rows={3} label="Poznámka"/>
 
                             </GridColumn>

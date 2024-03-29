@@ -1,14 +1,9 @@
-import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { Button, Card, CardGroup, Checkbox, Container, Dropdown, FormField, Grid, GridColumn, GridRow, Header, Label, List, ListItem, Segment } from "semantic-ui-react";
+import {useState } from "react";
+import { Button, Grid, GridColumn, GridRow, Header, Segment } from "semantic-ui-react";
 import { store } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
-import LoadingComponent from "../layout/LoadingComponent";
-import { BedRelation } from "../../models/BedRelation";
-import { PlantDTO } from "../../models/PlantDTO";
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
-import MyTextInput from "../../app/common/form/MyInput";
 import MyTextArea from "../../app/common/form/MyTextArea";
 import { BedDTO } from "../../models/BedDTO";
 import MyInput from "../../app/common/form/MyInput";
@@ -21,7 +16,7 @@ const BedsFormComponent = observer(function BedsForm() {
 
 
 
-    const [selectedBed, setBed] = useState<BedDTO>({
+    const selectedBed = {
         id: "",
         name: "",
         length: 0,
@@ -31,7 +26,7 @@ const BedsFormComponent = observer(function BedsForm() {
         note: "",
         numOfColumns: 0,
         numOfRows: 0
-    })
+    }
 
     const [isRotationDisabled, setIsRotationDisabled] = useState(true);
 

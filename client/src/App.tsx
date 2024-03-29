@@ -12,10 +12,11 @@ import ModalContainer from './components/modals/ModalContainer';
 
 function App() {
     const location = useLocation();
-    const { bedsStore, plantRecordStore, globalStore, monthWeekStore, pestsStore, userStore } = useStore();
+    const { bedsStore, plantRecordStore, globalStore, monthWeekStore, pestsStore, userStore, plantStore } = useStore();
     const { loadBeds, beds } = bedsStore;
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
-    const { loadPlantDTO, plantDTOList, loadStats } = globalStore;
+    const { loadStats } = globalStore;
+    const { loadPlantDTO, plantDTOList } = plantStore;
     const { monthWeekRelationList, loadMonthWeeekRelations, currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
     const { pestsList, loadPests } = pestsStore;
     const { isLoggedIn } = userStore;
@@ -50,7 +51,7 @@ function App() {
         }
     }, [beds.length, loadBeds, plantRecordMap, loadPlantRecords, plantDTOList, loadPlantDTO, monthWeekRelationList.length, loadMonthWeeekRelations, pestsList.length, loadPests, currentMonthRelationList.length, loadMonthWeeeks, loadStats, isLoggedIn])
 
-    if (!globalStore.appLoaded) return <LoadingComponent/>
+    if (!globalStore.appLoaded) return <LoadingComponent />
     return (
         <>
             <ModalContainer/>

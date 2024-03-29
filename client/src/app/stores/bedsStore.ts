@@ -112,8 +112,8 @@ export default class BedsStore {
 
 
     createBed = async (width: number, length: number, name: string, isDesign: boolean, cropRotation: number, note: string) => {
-        const r = (width / 20) * 100;
-        const c = (length / 20) * 100;
+        const r = (width / 10) * 100;
+        const c = (length / 10) * 100;
 
         const cells = new Array<Cell>();
 
@@ -163,6 +163,7 @@ export default class BedsStore {
             runInAction(() => {
                 this.bedList.delete(id);
                 store.globalStore.loading = false;
+                store.modalStore.closeModal();
             });
 
         } catch (error) {

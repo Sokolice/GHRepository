@@ -1,9 +1,9 @@
 import { Container, Segment } from "semantic-ui-react";
-import { store } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import LoadingComponent from "../layout/LoadingComponent";
 import BedsFormComponent from "./BedsForm";
 import BedsListComponent from "./BedsList";
+import LoadingComponent from "../layout/LoadingComponent";
+import { store } from "../../app/stores/store";
 
 
 

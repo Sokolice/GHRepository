@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
-import { Container, Header, Segment, Card, Grid, GridColumn, Image, CardContent, CardHeader, Label, Popup } from "semantic-ui-react";
+import { Card, Grid, GridColumn, Image, CardContent, CardHeader, Label, Popup } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling, faSquareCheck, faRepeat, faWheatAwn, faSnowflake, faFire, faCloudRain } from '@fortawesome/free-solid-svg-icons'
 import LoadingComponent from "../layout/LoadingComponent";

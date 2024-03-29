@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class HarvestController : BaseApiController
     {
         private readonly IHarvestService _harvestService;
@@ -16,7 +18,6 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route("Harvest")]
         public async Task<ActionResult<HarvestDTO>> Harvest(HarvestDTO harvest)
         {
             var result = await _harvestService.Harvest(harvest);

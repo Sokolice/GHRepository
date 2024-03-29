@@ -34,7 +34,7 @@ namespace API.Services
 
             var result = await _context.SaveChangesAsync() > 0;
 
-            if(result)
+            if(!result)
                 return Result<HarvestDTO>.Failure("Failed to save harvest", false);
 
             return Result<HarvestDTO>.Success(harvest);

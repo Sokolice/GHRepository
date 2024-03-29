@@ -15,6 +15,13 @@ import { dateOptions } from "../../app/options/dateOptions";
 import ConfirmationDeleteComponent from "../details/ConfirmationDelete";
 
 const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
+
+    function deleteRecord() {
+        if (plantRecord.id != '') {
+            store.plantRecordStore.deletePlantRecord(plantRecord.id);
+        }
+    }
+
     if (!plant)
         return (
             <LoadingComponent />
@@ -39,7 +46,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
                 <Popup content='Smazat' trigger={
                     <Button icon='minus'
                         color='red'
-                        onClick={() => store.modalStore.openModal(<ConfirmationDeleteComponent plantRecordId={plantRecord.id} />)}
+                        onClick={() => store.modalStore.openModal(<ConfirmationDeleteComponent handleSubmit={deleteRecord} />)}
                     />}
                 />
                 <Popup content='Recepty' trigger={
@@ -69,13 +76,13 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
-    const { globalStore } = useStore();
+    const { globalStore, plantStore } = useStore();
     const { stats } = globalStore;
 
-    if (store.globalStore.loading)
+    /*if (store.globalStore.loading)
         return (
             <LoadingComponent />
-        )
+        )*/
 
     return (
         <Container>
@@ -99,7 +106,7 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
                 <Card.Group itemsPerRow='6'>
                     {
                         store.plantRecordStore.plantRecords.map((plantRecord: PlantRecordDTO) => {
-                            return RenderPlantRecord(plantRecord, store.globalStore.getPlantDTO(plantRecord.plantId))
+                            return RenderPlantRecord(plantRecord, plantStore.getPlantDTO(plantRecord.plantId))
                         })
                     }
                     </Card.Group>
