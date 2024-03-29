@@ -3,7 +3,7 @@ import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import LoginComponent from "../users/login";
 import MainDashboard from "../dashboards/MainDashboard";
-import { Button, Container, Segment } from "semantic-ui-react";
+import { Button, Container, Header, Segment } from "semantic-ui-react";
 import RegisterForm from "../users/RegisterForm";
 
 const HomePageComponent = observer(function HomePage() {
@@ -14,6 +14,9 @@ const HomePageComponent = observer(function HomePage() {
         <>
             <Segment inverted textAlign="center" vertical className="masthead">
                 <Container>
+                    <Header as='h1' inverted>
+                        Zahradníkův pomocník
+                        </Header>
                     {userStore.isLoggedIn ? (
                         <MainDashboard />
                     ) : (

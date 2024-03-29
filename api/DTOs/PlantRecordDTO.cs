@@ -55,7 +55,7 @@ namespace API.DTOs
 
             var firstHarvestMonth = plant.HarvestMonths.OrderBy(a => a.MonthIndex).FirstOrDefault();
 
-            PresumedHarvest = DatePlanted.AddMonths(firstHarvestMonth.MonthIndex - 1);
+            PresumedHarvest = DatePlanted.AddMonths(firstHarvestMonth.MonthIndex);
         }
     }
 }

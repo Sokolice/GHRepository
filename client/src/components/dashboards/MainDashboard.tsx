@@ -13,12 +13,9 @@ const MainDashboard = observer(function MainDashboard() {
 
     if (loading)
         return (
-            <LoadingComponent content="Loading" />
+            <LoadingComponent />
         )
-    return (<>
-                <Header as='h1' inverted>
-                    Zahradníkův pomocník
-                </Header>
+    return (<>                
                 <Grid columns={4}>
                     <GridColumn>
                         <Card>

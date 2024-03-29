@@ -63,7 +63,6 @@ export default class PlantRecordStore {
     }
 
     createPlantRecord = async (plantRecord: PlantRecordDTO) => {
-        store.globalStore.setLoading(true);
         plantRecord.id = uiid();
         try {
             const response = await agent.PlantRecords.create(plantRecord);
@@ -71,25 +70,22 @@ export default class PlantRecordStore {
             runInAction(() => {
                 this.setPlantRecord(response.data);
             });
-            
         }
         catch (error) {
             console.log(error);
         }
         store.globalStore.loadStats();
-        store.globalStore.setLoading(false);
+        store.modalStore.closeModal();
     }
 
     updatePlantRecord = async (plantRecord: PlantRecordDTO) => {
-        store.globalStore.setLoading(true);
         try {
             await agent.PlantRecords.update(plantRecord);
 
             runInAction(() => {
                 this.plantRecordMap.set(plantRecord.id, plantRecord);
             })
-
-            store.globalStore.setLoading(false);
+            store.modalStore.closeModal();
         }
         catch (error) {
             console.log(error);
@@ -103,7 +99,7 @@ export default class PlantRecordStore {
             runInAction(() => {
                 this.plantRecordMap.delete(id);
             });
-
+            store.modalStore.closeModal();
         } catch (error) {
             console.log(error);
         }
@@ -128,6 +124,7 @@ export default class PlantRecordStore {
                 update = false;
             }
         })
+        store.globalStore.loadStats();
         store.globalStore.setLoading(false);
     }
 

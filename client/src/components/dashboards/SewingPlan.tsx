@@ -2,7 +2,7 @@ import { Card, Container, Image, Label, Icon, Popup, Button, Divider, Header} fr
 import { PlantDTO } from "../../models/PlantDTO";
 import { observer } from "mobx-react-lite";
 import { store } from "../../app/stores/store";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
@@ -11,8 +11,8 @@ import MyMapping from "../../app/MyMapping";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling, faRepeat } from "@fortawesome/free-solid-svg-icons";
 
-const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void, toSowMonth: boolean) => {
-
+const RenderPlant = (plant: PlantDTO, toSowMonth: boolean) => {
+   
     return (
             <Card key={plant.id}>
                 <Image src={`/src/assets/plants/${plant.imageSrc}`} wrapped ui={false} />
@@ -51,7 +51,7 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void, toSow
                     null
                 }
                 <Divider horizontal />
-                    <Button icon='angle double down' onClick={() => openForm(plant)} content="Zasaď mě" key={plant.id} />
+                <Button icon='angle double down' onClick={() => store.modalStore.openModal(<PlantRecordFormComponent plant={plant } plantRecordId = { ''} /> )} content="Zasaď mě" key={plant.id} />
                     <Divider hidden/>
                     <Button icon='info' as={Link} to={`/plants/${plant.id}/sewingplan`} content="Detail" /> 
                 
@@ -60,7 +60,7 @@ const RenderPlant = (plant: PlantDTO, openForm: (plant: PlantDTO) => void, toSow
     )
 }
 
-const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: PlantDTO) => void) => {
+const RenderMonthWeek = (monthSewed: MonthSewedRelation) => {
 
     const thisMonth = new Date().getMonth() + 1;
 
@@ -78,7 +78,7 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation, openForm: (plant: Plant
             <Divider horizontal />
                 <Card.Group itemsPerRow={6} >
                 {
-                    monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant, openForm, thisMonth == MyMapping.mapMonthIndex(monthSewed.month)))
+                    monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant, thisMonth == MyMapping.mapMonthIndex(monthSewed.month)))
                 }
                 </Card.Group>
             </Container>
@@ -89,40 +89,15 @@ const SewingPlanComponent = observer(function SewingPlan() {
 
     const thisMonth = new Date().getMonth() + 1;
 
-    const [open, setOpen] = useState(false);
     const [active, setActive] = useState(false);
     const [planted, setPlanted] = useState(false);
 
-    const [selectedPlant, setPlant] = useState({
-        id: '',
-        name: '',
-        isHybrid: false,
-        directSewing: false,
-        germinationTemp: 0,
-        cropRotatoin: 0,
-        description: '',
-        imageSrc: '',
-        repeatedPlanting: 0
-    });
 
     useEffect(() => {
         const element = document.getElementById("month_" + thisMonth)
         if (element)
             element.scrollIntoView({ behavior: 'smooth' })
     }, [])
-
-    function openForm(plant: PlantDTO) {
-        setOpen(true);
-        setPlant(plant);
-    }
-
-    function onOpen() {
-        setOpen(true);
-    }
-
-    function onClose() {
-        setOpen(false);
-    }
 
     function switchToCurrentMonth() {
         setActive(!active);
@@ -151,11 +126,10 @@ const SewingPlanComponent = observer(function SewingPlan() {
             <Container>
                 {
                     store.monthWeekStore.currentMonthRelationList.map((m: MonthSewedRelation) => {
-                        return RenderMonthWeek(m, openForm);
+                        return RenderMonthWeek(m);
                     })
                 }
-                <PlantRecordFormComponent plant={selectedPlant} isOpen={open} onClose={onClose} onOpen={onOpen} plantRecordId={''} />
-            </Container>
+                </Container>
         </Container>
         )
     }
