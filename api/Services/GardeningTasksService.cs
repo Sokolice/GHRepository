@@ -1,5 +1,6 @@
 ﻿using API.Core;
 using API.DTOs;
+using API.Interfaces;
 using API.Persistence;
 using API.Relations;
 using Microsoft.EntityFrameworkCore;

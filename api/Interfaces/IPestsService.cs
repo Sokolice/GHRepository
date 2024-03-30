@@ -1,7 +1,7 @@
 ﻿using API.Core;
 using API.Relations;
 
-namespace API.Services
+namespace API.Interfaces
 {
     public interface IPestsService
     {

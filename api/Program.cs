@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using API.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using API.Interfaces;
+using API.Security;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace API
 {
@@ -27,11 +30,17 @@ namespace API
             builder.Services.AddTransient<IStatsService, StatsService>();
 
             builder.Services.AddControllers(opt =>
-            {/*
+            {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                opt.Filters.Add(new AuthorizeFilter(policy));*/
-            }
-                );
+                opt.Filters.Add(new AuthorizeFilter(policy));
+            });
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<DataContext>(opt =>
+            {
+                opt.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("MyGarden"));
+            });
+
             builder.Services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -40,26 +49,24 @@ namespace API
                     //policy.AllowAnyHeader().WithOrigins("http://localhost:5180");
                 });
             });
-            builder.Services.AddDbContext<DataContext>(opt =>
-            {
-                opt.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("MyGarden"));
-            });
-           
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddIdentityServices(builder.Configuration);
 
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddIdentityServices(builder.Configuration);
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             var app = builder.Build();
 
-            app.UseCors("CorsPolicy");
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
@@ -76,7 +83,7 @@ namespace API
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 context.Database.Migrate();
 
-                await SeedUser.SeedData(context, userManager);
+                //await SeedUser.SeedData(context, userManager);
                 //await SeedPlants.SeedData(context);
             }
             catch (Exception ex)

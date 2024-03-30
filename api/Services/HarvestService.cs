@@ -1,5 +1,6 @@
 ﻿using API.Core;
 using API.DTOs;
+using API.Interfaces;
 using API.Model;
 using API.Persistence;
 using Microsoft.AspNetCore.Mvc;

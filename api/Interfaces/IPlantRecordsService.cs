@@ -1,7 +1,7 @@
 ﻿using API.Core;
 using API.DTOs;
 
-namespace API.Services
+namespace API.Interfaces
 {
     public interface IPlantRecordsService
     {

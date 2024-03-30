@@ -3,6 +3,7 @@ using System;
 using API.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240330091935_Migration_240330")]
+    partial class Migration_240330
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,15 +191,10 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("WasSent")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Tasks");
                 });
@@ -223,14 +221,9 @@ namespace API.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PlantId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Harvests");
                 });
@@ -393,15 +386,10 @@ namespace API.Migrations
                     b.Property<int>("ReadyToHarvestAmount")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("WeatherChecked")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Stats");
                 });
@@ -649,15 +637,6 @@ namespace API.Migrations
                         .HasForeignKey("BedId");
                 });
 
-            modelBuilder.Entity("API.Model.GardeningTask", b =>
-                {
-                    b.HasOne("API.Domain.AppUser", "User")
-                        .WithMany("Tasks")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("API.Model.Harvest", b =>
                 {
                     b.HasOne("API.Model.Plant", "Plant")
@@ -666,13 +645,7 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Domain.AppUser", "User")
-                        .WithMany("Harvests")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Plant");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("API.Model.Plant", b =>
@@ -695,15 +668,6 @@ namespace API.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("Plant");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("API.Model.Stats", b =>
-                {
-                    b.HasOne("API.Domain.AppUser", "User")
-                        .WithMany("Stats")
-                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -853,13 +817,7 @@ namespace API.Migrations
                 {
                     b.Navigation("Beds");
 
-                    b.Navigation("Harvests");
-
                     b.Navigation("Plants");
-
-                    b.Navigation("Stats");
-
-                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("API.Model.Bed", b =>

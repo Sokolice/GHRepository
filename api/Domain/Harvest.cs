@@ -1,4 +1,5 @@
-﻿using API.DTOs;
+﻿using API.Domain;
+using API.DTOs;
 
 namespace API.Model
 {
@@ -11,6 +12,7 @@ namespace API.Model
         public int Rating { get; set; }
         public string Note { get; set; }
 
+        public virtual AppUser User { get; set; }
         public Harvest()
         {
             Id = Guid.NewGuid();

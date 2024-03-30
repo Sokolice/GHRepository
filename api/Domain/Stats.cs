@@ -10,6 +10,8 @@ using System.Drawing.Drawing2D;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using API.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Model
 {
@@ -28,8 +30,7 @@ namespace API.Model
         public string CanBeSowedThisWeek { get; set; }
         public string CanBeSowedRepeatedly { get; set; }
         public string ReadyToHarvest { get; set; }
-
-
+        public virtual AppUser User { get; set; }
 
         public Stats()
         {

@@ -1,5 +1,6 @@
 ﻿using API.Core;
 using API.DTOs;
+using API.Interfaces;
 using API.Model;
 using API.Persistence;
 using API.Relations;
@@ -11,15 +12,20 @@ namespace API.Services
     public class PlantRecordsService: IPlantRecordsService
     {
         private readonly DataContext _context;
+        private readonly IUserAccessor _userAccessor;
 
-        public PlantRecordsService(DataContext context)
+        public PlantRecordsService(DataContext context, IUserAccessor userAccessor)
         {
             _context = context;
+            _userAccessor = userAccessor;
         }
 
         public async Task<Result<List<PlantRecordDTO>>> GetPlantRecords()
         {
-            var plantsRecord = await _context.PlantRecords.Select(a => new PlantRecordDTO(a))
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+                a.UserName == _userAccessor.GetUserName());
+
+            var plantsRecord = await _context.PlantRecords.Where(a=> a.User == user).Select(a => new PlantRecordDTO(a))
                                                     .ToListAsync();
 
             foreach (var record in plantsRecord)
@@ -38,6 +44,9 @@ namespace API.Services
 
         public async Task<Result<PlantRecordDTO>> PostPlantRecord(PlantRecordDTO plantRecordDTO)
         {
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.UserName == _userAccessor.GetUserName());
+
 
             var plant = _context.Plants.Find(plantRecordDTO.PlantId);
 
@@ -55,7 +64,8 @@ namespace API.Services
                 DatePlanted = plantRecordDTO.DatePlanted,
                 PlantId = plantRecordDTO.PlantId,
                 Plant = _context.Plants.First(a => a.Id == plantRecordDTO.PlantId),
-                Note = plantRecordDTO.Note
+                Note = plantRecordDTO.Note,
+                User = user
             };
 
 

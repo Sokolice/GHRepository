@@ -1,4 +1,6 @@
-﻿namespace API.Model
+﻿using API.Domain;
+
+namespace API.Model
 {
     public class GardeningTask
     {
@@ -9,6 +11,7 @@
         public bool IsCompleted { get; set; }
 
         public bool WasSent { get; set; }
+        public virtual AppUser User { get; set; }
 
         public GardeningTask()
         {

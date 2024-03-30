@@ -11,8 +11,8 @@ using API.DTOs;
 using AutoMapper;
 using API.Core;
 using API.Relations;
-using API.Services;
 using Microsoft.AspNetCore.Authorization;
+using API.Interfaces;
 
 namespace API.Controllers
 {

@@ -2,7 +2,7 @@
 using API.DTOs;
 using API.Relations;
 
-namespace API.Services
+namespace API.Interfaces
 {
     public interface IPlantsService
     {

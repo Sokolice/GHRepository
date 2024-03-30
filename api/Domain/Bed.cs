@@ -1,4 +1,5 @@
 ﻿using API.Core;
+using API.Domain;
 using API.Relations;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Policy;
@@ -19,6 +20,7 @@ namespace API.Model
         public int CropRotation { get; set; }
         public virtual List<Plant> Plants { get; set; }
         public string Note {  get; set; }
+        public virtual AppUser User { get; set; }
 
         public Bed()
         {

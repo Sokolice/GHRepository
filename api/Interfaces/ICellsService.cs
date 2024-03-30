@@ -2,7 +2,7 @@
 using API.Relations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Services
+namespace API.Interfaces
 {
     public interface ICellsService
     {

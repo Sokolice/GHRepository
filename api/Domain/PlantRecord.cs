@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using API.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Model
 {
@@ -13,6 +14,7 @@ namespace API.Model
         public DateTime PresumedHarvest { get; set; }
 
         public string Note { get; set; }
+        public virtual AppUser User { get; set; }
 
         public PlantRecord()
         {
