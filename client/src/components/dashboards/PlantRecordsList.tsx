@@ -22,7 +22,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
         }
     }
 
-    if (!plant)
+    if (!plant || store.globalStore.loading)
         return (
             <LoadingComponent />
         )

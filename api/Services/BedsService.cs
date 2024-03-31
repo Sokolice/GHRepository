@@ -11,16 +11,19 @@ namespace API.Services
     public class BedsService: IBedsService
     {
         private readonly DataContext _context;
+        private readonly IUserAccessor _userAccessor;
 
-        public BedsService(DataContext context)
+        public BedsService(DataContext context, IUserAccessor userAccessor)
         {
             _context = context;
+            _userAccessor = userAccessor;
         }
 
         public async Task<Result<List<BedRelation>>> GetBeds()
         {
 
             var bedsDTO = await _context.Beds
+                .Where(x => x.User.Email == _userAccessor.GetUserEmail())
                                         .Select(a => new BedRelation(a))
                                         .ToListAsync();
 
@@ -37,6 +40,11 @@ namespace API.Services
         public async Task<Result<BedRelation>> PostBed(BedRelation bedRelation)
         {
             var bed = new Bed(bedRelation);
+
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.Email == _userAccessor.GetUserEmail());
+
+            bed.User = user;
 
             _context.Beds.Add(bed);
 

@@ -22,10 +22,9 @@ namespace API.Services
 
         public async Task<Result<List<PlantRecordDTO>>> GetPlantRecords()
         {
-            var user = await _context.Users.FirstOrDefaultAsync(a =>
-                a.UserName == _userAccessor.GetUserName());
 
-            var plantsRecord = await _context.PlantRecords.Where(a=> a.User == user).Select(a => new PlantRecordDTO(a))
+
+            var plantsRecord = await _context.PlantRecords.Where(a=> a.User.Email == _userAccessor.GetUserEmail()).Select(a => new PlantRecordDTO(a))
                                                     .ToListAsync();
 
             foreach (var record in plantsRecord)
@@ -34,6 +33,7 @@ namespace API.Services
                 {
                     var plant = _context.Plants.Find(record.PlantId);
                     record.CalculatePresumedHarvest(plant);
+                    await _context.SaveChangesAsync();
 
                 }
                 record.calculateProgress();

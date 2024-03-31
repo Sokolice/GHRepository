@@ -1,7 +1,9 @@
 ﻿using API.Core;
+using API.Domain;
 using API.Interfaces;
 using API.Model;
 using API.Persistence;
+using API.Security;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
@@ -10,20 +12,26 @@ namespace API.Services
     public class StatsService: IStatsService
     {
         private readonly DataContext _context;
-        private readonly Stats stats;
+        private readonly IUserAccessor _userAccessor;
 
-        public StatsService(DataContext context)
+        public StatsService(DataContext context, IUserAccessor userAccessor)
         {
             _context = context;
-            stats = new Stats();
+            _userAccessor = userAccessor;
         }
 
         public async Task<Result<Stats>> GetStats()
         {
-            await ThisWeekSowingCalculation();
-            await RepeatedPlanting();
-            await CheckWeatherStats();
-            await ReadyToHarvestStats();
+
+            var stats = new Stats();
+
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.UserName == _userAccessor.GetUserName());
+
+            await ThisWeekSowingCalculation(stats, user);
+            await RepeatedPlanting(stats, user);
+            await CheckWeatherStats(stats, user);
+            await ReadyToHarvestStats(stats, user);
 
             _context.Stats.Add(stats);
             var result = await _context.SaveChangesAsync() > 0;
@@ -34,8 +42,7 @@ namespace API.Services
             return Result<Stats>.Success(stats);
                 
         }
-
-        public async Task ThisWeekSowingCalculation()
+        public async Task ThisWeekSowingCalculation(Stats stats, AppUser user)
         {
 
             var month = DateTime.Today.Month;
@@ -46,7 +53,7 @@ namespace API.Services
                 weekOfMonth = 4;
 
             var plants = await _context.Plants
-                .Include(p => p.PlantRecords)
+                .Include(p => p.PlantRecords.Where(p=> p.User == user))
                 .Where(a => a.SewingMonths.Any(sm => sm.MonthIndex == month && sm.Week == weekOfMonth)).ToListAsync();
 
             stats.CanBeSowedThisWeek = string.Join(",", plants
@@ -60,17 +67,15 @@ namespace API.Services
 
             stats.MissingTaskThisWeekAmount = _context.Tasks
                                             .Where(a => a.MonthWeeks
-                                            .Any(sm => sm.MonthIndex == month && sm.Week == weekOfMonth) && a.IsCompleted == false)
-                                            .Count();
-
+                                            .Any(sm => sm.MonthIndex == month && sm.Week == weekOfMonth) && a.IsCompleted == false).Count();
         }
 
-        public async Task RepeatedPlanting()
+        public async Task RepeatedPlanting(Stats stats, AppUser user)
         {
             var today = DateTime.Now;
 
             var records = await _context.PlantRecords
-                            .Where(r => r.Plant.RepeatedPlanting > 0)
+                            .Where(r => r.Plant.RepeatedPlanting > 0 && r.User == user)
                             .ToListAsync();
 
             foreach (var record in records)
@@ -84,14 +89,14 @@ namespace API.Services
 
         }
 
-        public async Task CheckWeatherStats()
+        public async Task CheckWeatherStats(Stats stats, AppUser user)
         {
             var now = DateTime.Now;
             var last = now;
             var lastStatsWeather = new Stats();
             if (_context.Stats != null)
             {
-                lastStatsWeather = _context.Stats.OrderByDescending(a => a.WeatherChecked).FirstOrDefault();
+                lastStatsWeather = _context.Stats.Where(s=> s.User == user).OrderByDescending(a => a.WeatherChecked).FirstOrDefault();
                 if (lastStatsWeather != null)
                 {
                     last = lastStatsWeather.WeatherChecked;
@@ -102,7 +107,7 @@ namespace API.Services
             if ((now - last).Hours > 4 || last == now)
             {
                 stats.WeatherChecked = DateTime.Now;
-                await GetDataFromWeatherAPI();
+                await GetDataFromWeatherAPI(stats);
             }
             else
             {
@@ -116,7 +121,7 @@ namespace API.Services
 
         }
 
-        public async Task GetDataFromWeatherAPI()
+        public async Task GetDataFromWeatherAPI(Stats stats)
         {
             var defLongtitude = 18.262;
             var defLatitude = 49.817;
@@ -150,9 +155,9 @@ namespace API.Services
             stats.RainPeriodAlert = weatherObjects.Where(a => a.Weather.Any(b => b.Id.StartsWith("5"))).Count() >= 6;
         }
 
-        public async Task ReadyToHarvestStats()
+        public async Task ReadyToHarvestStats(Stats stats, AppUser user)
         {
-            var records = await _context.PlantRecords.ToListAsync();
+            var records = await _context.PlantRecords.Where(a=> a.User == user).ToListAsync();
 
             var recordsDTO = MyMapping.MapPlantRecordsList(records);
 

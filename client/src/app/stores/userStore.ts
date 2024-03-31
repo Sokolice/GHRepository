@@ -4,6 +4,8 @@ import { User, UserFormValues } from "../../models/user";
 import agent from "../../api/agent";
 import { store } from "./store";
 import { router } from "../../router/router";
+import { BedRelation } from "../../models/BedRelation";
+import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 
 export default class UserStore {
     user: User | null = null;
@@ -34,6 +36,7 @@ export default class UserStore {
     logout = () => {
         store.globalStore.setToken(null);
         this.user = null;
+        this.invalidateCache();
         router.navigate('/');
     }
 
@@ -61,5 +64,11 @@ export default class UserStore {
             throw error;
         }
 
+    }
+
+    invalidateCache = () => {
+        store.plantRecordStore.plantRecordMap = new Map<string, PlantRecordDTO>();
+        store.bedsStore.bedList = new Map<string, BedRelation>();
+        store.globalStore.stats = null;
     }
 }

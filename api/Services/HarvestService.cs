@@ -4,15 +4,19 @@ using API.Interfaces;
 using API.Model;
 using API.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
 {
     public class HarvestService: IHarvestService
     {
         private readonly DataContext _context;
-        public HarvestService(DataContext context)
+        private readonly IUserAccessor _userAccessor;
+        public HarvestService(DataContext context, IUserAccessor userAccessor)
         {
             _context = context;
+            _userAccessor = userAccessor;
+
         }
         public async Task<Result<HarvestDTO>> Harvest(HarvestDTO harvest)
         {
@@ -23,6 +27,9 @@ namespace API.Services
             if (plant == null)
                 return Result<HarvestDTO>.Failure("Plant not found", true);
 
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.UserName == _userAccessor.GetUserName());
+
             _context.Harvests.Add(new Harvest
             {
                 Id = harvest.Id,
@@ -30,7 +37,8 @@ namespace API.Services
                 Date = harvest.Date,
                 Note = harvest.Note,
                 Rating = harvest.Rating,
-                Plant = plant
+                Plant = plant,
+                User = user
             });
 
             var result = await _context.SaveChangesAsync() > 0;

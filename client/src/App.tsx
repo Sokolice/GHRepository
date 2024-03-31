@@ -19,7 +19,7 @@ function App() {
     const { loadPlantDTO, plantDTOList } = plantStore;
     const { monthWeekRelationList, loadMonthWeeekRelations, currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
     const { pestsList, loadPests } = pestsStore;
-    const { isLoggedIn } = userStore;
+    const { isLoggedIn, user } = userStore;
 
     useEffect(() => {
         if (globalStore.token) {

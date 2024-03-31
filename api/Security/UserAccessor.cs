@@ -12,6 +12,11 @@ namespace API.Security
            _httpContextAccessor = httpContextAccessor;
         }
 
+        public string GetUserEmail()
+        {
+            return _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+        }
+
         public string GetUserName()
         {
             return _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
