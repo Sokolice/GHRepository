@@ -3,6 +3,7 @@ using System;
 using API.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240405074011_Migration_240405")]
+    partial class Migration_240405
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,7 +131,7 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Beds", (string)null);
+                    b.ToTable("Beds");
                 });
 
             modelBuilder.Entity("API.Domain.Cell", b =>
@@ -172,7 +175,7 @@ namespace API.Migrations
 
                     b.HasIndex("BedId");
 
-                    b.ToTable("Cells", (string)null);
+                    b.ToTable("Cells");
                 });
 
             modelBuilder.Entity("API.Domain.GardeningTask", b =>
@@ -198,7 +201,7 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tasks", (string)null);
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("API.Domain.Harvest", b =>
@@ -232,7 +235,7 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Harvests", (string)null);
+                    b.ToTable("Harvests");
                 });
 
             modelBuilder.Entity("API.Domain.MonthWeek", b =>
@@ -248,7 +251,7 @@ namespace API.Migrations
 
                     b.HasKey("Month", "Week");
 
-                    b.ToTable("MonthWeeks", (string)null);
+                    b.ToTable("MonthWeeks");
                 });
 
             modelBuilder.Entity("API.Domain.Pest", b =>
@@ -271,7 +274,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pests", (string)null);
+                    b.ToTable("Pests");
                 });
 
             modelBuilder.Entity("API.Domain.Plant", b =>
@@ -322,7 +325,7 @@ namespace API.Migrations
 
                     b.HasIndex("PlantTypeId");
 
-                    b.ToTable("Plants", (string)null);
+                    b.ToTable("Plants");
                 });
 
             modelBuilder.Entity("API.Domain.PlantRecord", b =>
@@ -356,7 +359,7 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PlantRecords", (string)null);
+                    b.ToTable("PlantRecords");
                 });
 
             modelBuilder.Entity("API.Domain.PlantType", b =>
@@ -394,7 +397,7 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PlantTypes", (string)null);
+                    b.ToTable("PlantTypes");
                 });
 
             modelBuilder.Entity("API.Model.Stats", b =>
@@ -449,7 +452,7 @@ namespace API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Stats", (string)null);
+                    b.ToTable("Stats");
                 });
 
             modelBuilder.Entity("AppUserPlant", b =>
@@ -482,7 +485,7 @@ namespace API.Migrations
 
                     b.HasIndex("MonthWeeksMonth", "MonthWeeksWeek");
 
-                    b.ToTable("GardeningTaskMonthWeek", (string)null);
+                    b.ToTable("GardeningTaskMonthWeek");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -628,7 +631,7 @@ namespace API.Migrations
 
                     b.HasIndex("SewingMonthsMonth", "SewingMonthsWeek");
 
-                    b.ToTable("MonthWeekPlant", (string)null);
+                    b.ToTable("MonthWeekPlant");
                 });
 
             modelBuilder.Entity("MonthWeekPlant1", b =>
@@ -646,7 +649,7 @@ namespace API.Migrations
 
                     b.HasIndex("HarvestMonthsMonth", "HarvestMonthsWeek");
 
-                    b.ToTable("MonthWeekPlant1", (string)null);
+                    b.ToTable("MonthWeekPlant1");
                 });
 
             modelBuilder.Entity("MonthWeekPlantType", b =>
@@ -664,7 +667,7 @@ namespace API.Migrations
 
                     b.HasIndex("SewingMonthsMonth", "SewingMonthsWeek");
 
-                    b.ToTable("MonthWeekPlantType", (string)null);
+                    b.ToTable("MonthWeekPlantType");
                 });
 
             modelBuilder.Entity("MonthWeekPlantType1", b =>
@@ -682,7 +685,7 @@ namespace API.Migrations
 
                     b.HasIndex("HarvestMonthsMonth", "HarvestMonthsWeek");
 
-                    b.ToTable("MonthWeekPlantType1", (string)null);
+                    b.ToTable("MonthWeekPlantType1");
                 });
 
             modelBuilder.Entity("PestPlantType", b =>
@@ -697,7 +700,7 @@ namespace API.Migrations
 
                     b.HasIndex("PlantsId");
 
-                    b.ToTable("PestPlantType", (string)null);
+                    b.ToTable("PestPlantType");
                 });
 
             modelBuilder.Entity("PlantTypePlantType", b =>

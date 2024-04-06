@@ -38,7 +38,7 @@ namespace API
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<DataContext>(opt =>
             {
-                opt.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("MyGarden"));
+                opt.UseLazyLoadingProxies().UseSqlite(builder.Configuration.GetConnectionString("GardenDB"));
             });
 
             builder.Services.AddCors(opt =>
@@ -83,8 +83,9 @@ namespace API
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 context.Database.Migrate();
 
-                //await SeedUser.SeedData(context, userManager);
-                //await SeedPlants.SeedData(context);
+                // await SeedMonthWeek.SeedData(context);
+                //await SeedPlantTypes.SeedData(context);
+                await SeedPlants.SeedData(context);
             }
             catch (Exception ex)
             {

@@ -20,12 +20,12 @@ namespace API.Services
         public async Task<Result<List<MonthSewedRelation>>> GetMonthWeeksGrouped()
         {
 
-            var monthweeks = await _context.MonthWeeks.Include(x => x.SewedPlant).ToListAsync();
+            var monthweeks = await _context.MonthWeeks.Include(x => x.SewedPlants).ToListAsync();
 
             var monthsDictionary = monthweeks.OrderBy(a => a.MonthIndex)
                 .GroupBy(x => x.Month)
                 .ToDictionary(x => x.Key,
-                    x => x.SelectMany(y => y.SewedPlant).GroupBy(y => y.Id).Select(y => y.First()).ToList());
+                    x => x.SelectMany(y => y.SewedPlants).GroupBy(y => y.Id).Select(y => y.First()).ToList());
 
             var monthWeeksResult =  monthsDictionary.Select(y => new MonthSewedRelation
             {
@@ -42,9 +42,9 @@ namespace API.Services
             var monthWeeksRelations = await _context.MonthWeeks.OrderBy(a => a.MonthIndex).Select(x => new MonthWeekRelation
             {
                 GardeningTasks = MyMapping.MapGardeningTasks(x.GardeningTasks),
-                HarvestedPlants = MyMapping.MapPlantsFromDTO(x.HarvestedPlant),
+                HarvestedPlants = MyMapping.MapPlantsFromDTO(x.HarvestedPlants),
                 MonthWeekDTO = new MonthWeekDTO { Month = x.Month, MonthIndex = x.MonthIndex, Week = x.Week },
-                SewedPlants = MyMapping.MapPlantsFromDTO(x.SewedPlant)
+                SewedPlants = MyMapping.MapPlantsFromDTO(x.SewedPlants)
             }).ToListAsync();
 
             return Result<List<MonthWeekRelation>>.Success(monthWeeksRelations);

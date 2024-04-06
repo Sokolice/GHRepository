@@ -1,6 +1,6 @@
 ﻿using API.Domain;
 
-namespace API.Model
+namespace API.Domain
 {
     public class GardeningTask
     {

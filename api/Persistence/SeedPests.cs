@@ -1,4 +1,4 @@
-﻿using API.Model;
+﻿using API.Domain;
 
 namespace API.Persistence
 {
@@ -6,7 +6,7 @@ namespace API.Persistence
     {
         public static async Task SeedData(DataContext context)
         {                                      
-            var idsMsice = new List<string>
+            /*var idsMsice = new List<string>
             {
                 "25C2EAC3-50F5-4E96-8F53-42B2C52EF017",
                 "89443749-1F3E-45A9-9474-E14665297615",
@@ -53,7 +53,7 @@ namespace API.Persistence
                 }
             };
             await context.AddRangeAsync(pests);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync();*/
         }
     }
 }

@@ -20,7 +20,7 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("GetStats")]
-        public async Task<ActionResult<Stats>> GetStats()
+        public async Task<ActionResult<StatsDTO>> GetStats()
         {
             var result = await _statsService.GetStats();
 

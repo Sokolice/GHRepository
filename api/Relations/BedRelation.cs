@@ -1,9 +1,7 @@
 ﻿using API.Core;
 using API.DTOs;
-using API.Model;
+using API.Domain;
 using API.Persistence;
-using Castle.DynamicProxy.Generators;
-using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging;
 
 namespace API.Relations
@@ -37,7 +35,7 @@ namespace API.Relations
 
         public void GetAllAvoidPlants(DataContext context)
         {
-            var allAvoidPlants = new List<string>();
+            /*var allAvoidPlants = new List<string>();
 
             foreach(var plantDTO in Plants)
             {
@@ -54,14 +52,14 @@ namespace API.Relations
                 }
             }
 
-            AvoidPlantsIds = allAvoidPlants;
+            AvoidPlantsIds = allAvoidPlants;*/
 
         }
 
         public void GetAllCompanionPlants(DataContext context)
         {
 
-            var allCompanionPlants = new List<string>();
+            /*var allCompanionPlants = new List<string>();
 
             foreach (var plantDTO in Plants)
             {
@@ -76,7 +74,7 @@ namespace API.Relations
                     }
                 }
             }
-            CompanionPlantsIds = allCompanionPlants;
+            CompanionPlantsIds = allCompanionPlants;*/
         }
     }
 }

@@ -1,9 +1,5 @@
-﻿using API.Model;
+﻿using API.Domain;
 using API.DTOs;
-using API.Relations;
-using System.Numerics;
-using System.Collections.Generic;
-using Microsoft.OpenApi.Validations;
 
 namespace API.Core
 {

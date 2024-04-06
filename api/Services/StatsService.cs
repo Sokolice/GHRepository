@@ -1,5 +1,6 @@
 ﻿using API.Core;
 using API.Domain;
+using API.DTOs;
 using API.Interfaces;
 using API.Model;
 using API.Persistence;
@@ -20,10 +21,10 @@ namespace API.Services
             _userAccessor = userAccessor;
         }
 
-        public async Task<Result<Stats>> GetStats()
+        public async Task<Result<StatsDTO>> GetStats()
         {
 
-            var stats = new Stats();
+            var stats = new StatsDTO();
 
             var user = await _context.Users.FirstOrDefaultAsync(a =>
                a.UserName == _userAccessor.GetUserName());
@@ -33,16 +34,32 @@ namespace API.Services
             await CheckWeatherStats(stats, user);
             await ReadyToHarvestStats(stats, user);
 
-            _context.Stats.Add(stats);
+            _context.Stats.Add(new Stats
+            {
+                CanBeSowedRepeatedly = stats.CanBeSowedRepeatedly,
+                CanBeSowedThisWeek = stats.CanBeSowedThisWeek,
+                MissingSowingThisWeekAmount = stats.MissingSowingThisWeekAmount,
+                MissingTaskThisWeekAmount = stats.MissingTaskThisWeekAmount,
+                RainPeriodAlert = stats.RainPeriodAlert,
+                FreezeAlert = stats.FreezeAlert,
+                CanBeSowedRepeatedlyAmount = stats.CanBeSowedRepeatedlyAmount,
+                Date = stats.Date,
+                HighTemperatureAlert = stats.HighTemperatureAlert,
+                ReadyToHarvest = stats.ReadyToHarvest,
+                ReadyToHarvestAmount = stats.ReadyToHarvestAmount,
+                WeatherChecked = stats.WeatherChecked,
+                Id = stats.Id,
+                User = user
+            });
             var result = await _context.SaveChangesAsync() > 0;
 
             if (!result)
-                return Result<Stats>.Failure("Failed to save stats", false);
+                return Result<StatsDTO>.Failure("Failed to save stats", false);
 
-            return Result<Stats>.Success(stats);
+            return Result<StatsDTO>.Success(stats);
                 
         }
-        public async Task ThisWeekSowingCalculation(Stats stats, AppUser user)
+        public async Task ThisWeekSowingCalculation(StatsDTO stats, AppUser user)
         {
 
             var month = DateTime.Today.Month;
@@ -70,7 +87,7 @@ namespace API.Services
                                             .Any(sm => sm.MonthIndex == month && sm.Week == weekOfMonth) && a.IsCompleted == false).Count();
         }
 
-        public async Task RepeatedPlanting(Stats stats, AppUser user)
+        public async Task RepeatedPlanting(StatsDTO stats, AppUser user)
         {
             var today = DateTime.Now;
 
@@ -89,7 +106,7 @@ namespace API.Services
 
         }
 
-        public async Task CheckWeatherStats(Stats stats, AppUser user)
+        public async Task CheckWeatherStats(StatsDTO stats, AppUser user)
         {
             var now = DateTime.Now;
             var last = now;
@@ -121,7 +138,7 @@ namespace API.Services
 
         }
 
-        public async Task GetDataFromWeatherAPI(Stats stats)
+        public async Task GetDataFromWeatherAPI(StatsDTO stats)
         {
             var defLongtitude = 18.262;
             var defLatitude = 49.817;
@@ -155,7 +172,7 @@ namespace API.Services
             stats.RainPeriodAlert = weatherObjects.Where(a => a.Weather.Any(b => b.Id.StartsWith("5"))).Count() >= 6;
         }
 
-        public async Task ReadyToHarvestStats(Stats stats, AppUser user)
+        public async Task ReadyToHarvestStats(StatsDTO stats, AppUser user)
         {
             var records = await _context.PlantRecords.Where(a=> a.User == user).ToListAsync();
 

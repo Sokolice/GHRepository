@@ -1,6 +1,4 @@
-﻿using API.Model;
-
-namespace API.DTOs
+﻿namespace API.DTOs
 {
     public class HarvestDTO
     {

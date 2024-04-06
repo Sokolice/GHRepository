@@ -1,7 +1,7 @@
 ﻿using API.Core;
 using API.DTOs;
 using API.Interfaces;
-using API.Model;
+using API.Domain;
 using API.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

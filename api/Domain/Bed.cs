@@ -1,10 +1,7 @@
-﻿using API.Core;
-using API.Domain;
-using API.Relations;
+﻿using API.Relations;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Policy;
 
-namespace API.Model
+namespace API.Domain
 {
     public class Bed
     {
@@ -33,6 +30,8 @@ namespace API.Model
             IsDesign = false;
             CropRotation = 0;
             Note = string.Empty;
+            Plants = new List<Plant>();
+            User = new AppUser();
         }
 
         public Bed(BedRelation bedRelation)

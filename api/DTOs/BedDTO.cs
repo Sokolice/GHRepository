@@ -1,4 +1,4 @@
-﻿using API.Model;
+﻿using API.Domain;
 
 namespace API.DTOs
 {

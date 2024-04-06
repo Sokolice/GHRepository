@@ -1,4 +1,4 @@
-﻿using API.Model;
+﻿using API.Domain;
 using Newtonsoft.Json.Schema;
 using System.Linq;
 using API.Core;
@@ -11,10 +11,10 @@ namespace API.Persistence
     {
         public static async Task SeedData(DataContext context)
         {
-            var monthWeekMap = context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
+            /*var monthWeekMap = context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
             var plants = new List<Plant>
             {
-                /*new Plant
+                new Plant
                 {
                     Name = "Rajče keříčkové balkónové",
                     IsHybrid = false,
@@ -2500,7 +2500,7 @@ namespace API.Persistence
                     "Tymián se používá čerstvý i sušený jako samostatné koření i do kořeninových směsí. Koření je skvělé pro dochucování nádivek, polévek a omáček. " +
                     "Výborné je s drůbežím masem a rybami.",
                     ImageSrc  = "tymian.jpg"
-                }
+                },
                 new Plant
                 {
                     Name = "Petržel kořenová",
@@ -3223,7 +3223,7 @@ namespace API.Persistence
                     Description = "Syrová řepa se dobře uplatní v salátech. Chutná s česnekem, křenem, zelím, jablky, pomeranči a ořechy. " +
                     "Z vařené řepy se připravují saláty se smetanou, majonézou, marinádou apod. Oba druhy salátů jsou dobrým doplňkem pečeného masa a minutek. " +
                     "Uvařenou mladou červenou řepu stačí jen osolit, pokapat citronem a máslem – je to dobrá příloha pro ty, kdo nemají rádi kyselé saláty."
-                }
+                },
                  new Plant
                 {
                     Name = "Celer bulvový Albin",
@@ -3705,7 +3705,7 @@ namespace API.Persistence
                     CropRotation = 1,
                     ImageSrc = "okrasne.jpg",
                     Description = "Směs okrasných dýní."
-                },*/
+                },
                 
                 new Plant
                 {
@@ -3752,41 +3752,36 @@ namespace API.Persistence
 
             
 
-            await context.Plants.AddRangeAsync(plants);
+            await context.Plants.AddRangeAsync(plants);*/
 
-            foreach(var plant in plants)
-            {
-                var shortName = plant.Name.Substring(0, plant.Name.IndexOf(" "));
+            var plantTypes= context.PlantTypes.ToList();
 
-                var keyCompanion = PlantsExtensions.CompanionPlants.FirstOrDefault(a => a.Key == shortName).Value;
+            foreach (var plantType in plantTypes) { 
 
-                if(keyCompanion != null) { 
-
-                var companions = keyCompanion.ToList();
-
-                foreach(var companion in companions)
+                if(plantType.Name == "Kapusta")
                 {
-                    if (companion != "")
+
+                    var plants = context.Plants.Where(a => a.Name.Contains("Kadeřávek") || a.Name.Contains("Kapusta")).ToList();
+                    foreach (var plant in plants)
                     {
-                        var p = context.Plants.Where(a=> a.Name.Contains(companion)).FirstOrDefault();
-                        plant.CompanionPlants.Add(p);
+                        plant.PlantType = plantType;
                     }
                 }
-
-                }
-                var keyAvoids = PlantsExtensions.AvoidPlants.FirstOrDefault(a => a.Key == shortName).Value;
-
-                if(keyAvoids != null) { 
-
-                var avoids = keyAvoids.ToList();
-
-                foreach (var avoid in avoids)
+                else if(plantType.Name == "Dýně")
                 {
-                    if(avoid != "") { 
-                        var p = context.Plants.Where(a => a.Name.Contains(avoid)).FirstOrDefault();
-                        plant.AvoidPlants.Add(p);
+                    var plants = context.Plants.Where(a => a.Name.Contains("Dýně") || a.Name.Contains("Tykev")).ToList();
+                    foreach (var plant in plants)
+                    {
+                        plant.PlantType = plantType;
                     }
                 }
+                else {
+
+                    var plants = context.Plants.Where(a => a.Name.Contains(plantType.Name)).ToList();
+                    foreach(var plant in plants)
+                    {
+                        plant.PlantType = plantType;
+                    }
                 }
             }
 

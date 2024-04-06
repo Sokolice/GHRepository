@@ -1,4 +1,4 @@
-﻿using API.Model;
+﻿using API.Domain;
 
 namespace API.DTOs
 {
@@ -37,7 +37,7 @@ namespace API.DTOs
             IsHybrid = aPlant.IsHybrid;
             DirectSewing = aPlant.DirectSewing;
             GerminationTemp = aPlant.GerminationTemp;
-            CropRotation = aPlant.CropRotation;
+            CropRotation = aPlant.PlantType.CropRotation;
             Description = aPlant.Description;
             ImageSrc = aPlant.ImageSrc;
             RepeatedPlanting = aPlant.RepeatedPlanting;

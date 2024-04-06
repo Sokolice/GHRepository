@@ -1,9 +1,8 @@
 ﻿using API.Core;
 using API.Interfaces;
-using API.Model;
+using API.Domain;
 using API.Persistence;
 using API.Relations;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Services

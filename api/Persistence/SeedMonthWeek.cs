@@ -1,8 +1,4 @@
-﻿using API.Model;
-using Microsoft.AspNetCore.Routing;
-using System;
-using System.Diagnostics;
-using System.Drawing;
+﻿using API.Domain;
 
 namespace API.Persistence
 {

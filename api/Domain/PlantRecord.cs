@@ -1,7 +1,7 @@
 ﻿using API.Domain;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Model
+namespace API.Domain
 {
     public class PlantRecord
     {
@@ -21,7 +21,8 @@ namespace API.Model
             Id = Guid.NewGuid();
             Plant = new Plant();
             PlantId = Guid.NewGuid();
-            Note = string.Empty;            
+            Note = string.Empty;           
+            User = new AppUser();
         }
     }
 }

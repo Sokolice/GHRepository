@@ -1,13 +1,11 @@
 ﻿using API.Domain;
-using System.ComponentModel.DataAnnotations;
 
-namespace API.Model
+namespace API.DTOs
 {
-    public class Stats
+    public class StatsDTO
     {
-        [Key]
         public Guid Id { get; set; }
-        public DateTime Date {  get; set; }
+        public DateTime Date { get; set; }
         public DateTime WeatherChecked { get; set; }
         public bool FreezeAlert { get; set; }
         public bool HighTemperatureAlert { get; set; }
@@ -19,18 +17,12 @@ namespace API.Model
         public string CanBeSowedThisWeek { get; set; }
         public string CanBeSowedRepeatedly { get; set; }
         public string ReadyToHarvest { get; set; }
-        public virtual AppUser User { get; set; }
 
-        public Stats()
+        public StatsDTO()
         {
-            Id = Guid.NewGuid();
-            Date = DateTime.Now;
-            CanBeSowedThisWeek = string.Empty;
             CanBeSowedRepeatedly = string.Empty;
+            CanBeSowedThisWeek =string.Empty;
             ReadyToHarvest = string.Empty;
-            CanBeSowedRepeatedlyAmount = 0;
-            ReadyToHarvestAmount = 0;
-            User = new AppUser();
         }
     }
 }

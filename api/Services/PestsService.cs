@@ -18,7 +18,7 @@ namespace API.Services
 
         public async Task<Result<List<PestRelation>>> GetPests()
         {
-            var pests = await _context.Pests.Select(a => new PestRelation
+            /*var pests = await _context.Pests.Select(a => new PestRelation
             {
                 PestDTO = new PestDTO
                 {
@@ -31,7 +31,9 @@ namespace API.Services
 
             }).ToListAsync();
 
-            return Result<List<PestRelation>>.Success(pests);
+            return Result<List<PestRelation>>.Success(pests);*/
+
+            return Result<List<PestRelation>>.Failure("not implemented", false);
         }
     }
 }
