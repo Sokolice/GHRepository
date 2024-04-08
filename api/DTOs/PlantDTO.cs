@@ -9,6 +9,7 @@ namespace API.DTOs
         public bool IsHybrid { get; set; }
 
         public bool DirectSewing { get; set; }
+        public bool PreCultivation { get; set; }
 
         public int GerminationTemp { get; set; }
 
@@ -41,6 +42,7 @@ namespace API.DTOs
             Description = aPlant.Description;
             ImageSrc = aPlant.ImageSrc;
             RepeatedPlanting = aPlant.RepeatedPlanting;
+            PreCultivation = aPlant.PreCultivation;
         }
     }
 }

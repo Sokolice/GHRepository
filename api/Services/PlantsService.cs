@@ -1,8 +1,10 @@
 ﻿using API.Core;
+using API.Domain;
 using API.DTOs;
 using API.Interfaces;
 using API.Persistence;
 using API.Relations;
+using Castle.DynamicProxy.Generators;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
@@ -40,19 +42,32 @@ namespace API.Services
 
         public async Task<Result<PlantPlantsRelation>> GetOtherPlants(Guid id)
         {
-            /*var plant = await _context.Plants.FindAsync(id);
+            var plant = await _context.Plants.FindAsync(id);
             if (plant == null)
                 return Result<PlantPlantsRelation>.Failure("Plant not found", true);
 
+            var plantAvoidType = plant.PlantType.AvoidPlantTypes;
+            var plantCompanionType = plant.PlantType.CompanionPlantTypes;
+
+            var plantAvoids = new List<Plant>();
+            var plantCompanion = new List<Plant>();
+
+            foreach (var avoid in plantAvoidType)
+            {
+                plantAvoids.AddRange(_context.Plants.Where(a => a.PlantType == avoid).ToList());
+            }
+            foreach (var companion in plantCompanionType)
+            {
+                plantCompanion.AddRange(_context.Plants.Where(a => a.PlantType == companion).ToList());
+            }
             var others = new PlantPlantsRelation
             {
                 Plant = new PlantDTO(plant),
-                AvoidPlants = MyMapping.MapPlantsFromDTO(plant.AvoidPlants).OrderBy(a => a.Name).ToList(),
-                CompanionPlants = MyMapping.MapPlantsFromDTO(plant.CompanionPlants).OrderBy(a => a.Name).ToList()
+                AvoidPlants = MyMapping.MapPlantsFromDTO(plantAvoids).OrderBy(a => a.Name).ToList(),
+                CompanionPlants = MyMapping.MapPlantsFromDTO(plantCompanion).OrderBy(a => a.Name).ToList()
             };
 
-            return Result<PlantPlantsRelation>.Success(others);*/
-            return Result<PlantPlantsRelation>.Failure("not implemented", false);
+            return Result<PlantPlantsRelation>.Success(others);
         }
 
         public async Task<Result<List<PlantPlantsRelation>>> GetAllPlantsRelations()

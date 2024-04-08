@@ -85,7 +85,7 @@ namespace API
 
                 // await SeedMonthWeek.SeedData(context);
                 //await SeedPlantTypes.SeedData(context);
-                await SeedPlants.SeedData(context);
+                //await SeedPlants.SeedData(context);
             }
             catch (Exception ex)
             {

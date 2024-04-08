@@ -35,8 +35,27 @@ namespace API.Core
             return plantDTOs;
         }
 
+        /*public static List<PlantDTO> MapPlantTypesFromDTO(List<PlantType> list)
+        {
+            var plantDTOs = new List<PlantDTO>();
+            if (list != null)
+            {
+                foreach (PlantType obj in list)
+                {
+                    plantDTOs.Add(new PlantDTO(obj));
+                }
+            }
 
-        public static List<MonthWeekDTO> MapMonthWeeks(List<MonthWeek> list)
+            return plantDTOs;
+
+        }
+
+        public static PlantDTO MapPlantFromPlantType(PlantType plantType)
+        {
+
+        }*/
+
+            public static List<MonthWeekDTO> MapMonthWeeks(List<MonthWeek> list)
         {
             var monthweeksDTOs = new List<MonthWeekDTO>();
             if (list != null)

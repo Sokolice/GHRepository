@@ -9,10 +9,10 @@ namespace API.Persistence
         public static async Task SeedData(DataContext context)
         {
 
-            /*var monthWeekMap = context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
+            var monthWeekMap = context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
             var plants = new List<PlantType>
             {
-                new PlantType
+                /*new PlantType
                 {
                     Name = "Rajče",
                     DirectSewing = false,
@@ -1188,10 +1188,122 @@ namespace API.Persistence
                     Description = "Květák neboli lidově karfiol (Brassica oleracea convar. botrytis) je oblíbenou košťálovou zeleninou, " +
                     "kterou člověk získal vyšlechtěním divoké brukve zelné (stejně jako např. kedluben, zelí či kapustu). " +
                     "V případě květáku využíváme jako zeleninu zdužnatělé květenství. Patří mezi jednoleté rostliny."
-                }
-               };*/
+                }*/
 
-            var plants = context.PlantTypes.OrderBy(a=>a.Name).ToList();
+                new PlantType
+                {
+                    Name = "Bylinky",
+                    DirectSewing = true,
+                    PreCultivation = true,
+                    GerminationTemp = 20,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.February, 1)],
+                        monthWeekMap[(Month.February, 2)],
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
+
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)]
+
+                        },
+                    HarvestMonths = new List<MonthWeek> {
+                         monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]
+
+                    },
+                    CropRotation = 1,
+                    ImageSrc = "herbs.jpg",
+                    Description = ""
+                }
+                ,
+                new PlantType
+                {
+                    Name = "Ostatní",
+                    DirectSewing = true,
+                    PreCultivation = true,
+                    GerminationTemp = 20,
+                    SewingMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.February, 1)],
+                        monthWeekMap[(Month.February, 2)],
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
+
+                        monthWeekMap[(Month.March, 1)],
+                        monthWeekMap[(Month.March, 2)],
+                        monthWeekMap[(Month.March, 3)],
+                        monthWeekMap[(Month.March, 4)]
+
+                        },
+                    HarvestMonths = new List<MonthWeek> {
+                         monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.June, 1)],
+                        monthWeekMap[(Month.June, 2)],
+                        monthWeekMap[(Month.June, 3)],
+                        monthWeekMap[(Month.June, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)],
+
+                        monthWeekMap[(Month.October, 1)],
+                        monthWeekMap[(Month.October, 2)],
+                        monthWeekMap[(Month.October, 3)],
+                        monthWeekMap[(Month.October, 4)]
+
+                    },
+                    CropRotation = 1,
+                    ImageSrc = "others.jpg",
+                    Description = ""
+                }
+               };
+
+            /*var plants = context.PlantTypes.OrderBy(a=>a.Name).ToList();
 
             foreach (var plant in plants)
             {
@@ -1229,10 +1341,10 @@ namespace API.Persistence
                         }
                     }
                 }
-            }
+            }*/
 
 
-            //await context.PlantTypes.AddRangeAsync(plants);
+            await context.PlantTypes.AddRangeAsync(plants);
             await context.SaveChangesAsync();
         }
     }

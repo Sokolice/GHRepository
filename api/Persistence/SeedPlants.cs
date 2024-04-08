@@ -3775,6 +3775,38 @@ namespace API.Persistence
                         plant.PlantType = plantType;
                     }
                 }
+                else if(plantType.Name == "Bylinky")
+                {
+                    var plants = context.Plants.Where(a => a.Name.Contains("Bazalka") 
+                                                        || a.Name.Contains("Pažitka")
+                                                        || a.Name.Contains("Petržel kadeřavá")
+                                                        || a.Name.Contains("Petržel hladkolistá")
+                                                        || a.Name.Contains("Rozmarýn")
+                                                        || a.Name.Contains("Tymián")
+                                                        || a.Name.Contains("Kopr")
+                                                        || a.Name.Contains("Koriandr")
+                                                        || a.Name.Contains("Máta")).ToList();
+                    foreach (var plant in plants)
+                    {
+                        plant.PlantType = plantType;
+                    }
+                }
+                else if (plantType.Name == "Ostatní")
+                {
+                    var plants = context.Plants.Where(a => a.Name.Contains("Ačokča")).ToList();
+                    foreach (var plant in plants)
+                    {
+                        plant.PlantType = plantType;
+                    }
+                }
+                else if (plantType.Name == "Salát")
+                {
+                    var plants = context.Plants.Where(a => a.Name.Contains("Rukola") || a.Name.Contains(plantType.Name)).ToList();
+                    foreach (var plant in plants)
+                    {
+                        plant.PlantType = plantType;
+                    }
+                }
                 else {
 
                     var plants = context.Plants.Where(a => a.Name.Contains(plantType.Name)).ToList();
