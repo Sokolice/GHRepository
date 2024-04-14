@@ -46,6 +46,7 @@ body{
     position: relative;
     border: solid 1px #888;
     margin: 1px;
+    background-size: contain !important;
 }
 .grid-item:focus{
     background-color:blueviolet;

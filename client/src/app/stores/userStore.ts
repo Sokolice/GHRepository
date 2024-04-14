@@ -6,6 +6,8 @@ import { store } from "./store";
 import { router } from "../../router/router";
 import { BedRelation } from "../../models/BedRelation";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
+import { PlantDTO } from "../../models/PlantDTO";
+import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 
 export default class UserStore {
     user: User | null = null;
@@ -69,6 +71,8 @@ export default class UserStore {
     invalidateCache = () => {
         store.plantRecordStore.plantRecordMap = new Map<string, PlantRecordDTO>();
         store.bedsStore.bedList = new Map<string, BedRelation>();
-        store.globalStore.stats = null;
+        store.globalStore.stats = undefined;
+        store.plantStore.plantDTOList = new Map<string, PlantDTO>();
+        store.monthWeekStore.currentMonthRelationList = new Array<MonthSewedRelation>(); 
     }
 }

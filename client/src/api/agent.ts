@@ -13,6 +13,8 @@ import { GardeningTaskDTO } from '../models/GardeningTaskDTO';
 import { HarvestDTO } from '../models/HarvestDTO';
 import { User, UserFormValues } from '../models/user';
 import { store } from '../app/stores/store';
+import { PlantTypePlantsRelation } from '../models/PlantTypePlantsRelation';
+import { PlantTypeDTO } from '../models/PlantTypeDTO';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>
@@ -52,7 +54,10 @@ const Plants = {
     details: (id: string) => requests.get<PlantDTO>(`/Plants/${id}`),
     getOtherPlants: (id: string) => requests.get<PlantPlantsRelation>(`/Plants/GetOtherPlants?id=${id}`),
     getAllPlantsRelations: () => requests.get<PlantPlantsRelation[]>('/Plants/GetAllPlantsRelations'),
-    harvest: (harvest: HarvestDTO) => requests.post<HarvestDTO>('Harvest', harvest)
+    harvest: (harvest: HarvestDTO) => requests.post<HarvestDTO>('Harvest', harvest),
+    getAllAvailablePlants: () => requests.get<PlantTypePlantsRelation[]>('/Plants/GetAllAvailablePlants'),
+    savePlantsForUser: (ids: string[]) => requests.post<string[]>('Plants/SavePlantsForUser', ids),
+    getAllPlantTypes: () => requests.get<PlantTypeDTO[]>('/Plants/GetAllPlantTypes'),
     /*create: (monthweek: MonthWeekRelation) => axios.post('/activities', monthweek),
     update: (monthweek: MonthWeekRelation) => axios.put(`/activities/${monthweek.id}`, monthweek),
     delete: (id: string) => axios.delete(`/activities/${id}`)*/

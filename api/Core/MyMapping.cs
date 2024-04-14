@@ -21,7 +21,7 @@ namespace API.Core
             return gardeningTaskDTOs;
         }
 
-        public static List<PlantDTO> MapPlantsFromDTO(List<Plant> list)
+        public static List<PlantDTO> MapPlantsToDTO(List<Plant> list)
         {
             var plantDTOs = new List<PlantDTO>();
             if (list != null)

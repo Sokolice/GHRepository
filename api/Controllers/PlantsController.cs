@@ -33,11 +33,20 @@ namespace API.Controllers
 
             return HandleResult(result);
         }
+        [HttpGet]
+        [Route("GetAllAvailablePlants")]
+        public async Task<ActionResult<List<PlantDTO>>> GetAllAvailablePlants()
+        {
+
+            var result = await _plantsService.GetAllAvailablePlantsByType();
+
+            return HandleResult(result);
+        }
 
         // GET: api/Plants/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PlantDTO>> GetPlant(Guid id)
-        {           
+        {
             var result = await _plantsService.GetPlant(id);
 
             return HandleResult(result);
@@ -62,6 +71,28 @@ namespace API.Controllers
             var result = await _plantsService.GetAllPlantsRelations();
 
             return HandleResult(result);
-        }        
+        }
+
+        [HttpGet]
+        [Route("GetAllPlantTypes")]
+        //[HttpGet("{id}/others")]
+        public async Task<ActionResult<List<PlantTypeDTO>>> GetAllPlantTypes()
+        {
+            var result = await _plantsService.GetAllPlantTypes();
+
+            return HandleResult(result);
+        }
+
+        [HttpPost]
+        [Route("SavePlantsForUser")]
+        public async Task<ActionResult<List<Guid>>> SavePlantsForUser(List<Guid> ids)
+        {
+            var result = await _plantsService.SavePlantsForUser(ids);
+
+            return HandleResult(result);
+        }
+
+
+
     }
 }

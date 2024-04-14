@@ -28,7 +28,7 @@ namespace API.Relations
             Bed = new BedDTO(aBed);
             Cells = aBed.Cells.OrderBy(x => x.Y).ToList().OrderBy(x => x.X).ToList();
 
-            Plants = MyMapping.MapPlantsFromDTO(aBed.Plants);
+            Plants = MyMapping.MapPlantsToDTO(aBed.Plants);
             AvoidPlantsIds = new List<string>();
             CompanionPlantsIds = new List<string>();
         }

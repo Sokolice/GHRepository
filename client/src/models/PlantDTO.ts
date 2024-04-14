@@ -8,4 +8,5 @@ export interface PlantDTO {
     description: string
     imageSrc: string
     repeatedPlanting: number
+    preCultivation: boolean
 }

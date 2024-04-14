@@ -12,14 +12,20 @@ namespace API.Services
     public class PlantsService: IPlantsService
     {
         private readonly DataContext _context;
-        public PlantsService(DataContext context)
+        private readonly IUserAccessor _userAccessor;
+        public PlantsService(DataContext context, IUserAccessor userAccessor)
         {
             _context = context;
+            _userAccessor = userAccessor;
+
         }
 
         public async Task<Result<List<PlantDTO>>> GetPlants()
         {
-            var plants = await _context.Plants.ToListAsync();
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.Email == _userAccessor.GetUserEmail());
+
+            var plants = await _context.Plants.Where(a=> a.Users.Contains(user)).ToListAsync();
 
             var plantsDTO = plants.Select(a => new PlantDTO(a))
                                   .ToList();
@@ -27,8 +33,40 @@ namespace API.Services
             return Result<List<PlantDTO>>.Success(plantsDTO);
         }
 
+        public async Task<Result<List<PlantTypePlantsRelation>>> GetAllAvailablePlantsByType()
+        {
+
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.Email == _userAccessor.GetUserEmail());
+
+            var userPlants = await _context.Plants.Where(a => a.Users.Contains(user)).ToListAsync();
+            var allPlants = await _context.Plants.ToListAsync();
+
+            var finalList = allPlants.Except(userPlants).ToList();
+
+            var plants = finalList.GroupBy(p=>p.PlantType)
+                                              .OrderBy(p=>p.Key.Name)
+                                              .Select(a=> new PlantTypePlantsRelation 
+                                              { 
+                                                  PlantType = new PlantTypeDTO(a.Key),
+                                                  Plants = MyMapping.MapPlantsToDTO(a.ToList())
+                                              }
+            ).ToList();
+
+            return Result<List<PlantTypePlantsRelation>>.Success(plants);
+        }
+
+        public async Task<Result<List<PlantTypeDTO>>> GetAllPlantTypes()
+        {
+
+            var plantTypes = await _context.PlantTypes.OrderBy(a=> a.Name).Select(a=> new PlantTypeDTO(a)).ToListAsync();
+
+            return Result<List<PlantTypeDTO>>.Success(plantTypes);
+        }
+
         public async Task<Result<PlantDTO>> GetPlant(Guid id)
         {
+
             var plant = await _context.Plants.FindAsync(id);
 
             if (plant == null)
@@ -63,8 +101,8 @@ namespace API.Services
             var others = new PlantPlantsRelation
             {
                 Plant = new PlantDTO(plant),
-                AvoidPlants = MyMapping.MapPlantsFromDTO(plantAvoids).OrderBy(a => a.Name).ToList(),
-                CompanionPlants = MyMapping.MapPlantsFromDTO(plantCompanion).OrderBy(a => a.Name).ToList()
+                AvoidPlants = MyMapping.MapPlantsToDTO(plantAvoids).OrderBy(a => a.Name).ToList(),
+                CompanionPlants = MyMapping.MapPlantsToDTO(plantCompanion).OrderBy(a => a.Name).ToList()
             };
 
             return Result<PlantPlantsRelation>.Success(others);
@@ -81,6 +119,23 @@ namespace API.Services
 
             return Result<List<PlantPlantsRelation>>.Success(others);*/
             return Result<List<PlantPlantsRelation>>.Failure("not implemented", false);
+        }
+
+        public async Task<Result<List<Guid>>> SavePlantsForUser(List<Guid> ids)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.Email == _userAccessor.GetUserEmail());
+
+            var plants = _context.Plants.Where(a => ids.Contains(a.Id)).ToList();
+
+            user.Plants.AddRange(plants);
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (!result)
+                return Result<List<Guid>>.Failure("Failed to save plants for User", false);
+
+            return Result<List<Guid>>.Success(ids);
         }
     }
 }

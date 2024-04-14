@@ -69,7 +69,7 @@ namespace API.Services
             if (weekOfMonth > 4)
                 weekOfMonth = 4;
 
-            var plants = await _context.Plants
+            var plants = await _context.Plants.Where(p=> p.Users.Contains(user))
                 .Include(p => p.PlantRecords.Where(p=> p.User == user))
                 .Where(a => a.SewingMonths.Any(sm => sm.MonthIndex == month && sm.Week == weekOfMonth)).ToListAsync();
 

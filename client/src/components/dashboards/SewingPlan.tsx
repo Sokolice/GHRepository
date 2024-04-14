@@ -121,6 +121,7 @@ const SewingPlanComponent = observer(function SewingPlan() {
             <Container textAlign='center'>
                 <Button toggle active={active} onClick={switchToCurrentMonth}>Aktuální výsev</Button>
                 <Button toggle active={planted} onClick={hidePlanted}>Skrýt vyseté</Button>
+                <Button as={Link} to='/myPlants'>Moje rostliny</Button>
             </Container>
 
             <Container>

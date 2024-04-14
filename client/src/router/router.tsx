@@ -10,6 +10,7 @@ import CalendarList from "../components/dashboards/Calendar";
 import BedsPage from "../components/dashboards/BedsPage";
 import LoginComponent from "../components/users/login";
 import MainDashboard from "../components/dashboards/MainDashboard";
+import MyPlantsComponent from "../components/dashboards/MyPlants";
 
 
 export const routes: RouteObject[] = [
@@ -28,7 +29,8 @@ export const routes: RouteObject[] = [
             { path: 'beds', element: <BedsPage /> },
             { path: 'beds/:id', element: <BedComponent /> },
             { path: 'recipeHints/:name', element: <RecipeHints /> },
-            { path: 'calendar', element: <CalendarList /> }
+            { path: 'calendar', element: <CalendarList /> },
+            { path: 'myPlants', element: <MyPlantsComponent /> }
         ]
     }]
 

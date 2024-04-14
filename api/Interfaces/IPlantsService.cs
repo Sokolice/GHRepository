@@ -10,5 +10,8 @@ namespace API.Interfaces
         Task<Result<PlantDTO>> GetPlant(Guid id);
         Task<Result<PlantPlantsRelation>> GetOtherPlants(Guid id);
         Task<Result<List<PlantPlantsRelation>>> GetAllPlantsRelations();
+        Task<Result<List<PlantTypePlantsRelation>>> GetAllAvailablePlantsByType();
+        Task<Result<List<Guid>>> SavePlantsForUser(List<Guid> ids);
+        Task<Result<List<PlantTypeDTO>>> GetAllPlantTypes();
     }
 }

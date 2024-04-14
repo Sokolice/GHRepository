@@ -1990,7 +1990,7 @@ namespace API.Persistence
                 },
                 new Plant
                 {
-                    Name = "Řepa salátová kulatá",
+                    Name = "Červená řepa salátová kulatá",
                     IsHybrid = false,
                     DirectSewing = true,
                     GerminationTemp = 8,
@@ -2282,11 +2282,21 @@ namespace API.Persistence
                 },
                 new Plant
                 {
-                    Name = "Sadbový česnek Topaz",
+                    Name = "Česnek Topaz",
                     IsHybrid = false,
                     DirectSewing = true,
                     GerminationTemp = 9,
                     SewingMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.January, 1)],
+                        monthWeekMap[(Month.January, 2)],
+                        monthWeekMap[(Month.January, 3)],
+                        monthWeekMap[(Month.January, 4)],
+
+                        monthWeekMap[(Month.February, 1)],
+                        monthWeekMap[(Month.February, 2)],
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
+
                         monthWeekMap[(Month.November, 1)],
                         monthWeekMap[(Month.November, 2)],
                         monthWeekMap[(Month.November, 3)],
@@ -2315,11 +2325,21 @@ namespace API.Persistence
                 },
                 new Plant
                 {
-                    Name = "Sadbový česnek Vekan",
+                    Name = "Česnek Vekan",
                     IsHybrid = false,
                     DirectSewing = true,
                     GerminationTemp = 9,
                     SewingMonths = new List<MonthWeek> {
+                        monthWeekMap[(Month.January, 1)],
+                        monthWeekMap[(Month.January, 2)],
+                        monthWeekMap[(Month.January, 3)],
+                        monthWeekMap[(Month.January, 4)],
+
+                        monthWeekMap[(Month.February, 1)],
+                        monthWeekMap[(Month.February, 2)],
+                        monthWeekMap[(Month.February, 3)],
+                        monthWeekMap[(Month.February, 4)],
+
                         monthWeekMap[(Month.November, 1)],
                         monthWeekMap[(Month.November, 2)],
                         monthWeekMap[(Month.November, 3)],
@@ -3179,7 +3199,7 @@ namespace API.Persistence
                 },
                 new Plant
                 {
-                    Name = "Řepa Cylindra",
+                    Name = "Červená řepa Cylindra",
                     IsHybrid = false,
                     DirectSewing = true,
                     GerminationTemp = 10,
@@ -3497,7 +3517,7 @@ namespace API.Persistence
                  ,
                 new Plant
                 {
-                    Name = "Řepa Golden eye",
+                    Name = "Červená řepa Golden eye",
                     IsHybrid = false,
                     DirectSewing = true,
                     GerminationTemp = 10,
@@ -3754,7 +3774,7 @@ namespace API.Persistence
 
             await context.Plants.AddRangeAsync(plants);*/
 
-            var plantTypes= context.PlantTypes.ToList();
+            var plantTypes = context.PlantTypes.ToList();
 
             foreach (var plantType in plantTypes) { 
 

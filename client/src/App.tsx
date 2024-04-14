@@ -16,7 +16,7 @@ function App() {
     const { loadBeds, beds } = bedsStore;
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
     const { loadStats } = globalStore;
-    const { loadPlantDTO, plantDTOList } = plantStore;
+    const { loadPlantDTO, plantDTOList, allAvailablePlantDTOListGrouped, loadAllPlants } = plantStore;
     const { monthWeekRelationList, loadMonthWeeekRelations, currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
     const { pestsList, loadPests } = pestsStore;
     const { isLoggedIn, user } = userStore;
@@ -43,13 +43,15 @@ function App() {
             if (currentMonthRelationList.length <= 0)
                 loadMonthWeeeks();
             if (plantDTOList.size <= 0)
-                loadPlantDTO();
+                loadPlantDTO();            
             if (plantRecordMap.size <= 0)
                 loadPlantRecords();
             if (beds.length <= 0)
                 loadBeds();
         }
-    }, [beds.length, loadBeds, plantRecordMap, loadPlantRecords, plantDTOList, loadPlantDTO, monthWeekRelationList.length, loadMonthWeeekRelations, pestsList.length, loadPests, currentMonthRelationList.length, loadMonthWeeeks, loadStats, isLoggedIn])
+    }, [beds.length, loadBeds, plantRecordMap, loadPlantRecords, plantDTOList, loadPlantDTO, monthWeekRelationList.length,
+        loadMonthWeeekRelations, pestsList.length, loadPests, currentMonthRelationList.length, loadMonthWeeeks, loadStats,
+        isLoggedIn])
 
     if (!globalStore.appLoaded) return <LoadingComponent />
     return (

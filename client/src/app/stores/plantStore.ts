@@ -3,15 +3,27 @@ import { store } from "./store";
 import { PlantPlantsRelation } from "../../models/PlantPlantsRelation";
 import agent from "../../api/agent";
 import { PlantDTO } from "../../models/PlantDTO";
+import { PlantTypePlantsRelation } from "../../models/PlantTypePlantsRelation";
+import { PlantTypeDTO } from "../../models/PlantTypeDTO";
 
 export default class PlantStore {
     allPlantsRelations = new Array<PlantPlantsRelation>();
 
     selectedPlant: PlantDTO | undefined = undefined;
     plantDTOList = new Map<string, PlantDTO>();
+    allAvailablePlantDTOListGrouped = new Array<PlantTypePlantsRelation>();
     otherPlants: PlantPlantsRelation = <PlantPlantsRelation>{
         plant: <PlantDTO>{}, avoidPlants: new Array<PlantDTO>(), companionPlants: new Array<PlantDTO>()
     };
+    //allPLantTypes = new Array<PlantTypeDTO>();
+
+    allPLantTypesOptions = Array<{
+        key: string, text: string, value: string
+    }>();
+
+    allPlantTypes = new Map<string, PlantTypeDTO>();
+
+    
     constructor() {
         makeAutoObservable(this)
     }
@@ -31,6 +43,27 @@ export default class PlantStore {
         } catch (exception) {
             console.log(exception);
         }
+    }
+
+    loadAllPlantTypes = async () => {
+        store.globalStore.setLoading(true);
+
+        try {
+            const plantTypes = await agent.Plants.getAllPlantTypes();
+            console.log(plantTypes);
+            runInAction(() => {
+                plantTypes.forEach(type => {
+                    this.allPlantTypes.set(type.id, type);
+                    this.allPLantTypesOptions.push({ key: type.id, text: type.name, value: type.id })
+                })
+            })
+
+            store.globalStore.setLoading(false);
+        } catch (exception) {
+            console.log(exception);
+        }
+
+        
     }
 
     getPlantRelation = (id: string) => {
@@ -83,7 +116,22 @@ export default class PlantStore {
         catch (error) {
             console.log(error);
         }
+    }
 
+    loadAllPlants = async () => {
+
+        store.globalStore.setLoading(true);
+        try {
+            const plants = await agent.Plants.getAllAvailablePlants();
+                runInAction(() => {
+                    this.allAvailablePlantDTOListGrouped = plants;
+                })
+
+            store.globalStore.setLoading(false);
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     loadOtherPlants = async (id: string) => {
@@ -99,5 +147,25 @@ export default class PlantStore {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    savePlantsForUser = async (plantsToAdd: Array<string>) => {
+        console.log(plantsToAdd);
+        store.globalStore.setLoading(true);
+        try {
+            await agent.Plants.savePlantsForUser(plantsToAdd).finally(() => this.realoadUserPlants());
+            store.globalStore.setLoading(false);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    realoadUserPlants = () => {
+        store.globalStore.setLoading(true);
+        this.loadPlantDTO();
+        this.loadAllPlants();
+        store.globalStore.setLoading(false);
+
     }
 }

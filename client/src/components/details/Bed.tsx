@@ -27,8 +27,8 @@ const BedComponent = observer(function Bed() {
     const { id } = useParams();
 
     useEffect(() => {
-        if (allPlantsRelations.length <= 0)
-            loadAllPlantsRelations();
+        /*if (allPlantsRelations.length <= 0)
+            loadAllPlantsRelations();*/
         if (plantDTOList.size <= 0)
             loadPlantDTO();
         if (plantRecordMap.size <= 0)
