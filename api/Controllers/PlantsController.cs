@@ -13,6 +13,7 @@ using API.Interfaces;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class PlantsController : BaseApiController
@@ -92,7 +93,14 @@ namespace API.Controllers
             return HandleResult(result);
         }
 
+        [HttpPost]
+        [Route("CreatePlant")]
+        public async Task<ActionResult<PlantDTO>> CreatePlant(PlantDTO plantDTO)
+        {
+            var result = await _plantsService.CreatePlant(plantDTO);
 
+            return HandleResult(result);
+        }
 
     }
 }

@@ -5,6 +5,15 @@ namespace API.Core
 {
     public static class MyMapping
     {
+        public static MonthWeekDTO MapMonthWeekToDTO (MonthWeek mw)
+        {
+            return new MonthWeekDTO
+            {
+                Month = mw.Month,
+                Week = mw.Week,
+                MonthIndex = mw.MonthIndex
+            };
+        }
 
         public static List<GardeningTaskDTO> MapGardeningTasks(List<GardeningTask> list)
         {
@@ -55,7 +64,7 @@ namespace API.Core
 
         }*/
 
-            public static List<MonthWeekDTO> MapMonthWeeks(List<MonthWeek> list)
+            public static List<MonthWeekDTO> MapMonthWeeksToDTOs(List<MonthWeek> list)
         {
             var monthweeksDTOs = new List<MonthWeekDTO>();
             if (list != null)

@@ -1,4 +1,5 @@
-﻿using API.Domain;
+﻿using API.Core;
+using API.Domain;
 
 namespace API.DTOs
 {
@@ -21,6 +22,12 @@ namespace API.DTOs
         public string ImageSrc { get; set; }
 
         public int RepeatedPlanting { get; set; }
+        public MonthWeekDTO SowingFrom { get; set; }
+        public MonthWeekDTO SowingTo { get; set; }
+        public MonthWeekDTO HarvestFrom { get; set; }
+        public MonthWeekDTO HarvestTo { get; set; }
+
+        public Guid PlantTypeId { get; set; }
 
         public PlantDTO()
         {
@@ -43,6 +50,30 @@ namespace API.DTOs
             ImageSrc = aPlant.ImageSrc;
             RepeatedPlanting = aPlant.RepeatedPlanting;
             PreCultivation = aPlant.PreCultivation;
+
+            if(aPlant.SewingMonths.Count > 0)
+            {
+                SowingFrom = MyMapping.MapMonthWeekToDTO(aPlant.SewingMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).First());
+                SowingTo = MyMapping.MapMonthWeekToDTO(aPlant.SewingMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).Last());
+            }
+            else
+            {
+
+                SowingFrom = MyMapping.MapMonthWeekToDTO(aPlant.PlantType.SewingMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).First());
+                SowingTo = MyMapping.MapMonthWeekToDTO(aPlant.PlantType.SewingMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).Last());
+            }
+
+            if(aPlant.HarvestMonths.Count > 0)
+            {
+                HarvestFrom = MyMapping.MapMonthWeekToDTO(aPlant.HarvestMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).First());
+                HarvestTo = MyMapping.MapMonthWeekToDTO(aPlant.HarvestMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).Last());
+            }
+            else
+            {
+
+                HarvestFrom = MyMapping.MapMonthWeekToDTO(aPlant.PlantType.HarvestMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).First());
+                HarvestTo = MyMapping.MapMonthWeekToDTO(aPlant.PlantType.HarvestMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).Last());
+            }
         }
     }
 }

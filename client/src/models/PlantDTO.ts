@@ -1,3 +1,5 @@
+import { MonthWeekDTO } from "./MonthWeekDTO"
+
 export interface PlantDTO {
     id: string
     name: string
@@ -8,5 +10,10 @@ export interface PlantDTO {
     description: string
     imageSrc: string
     repeatedPlanting: number
-    preCultivation: boolean
+    preCultivation: boolean,
+    sowingFrom: MonthWeekDTO,
+    sowingTo: MonthWeekDTO,
+    harvestFrom: MonthWeekDTO,
+    harvestTo: MonthWeekDTO,
+    plantTypeId: string
 }

@@ -5,6 +5,8 @@ import agent from "../../api/agent";
 import { PlantDTO } from "../../models/PlantDTO";
 import { PlantTypePlantsRelation } from "../../models/PlantTypePlantsRelation";
 import { PlantTypeDTO } from "../../models/PlantTypeDTO";
+import { MonthWeekDTO } from "../../models/MonthWeekDTO";
+import { v4 as uiid } from 'uuid';
 
 export default class PlantStore {
     allPlantsRelations = new Array<PlantPlantsRelation>();
@@ -23,6 +25,10 @@ export default class PlantStore {
 
     allPlantTypes = new Map<string, PlantTypeDTO>();
 
+    newPlantSowingFrom: MonthWeekDTO = { month: "", monthIndex: 0, week: 0 };
+    newPlantSowingTo: MonthWeekDTO = { month: "", monthIndex: 0, week: 0 };
+    newPlantHarvestFrom: MonthWeekDTO = { month: "", monthIndex: 0, week: 0 };
+    newPlantHarvestTo: MonthWeekDTO = { month: "", monthIndex: 0, week: 0 };
     
     constructor() {
         makeAutoObservable(this)
@@ -50,12 +56,13 @@ export default class PlantStore {
 
         try {
             const plantTypes = await agent.Plants.getAllPlantTypes();
-            console.log(plantTypes);
             runInAction(() => {
-                plantTypes.forEach(type => {
-                    this.allPlantTypes.set(type.id, type);
-                    this.allPLantTypesOptions.push({ key: type.id, text: type.name, value: type.id })
-                })
+                if (this.allPLantTypesOptions.length == 0) {
+                    plantTypes.forEach(type => {
+                        this.allPlantTypes.set(type.id, type);
+                        this.allPLantTypesOptions.push({ key: type.id, text: type.name, value: type.id })
+                    })
+                }
             })
 
             store.globalStore.setLoading(false);
@@ -167,5 +174,22 @@ export default class PlantStore {
         this.loadAllPlants();
         store.globalStore.setLoading(false);
 
+    }
+
+    createNewPlant = async (plant: PlantDTO, plantTypeId: string) => {
+        store.globalStore.setLoading(true);
+        try {
+            plant.id = uiid();
+            plant.plantTypeId = plantTypeId;
+            plant.sowingFrom = this.newPlantSowingFrom;
+            plant.sowingTo = this.newPlantSowingTo;
+            plant.harvestFrom = this.newPlantHarvestFrom;
+            plant.harvestTo = this.newPlantHarvestTo;
+            await agent.Plants.createNewPlant(plant);
+            store.globalStore.setLoading(false);
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

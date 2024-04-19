@@ -6,6 +6,7 @@ using API.Persistence;
 using API.Relations;
 using Castle.DynamicProxy.Generators;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
 
 namespace API.Services
 {
@@ -59,7 +60,11 @@ namespace API.Services
         public async Task<Result<List<PlantTypeDTO>>> GetAllPlantTypes()
         {
 
-            var plantTypes = await _context.PlantTypes.OrderBy(a=> a.Name).Select(a=> new PlantTypeDTO(a)).ToListAsync();
+            var plantTypes = await _context.PlantTypes.Include(a=> a.HarvestMonths)
+                                                      .Include(a=> a.SewingMonths)
+                                                      .OrderBy(a=> a.Name)
+                                                      .Select(a=> new PlantTypeDTO(a))
+                                                      .ToListAsync();
 
             return Result<List<PlantTypeDTO>>.Success(plantTypes);
         }
@@ -136,6 +141,70 @@ namespace API.Services
                 return Result<List<Guid>>.Failure("Failed to save plants for User", false);
 
             return Result<List<Guid>>.Success(ids);
+        }
+
+        public async Task<Result<PlantDTO>> CreatePlant(PlantDTO plantDTO)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.Email == _userAccessor.GetUserEmail());
+
+
+            var plantType = _context.PlantTypes.Find(plantDTO.PlantTypeId);
+            var plant = new Plant
+            {
+                CropRotation = plantDTO.CropRotation,
+                Description = plantDTO.Description,
+                DirectSewing = plantDTO.DirectSewing,
+                GerminationTemp = plantDTO.GerminationTemp,
+                Id = plantDTO.Id,
+                ImageSrc = plantDTO.ImageSrc,
+                IsHybrid = plantDTO.IsHybrid,
+                Name = plantDTO.Name,
+                PlantType = plantType,
+                PreCultivation = plantDTO.PreCultivation,
+                RepeatedPlanting = plantDTO.RepeatedPlanting,
+                IsApproved = (user.DisplayName == "Admin")? true:false
+            };
+            if (plantDTO.SowingFrom != null)
+            {
+                GenerateMonths(plantDTO.SowingFrom, plantDTO.SowingTo, plant.SewingMonths);
+                GenerateMonths(plantDTO.HarvestFrom, plantDTO.HarvestTo, plant.HarvestMonths);
+            }
+
+            _context.Plants.Add(plant);
+
+            user.Plants.Add(_context.Plants.Find(plantDTO.Id));
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (!result)
+                return Result<PlantDTO>.Failure("Failed to save plant for User", false);
+
+            return Result<PlantDTO>.Success(plantDTO);
+
+        }
+
+        private void GenerateMonths(MonthWeekDTO from, MonthWeekDTO to,  List<MonthWeek> plantMonthWeeks)
+        {
+            var monthWeekMap = _context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
+
+            for (var month = from.MonthIndex; month <= to.MonthIndex; month++)
+            {
+                var weekFrom = 1;
+                var weekTo = 4;
+                if(month == 1)
+                    weekFrom = from.Week;
+
+                if(month == to.MonthIndex)
+                    weekTo = to.Week;
+
+                while (weekFrom <= weekTo)
+                {
+                    plantMonthWeeks.Add(monthWeekMap[(Month.getMonthName(month), weekFrom)]);
+                    weekFrom++;
+                }
+
+            }
         }
     }
 }

@@ -58,7 +58,9 @@ const Plants = {
     getAllAvailablePlants: () => requests.get<PlantTypePlantsRelation[]>('/Plants/GetAllAvailablePlants'),
     savePlantsForUser: (ids: string[]) => requests.post<string[]>('Plants/SavePlantsForUser', ids),
     getAllPlantTypes: () => requests.get<PlantTypeDTO[]>('/Plants/GetAllPlantTypes'),
+    createNewPlant: (plant: PlantDTO) => requests.post<PlantTypeDTO>('/Plants/CreatePlant', plant),
     /*create: (monthweek: MonthWeekRelation) => axios.post('/activities', monthweek),
+    getAllPlantTypes: () => requests.get<PlantTypeDTO[]>('/Plants/GetAllPlantTypes'),
     update: (monthweek: MonthWeekRelation) => axios.put(`/activities/${monthweek.id}`, monthweek),
     delete: (id: string) => axios.delete(`/activities/${id}`)*/
 }

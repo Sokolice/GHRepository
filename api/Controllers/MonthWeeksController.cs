@@ -16,6 +16,7 @@ using API.Interfaces;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class MonthWeeksController : BaseApiController

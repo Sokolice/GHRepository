@@ -33,6 +33,8 @@ namespace API.Domain
 
         public virtual List<AppUser> Users { get; set; }
 
+        public bool IsApproved {  get; set; }
+
         public Plant()
         {
             Id = new Guid();

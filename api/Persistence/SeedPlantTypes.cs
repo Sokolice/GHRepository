@@ -158,7 +158,33 @@ namespace API.Persistence
                         monthWeekMap[(Month.August, 2)],
                         monthWeekMap[(Month.August, 3)],
                         monthWeekMap[(Month.August, 4)]
-                    } ,
+                    },
+                    HarvestMonths = new List<MonthWeek> {
+
+                        monthWeekMap[(Month.April, 1)],
+                        monthWeekMap[(Month.April, 2)],
+                        monthWeekMap[(Month.April, 3)],
+                        monthWeekMap[(Month.April, 4)],
+
+                        monthWeekMap[(Month.May, 1)],
+                        monthWeekMap[(Month.May, 2)],
+                        monthWeekMap[(Month.May, 3)],
+                        monthWeekMap[(Month.May, 4)],
+
+                        monthWeekMap[(Month.July, 1)],
+                        monthWeekMap[(Month.July, 2)],
+                        monthWeekMap[(Month.July, 3)],
+                        monthWeekMap[(Month.July, 4)],
+
+                        monthWeekMap[(Month.August, 1)],
+                        monthWeekMap[(Month.August, 2)],
+                        monthWeekMap[(Month.August, 3)],
+                        monthWeekMap[(Month.August, 4)],
+
+                        monthWeekMap[(Month.September, 1)],
+                        monthWeekMap[(Month.September, 2)],
+                        monthWeekMap[(Month.September, 3)],
+                        monthWeekMap[(Month.September, 4)]} ,
                     CropRotation = 3,
                     ImageSrc = "lidka.jpg",
                     Description = "Ředkvička je kořenová zelenina botanicky klasifikovaná jako varieta ředkev setá letní " +
@@ -1188,7 +1214,7 @@ namespace API.Persistence
                     Description = "Květák neboli lidově karfiol (Brassica oleracea convar. botrytis) je oblíbenou košťálovou zeleninou, " +
                     "kterou člověk získal vyšlechtěním divoké brukve zelné (stejně jako např. kedluben, zelí či kapustu). " +
                     "V případě květáku využíváme jako zeleninu zdužnatělé květenství. Patří mezi jednoleté rostliny."
-                }*/
+                }
 
                 new PlantType
                 {
@@ -1300,8 +1326,8 @@ namespace API.Persistence
                     CropRotation = 1,
                     ImageSrc = "others.jpg",
                     Description = ""
-                }
-               };
+                }*/
+            };
 
             /*var plants = context.PlantTypes.OrderBy(a=>a.Name).ToList();
 

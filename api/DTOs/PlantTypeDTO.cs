@@ -1,4 +1,5 @@
 ﻿using API.Domain;
+using API.Core;
 
 namespace API.DTOs
 {
@@ -20,6 +21,11 @@ namespace API.DTOs
 
         public int RepeatedPlanting { get; set; }
 
+        public MonthWeekDTO SowingFrom { get; set; }
+        public MonthWeekDTO SowingTo { get; set; }
+        public MonthWeekDTO HarvestFrom { get; set; }
+        public MonthWeekDTO HarvestTo { get; set; }
+
 
         public PlantTypeDTO()
         {
@@ -39,6 +45,10 @@ namespace API.DTOs
             CropRotation = plantType.CropRotation;
             ImageSrc = plantType.ImageSrc;
             RepeatedPlanting = plantType.RepeatedPlanting;
+            SowingFrom = MyMapping.MapMonthWeekToDTO(plantType.SewingMonths.OrderBy(a=> a.MonthIndex).ThenBy(a=> a.Week).First());
+            SowingTo = MyMapping.MapMonthWeekToDTO(plantType.SewingMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).Last());
+            HarvestFrom = MyMapping.MapMonthWeekToDTO(plantType.HarvestMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).First());
+            HarvestTo = MyMapping.MapMonthWeekToDTO(plantType.HarvestMonths.OrderBy(a => a.MonthIndex).ThenBy(a => a.Week).Last());
         }
     }
 }
