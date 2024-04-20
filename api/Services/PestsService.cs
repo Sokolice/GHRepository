@@ -1,8 +1,10 @@
 ﻿using API.Core;
+using API.Domain;
 using API.DTOs;
 using API.Interfaces;
 using API.Persistence;
 using API.Relations;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
@@ -18,22 +20,39 @@ namespace API.Services
 
         public async Task<Result<List<PestRelation>>> GetPests()
         {
-            /*var pests = await _context.Pests.Select(a => new PestRelation
+            var pests = await _context.Pests.ToListAsync();
+            var pestsRelation = new List<PestRelation>();
+
+            foreach (var pest in pests)
             {
-                PestDTO = new PestDTO
+                var pestRelation = new PestRelation
                 {
-                    Advice = a.Advice,
-                    Name = a.Name,
-                    Id = a.Id,
-                    ImageSrc = a.ImageSrc
-                },
-                Plants = MyMapping.MapPlantsFromDTO(a.Plants)
+                    PestDTO = new PestDTO
+                    {
+                        Advice = pest.Advice,
+                        Id = pest.Id,
+                        ImageSrc = pest.ImageSrc,
+                        Name = pest.Name,
+                    },
+                    Plants = getPlantsForPlantType(pest.Plants)
+                };
+                pestsRelation.Add(pestRelation);
+            }
 
-            }).ToListAsync();
+            return Result<List<PestRelation>>.Success(pestsRelation);
+        }
 
-            return Result<List<PestRelation>>.Success(pests);*/
+        private List<PlantDTO> getPlantsForPlantType(List<PlantType> plantTypes)
+        {
+            var plantsDTO = new List<PlantDTO>();
+            foreach (var plantType in plantTypes)
+            {
+                var plants = _context.Plants.Where(a => a.PlantType == plantType).ToList();
 
-            return Result<List<PestRelation>>.Failure("not implemented", false);
+                plantsDTO.AddRange(MyMapping.MapPlantsToDTO(plants));
+            }
+
+            return plantsDTO;
         }
     }
 }

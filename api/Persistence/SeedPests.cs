@@ -6,33 +6,14 @@ namespace API.Persistence
     {
         public static async Task SeedData(DataContext context)
         {                                      
-            /*var idsMsice = new List<string>
-            {
-                "25C2EAC3-50F5-4E96-8F53-42B2C52EF017",
-                "89443749-1F3E-45A9-9474-E14665297615",
-                "975E0757-7EA9-4FE8-8593-2A77A513FE50",
-                "4D310F40-E2E0-4E69-A2D1-530AD8FDBB97",
-                "14B245A1-71A0-49DF-ABA1-6E8FB0028A83",
-                "77CF3D7F-D9CD-4EB4-8E14-87D99498A144",
-                "930CFEB4-BC7B-4C05-9189-09273B995D52",
-                "9A40FBBE-0302-4150-8D37-8E1BBF924AC3",
-                "769ACF86-01CF-49FD-A694-85492C1CF6C5",
-                "999A6D7C-5F05-4593-A793-E097E7FE4926",
-                "BD81002B-E63F-4908-A1DB-F39E8601549E",
-                "C433ABD0-7D58-42F5-9FD9-A06361A0F5B9",
-                "D643A20F-03E7-4630-94CD-1C128AF221D1"
-            };
-            var plantsMsice = context.Plants.Where(p => idsMsice.Contains(p.Id.ToString())).ToList();
+            
+            var plantsMsice = context.PlantTypes.Where(a=> a.Name.Contains("Rajče") || a.Name.Contains("Paprika") || a.Name.Contains("Okurka")).ToList();
 
-            var idsDrepcik = new List<string>
-            {
-                "9F9A1F91-93E3-4E90-9A06-7B55C1AF72EC",
-                "91D656F9-E0ED-410D-9067-571CA02A775F",
-                "8AD871CC-AE38-4189-8994-B38CED71F3B5"
+            var plantsDrepcik = context.PlantTypes.Where(p => p.Name.Contains("Kedluben") || p.Name.Contains("Brokolice") || p.Name.Contains("Kedluben") || p.Name.Contains("Ředkvička") || p.Name.Contains("Květák") || p.Name.Contains("Kapusta") || p.Name.Contains("Pak Choi")).ToList();
 
-            };
+            var plantsSviluska = context.PlantTypes.Where(p => p.Name.Contains("Kedluben")).ToList();
 
-            var plantsDrepcik = context.Plants.Where(p => idsDrepcik.Contains(p.Id.ToString())).ToList();
+            var plantsBelasek = context.PlantTypes.Where(p => p.Name.Contains("Kedluben") || p.Name.Contains("Brokolice") || p.Name.Contains("Kedluben") || p.Name.Contains("Ředkvička") || p.Name.Contains("Květák") || p.Name.Contains("Kapusta") || p.Name.Contains("Pak Choi")).ToList();
 
             var pests = new List<Pest>
             {
@@ -50,10 +31,25 @@ namespace API.Persistence
                     ImageSrc= "drepcik.jpg",
                     Plants= plantsDrepcik
 
+                },
+                new Pest
+                {
+                    Name = "Sviluška",
+                    Advice = "Sviluška (Tetranychus) je rod roztočů, kterým je obecně věnována velká pozornost pro jejich schopnost vážně poškozovat rostliny. ",
+                    ImageSrc= "drepcik.jpg",
+                    Plants= plantsDrepcik
+
+                },
+                new Pest
+                {
+                    Name = "Bělásek",
+                    Advice = "Nenasytné housenky běláska způsobují svým povrchovým žírem značné škody na rostlinách z čeledi Brukvovitých (​Brassicaceae)​, známých také jako košťáloviny. Lze použít ​výluhy z aromatických rostlin​, které bělásky odpuzují. Patří mezi ně například šalvěj, mateřídouška, vratič, kopretina, máta peprná či rajčatové zálistky",
+                    ImageSrc = "belasek.jpg",
+                    Plants = plantsBelasek
                 }
             };
             await context.AddRangeAsync(pests);
-            await context.SaveChangesAsync();*/
+            await context.SaveChangesAsync();
         }
     }
 }
