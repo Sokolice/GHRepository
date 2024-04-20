@@ -16,6 +16,8 @@ namespace API.Domain
         public string Note { get; set; }
         public virtual AppUser User { get; set; }
 
+        public string Mark {  get; set; }
+
         public PlantRecord()
         {
             Id = Guid.NewGuid();
@@ -23,6 +25,7 @@ namespace API.Domain
             PlantId = Guid.NewGuid();
             Note = string.Empty;           
             User = new AppUser();
+            Mark = string.Empty;
         }
     }
 }

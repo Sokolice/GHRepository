@@ -5,5 +5,6 @@ export interface PlantRecordDTO {
     amountPlanted: number,
     progress: number,
     presumedHarvest: string,
-    note: string
+    note: string,
+    mark: string
 }

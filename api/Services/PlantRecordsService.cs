@@ -65,7 +65,8 @@ namespace API.Services
                 PlantId = plantRecordDTO.PlantId,
                 Plant = _context.Plants.First(a => a.Id == plantRecordDTO.PlantId),
                 Note = plantRecordDTO.Note,
-                User = user
+                User = user,
+                Mark = plantRecordDTO.Mark,
             };
 
 
@@ -107,6 +108,8 @@ namespace API.Services
 
             record.AmountPlanted = plantRecord.AmountPlanted;
             record.DatePlanted = plantRecord.DatePlanted;
+            record.Mark = plantRecord.Mark;
+            record.Note = plantRecord.Note;
 
             var plant = await _context.Plants.FindAsync(plantRecord.PlantId);
 

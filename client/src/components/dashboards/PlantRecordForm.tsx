@@ -27,7 +27,8 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
         amountPlanted: 0,
         progress: 0,
         presumedHarvest: '0001-01-01',
-        note: ''
+        note: '',
+        mark:''
     });
 
     const validationSchema = Yup.object({
@@ -86,7 +87,8 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({ plant, plan
                                     dateFormat='dd.MM.yyyy'
                                 />
                                 <MyInput name='amountPlanted' placeholder='Množství' type='number' label='Množství' />
-                                <MyTextArea name='note' placeholder='Poznámka' rows={3} label="Poznámka"/>
+                                <MyTextArea name='note' placeholder='Poznámka' rows={3} label="Poznámka" />
+                                <MyInput name='mark' placeholder='Označení' type='text' label='Označení' />
 
                             </GridColumn>
                         </GridRow>

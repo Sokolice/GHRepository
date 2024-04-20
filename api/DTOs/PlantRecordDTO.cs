@@ -15,6 +15,7 @@ namespace API.DTOs
         public int Progress { get; set; }
 
         public string Note { get; set; }
+        public string Mark {  get; set; }
 
         public PlantRecordDTO()
         {
@@ -31,6 +32,7 @@ namespace API.DTOs
             DatePlanted = aPlantRecord.DatePlanted;
             PlantId = aPlantRecord.PlantId;
             Note = aPlantRecord.Note;
+            Mark = aPlantRecord.Mark;
         }
 
 
