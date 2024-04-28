@@ -119,7 +119,7 @@ export default class BedsStore {
 
         for (let x = 1; x <= c; x++) {
             for (let y = 1; y <= r; y++) {
-                cells.push({ id: uiid(), x: x, y: y, isActive: false, gridArea: "", backgroundImage: "", plantRecordId: "", isHidden: false, objectID: "" })
+                cells.push({ id: uiid(), x: x, y: y, isActive: false, gridArea: "", backgroundImage: "", plantRecordId: "00000000-0000-0000-0000-000000000000", isHidden: false, objectID: "" })
             }
         }
 

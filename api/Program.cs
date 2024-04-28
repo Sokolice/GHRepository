@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using API.Interfaces;
 using API.Security;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.Negotiate;
 
 namespace API
 {
@@ -17,6 +18,13 @@ namespace API
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
+   .AddNegotiate();
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = options.DefaultPolicy;
+            });
 
             // Add services to the container.
             builder.Services.AddTransient<IPestsService, PestsService>();
@@ -69,8 +77,8 @@ namespace API
             app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
+            
             app.UseAuthentication();
-
             app.UseAuthorization();
 
 

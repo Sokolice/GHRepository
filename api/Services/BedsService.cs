@@ -4,10 +4,11 @@ using API.Domain;
 using API.Persistence;
 using API.Relations;
 using Microsoft.EntityFrameworkCore;
+using API.DTOs;
 
 namespace API.Services
 {
-    public class BedsService: IBedsService
+    public class BedsService : IBedsService
     {
         private readonly DataContext _context;
         private readonly IUserAccessor _userAccessor;
@@ -23,18 +24,52 @@ namespace API.Services
 
             var bedsDTO = await _context.Beds
                 .Where(x => x.User.Email == _userAccessor.GetUserEmail())
-                                        .Select(a => new BedRelation(a))
                                         .ToListAsync();
 
+            var bedRelations = new List<BedRelation>();
+            var plantsDTO = new List<PlantDTO>();
             foreach (var bed in bedsDTO)
+            {
+                var relation = new BedRelation
+                {
+                    Bed = MyMapping.MapBedToDTO(bed),
+                    Cells = bed.Cells
+                };
+
+                var cellRecordIds = bed.Cells.Where(a => a.PlantRecordId != Guid.Empty)
+                                              .Select(a => a.PlantRecordId)
+                                              .ToList();
+
+                var plants = (bed.IsDesign) ? _context.Plants.Where(a => cellRecordIds.Contains(a.Id))
+                                                             .ToList()
+                                            : _context.PlantRecords.Where(a => cellRecordIds.Contains(a.Id))
+                                                        .Select(a => a.Plant)
+                                                        .ToList();
+
+                plantsDTO = MyMapping.MapPlantsToDTO(plants);
+
+                relation.Plants = plantsDTO;
+                bedRelations.Add(relation);
+
+            }
+
+            /*foreach (var bed in bedsDTO)
             {
                 bed.GetAllCompanionPlants(_context);
                 bed.GetAllAvoidPlants(_context);
-            }
+            }*/
 
-            return Result<List<BedRelation>>.Success(bedsDTO);
+            return Result<List<BedRelation>>.Success(bedRelations);
         }
 
+        /*private  List<PlantDTO> getPlantsForBed(Bed bed)
+        {
+            var plantrecordIds = bed.Cells.Select(a => a.PlantRecordId).ToList();
+
+            var plants = _context.PlantRecords.Where(a => plantrecordIds.Contains(a.Id.ToString())).Select(a => a.Plant).ToList();
+
+            return MyMapping.MapPlantsToDTO(plants);
+        }*/
 
         public async Task<Result<BedRelation>> PostBed(BedRelation bedRelation)
         {
@@ -58,6 +93,9 @@ namespace API.Services
 
         public async Task<Result<Guid>> DeleteBed(Guid id)
         {
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.Email == _userAccessor.GetUserEmail());
+
             var bed = await _context.Beds.FindAsync(id);
 
             if (bed == null)
@@ -85,25 +123,25 @@ namespace API.Services
             if (id != bedRelation.Bed.Id)
                 return Result<BedRelation>.Failure("Failed to update bed", false);
 
-            
-                var bed = await _context.Beds.FindAsync(id);
+
+            var bed = await _context.Beds.FindAsync(id);
 
             if (bed == null)
                 return Result<BedRelation>.Failure("Failed to update bed. Bed do not exists", true);
 
-               
-                bed.Name = bedRelation.Bed.Name;
-                bed.Length = bedRelation.Bed.Length;
-                bed.Width = bedRelation.Bed.Width;
-                bed.NumOfRows = bedRelation.Bed.NumOfRows;
-                bed.NumOfColumns = bedRelation.Bed.NumOfColumns;
-                bed.Cells = bedRelation.Cells;
-                bed.IsDesign =  bedRelation.Bed.IsDesign;
-                bed.CropRotation = bedRelation.Bed.CropRotation;
 
-                bed.Plants = _context.Plants.Where(a => bedRelation.Plants.Select(b => b.Id).ToList().Contains(a.Id)).ToList();
+            bed.Name = bedRelation.Bed.Name;
+            bed.Length = bedRelation.Bed.Length;
+            bed.Width = bedRelation.Bed.Width;
+            bed.NumOfRows = bedRelation.Bed.NumOfRows;
+            bed.NumOfColumns = bedRelation.Bed.NumOfColumns;
+            bed.Cells = bedRelation.Cells;
+            bed.IsDesign = bedRelation.Bed.IsDesign;
+            bed.CropRotation = bedRelation.Bed.CropRotation;
 
-               
+            //bed.Plants = _context.Plants.Where(a => bedRelation.Plants.Select(b => b.Id).ToList().Contains(a.Id)).ToList();
+
+
             await _context.SaveChangesAsync();
 
             return Result<BedRelation>.Success(bedRelation);

@@ -271,7 +271,7 @@ const BedComponent = observer(function Bed() {
                 style={generateCellStyle(cell)}
             >
                 {showPlantRecordDetails()}
-                {cell.plantRecordId != "" ?
+                {cell.plantRecordId != "00000000-0000-0000-0000-000000000000" ?
                     <Button icon='minus'  size='tiny' onClick={() => deleteClick(cell.objectID)} className='no_print, dell_Cell' />
                     :
                     null} 

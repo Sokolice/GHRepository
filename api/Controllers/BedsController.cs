@@ -33,6 +33,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Route("PostBed")]
         public async Task<ActionResult<BedRelation>> PostBed(BedRelation bedRelation)
         {
             var result  = await _bedsService.PostBed(bedRelation);

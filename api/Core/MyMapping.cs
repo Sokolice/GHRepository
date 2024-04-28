@@ -5,6 +5,22 @@ namespace API.Core
 {
     public static class MyMapping
     {
+        public static BedDTO MapBedToDTO(Bed bed)
+        {
+            return new BedDTO
+            {
+                CropRotation = bed.CropRotation,
+                Id = bed.Id,
+                IsDesign = bed.IsDesign,
+                Length = bed.Length,
+                Name = bed.Name,
+                Note = bed.Note,
+                NumOfColumns = bed.NumOfColumns,
+                NumOfRows = bed.NumOfRows,
+                Width = bed.Width
+            };
+        }
+
         public static MonthWeekDTO MapMonthWeekToDTO (MonthWeek mw)
         {
             return new MonthWeekDTO

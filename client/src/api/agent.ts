@@ -84,7 +84,7 @@ const PlantRecords = {
 }
 const Beds = {
     getBeds: () => requests.get<BedRelation[]>('/Beds/GetBeds'),
-    create: (bedRelation: BedRelation) => axios.post('/Beds', bedRelation),
+    create: (bedRelation: BedRelation) => axios.post('/Beds/PostBed', bedRelation),
     delete: (id: string) => axios.delete(`/Beds/${id}`),
     update: (bedRelation: BedRelation) => axios.put(`/Beds/${bedRelation.bed.id}`, bedRelation),
     details: (id: string) => requests.get<BedRelation>(`/Beds/${id}`),

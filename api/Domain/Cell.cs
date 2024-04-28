@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-
-namespace API.Domain
+﻿namespace API.Domain
 {
     public class Cell
     {
@@ -11,14 +8,14 @@ namespace API.Domain
         public bool IsActive { get; set; }
         public string GridArea { get; set; }
         public string BackgroundImage { get; set; }
-        public string PlantRecordId { get; set; }
+        public Guid PlantRecordId { get; set; }
         public bool isHidden { get; set; }
 
         public string ObjectID { get; set; }
         public Cell() {
             GridArea = string.Empty;
             BackgroundImage = string.Empty;
-            PlantRecordId = string.Empty;
+            PlantRecordId = Guid.Empty;
             isHidden = false;
             IsActive = false;
             ObjectID = string.Empty;

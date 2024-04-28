@@ -15,7 +15,6 @@ namespace API.Domain
         public int NumOfRows { get; set; }
         public bool IsDesign { get; set; }
         public int CropRotation { get; set; }
-        public virtual List<Plant> Plants { get; set; }
         public string Note {  get; set; }
         public virtual AppUser User { get; set; }
 
@@ -30,7 +29,6 @@ namespace API.Domain
             IsDesign = false;
             CropRotation = 0;
             Note = string.Empty;
-            Plants = new List<Plant>();
             User = new AppUser();
         }
 
