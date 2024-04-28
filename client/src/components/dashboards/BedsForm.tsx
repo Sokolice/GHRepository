@@ -21,7 +21,7 @@ const BedsFormComponent = observer(function BedsForm() {
         name: "",
         length: 0,
         width: 0,
-        isDesign: true,
+        isDesign: false,
         cropRotation: 0,
         note: "",
         numOfColumns: 0,

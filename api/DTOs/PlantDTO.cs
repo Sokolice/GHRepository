@@ -50,6 +50,7 @@ namespace API.DTOs
             ImageSrc = aPlant.ImageSrc;
             RepeatedPlanting = aPlant.RepeatedPlanting;
             PreCultivation = aPlant.PreCultivation;
+            PlantTypeId = aPlant.PlantTypeId;
 
             if(aPlant.SewingMonths.Count > 0)
             {

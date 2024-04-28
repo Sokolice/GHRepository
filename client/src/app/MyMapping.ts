@@ -1,3 +1,6 @@
+import { BedDTO } from "../models/BedDTO";
+import { PlantDTO } from "../models/PlantDTO";
+
 export default class MyMapping {
 
     static mapMonthIndex = (month: string)=>{
@@ -58,5 +61,14 @@ export default class MyMapping {
             case 12:
                 return "Prosinec";
         }
+    }
+
+    static isCropRotationSame = (bed: BedDTO, plant: PlantDTO) =>{
+        if (plant.cropRotation == 23 && (bed.cropRotation == 2 || bed.cropRotation == 3))
+            return true;
+        if (plant.cropRotation == bed.cropRotation)
+            return true;
+
+        return false;
     }
 }

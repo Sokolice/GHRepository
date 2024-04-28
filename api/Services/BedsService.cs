@@ -49,27 +49,16 @@ namespace API.Services
                 plantsDTO = MyMapping.MapPlantsToDTO(plants);
 
                 relation.Plants = plantsDTO;
-                bedRelations.Add(relation);
 
+                relation.GetAllCompanionPlants(_context);
+                relation.GetAllAvoidPlants(_context);
+
+                bedRelations.Add(relation);
             }
 
-            /*foreach (var bed in bedsDTO)
-            {
-                bed.GetAllCompanionPlants(_context);
-                bed.GetAllAvoidPlants(_context);
-            }*/
 
             return Result<List<BedRelation>>.Success(bedRelations);
         }
-
-        /*private  List<PlantDTO> getPlantsForBed(Bed bed)
-        {
-            var plantrecordIds = bed.Cells.Select(a => a.PlantRecordId).ToList();
-
-            var plants = _context.PlantRecords.Where(a => plantrecordIds.Contains(a.Id.ToString())).Select(a => a.Plant).ToList();
-
-            return MyMapping.MapPlantsToDTO(plants);
-        }*/
 
         public async Task<Result<BedRelation>> PostBed(BedRelation bedRelation)
         {

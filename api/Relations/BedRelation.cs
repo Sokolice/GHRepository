@@ -3,6 +3,8 @@ using API.DTOs;
 using API.Domain;
 using API.Persistence;
 using NuGet.Packaging;
+using Microsoft.EntityFrameworkCore;
+using Castle.DynamicProxy.Generators;
 
 namespace API.Relations
 {
@@ -35,46 +37,46 @@ namespace API.Relations
 
         public void GetAllAvoidPlants(DataContext context)
         {
-            /*var allAvoidPlants = new List<string>();
+            var allAvoidPlants = new List<string>();
 
             foreach(var plantDTO in Plants)
             {
-                var plant = context.Plants.Find(plantDTO.Id);
-                var plantAvoids = plant.AvoidPlants.ToList();
-                if(plantAvoids.Count > 0) { 
-                    if (allAvoidPlants.Count == 0)
-                        allAvoidPlants.AddRange(plantAvoids.Select(a=>a.Id.ToString()));
-                    else
+                var avoidPlantTypes = context.PlantTypes.Find(plantDTO.PlantTypeId).AvoidPlantTypes.ToList();
+                if(avoidPlantTypes.Count > 0) { 
+                    foreach(var avoid in avoidPlantTypes)
                     {
-                    
-                        allAvoidPlants.Union(plantAvoids.Select(a => a.Id.ToString()));
+                        if (allAvoidPlants.Count == 0)
+                            allAvoidPlants.AddRange(context.Plants.Where(a => a.PlantType == avoid).Select(a=>a.Id.ToString().ToLower()).ToList());
+                        else
+                            allAvoidPlants.Union(context.Plants.Where(a => a.PlantType == avoid).Select(a => a.Id.ToString().ToLower()).ToList());
                     }
                 }
             }
 
-            AvoidPlantsIds = allAvoidPlants;*/
-
+            AvoidPlantsIds = allAvoidPlants;
         }
 
         public void GetAllCompanionPlants(DataContext context)
         {
 
-            /*var allCompanionPlants = new List<string>();
+            var allCompanionPlants = new List<string>();
 
             foreach (var plantDTO in Plants)
             {
-                var plant = context.Plants.Find(plantDTO.Id);
-                var plantCompanions = plant.CompanionPlants.ToList();
-                if(plantCompanions.Count > 0) { 
-                    if (allCompanionPlants.Count == 0)
-                        allCompanionPlants.AddRange(plantCompanions.Select(a=>a.Id.ToString()));
-                    else
+                var plantCompanions = context.PlantTypes.Find(plantDTO.PlantTypeId).CompanionPlantTypes.ToList();
+                if (plantCompanions.Count > 0)
+                {
+                    foreach (var companion in plantCompanions)
                     {
-                        allCompanionPlants.Intersect(plantCompanions.Select(a => a.Id.ToString()));
+
+                        if (allCompanionPlants.Count == 0)
+                            allCompanionPlants.AddRange(context.Plants.Where(a => a.PlantType == companion).Select(a => a.Id.ToString().ToLower()).ToList());
+                        else
+                            allCompanionPlants.Intersect(context.Plants.Where(a => a.PlantType == companion).Select(a => a.Id.ToString().ToLower()).ToList());
                     }
                 }
             }
-            CompanionPlantsIds = allCompanionPlants;*/
+            CompanionPlantsIds = allCompanionPlants;
         }
     }
 }

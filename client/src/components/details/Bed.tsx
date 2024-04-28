@@ -10,6 +10,7 @@ import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { Cell } from "../../models/Cell";
 import { DropItem } from "../../models/DropItem";
 import { dateOptions } from "../../app/options/dateOptions";
+import MyMapping from "../../app/MyMapping";
 
 
 
@@ -63,13 +64,13 @@ const BedComponent = observer(function Bed() {
     }
    
     function loadDropDownItems() {
-        if (selectedBed?.bed.cropRotation > 0 && selectedBed?.bed.isDesign) {
+        if (selectedBed.bed.isDesign) {
             plantStore.plantDTOList.forEach((p) => {
-                //console.log(p.name + " trat: " + p.cropRotation);
-                if (p.cropRotation == selectedBed.bed.cropRotation || (p.cropRotation == 23 && (selectedBed.bed.cropRotation == 2 || selectedBed.bed.cropRotation == 3))) {
+                if (selectedBed.bed.cropRotation > 0)
+                    if (!MyMapping.isCropRotationSame(selectedBed.bed, p))
+                        return;
                     let avoid = false;
                     let companion = false;
-
                     if (selectedBed.avoidPlantsIds.length > 0)
                         if (selectedBed.avoidPlantsIds.includes(p.id))
                             avoid = true;
@@ -78,43 +79,18 @@ const BedComponent = observer(function Bed() {
                         if (selectedBed.companionPlantsIds.includes(p.id))
                             companion = true;
                     pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion)
-                }
-                else {
-                    let avoid = false;
-                    let companion = false;
-
-                    if (selectedBed.avoidPlantsIds.length > 0)
-                        if (selectedBed.avoidPlantsIds.includes(p.id))
-                            avoid = true;
-
-                    if (selectedBed.companionPlantsIds.length > 0)
-                        if (selectedBed.companionPlantsIds.includes(p.id))
-                            companion = true;
-                    pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion)
-                }
-            })
-        }
-        else if (selectedBed.bed.isDesign) {
-            plantStore.plantDTOList.forEach((p) => {
-                //console.log(p.name + " trat: " + p.cropRotation);
-                    let avoid = false;
-                    let companion = false;
-
-                if (selectedBed.avoidPlantsIds.length > 0)
-                    if (selectedBed.avoidPlantsIds.includes(p.id))
-                            avoid = true;
-
-                if (selectedBed.companionPlantsIds.length > 0)
-                    if (selectedBed.companionPlantsIds.includes(p.id))
-                            companion = true;
-                    pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion)                
             })
         }
         else { 
             store.plantRecordStore.plantRecordMap.forEach((plantRecord: PlantRecordDTO) => {
+
                 //console.log(plantRecord);
                 //console.log(store.globalStore.plantDTOList);
                 const plant: PlantDTO = plantStore.getPlantDTO(plantRecord.plantId);
+                if (selectedBed.bed.cropRotation > 0)
+                    if (!MyMapping.isCropRotationSame(selectedBed.bed, plant))
+                        return;
+
                 let avoid = false;
                 let companion = false;
 
@@ -234,12 +210,11 @@ const BedComponent = observer(function Bed() {
     }
 
     function renderCell(cell: Cell) {
-
         if (cell.isHidden)
             return;
         function showPlantRecordDetails(): ReactNode {
             //console.log(cell.plantRecordId);
-            if (cell.plantRecordId != "") {
+            if (cell.plantRecordId != "00000000-0000-0000-0000-000000000000") {
                 //console.log(cell.plantRecordId);
                
                 const plantRecord: PlantRecordDTO = store.plantRecordStore.getPlantRecord(cell.plantRecordId);
