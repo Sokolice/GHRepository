@@ -13,7 +13,7 @@ const renderBed = (bedRelation: BedRelation) => {
                 {
                     plants.map(item => {
                         return (
-                            <ListItem key={item.id}>
+                            <ListItem key={bedRelation.bed.id + "_" + item.id}>
                                 {item.name}
                             </ListItem>
                         )
@@ -27,7 +27,7 @@ const renderBed = (bedRelation: BedRelation) => {
         store.bedsStore.deleteBed(bedRelation.bed.id);
     }
     return (
-        <Card key={bedRelation.bed.id}>
+        <Card key={"b_" + bedRelation.bed.id}>
 
             <Card.Content>
                 {bedRelation.bed.cropRotation > 0 || bedRelation.bed.isDesign ? (

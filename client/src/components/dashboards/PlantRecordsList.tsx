@@ -28,10 +28,18 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
         )
 
     return (
-        <Card key={plantRecord.id}>
+        <Card key={plantRecord.id}>            
             <Image src={`/src/assets/plants/${plant.imageSrc}`} wrapped ui={false} />
             <Card.Content>
                 <Card.Header >{plant.name}</Card.Header>
+                {(plantRecord.mark != "") ?
+
+                    <Label color='red' tag>
+                        {plantRecord.mark}
+                    </Label>
+                    :
+                    null
+                }
             </Card.Content>
             <Card.Content extra>
                 <Card.Header>Datum výsadby: </Card.Header>{plantRecord.datePlanted.toLocaleString('cs-CZ', dateOptions)}

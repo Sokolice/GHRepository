@@ -157,7 +157,8 @@ const BedComponent = observer(function Bed() {
                 }
             });
         });
-        selectedBed?.plants.push(plant);
+        if (selectedBed.plants.indexOf(plant) === -1)
+            selectedBed?.plants.push(plant);
         store.bedsStore.updateBed(selectedBed);
     }
 
