@@ -27,6 +27,9 @@ const BedComponent = observer(function Bed() {
 
     const { id } = useParams();
 
+    const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+    const [mouseDown, setMouseDown] = useState(false);
+
     useEffect(() => {
         /*if (allPlantsRelations.length <= 0)
             loadAllPlantsRelations();*/
@@ -84,8 +87,9 @@ const BedComponent = observer(function Bed() {
         else { 
             store.plantRecordStore.plantRecordMap.forEach((plantRecord: PlantRecordDTO) => {
 
-                //console.log(plantRecord);
-                //console.log(store.globalStore.plantDTOList);
+                if (plantRecord.id == "00000000-0000-0000-0000-000000000000")
+                    return;
+                //console.log(plantRecord.id);
                 const plant: PlantDTO = plantStore.getPlantDTO(plantRecord.plantId);
                 if (selectedBed.bed.cropRotation > 0)
                     if (!MyMapping.isCropRotationSame(selectedBed.bed, plant))
@@ -200,7 +204,7 @@ const BedComponent = observer(function Bed() {
                     cell.backgroundImage = "";
                     cell.gridArea = " ";
                     cell.isHidden = false;
-                    cell.plantRecordId = "";
+                    cell.plantRecordId = "00000000-0000-0000-0000-000000000000";
                     cell.objectID = "";
                     cell.isActive = false;
                 })
@@ -208,6 +212,45 @@ const BedComponent = observer(function Bed() {
         })
 
         store.bedsStore.updateBed(selectedBed);
+    }
+
+    function handleMouseDown(e) {
+
+        setStartPosition({ x: e.target.dataset.x, y: e.target.dataset.y });
+        setMouseDown(true);
+    }
+
+    function handleMouseUp(e) {
+
+        //activateCells(startPosition.x, startPosition.y, e.target.dataset.x, e.target.dataset.y);
+        /*selectedBed.cells.forEach(cell => {
+            if (cell.x >= startPosition.x && cell.x <= e.target.dataset.x && cell.y >= startPosition.y && cell.y <= e.target.dataset.y)
+                runInAction(() => {
+                    cell.isActive = true;
+                })
+        })*/
+        setStartPosition({ x: 0, y: 0 });
+        setMouseDown(false)
+
+    }
+
+    function handleMouseOver(e) {
+        if (mouseDown)
+            activateCells(startPosition.x, startPosition.y, e.target.dataset.x, e.target.dataset.y);
+    }
+
+    function activateCells(startX: number, startY: number, endX: number, endY: number) {
+
+        selectedBed.cells.forEach(cell => {
+            if ((cell.x >= startX && cell.x <= endX) && (cell.y >= startY && cell.y <= endY))
+                runInAction(() => {
+                    cell.isActive =true;
+                })
+            else
+                runInAction(() => {
+                    cell.isActive = false;
+                })
+        })
     }
 
     function renderCell(cell: Cell) {
@@ -240,6 +283,9 @@ const BedComponent = observer(function Bed() {
         return (
             <div className={'grid-item' + (cell.isActive ? " clicked" : "")}
                 onClick={(e) => handleClick(e)}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseOver={handleMouseOver}
                 data-x={cell.x}
                 data-y={cell.y}
                 key={cell.x + '_' + cell.y}

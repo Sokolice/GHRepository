@@ -180,6 +180,9 @@ namespace API.Services
 
             foreach (var recordDTO in recordsDTO)
             {
+                var plant = _context.Plants.Find(recordDTO.PlantId);
+                recordDTO.CalculatePresumedHarvest(plant);
+                recordDTO.calculateProgress();
                 if (recordDTO.Progress >= 100)
                 {
                     stats.ReadyToHarvest = string.Join(",", stats.ReadyToHarvest, recordDTO.PlantId);

@@ -33,7 +33,7 @@ namespace API.Services
                 var relation = new BedRelation
                 {
                     Bed = MyMapping.MapBedToDTO(bed),
-                    Cells = bed.Cells
+                    Cells = bed.Cells.OrderBy(a=> a.Y).OrderBy(a=>a.X).ToList(),
                 };
 
                 var cellRecordIds = bed.Cells.Where(a => a.PlantRecordId != Guid.Empty)
