@@ -8,6 +8,8 @@ import { BedRelation } from "../../models/BedRelation";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { PlantDTO } from "../../models/PlantDTO";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
+import { GardeningTaskDTO } from "../../models/GardeningTaskDTO";
+import { MonthTaskRelation } from "../../models/MonthTaskRelation";
 
 export default class UserStore {
     user: User | null = null;
@@ -73,6 +75,7 @@ export default class UserStore {
         store.bedsStore.bedList = new Map<string, BedRelation>();
         store.globalStore.stats = undefined;
         store.plantStore.plantDTOList = new Map<string, PlantDTO>();
-        store.monthWeekStore.currentMonthRelationList = new Array<MonthSewedRelation>(); 
+        store.monthWeekStore.currentMonthRelationList = new Array<MonthSewedRelation>();
+        store.monthWeekStore.monthTaskRelations = new Array<MonthTaskRelation>();
     }
 }
