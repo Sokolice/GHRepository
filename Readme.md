@@ -31,24 +31,24 @@ Client is written in React using TypeScript. There are two Backend APIs. One is 
 ## Project Description
 Gardener Helper consists of four parts. Sewing plan, list of planted vegetables, bed creation and list of gardening tips and tasks. There are variety of notifications on main page such as:
 
-![Missing Plants](/docs/missing.png) number of plants which can be sowed this week and are not yet \
+![Missing Plants](/docs/missing.PNG) number of plants which can be sowed this week and are not yet \
 
-![Repeated Planting](/docs/repeated.png) number of plants which can be sowed repeatedly for whole year harvest eg. dill, radish 
+![Repeated Planting](/docs/repeated.PNG) number of plants which can be sowed repeatedly for whole year harvest eg. dill, radish 
 
-![Harvest](/docs/harvest.png) number of plants ready to harvest based on presumption 
+![Harvest](/docs/harvest.PNG) number of plants ready to harvest based on presumption 
 
 
-![Rainy](/docs/rainy.png) notification in case of 6 and more rainy days in foreacast for user location
+![Rainy](/docs/rainy.PNG) notification in case of 6 and more rainy days in foreacast for user location
 
-![Freeze](/docs/freeze.png) freeze alert
+![Freeze](/docs/freeze.PNG) freeze alert
 
-![To Do](/docs/todo.png) unfinished tasks for this week 
+![To Do](/docs/todo.PNG) unfinished tasks for this week 
 
-![Home Page](/docs/home.png)
+![Home Page](/docs/home.PNG)
 
 ### Sewing plan / Přehled výsevu
 
-![Home Page](/docs/sewing_plan.png)
+![Home Page](/docs/sewing_plan.PNG)
 
 ### Growing / Roste
-![Home Page](/docs/records.png)
+![Home Page](/docs/records.PNG)
