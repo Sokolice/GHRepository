@@ -31,7 +31,16 @@ Client is written in React using TypeScript. There are two Backend APIs. One is 
 ## Project Description
 Gardener Helper consists of four parts. Sewing plan, list of planted vegetables, bed creation and list of gardening tips and tasks. There are variety of notifications on main page such as:
 
-![Missing Plants](/docs/missing.png) number of plants which can be sown this week and are not yet 
+![Missing Plants](/docs/missing.png) number of plants which can be sowed this week and are not yet \
+
+![Repeated Planting](/docs/repeated.png) number of plants which can be sowed repeatedly for whole year harvest eg. dill, radish 
+
+![Harvest](/docs/harvest.png) number of plants ready to harvest based on presumption 
+
+
+![Rainy](/docs/rainy.png) notification in case of 6 and more rainy days in foreacast for user location
+
+![Freeze](/docs/freeze.png) freeze alert
 
 ![To Do](/docs/todo.png) unfinished tasks for this week 
 
@@ -41,4 +50,5 @@ Gardener Helper consists of four parts. Sewing plan, list of planted vegetables,
 
 ![Home Page](/docs/sewing_plan.png)
 
+### Growing / Roste
 ![Home Page](/docs/records.png)
