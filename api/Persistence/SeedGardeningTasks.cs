@@ -10,7 +10,14 @@ namespace API.Persistence
             var monthWeekMap = context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
 
 
-            var tasks = new List<GardeningTask>
+            
+                
+
+            var users = context.Users.ToList();
+
+            foreach (var user in users)
+            {
+                var tasks = new List<GardeningTask>
             {
                 new GardeningTask
                 {
@@ -18,7 +25,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.January, 1)]
-                    }
+                    },
+                    User = user,
                 },
                  new GardeningTask
                 {
@@ -26,7 +34,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.January, 2)]
-                    }
+                    },
+                    User = user,
                 },
                  new GardeningTask
                 {
@@ -34,7 +43,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.January, 1)]
-                    }
+                    },
+                    User = user,
                 }
                  ,
                  new GardeningTask
@@ -43,7 +53,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.January, 2)],
-                    }
+                    },
+                    User = user,
                 },
                  new GardeningTask
                 {
@@ -51,7 +62,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.January, 3)]
-                    }
+                    },
+                    User = user,
                 },
                  new GardeningTask
                 {
@@ -59,7 +71,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.January, 4)],
-                    }
+                    },
+                    User = user,
                 },
                  new GardeningTask
                 {
@@ -67,7 +80,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.January, 3)]
-                    }
+                    },
+                    User = user,
                 },
                  new GardeningTask
                 {
@@ -75,7 +89,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.January, 4)],
-                    }
+                    },
+                    User = user,
                 },
                 new GardeningTask
                 {
@@ -83,7 +98,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.February, 1)]
-                    } 
+                    },
+                    User = user,
                 },
                 new GardeningTask
                 {
@@ -91,7 +107,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.February, 2)]
-                    }
+                    },
+                    User = user,
                 },
                 new GardeningTask
                 {
@@ -99,7 +116,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.February, 2)]
-                    }
+                    },
+                    User = user,
                 },
                 new GardeningTask
                 {
@@ -107,7 +125,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.February, 3)]
-                    }
+                    },
+                    User = user,
                 }
                 ,
                 new GardeningTask
@@ -116,7 +135,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.February, 4)]
-                    }
+                    },
+                    User = user,
                 } ,
                 new GardeningTask
                 {
@@ -124,7 +144,8 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.February, 4)]
-                    }
+                    },
+                    User = user,
                 },
                 new GardeningTask
                 {
@@ -132,12 +153,41 @@ namespace API.Persistence
                     MonthWeeks = new List<MonthWeek>
                     {
                         monthWeekMap[(Month.March, 1)]
-                    }
+                    },
+                    User = user,
+                },
+                new GardeningTask
+                {
+                    Name = "Ochrana záhonů před slimáky",
+                    MonthWeeks = new List<MonthWeek>
+                    {
+                        monthWeekMap[(Month.May, 1)]
+                    },
+                    User = user,
+                },
+                new GardeningTask
+                {
+                    Name = "Mulčování záhonů posekanou trávou",
+                    MonthWeeks = new List<MonthWeek>
+                    {
+                        monthWeekMap[(Month.May, 2)]
+                    },
+                    User = user,
+                },
+                new GardeningTask
+                {
+                    Name = "Výsadba sazenic na venkovní záhony",
+                    MonthWeeks = new List<MonthWeek>
+                    {
+                        monthWeekMap[(Month.May, 3)]
+                    },
+                    User = user,
                 }
-                
-            };
+                };
 
-            await context.AddRangeAsync(tasks);
+                await context.AddRangeAsync(tasks);
+            }
+
             await context.SaveChangesAsync();
         }
     }

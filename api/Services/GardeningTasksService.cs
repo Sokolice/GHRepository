@@ -3,6 +3,7 @@ using API.DTOs;
 using API.Interfaces;
 using API.Persistence;
 using API.Relations;
+using API.Security;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
@@ -10,14 +11,19 @@ namespace API.Services
     public class GardeningTasksService: IGardeningTasksService
     {
         private readonly DataContext _context;
-        public GardeningTasksService(DataContext context)
+        private readonly IUserAccessor _userAccessor;
+        public GardeningTasksService(DataContext context, IUserAccessor userAccessor)
         {
             _context = context;
+            _userAccessor = userAccessor;
+
         }
 
         public async Task<Result<List<MonthTaskRelation>>> GetTasks()
         {
-            var monthweeks = await _context.MonthWeeks.Include(x => x.GardeningTasks).ToListAsync();
+            var user = await _context.Users.FirstOrDefaultAsync(a =>
+               a.Email == _userAccessor.GetUserEmail());
+            var monthweeks = await _context.MonthWeeks.Include(x => x.GardeningTasks.Where( x=> x.User == user)).ToListAsync();
 
             var tasks = monthweeks
                 .GroupBy(a => (a.Week, a.Month))

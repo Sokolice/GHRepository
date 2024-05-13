@@ -40,7 +40,7 @@ const CalendarList = observer(function CalendarView() {
                                 month.weekTaskRelations.map((week) => {
                                     return (
                                         <ItemGroup key={month.month + "_" + week.week}>
-                                            <Button content={`${week.week} .Týden`} icon='share square' labelPosition='right' onClick={()=>shareClick(week)} />
+                                            <Header as='h3' content={`${week.week} .Týden`}  /*onClick={()=>shareClick(week)}*/ />
                                             {week.gardeningTasks.map(task => {
                                                 return (
                                                     <Item key={task.id}>

@@ -81,7 +81,6 @@ namespace API.Persistence
                 .HasMany(a => a.Users)
                 .WithMany(b => b.Plants)
                 .UsingEntity(c => c.ToTable("PlantUser"));
-
         }
     }
 }

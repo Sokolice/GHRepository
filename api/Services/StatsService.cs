@@ -83,6 +83,7 @@ namespace API.Services
                                             .Count();
 
             stats.MissingTaskThisWeekAmount = _context.Tasks
+                                             .Where(x => x.User == user)
                                             .Where(a => a.MonthWeeks
                                             .Any(sm => sm.MonthIndex == month && sm.Week == weekOfMonth) && a.IsCompleted == false).Count();
         }

@@ -95,6 +95,7 @@ namespace API
                 //await SeedPlantTypes.SeedData(context);
                 //await SeedPlants.SeedData(context);
                 //await SeedPests.SeedData(context);
+                //await SeedGardeningTasks.SeedData(context);
             }
             catch (Exception ex)
             {
