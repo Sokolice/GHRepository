@@ -52,3 +52,11 @@ Gardener Helper consists of four parts. Sewing plan, list of planted vegetables,
 
 ### Growing / Roste
 ![Home Page](/docs/records.PNG)
+
+### Beds list / Seznam záhonů
+![Home Page](/docs/beds.PNG)
+
+### Adding plant into bed / Přidání rosltiny do záhonu
+![Home Page](/docs/bed_plant_add.PNG)
+### Completed bed / Dokončený záhon
+![Home Page](/docs/completed_bed.PNG)
