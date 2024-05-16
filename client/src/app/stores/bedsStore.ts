@@ -83,10 +83,10 @@ export default class BedsStore {
         try {
 
             store.globalStore.setLoading(true);
-            console.log(bedRelation);
-            await agent.Beds.update(bedRelation);
+            const responseRelation = await agent.Beds.update(bedRelation);
             runInAction(() => {
-                this.bedList.set(bedRelation.bed.id, bedRelation);
+                this.bedList.set(responseRelation.bed.id, responseRelation);
+                this.selectedBed = responseRelation;
             })
 
             store.globalStore.setLoading(false);

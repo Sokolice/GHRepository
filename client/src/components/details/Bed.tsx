@@ -56,31 +56,39 @@ const BedComponent = observer(function Bed() {
             image: {avatar: false, src: `/src/assets/plants/${image}`}
         }
 
-        if (avoid)
-            opt.label = { color: 'red', circular: true, empty: true };
-
-        if (companion)
-            opt.label = { color: 'green', circular: true, empty: true };
-            
+        if (avoid && companion)
+            opt.label = { color: 'orange', circular: true, empty: true };
+        else {         
+            if (avoid)
+                opt.label = { color: 'red', circular: true, empty: true };
+            if (companion)
+                opt.label = { color: 'green', circular: true, empty: true };
+        } 
 
         options.push(opt);
     }
    
     function loadDropDownItems() {
+        console.log(selectedBed.avoidPlantsIds.toString());
+        console.log(selectedBed.companionPlantsIds.toString());
         if (selectedBed.bed.isDesign) {
             plantStore.plantDTOList.forEach((p) => {
+                console.log(p.id);
                 if (selectedBed.bed.cropRotation > 0)
                     if (!MyMapping.isCropRotationSame(selectedBed.bed, p))
                         return;
+
                     let avoid = false;
                     let companion = false;
+
                     if (selectedBed.avoidPlantsIds.length > 0)
                         if (selectedBed.avoidPlantsIds.includes(p.id))
                             avoid = true;
 
                     if (selectedBed.companionPlantsIds.length > 0)
                         if (selectedBed.companionPlantsIds.includes(p.id))
-                            companion = true;
+                        companion = true;
+
                     pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion)
             })
         }

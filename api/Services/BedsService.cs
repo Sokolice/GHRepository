@@ -129,7 +129,8 @@ namespace API.Services
             bed.CropRotation = bedRelation.Bed.CropRotation;
 
             //bed.Plants = _context.Plants.Where(a => bedRelation.Plants.Select(b => b.Id).ToList().Contains(a.Id)).ToList();
-
+            bedRelation.GetAllCompanionPlants(_context);
+            bedRelation.GetAllAvoidPlants(_context);
 
             await _context.SaveChangesAsync();
 

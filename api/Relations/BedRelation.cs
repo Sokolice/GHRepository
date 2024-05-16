@@ -46,9 +46,9 @@ namespace API.Relations
                     foreach(var avoid in avoidPlantTypes)
                     {
                         if (allAvoidPlants.Count == 0)
-                            allAvoidPlants.AddRange(context.Plants.Where(a => a.PlantType == avoid).Select(a=>a.Id.ToString().ToLower()).ToList());
-                        else
-                            allAvoidPlants.Union(context.Plants.Where(a => a.PlantType == avoid).Select(a => a.Id.ToString().ToLower()).ToList());
+                            allAvoidPlants.AddRange(context.Plants.Where(a => a.PlantType == avoid).Select(a => a.Id.ToString().ToLower()).ToList());
+                        else 
+                            allAvoidPlants = allAvoidPlants.Union(context.Plants.Where(a => a.PlantType == avoid).Select(a => a.Id.ToString().ToLower()).ToList()).ToList();                        
                     }
                 }
             }
@@ -71,8 +71,8 @@ namespace API.Relations
 
                         if (allCompanionPlants.Count == 0)
                             allCompanionPlants.AddRange(context.Plants.Where(a => a.PlantType == companion).Select(a => a.Id.ToString().ToLower()).ToList());
-                        else
-                            allCompanionPlants.Intersect(context.Plants.Where(a => a.PlantType == companion).Select(a => a.Id.ToString().ToLower()).ToList());
+                        else 
+                            allCompanionPlants = allCompanionPlants.Union(context.Plants.Where(a => a.PlantType == companion).Select(a => a.Id.ToString().ToLower()).ToList()).ToList();
                     }
                 }
             }

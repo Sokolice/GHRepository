@@ -58,5 +58,8 @@ Gardener Helper consists of four parts. Sewing plan, list of planted vegetables,
 
 ### Adding plant into bed / Přidání rosltiny do záhonu
 ![Home Page](/docs/bed_plant_add.PNG)
+### Suitable plants / Vhodnost rostlin
+Plant options are updated based on added plant. You can see green, red or orange color which represents suitabality of plants due to already planted. 
+![Home Page](/docs/bed_plants_hints.PNG)
 ### Completed bed / Dokončený záhon
 ![Home Page](/docs/completed_bed.PNG)
