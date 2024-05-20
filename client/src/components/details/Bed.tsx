@@ -11,6 +11,10 @@ import { Cell } from "../../models/Cell";
 import { DropItem } from "../../models/DropItem";
 import { dateOptions } from "../../app/options/dateOptions";
 import MyMapping from "../../app/MyMapping";
+import HarvestComponent from "./HarvestComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faWheatAwn } from "@fortawesome/free-solid-svg-icons";
+import ConfirmationDeleteComponent from "./ConfirmationDelete";
 
 
 
@@ -69,11 +73,8 @@ const BedComponent = observer(function Bed() {
     }
    
     function loadDropDownItems() {
-        console.log(selectedBed.avoidPlantsIds.toString());
-        console.log(selectedBed.companionPlantsIds.toString());
         if (selectedBed.bed.isDesign) {
             plantStore.plantDTOList.forEach((p) => {
-                console.log(p.id);
                 if (selectedBed.bed.cropRotation > 0)
                     if (!MyMapping.isCropRotationSame(selectedBed.bed, p))
                         return;
@@ -97,7 +98,6 @@ const BedComponent = observer(function Bed() {
 
                 if (plantRecord.id == "00000000-0000-0000-0000-000000000000")
                     return;
-                //console.log(plantRecord.id);
                 const plant: PlantDTO = plantStore.getPlantDTO(plantRecord.plantId);
                 if (selectedBed.bed.cropRotation > 0)
                     if (!MyMapping.isCropRotationSame(selectedBed.bed, plant))
@@ -204,7 +204,6 @@ const BedComponent = observer(function Bed() {
     }
 
     function deleteClick(objectID: string) {
-
         selectedBed.cells.forEach(cell => {
             if (cell.objectID == objectID)
             {
@@ -220,6 +219,7 @@ const BedComponent = observer(function Bed() {
         })
 
         store.bedsStore.updateBed(selectedBed);
+        store.modalStore.closeModal();
     }
 
     function handleMouseDown(e) {
@@ -229,14 +229,6 @@ const BedComponent = observer(function Bed() {
     }
 
     function handleMouseUp(e) {
-
-        //activateCells(startPosition.x, startPosition.y, e.target.dataset.x, e.target.dataset.y);
-        /*selectedBed.cells.forEach(cell => {
-            if (cell.x >= startPosition.x && cell.x <= e.target.dataset.x && cell.y >= startPosition.y && cell.y <= e.target.dataset.y)
-                runInAction(() => {
-                    cell.isActive = true;
-                })
-        })*/
         setStartPosition({ x: 0, y: 0 });
         setMouseDown(false)
 
@@ -264,6 +256,7 @@ const BedComponent = observer(function Bed() {
     function renderCell(cell: Cell) {
         if (cell.isHidden)
             return;
+        let plant: PlantDTO |undefined = undefined;
         function showPlantRecordDetails(): ReactNode {
             //console.log(cell.plantRecordId);
             if (cell.plantRecordId != "00000000-0000-0000-0000-000000000000") {
@@ -275,7 +268,7 @@ const BedComponent = observer(function Bed() {
 
                 const id = selectedBed?.bed.isDesign ? cell.plantRecordId : plantRecord.plantId
                 if (id) {
-                    const plant = plantStore.getPlantDTO(id);
+                    plant = plantStore.getPlantDTO(id);
                     if (plant) {
                         return <Label className="lbl-name" as={Link} to={selectedBed?.bed.isDesign ? `/plants/${id}/beds/${selectedBed.bed.id}` : '/plantrecords'} >
                             {plant?.name} {selectedBed?.bed.isDesign ? null : ": " + plantRecord.datePlanted}
@@ -301,8 +294,19 @@ const BedComponent = observer(function Bed() {
                 style={generateCellStyle(cell)}
             >
                 {showPlantRecordDetails()}
-                {cell.plantRecordId != "00000000-0000-0000-0000-000000000000" ?
-                    <Button icon='minus'  size='tiny' onClick={() => deleteClick(cell.objectID)} className='no_print, dell_Cell' />
+                {cell.plantRecordId != "00000000-0000-0000-0000-000000000000"
+                    ?
+                    <> <Button icon='minus' size='tiny' onClick={() => store.modalStore.openModal(<ConfirmationDeleteComponent handleSubmit={() => deleteClick(cell.objectID)} />)} className='no_print, dell_Cell' />
+                        {!selectedBed.bed.isDesign
+                            ?
+                            <Button size='tiny' className='no_print, harvest_Cell' onClick={
+                            () => store.modalStore.openModal(
+                                <HarvestComponent plantDTO={plant} />
+                            )}
+                        ><FontAwesomeIcon icon={faWheatAwn} /> </Button>
+                            :
+                            null}
+                    </>
                     :
                     null} 
             </div>

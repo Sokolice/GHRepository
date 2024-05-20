@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Button, Form, Image, Header, Rating, Divider, Grid, GridRow, GridColumn } from "semantic-ui-react";
+import { Button, Form, Image, Header, Rating, Divider, Grid, GridRow, GridColumn, List, ListItem } from "semantic-ui-react";
 import { PlantDTO } from "../../models/PlantDTO";
 import { ChangeEvent, useState } from "react";
 import { store, useStore } from "../../app/stores/store";
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
-    const { modalStore, globalStore } = useStore();
+    const { modalStore, globalStore, plantStore } = useStore();
     const [harvest, setHarvest] = useState({
         id: '',
         plantId: '',
@@ -20,6 +20,8 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
         note: ''
     });
 
+    const posibleNextPlants = Array.from(plantStore.plantDTOList).filter(item =>  item[1].cropRotation != plantDTO.cropRotation);
+    console.log(posibleNextPlants);
     function handleChangeOnRate(e, { rating }) {
         setHarvest({ ...harvest, rating: rating });
     }
@@ -47,8 +49,19 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
                         <Form.Input name='date' placeholder='Datum' id='date' type='date' onChange={handleInputChange}></Form.Input>
                         <Form.TextArea placeholder='Poznámka' id="note" name="note" label="Poznámka" onChange={handleInputChange} />
                         <Rating name='rating' id='rating' maxRating={5} defaultRating={0} icon='star' size='huge' onRate={handleChangeOnRate} />
-
-                    </GridColumn>
+                        <Header as='h3'> Následné plodiny</Header>
+                            <List>
+                                {
+                                    posibleNextPlants.map(plant => {
+                                        return (
+                                            <ListItem key={plant[0]}>
+                                                <Image avatar src={`/src/assets/plants/${plant[1].imageSrc}`} /> {plant[1].name}
+                                            </ListItem>
+                                        )
+                                    })
+                                }
+                            </List>
+                    </GridColumn>                   
                 </GridRow>
                 <GridRow>
                     <GridColumn width={16}>

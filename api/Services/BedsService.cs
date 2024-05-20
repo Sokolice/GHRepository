@@ -128,6 +128,18 @@ namespace API.Services
             bed.IsDesign = bedRelation.Bed.IsDesign;
             bed.CropRotation = bedRelation.Bed.CropRotation;
 
+            var cellRecordIds = bed.Cells.Where(a => a.PlantRecordId != Guid.Empty)
+                                              .Select(a => a.PlantRecordId)
+                                              .ToList();
+
+            var plants = (bed.IsDesign) ? _context.Plants.Where(a => cellRecordIds.Contains(a.Id))
+                                                             .ToList()
+                                            : _context.PlantRecords.Where(a => cellRecordIds.Contains(a.Id))
+                                                        .Select(a => a.Plant)
+                                                        .ToList();
+
+            bedRelation.Plants = MyMapping.MapPlantsToDTO(plants);
+
             //bed.Plants = _context.Plants.Where(a => bedRelation.Plants.Select(b => b.Id).ToList().Contains(a.Id)).ToList();
             bedRelation.GetAllCompanionPlants(_context);
             bedRelation.GetAllAvoidPlants(_context);

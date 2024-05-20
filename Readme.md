@@ -63,3 +63,5 @@ Plant options are updated based on added plant. You can see green, red or orange
 ![Home Page](/docs/bed_plants_hints.PNG)
 ### Completed bed / Dokončený záhon
 ![Home Page](/docs/completed_bed.PNG)
+### Harvest form / Formulář pro sklizeň
+![Home Page](/docs/next_possible_plants.PNG)

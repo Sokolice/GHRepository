@@ -73,6 +73,12 @@ body{
     position: absolute;
     background-color: rgba(219, 40, 40, 0.8) !important;
 }
+.harvest_Cell {
+    right: 0;
+    top: 0;
+    position: absolute;
+    background-color: rgb(60, 179, 113, 0.8) !important;
+}
 .lbl-name {
     background-color: rgba(232, 232, 232, 0.8) !important;
 }
