@@ -1,5 +1,5 @@
 # Gardening Helper / Zahradníkův pomocník
-This project is the result of learning REACT on maternity leave. 
+This project is the result of learning React on maternity leave. 
 
 It is simple web application for gardeners. It can be used for maintaning informations about planted crops such as:
 - amount
