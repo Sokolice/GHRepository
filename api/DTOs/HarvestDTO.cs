@@ -8,6 +8,7 @@
         public double Amount { get; set; }
         public int Rating { get; set; }
         public string Note { get; set; }
+        public int Unit { get; set; }
 
         public HarvestDTO()
         {
@@ -17,6 +18,7 @@
             Rating = 0;
             Note = string.Empty;
             Amount = 0;
+            Unit = 0;
         }
     }
 }

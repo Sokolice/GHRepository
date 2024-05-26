@@ -38,7 +38,8 @@ namespace API.Services
                 Note = harvest.Note,
                 Rating = harvest.Rating,
                 Plant = plant,
-                User = user
+                User = user,
+                Unit = harvest.Unit
             });
 
             var result = await _context.SaveChangesAsync() > 0;

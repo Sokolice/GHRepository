@@ -13,6 +13,7 @@ namespace API.Domain
         public double Amount { get; set; }  
         public int Rating { get; set; }
         public string Note { get; set; }
+        public int Unit {  get; set; }
 
         public virtual AppUser User { get; set; }
         public Harvest()
@@ -24,6 +25,7 @@ namespace API.Domain
             Note = string.Empty;
             Amount = 0;
             User = new AppUser();
+            Unit = 0;
         }
 
     }

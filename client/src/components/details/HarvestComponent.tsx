@@ -4,6 +4,7 @@ import { PlantDTO } from "../../models/PlantDTO";
 import { ChangeEvent, useState } from "react";
 import { store, useStore } from "../../app/stores/store";
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import { unitOptions } from "../../app/options/unitOptions";
 
 interface Props {
     plantDTO: PlantDTO
@@ -17,11 +18,11 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
         date: '',
         amount: 0,
         rating: 0,
-        note: ''
+        note: '',
+        unit:0
     });
 
     const posibleNextPlants = Array.from(plantStore.plantDTOList).filter(item =>  item[1].cropRotation != plantDTO.cropRotation);
-    console.log(posibleNextPlants);
     function handleChangeOnRate(e, { rating }) {
         setHarvest({ ...harvest, rating: rating });
     }
@@ -31,6 +32,11 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
     }
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value } = event.target;
+        setHarvest({ ...harvest, [name]: value });
+    }
+    
+    const handleSelectChange = (e, data) => {
+        const { name, value } = data;
         setHarvest({ ...harvest, [name]: value });
     }
     return (
@@ -45,7 +51,10 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
                     </GridColumn>
 
                     <GridColumn width={10}>
-                        <Form.Input name='amount' placeholder='gramy' id='amount' label='Množství' onChange={handleInputChange}></Form.Input>
+                    <Form.Group>
+                            <Form.Input name='amount' placeholder='mnozstvi' id='amount' label='Množství' onChange={handleInputChange} width={7} />
+                            <Form.Select name='unit' placeholder='jednotka' id='unit' label='Jednotka' onChange={handleSelectChange} defaultValue={unitOptions[0].value} options={unitOptions} width={7} />
+                        </Form.Group>
                         <Form.Input name='date' placeholder='Datum' id='date' type='date' onChange={handleInputChange}></Form.Input>
                         <Form.TextArea placeholder='Poznámka' id="note" name="note" label="Poznámka" onChange={handleInputChange} />
                         <Rating name='rating' id='rating' maxRating={5} defaultRating={0} icon='star' size='huge' onRate={handleChangeOnRate} />

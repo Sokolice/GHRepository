@@ -4,5 +4,6 @@ export interface HarvestDTO {
     date: string,
     amount: number,
     rating: number,
-    note: string
+    note: string,
+    unit: number
 }
