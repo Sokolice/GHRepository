@@ -1,8 +1,8 @@
 
 import { observer } from "mobx-react-lite";
-import { Header, Select, Form, FormField, FormCheckbox, FormInput, FormTextArea, FormGroup, Divider, Grid, GridRow, GridColumn, Button, FormButton, CheckboxProps } from "semantic-ui-react";
+import { Header, Select, Form, FormField, FormCheckbox, FormInput, FormTextArea, Divider, Grid, GridRow, GridColumn, FormButton } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import MonthWeekSelect from "../../app/common/form/MonthWeekSelect";
 import { PlantDTO } from "../../models/PlantDTO";
 import { runInAction } from "mobx";
@@ -26,7 +26,7 @@ const NewPlantForm = observer(function NewPlantForm() {
 
     const [plantTypeId, setPlantTypeId] = useState("");
 
-    const handlePlantTypeChangeClick = (e: SyntheticEvent<HTMLElement, Event>, data) => {
+    const handlePlantTypeChangeClick = (data:any) => {
         const plantType = allPlantTypes.get(data.value);
         setDisabled(false);
         if (plantType) {
@@ -41,13 +41,13 @@ const NewPlantForm = observer(function NewPlantForm() {
         }
     }
 
-    const handleChange = (e, data) => {
+    const handleChange = (e:any) => {
         //console.log(data);
         const { name, value } = e.target;
             setInitialValue({ ...initialValue, [name]: value });
     }
 
-    const handleCheckBoxChange = (e, data) => {
+    const handleCheckBoxChange = (data:any) => {
         const { name, checked } = data;
         setInitialValue({ ...initialValue, [name]: checked });
     }

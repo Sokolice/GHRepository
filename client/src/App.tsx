@@ -16,10 +16,10 @@ function App() {
     const { loadBeds, beds } = bedsStore;
     const { loadPlantRecords, plantRecordMap } = plantRecordStore;
     const { loadStats } = globalStore;
-    const { loadPlantDTO, plantDTOList, allAvailablePlantDTOListGrouped, loadAllPlants } = plantStore;
+    const { loadPlantDTO, plantDTOList } = plantStore;
     const { monthWeekRelationList, loadMonthWeeekRelations, currentMonthRelationList, loadMonthWeeeks } = monthWeekStore;
     const { pestsList, loadPests } = pestsStore;
-    const { isLoggedIn, user } = userStore;
+    const { isLoggedIn } = userStore;
 
     useEffect(() => {
         if (globalStore.token) {

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Grid, GridColumn, Header, List, ListContent, ListHeader, ListItem, Image, Accordion, AccordionTitle, AccordionContent, Icon, Segment, Checkbox, Button, Container, Divider } from "semantic-ui-react";
+import { Grid, GridColumn, Header, List, ListContent, ListHeader, ListItem, Image, Accordion, AccordionTitle, AccordionContent, Icon, Checkbox, Button, Container, Divider } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { useEffect, useState } from "react";
 import NewPlantForm from "../details/NewPlantForm";
@@ -12,8 +12,8 @@ const MyPlantsComponent = observer(function MyPlants() {
 
     const { isLoggedIn } = userStore;
     let indexNumber = 0;
-    const [plantsToAdd, setPlantsToAdd] = useState([]);
-    const numOfElements = allAvailablePlantDTOListGrouped.length / 2;
+    const [plantsToAdd, setPlantsToAdd] = useState<string[]>([]);
+    //const numOfElements = allAvailablePlantDTOListGrouped.length / 2;
     useEffect(() => {
 
         if (isLoggedIn) {

@@ -1,4 +1,4 @@
-import { Container, Segment } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import BedsFormComponent from "./BedsForm";
 import BedsListComponent from "./BedsList";

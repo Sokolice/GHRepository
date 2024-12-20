@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Link, useParams } from "react-router-dom";
-import { Button, Header, Item, Label, Segment, Divider, Icon, Grid, GridColumn, GridRow, ItemGroup, ItemContent, Container } from "semantic-ui-react";
+import { Button, Header, Item, Label, Segment, Divider, Icon, Grid, GridColumn, GridRow, ItemGroup} from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";

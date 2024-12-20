@@ -9,7 +9,7 @@ const LoginComponent = observer(function LoginForm() {
     return (
                 <Formik
                 initialValues={{ email: '', password: '', error: null }}
-                onSubmit={(values, { setErrors }) => userStore.login(values).catch(error =>
+                onSubmit={(values, { setErrors }) => userStore.login(values).catch(() =>
                     setErrors({ error: 'Uživatel se zadaným emailem a heslsem neexistuje' }))}    >
                 {({ handleSubmit, isSubmitting, errors }) => (
                 <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>

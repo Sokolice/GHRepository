@@ -1,6 +1,6 @@
 import { runInAction } from "mobx";
 import { observer } from "mobx-react-lite";
-import { MouseEvent, ReactNode, SyntheticEvent, useEffect, useState } from "react";
+import { MouseEvent, ReactNode, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { store, useStore } from "../../app/stores/store";
 import LoadingComponent from "../layout/LoadingComponent";
@@ -10,11 +10,11 @@ import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { Cell } from "../../models/Cell";
 import { DropItem } from "../../models/DropItem";
 import { dateOptions } from "../../app/options/dateOptions";
-import MyMapping from "../../app/MyMapping";
 import HarvestComponent from "./HarvestComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faWheatAwn } from "@fortawesome/free-solid-svg-icons";
 import ConfirmationDeleteComponent from "./ConfirmationDelete";
+import { isCropRotationSame } from "../../app/MyMapping";
 
 
 
@@ -69,14 +69,14 @@ const BedComponent = observer(function Bed() {
                 opt.label = { color: 'green', circular: true, empty: true };
         } 
 
-        options.push(opt);
+        options?.push(opt);
     }
    
     function loadDropDownItems() {
         if (selectedBed.bed.isDesign) {
             plantStore.plantDTOList.forEach((p) => {
                 if (selectedBed.bed.cropRotation > 0)
-                    if (!MyMapping.isCropRotationSame(selectedBed.bed, p))
+                    if (!isCropRotationSame(selectedBed.bed, p))
                         return;
 
                     let avoid = false;
@@ -98,28 +98,29 @@ const BedComponent = observer(function Bed() {
 
                 if (plantRecord.id == "00000000-0000-0000-0000-000000000000")
                     return;
-                const plant: PlantDTO = plantStore.getPlantDTO(plantRecord.plantId);
+                const plant: PlantDTO|undefined = plantStore.getPlantDTO(plantRecord.plantId);
                 if (selectedBed.bed.cropRotation > 0)
-                    if (!MyMapping.isCropRotationSame(selectedBed.bed, plant))
+                    if (!isCropRotationSame(selectedBed.bed, plant))
                         return;
 
                 let avoid = false;
                 let companion = false;
 
-                if (selectedBed.avoidPlantsIds.includes(plant.id))
+                if (plant && selectedBed.avoidPlantsIds.includes(plant.id))
                     avoid = true;
 
-                if (selectedBed.companionPlantsIds.includes(plant.id))
+                if (plant && selectedBed.companionPlantsIds.includes(plant.id))
                     companion = true;
 
-                pushToOptions(plantRecord.id, plant.name + " - " + plantRecord.datePlanted.toLocaleString('cs-CZ', dateOptions), plant.id, plant.imageSrc, avoid, companion); 
+                if(plant)
+                pushToOptions(plantRecord.id, plant?.name + " - " + plantRecord.datePlanted?.toLocaleString('cs-CZ', dateOptions), plant.id, plant.imageSrc, avoid, companion); 
             })
         }
             return options;
     }
 
     function AddPlantImage() {
-        const plant: PlantDTO = plantStore.getPlantDTO(plantId);
+        const plant: PlantDTO |undefined = plantStore.getPlantDTO(plantId);
 
         const imagePath = 'url(/src/assets/plants/' + plant?.imageSrc + ")";
         const activeCells = new Array<Cell>();
@@ -169,19 +170,19 @@ const BedComponent = observer(function Bed() {
                 }
             });
         });
-        if (selectedBed.plants.indexOf(plant) === -1)
+        if (plant && selectedBed.plants.indexOf(plant) === -1)
             selectedBed?.plants.push(plant);
         store.bedsStore.updateBed(selectedBed);
     }
 
 
-    function handleDropChange(e: SyntheticEvent<HTMLElement, Event>, data) {
+    function handleDropChange(data:any) {
         setPlantId(data.value);
         const key = options?.find(a => a.value == data.value);
 
         setPlantRecordId(key?.key);
     }
-    function handleClick(event: MouseEvent<HTMLDivElement, MouseEvent>) {
+    function handleClick(event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {
 
 
         const thisCell = event.currentTarget;
@@ -222,19 +223,19 @@ const BedComponent = observer(function Bed() {
         store.modalStore.closeModal();
     }
 
-    function handleMouseDown(e) {
+    function handleMouseDown(e:any) {
 
         setStartPosition({ x: e.target.dataset.x, y: e.target.dataset.y });
         setMouseDown(true);
     }
 
-    function handleMouseUp(e) {
+    function handleMouseUp() {
         setStartPosition({ x: 0, y: 0 });
         setMouseDown(false)
 
     }
 
-    function handleMouseOver(e) {
+    function handleMouseOver(e:any) {
         if (mouseDown)
             activateCells(startPosition.x, startPosition.y, e.target.dataset.x, e.target.dataset.y);
     }
@@ -262,16 +263,16 @@ const BedComponent = observer(function Bed() {
             if (cell.plantRecordId != "00000000-0000-0000-0000-000000000000") {
                 //console.log(cell.plantRecordId);
                
-                const plantRecord: PlantRecordDTO = store.plantRecordStore.getPlantRecord(cell.plantRecordId);
+                const plantRecord: PlantRecordDTO |undefined = store.plantRecordStore.getPlantRecord(cell.plantRecordId);
 
                 //console.log(store.plantRecordStore.plantRecordMap);
 
-                const id = selectedBed?.bed.isDesign ? cell.plantRecordId : plantRecord.plantId
+                const id = selectedBed?.bed.isDesign ? cell.plantRecordId : plantRecord?.plantId
                 if (id) {
                     plant = plantStore.getPlantDTO(id);
                     if (plant) {
                         return <Label className="lbl-name" as={Link} to={selectedBed?.bed.isDesign ? `/plants/${id}/beds/${selectedBed.bed.id}` : '/plantrecords'} >
-                            {plant?.name} {selectedBed?.bed.isDesign ? null : ": " + plantRecord.datePlanted}
+                            {plant?.name} {selectedBed?.bed.isDesign ? null : ": " + plantRecord?.datePlanted}
                         </Label>
                     }
                     else

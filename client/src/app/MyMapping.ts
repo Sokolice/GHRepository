@@ -1,9 +1,8 @@
 import { BedDTO } from "../models/BedDTO";
 import { PlantDTO } from "../models/PlantDTO";
 
-export default class MyMapping {
 
-    static mapMonthIndex = (month: string)=>{
+    export const mapMonthIndex = (month: string)=>{
 
         switch (month) {
             case "Leden":
@@ -33,7 +32,7 @@ export default class MyMapping {
         }
     }
 
-    static mapMonthIndexToName:string = (index: number) => {
+    export const mapMonthIndexToName = (index: number) => {
 
         switch (index) {
             case 1:
@@ -59,16 +58,16 @@ export default class MyMapping {
             case 11:
                 return "Listopad";
             case 12:
+            default:
                 return "Prosinec";
         }
     }
 
-    static isCropRotationSame = (bed: BedDTO, plant: PlantDTO) =>{
-        if (plant.cropRotation == 23 && (bed.cropRotation == 2 || bed.cropRotation == 3))
+    export const isCropRotationSame = (bed: BedDTO, plant: PlantDTO |undefined) =>{
+        if (plant?.cropRotation == 23 && (bed.cropRotation == 2 || bed.cropRotation == 3))
             return true;
-        if (plant.cropRotation == bed.cropRotation)
+        if (plant?.cropRotation == bed.cropRotation)
             return true;
 
         return false;
     }
-}

@@ -8,13 +8,13 @@ import { BedRelation } from '../models/BedRelation';
 import { PestRelation } from '../models/PestRelation';
 import { MonthTaskRelation, WeekTaskRelation } from '../models/MonthTaskRelation';
 import { PlantPlantsRelation } from '../models/PlantPlantsRelation';
-import { Stats } from '../models/Stats';
 import { GardeningTaskDTO } from '../models/GardeningTaskDTO';
 import { HarvestDTO } from '../models/HarvestDTO';
 import { User, UserFormValues } from '../models/user';
 import { store } from '../app/stores/store';
 import { PlantTypePlantsRelation } from '../models/PlantTypePlantsRelation';
 import { PlantTypeDTO } from '../models/PlantTypeDTO';
+import { Statistics } from '../models/Stats';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) =>
@@ -105,13 +105,13 @@ const Tasks = {
 }
 
 const Stats = {
-    getStats: () => requests.get<Stats>('/Stats/GetStats')
+    getStats: () => requests.get<Statistics>('/Stats/GetStats')
 }
 
 const Account = {
     currentUser: () => requests.get<User>('/account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
-    register: (user: UserFormValues) => requests.post('account/register', user)
+    register: (user: UserFormValues) => requests.post<User>('account/register', user)
 }
 
 const agent = {

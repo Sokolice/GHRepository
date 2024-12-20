@@ -24,7 +24,7 @@ const MainDashboard = observer(function MainDashboard() {
                             <CardContent>
                                 <CardHeader>
                                     Přehled výsevu &nbsp;
-                                    {stats?.missingSowingThisWeekAmount > 0
+                                    {stats && stats?.missingSowingThisWeekAmount > 0
                                         ?
                                         <Popup content='Tento týden zbývá vysadit' trigger={
                                             <Label as={Link} to='/sewingplan' color='red'>
@@ -33,7 +33,7 @@ const MainDashboard = observer(function MainDashboard() {
                                         } />
 
                                         : null
-                                    }{stats?.canBeSowedRepeatedlyAmount > 0
+                                    }{stats && stats?.canBeSowedRepeatedlyAmount > 0
                                         ?
                                         <Popup content='Opakovaný výsev' trigger={
                                             <Label as={Link} to='/sewingplan' color='red'>
@@ -55,7 +55,7 @@ const MainDashboard = observer(function MainDashboard() {
                             <CardContent>
                                 <CardHeader>
                                     Roste &nbsp;
-                                    {stats?.readyToHarvestAmount > 0
+                                    {stats && stats?.readyToHarvestAmount > 0
                                         ?
                                         <Popup content='Ke sklizni' trigger={
                                             <Label as={Link} to='/plantrecords' color='red'>
@@ -117,7 +117,7 @@ const MainDashboard = observer(function MainDashboard() {
                             <CardContent>
                                 <CardHeader>
                                     Zahradnické úkoly&nbsp;
-                                    {stats?.missingTaskThisWeekAmount > 0
+                                    {stats && stats?.missingTaskThisWeekAmount > 0
                                         ?
                                         <Popup content='Zbývá úkolů pro tento týden' trigger={
                                             <Label as={Link} to='/calendar' color='red'>

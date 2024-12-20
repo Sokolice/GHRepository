@@ -1,16 +1,16 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { store, useStore } from "../../app/stores/store";
-import {  Button, Container, Header, Item, ItemGroup } from "semantic-ui-react";
+import { Container, Header, Item, ItemGroup } from "semantic-ui-react";
 import LoadingComponent from "../layout/LoadingComponent";
 import TaskCheck from "../details/TaskCheck";
-import { WeekTaskRelation } from "../../models/MonthTaskRelation";
+//import { WeekTaskRelation } from "../../models/MonthTaskRelation";
 
 const CalendarList = observer(function CalendarView() {
 
 
     const { monthWeekStore } = useStore();
-    const { monthTaskRelations, loadMonthTasksRelation, shareWeekTasks } = monthWeekStore;
+    const { monthTaskRelations, loadMonthTasksRelation } = monthWeekStore;
     useEffect(() => {
         if (monthTaskRelations.length <= 0) {
 
@@ -18,9 +18,9 @@ const CalendarList = observer(function CalendarView() {
         }
     }, [monthTaskRelations.length, loadMonthTasksRelation])
 
-    function shareClick(week: WeekTaskRelation) {
+    /* function shareClick(week: WeekTaskRelation) {
         shareWeekTasks(week);
-    }
+    } */
 
 
     if (store.globalStore.loading)

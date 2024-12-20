@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { PlantDTO } from "../../models/PlantDTO";
-import { Button, Divider, Grid, GridColumn, GridRow, Header, Image, Modal } from "semantic-ui-react";
+import { Button, Divider, Grid, GridColumn, GridRow, Header, Image } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from 'uuid'
 import { store, useStore } from "../../app/stores/store";

@@ -58,7 +58,7 @@ export default class BedsStore {
                 bedRelation.cells.forEach(cell => {
                     if (cell.plantRecordId != "") {
 
-                        const plant: PlantDTO = store.plantStore.getPlantDTO(
+                        const plant: PlantDTO | undefined = store.plantStore.getPlantDTO(
                             bedRelation.bed.isDesign ? cell.plantRecordId : store.plantRecordStore.getPlantRecord(cell.plantRecordId)?.plantId
                                 ?? "");
                         if (plant)

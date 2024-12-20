@@ -7,9 +7,9 @@ import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
 import LoadingComponent from "../layout/LoadingComponent";
-import MyMapping from "../../app/MyMapping";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSeedling, faRepeat } from "@fortawesome/free-solid-svg-icons";
+import { mapMonthIndex } from "../../app/MyMapping";
 
 const RenderPlant = (plant: PlantDTO, toSowMonth: boolean) => {
    
@@ -67,7 +67,7 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation) => {
 
     return (
 
-        <Container key={`${monthSewed.month}`} id={`month_${MyMapping.mapMonthIndex(monthSewed.month)}`} textAlign="center">
+        <Container key={`${monthSewed.month}`} id={`month_${mapMonthIndex(monthSewed.month)}`} textAlign="center">
 
             <Divider horizontal />
             
@@ -78,7 +78,7 @@ const RenderMonthWeek = (monthSewed: MonthSewedRelation) => {
             <Divider horizontal />
                 <Card.Group itemsPerRow={6} >
                 {
-                    monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant, thisMonth == MyMapping.mapMonthIndex(monthSewed.month)))
+                    monthSewed.sewedPlants.map((plant: PlantDTO) => RenderPlant(plant, thisMonth == mapMonthIndex(monthSewed.month)))
                 }
                 </Card.Group>
             </Container>

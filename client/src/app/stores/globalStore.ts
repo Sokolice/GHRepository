@@ -2,7 +2,7 @@ import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { GardeningTaskDTO } from "../../models/GardeningTaskDTO";
 import { MonthWeekDTO } from "../../models/MonthWeekDTO";
 import agent from "../../api/agent";
-import { Stats } from "../../models/Stats";
+import { Statistics } from "../../models/Stats";
 import { HarvestDTO } from "../../models/HarvestDTO";
 import { v4 as uiid } from 'uuid';
 import { store } from "./store";
@@ -11,7 +11,7 @@ export default class GlobalStore {
     monthweekDTOlist = new Map<string, MonthWeekDTO>();
     gardeningTaskList = new Map<string, GardeningTaskDTO>();
     loading = false;
-    stats: Stats | undefined;
+    stats: Statistics | undefined;
     token: string | null = localStorage.getItem('jwt');
     appLoaded = false;
     constructor() {

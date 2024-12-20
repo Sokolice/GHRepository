@@ -8,7 +8,6 @@ import { BedRelation } from "../../models/BedRelation";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { PlantDTO } from "../../models/PlantDTO";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
-import { GardeningTaskDTO } from "../../models/GardeningTaskDTO";
 import { MonthTaskRelation } from "../../models/MonthTaskRelation";
 
 export default class UserStore {
@@ -38,7 +37,7 @@ export default class UserStore {
     }
 
     logout = () => {
-        store.globalStore.setToken(null);
+        store.globalStore.setToken('');
         this.user = null;
         this.invalidateCache();
         router.navigate('/');

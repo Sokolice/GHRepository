@@ -1,4 +1,4 @@
-export interface Stats{
+export interface Statistics{
     freezeAlert: boolean,
     highTemperatureAlert: boolean,
     rainPeriodAlert: boolean,

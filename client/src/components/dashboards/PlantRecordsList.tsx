@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { observer } from "mobx-react-lite";
-import { Button, Card, Container, Divider, Image, Popup, Progress, Item, ItemContent, ItemHeader, Label } from "semantic-ui-react";
+import { Button, Card, Container, Divider, Image, Popup, Progress, Item, ItemContent, ItemHeader, Label, Checkbox } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import { useEffect } from "react";
@@ -14,7 +14,7 @@ import HarvestComponent from "../details/HarvestComponent";
 import { dateOptions } from "../../app/options/dateOptions";
 import ConfirmationDeleteComponent from "../details/ConfirmationDelete";
 
-const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
+const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO | undefined) => {
 
     function deleteRecord() {
         if (plantRecord.id != '') {
@@ -28,7 +28,8 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
         )
 
     return (
-        <Card key={plantRecord.id}>            
+        <Card key={plantRecord.id}>  
+        <Checkbox className="plant-record-checkbox"/>         
             <Image src={`/src/assets/plants/${plant.imageSrc}`} wrapped ui={false} />
             <Card.Content>
                 <Card.Header >{plant.name}</Card.Header>
@@ -42,7 +43,7 @@ const RenderPlantRecord = (plantRecord: PlantRecordDTO, plant: PlantDTO) => {
                 }
             </Card.Content>
             <Card.Content extra>
-                <Card.Header>Datum výsadby: </Card.Header>{plantRecord.datePlanted.toLocaleString('cs-CZ', dateOptions)}
+                <Card.Header>Datum výsadby: </Card.Header>{plantRecord.datePlanted?.toLocaleString('cs-CZ', dateOptions)}
                 <Divider />
                 <Card.Header>Množství: </Card.Header>{plantRecord.amountPlanted}
                 <Divider />

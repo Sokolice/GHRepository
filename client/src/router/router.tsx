@@ -6,11 +6,11 @@ import PlantRecordsListComponent from "../components/dashboards/PlantRecordsList
 import PlantDetails from "../components/details/PlantDetails";
 import BedComponent from "../components/details/Bed";
 import RecipeHints from "../components/details/RecipeHints";
-import CalendarList from "../components/dashboards/Calendar";
 import BedsPage from "../components/dashboards/BedsPage";
 import LoginComponent from "../components/users/login";
 import MainDashboard from "../components/dashboards/MainDashboard";
 import MyPlantsComponent from "../components/dashboards/MyPlants";
+import CalendarList from "../components/dashboards/calendar";
 
 
 export const routes: RouteObject[] = [

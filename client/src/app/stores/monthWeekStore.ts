@@ -4,8 +4,8 @@ import { MonthWeekRelation } from "../../models/MonthWeekRelation";
 import { store } from "./store";
 import { MonthSewedRelation } from "../../models/MonthSewedRelation";
 import { MonthTaskRelation, WeekTaskRelation } from "../../models/MonthTaskRelation";
-import MyMapping from "../MyMapping";
 import { GardeningTaskDTO } from "../../models/GardeningTaskDTO";
+import { mapMonthIndex } from "../MyMapping";
 
 export default class MonthWeekStore {
 
@@ -46,7 +46,7 @@ export default class MonthWeekStore {
             const today = new Date();
             const month = today.getMonth() + 1;
 
-            const filteredMonthWeeks = this.currentMonthRelationList.filter((item) => MyMapping.mapMonthIndex(item.month) == month);
+            const filteredMonthWeeks = this.currentMonthRelationList.filter((item) => mapMonthIndex(item.month) == month);
             this.monthWeekList = this.currentMonthRelationList;
             this.currentMonthRelationList = filteredMonthWeeks;
         }

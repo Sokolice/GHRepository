@@ -3,11 +3,10 @@ import { Button, Form, Image, Header, Rating, Divider, Grid, GridRow, GridColumn
 import { PlantDTO } from "../../models/PlantDTO";
 import { ChangeEvent, useState } from "react";
 import { store, useStore } from "../../app/stores/store";
-import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import { unitOptions } from "../../app/options/unitOptions";
 
 interface Props {
-    plantDTO: PlantDTO
+    plantDTO: PlantDTO |undefined
 }
 
 const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
@@ -22,12 +21,13 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
         unit:0
     });
 
-    const posibleNextPlants = Array.from(plantStore.plantDTOList).filter(item =>  item[1].cropRotation != plantDTO.cropRotation);
-    function handleChangeOnRate(e, { rating }) {
-        setHarvest({ ...harvest, rating: rating });
-    }
+
+    const posibleNextPlants = Array.from(plantStore.plantDTOList).filter(item =>  item[1].cropRotation != plantDTO?.cropRotation);
+    /* function handleChangeOnRate(event:React.MouseEvent<HTMLDivElement>, data:RatingProps) {
+        setHarvest({ ...harvest, rating: data. });
+    } */
     function handleSubmit() {
-        harvest.plantId = plantDTO.id;
+        harvest.plantId = plantDTO?.id ?? '';
         store.globalStore.saveHarvest(harvest);
     }
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -35,7 +35,7 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
         setHarvest({ ...harvest, [name]: value });
     }
     
-    const handleSelectChange = (e, data) => {
+    const handleSelectChange = (data:any) => {
         const { name, value } = data;
         setHarvest({ ...harvest, [name]: value });
     }
@@ -47,7 +47,7 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
 
                 <GridRow>
                     <GridColumn width={6}>
-                        <Image size='medium' src={`/src/assets/plants/${plantDTO.imageSrc}`} wrapped />
+                        <Image size='medium' src={`/src/assets/plants/${plantDTO?.imageSrc}`} wrapped />
                     </GridColumn>
 
                     <GridColumn width={10}>
@@ -57,7 +57,7 @@ const HarvestComponent = observer(function Harvest({ plantDTO }: Props) {
                         </Form.Group>
                         <Form.Input name='date' placeholder='Datum' id='date' type='date' onChange={handleInputChange}></Form.Input>
                         <Form.TextArea placeholder='Poznámka' id="note" name="note" label="Poznámka" onChange={handleInputChange} />
-                        <Rating name='rating' id='rating' maxRating={5} defaultRating={0} icon='star' size='huge' onRate={handleChangeOnRate} />
+                        <Rating name='rating' id='rating' maxRating={5} defaultRating={0} icon='star' size='huge' />
                         <Header as='h3'> Následné plodiny</Header>
                             <List>
                                 {
