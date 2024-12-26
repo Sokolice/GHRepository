@@ -3,7 +3,8 @@ import { useStore } from "../../app/stores/store";
 import { Button, Divider, Form, Header } from "semantic-ui-react";
 
 interface Props {
-    handleSubmit: () => void
+    handleSubmit: () => void;
+    message?:string;
 }
 
 const ConfirmationDeleteComponent = observer(function ConfirmationDelete({ handleSubmit }: Props) {

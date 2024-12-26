@@ -34,6 +34,10 @@ namespace API.Domain
 
         public virtual List<Pest> Pests { get; set; }
         public virtual List<Plant> Plants { get; set; }
+        public long MinTemperature { get; set; }
+        public int PlantHeight { get; set; }
+        public int PlantSpace { get; set; }
+        public int RowSpace { get; set; }
 
         public PlantType()
         {
@@ -48,6 +52,10 @@ namespace API.Domain
             ImageSrc = string.Empty;
             Pests = new List<Pest>();
             Plants = new List<Plant>();
+            MinTemperature = 0;
+            PlantHeight = 0;
+            RowSpace = 0;
+            PlantSpace = 0;
         }
     }
 }
