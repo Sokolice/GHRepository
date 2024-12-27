@@ -53,8 +53,11 @@ namespace API
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-                    //policy.AllowAnyHeader().WithOrigins("http://localhost:5180");
+                    policy
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .WithOrigins("http://localhost:3000");
                 });
             });
 
@@ -73,16 +76,27 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            else
+            {
+                app.Use(async (context, next) =>
+                {
+                    context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+                    await next.Invoke();
+                });
+            }
 
             app.UseCors("CorsPolicy");
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             
             app.UseAuthentication();
             app.UseAuthorization();
 
-
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.MapControllers();
+            app.MapFallbackToController("Index", "Fallback");
+
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
             try

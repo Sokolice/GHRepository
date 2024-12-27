@@ -17,8 +17,8 @@ export default class RecipesStore {
     loadRecipes = async (name: string) => {
 
         store.globalStore.loading = true;
-        const response = await axios.get(
-            `http://localhost:5106/Recipes/${name}`
+        const url = import.meta.env.VITE_RECIPE_URL + `/${name}`;
+        const response = await axios.get(url
         );
         console.log(response.data);
         runInAction(() => {

@@ -21,7 +21,7 @@ const sleep = (delay: number) => {
         setTimeout(resolve, delay))
 }
 
-axios.defaults.baseURL = 'http://localhost:5180/api/';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 axios.interceptors.request.use(config => {
     const token = store.globalStore.token;
