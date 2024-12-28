@@ -10,13 +10,11 @@ const LoginComponent = observer(function LoginForm() {
     <Formik
       initialValues={{ email: "", password: "", error: null }}
       onSubmit={(values, { setErrors }) =>
-        userStore
-          .login(values)
-          .catch(() =>
-            setErrors({
-              error: "Uživatel se zadaným emailem a heslsem neexistuje",
-            }),
-          )
+        userStore.login(values).catch(() =>
+          setErrors({
+            error: "Uživatel se zadaným emailem a heslsem neexistuje",
+          }),
+        )
       }
     >
       {({ handleSubmit, isSubmitting, errors }) => (

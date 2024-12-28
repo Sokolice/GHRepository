@@ -48,10 +48,16 @@ const BedComponent = observer(function Bed() {
   useEffect(() => {
     /*if (allPlantsRelations.length <= 0)
             loadAllPlantsRelations();*/
-    if (plantDTOList.size <= 0) loadPlantDTO();
-    if (plantRecordMap.size <= 0) loadPlantRecords();
+    if (plantDTOList.size <= 0) {
+      loadPlantDTO();
+    }
+    if (plantRecordMap.size <= 0) {
+      loadPlantRecords();
+    }
     async function fetchData() {
-      if (id) await loadBed(id);
+      if (id) {
+        await loadBed(id);
+      }
     }
     fetchData();
   }, [
@@ -80,12 +86,15 @@ const BedComponent = observer(function Bed() {
       image: { avatar: false, src: `/src/assets/plants/${image}` },
     };
 
-    if (avoid && companion)
+    if (avoid && companion) {
       opt.label = { color: "orange", circular: true, empty: true };
-    else {
-      if (avoid) opt.label = { color: "red", circular: true, empty: true };
-      if (companion)
+    } else {
+      if (avoid) {
+        opt.label = { color: "red", circular: true, empty: true };
+      }
+      if (companion) {
         opt.label = { color: "green", circular: true, empty: true };
+      }
     }
 
     options?.push(opt);
@@ -94,40 +103,56 @@ const BedComponent = observer(function Bed() {
   function loadDropDownItems() {
     if (selectedBed.bed.isDesign) {
       plantStore.plantDTOList.forEach((p) => {
-        if (selectedBed.bed.cropRotation > 0)
-          if (!isCropRotationSame(selectedBed.bed, p)) return;
+        if (selectedBed.bed.cropRotation > 0) {
+          if (!isCropRotationSame(selectedBed.bed, p)) {
+            return;
+          }
+        }
 
         let avoid = false;
         let companion = false;
 
-        if (selectedBed.avoidPlantsIds.length > 0)
-          if (selectedBed.avoidPlantsIds.includes(p.id)) avoid = true;
+        if (selectedBed.avoidPlantsIds.length > 0) {
+          if (selectedBed.avoidPlantsIds.includes(p.id)) {
+            avoid = true;
+          }
+        }
 
-        if (selectedBed.companionPlantsIds.length > 0)
-          if (selectedBed.companionPlantsIds.includes(p.id)) companion = true;
+        if (selectedBed.companionPlantsIds.length > 0) {
+          if (selectedBed.companionPlantsIds.includes(p.id)) {
+            companion = true;
+          }
+        }
 
         pushToOptions(p.id, p.name, p.id, p.imageSrc, avoid, companion);
       });
     } else {
       store.plantRecordStore.plantRecordMap.forEach(
         (plantRecord: PlantRecordDTO) => {
-          if (plantRecord.id == "00000000-0000-0000-0000-000000000000") return;
+          if (plantRecord.id == "00000000-0000-0000-0000-000000000000") {
+            return;
+          }
           const plant: PlantDTO | undefined = plantStore.getPlantDTO(
             plantRecord.plantId,
           );
-          if (selectedBed.bed.cropRotation > 0)
-            if (!isCropRotationSame(selectedBed.bed, plant)) return;
+          if (selectedBed.bed.cropRotation > 0) {
+            if (!isCropRotationSame(selectedBed.bed, plant)) {
+              return;
+            }
+          }
 
           let avoid = false;
           let companion = false;
 
-          if (plant && selectedBed.avoidPlantsIds.includes(plant.id))
+          if (plant && selectedBed.avoidPlantsIds.includes(plant.id)) {
             avoid = true;
+          }
 
-          if (plant && selectedBed.companionPlantsIds.includes(plant.id))
+          if (plant && selectedBed.companionPlantsIds.includes(plant.id)) {
             companion = true;
+          }
 
-          if (plant)
+          if (plant) {
             pushToOptions(
               plantRecord.id,
               plant?.name +
@@ -138,6 +163,7 @@ const BedComponent = observer(function Bed() {
               avoid,
               companion,
             );
+          }
         },
       );
     }
@@ -191,8 +217,9 @@ const BedComponent = observer(function Bed() {
         }
       });
     });
-    if (plant && selectedBed.plants.indexOf(plant) === -1)
+    if (plant && selectedBed.plants.indexOf(plant) === -1) {
       selectedBed?.plants.push(plant);
+    }
     store.bedsStore.updateBed(selectedBed);
   }
 
@@ -211,8 +238,9 @@ const BedComponent = observer(function Bed() {
 
     runInAction(() => {
       selectedBed.cells.forEach((cell) => {
-        if (cell.x == x && cell.y == y)
+        if (cell.x == x && cell.y == y) {
           cell.isActive = cell.isActive ? false : true;
+        }
       });
     });
   }
@@ -253,13 +281,14 @@ const BedComponent = observer(function Bed() {
   }
 
   function handleMouseOver(e: any) {
-    if (mouseDown)
+    if (mouseDown) {
       activateCells(
         startPosition.x,
         startPosition.y,
         e.target.dataset.x,
         e.target.dataset.y,
       );
+    }
   }
 
   function activateCells(
@@ -274,19 +303,22 @@ const BedComponent = observer(function Bed() {
         cell.x <= endX &&
         cell.y >= startY &&
         cell.y <= endY
-      )
+      ) {
         runInAction(() => {
           cell.isActive = true;
         });
-      else
+      } else {
         runInAction(() => {
           cell.isActive = false;
         });
+      }
     });
   }
 
   function renderCell(cell: Cell) {
-    if (cell.isHidden) return;
+    if (cell.isHidden) {
+      return;
+    }
     let plant: PlantDTO | undefined = undefined;
     function showPlantRecordDetails(): ReactNode {
       //console.log(cell.plantRecordId);
@@ -320,7 +352,9 @@ const BedComponent = observer(function Bed() {
                   : ": " + plantRecord?.datePlanted}
               </Label>
             );
-          } else return;
+          } else {
+            return;
+          }
         }
       }
     }
@@ -392,7 +426,9 @@ const BedComponent = observer(function Bed() {
     window.print();
   }
 
-  if (store.globalStore.loading || !selectedBed) return <LoadingComponent />;
+  if (store.globalStore.loading || !selectedBed) {
+    return <LoadingComponent />;
+  }
   return (
     <SegmentGroup>
       <Segment>

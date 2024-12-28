@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container } from "semantic-ui-react";
 import "./App.css";
 import HomePage from "./components/home/HomePage";
@@ -46,12 +45,24 @@ function App() {
     if (isLoggedIn) {
       loadStats();
 
-      if (pestsList.length <= 0) loadPests();
-      if (monthWeekRelationList.length <= 0) loadMonthWeeekRelations();
-      if (currentMonthRelationList.length <= 0) loadMonthWeeeks();
-      if (plantDTOList.size <= 0) loadPlantDTO();
-      if (plantRecordMap.size <= 0) loadPlantRecords();
-      if (beds.length <= 0) loadBeds();
+      if (pestsList.length <= 0) {
+        loadPests();
+      }
+      if (monthWeekRelationList.length <= 0) {
+        loadMonthWeeekRelations();
+      }
+      if (currentMonthRelationList.length <= 0) {
+        loadMonthWeeeks();
+      }
+      if (plantDTOList.size <= 0) {
+        loadPlantDTO();
+      }
+      if (plantRecordMap.size <= 0) {
+        loadPlantRecords();
+      }
+      if (beds.length <= 0) {
+        loadBeds();
+      }
     }
   }, [
     beds.length,
@@ -70,7 +81,9 @@ function App() {
     isLoggedIn,
   ]);
 
-  if (!globalStore.appLoaded) return <LoadingComponent />;
+  if (!globalStore.appLoaded) {
+    return <LoadingComponent />;
+  }
   return (
     <>
       <ModalContainer />

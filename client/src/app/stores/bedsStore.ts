@@ -56,7 +56,9 @@ export default class BedsStore {
                 : (store.plantRecordStore.getPlantRecord(cell.plantRecordId)
                     ?.plantId ?? ""),
             );
-            if (plant) ids.set(plant.id, plant);
+            if (plant) {
+              ids.set(plant.id, plant);
+            }
           }
         });
         runInAction(() => {

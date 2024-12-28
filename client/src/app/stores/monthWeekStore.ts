@@ -48,7 +48,9 @@ export default class MonthWeekStore {
       );
       this.monthWeekList = this.currentMonthRelationList;
       this.currentMonthRelationList = filteredMonthWeeks;
-    } else this.currentMonthRelationList = this.monthWeekList;
+    } else {
+      this.currentMonthRelationList = this.monthWeekList;
+    }
   };
 
   filterPlanted = () => {
@@ -70,7 +72,9 @@ export default class MonthWeekStore {
 
       this.monthWeekList = this.currentMonthRelationList;
       this.currentMonthRelationList = newArr;
-    } else this.currentMonthRelationList = this.monthWeekList;
+    } else {
+      this.currentMonthRelationList = this.monthWeekList;
+    }
   };
 
   //using for calculationg progress

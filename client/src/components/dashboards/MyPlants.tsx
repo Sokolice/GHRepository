@@ -39,8 +39,12 @@ const MyPlantsComponent = observer(function MyPlants() {
   //const numOfElements = allAvailablePlantDTOListGrouped.length / 2;
   useEffect(() => {
     if (isLoggedIn) {
-      if (allAvailablePlantDTOListGrouped.length <= 0) loadAllPlants();
-      if (allPlantTypes.size <= 0) loadAllPlantTypes();
+      if (allAvailablePlantDTOListGrouped.length <= 0) {
+        loadAllPlants();
+      }
+      if (allPlantTypes.size <= 0) {
+        loadAllPlantTypes();
+      }
     }
   }, [
     allAvailablePlantDTOListGrouped.length,
@@ -57,7 +61,9 @@ const MyPlantsComponent = observer(function MyPlants() {
   function handleCheckBoxChange(id: string) {
     setPlantsToAdd([...plantsToAdd, id]);
   }
-  if (store.globalStore.loading) return <LoadingComponent />;
+  if (store.globalStore.loading) {
+    return <LoadingComponent />;
+  }
   return (
     <>
       <Button

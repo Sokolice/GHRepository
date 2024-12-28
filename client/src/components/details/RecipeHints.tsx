@@ -27,7 +27,9 @@ const RecipeHints = observer(function RecipeHints() {
     fetchData();
   }, [store.recipesStore.loadRecipes]);
 
-  if (store.globalStore.loading) return <LoadingComponent />;
+  if (store.globalStore.loading) {
+    return <LoadingComponent />;
+  }
   return (
     <>
       <Button

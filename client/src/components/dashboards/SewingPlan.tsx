@@ -125,7 +125,9 @@ const SewingPlanComponent = observer(function SewingPlan() {
 
   useEffect(() => {
     const element = document.getElementById("month_" + thisMonth);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   }, []);
 
   function switchToCurrentMonth() {
@@ -142,7 +144,9 @@ const SewingPlanComponent = observer(function SewingPlan() {
     store.monthWeekStore.hidePlanted = !store.monthWeekStore.hidePlanted;
     store.monthWeekStore.filterPlanted();
   }
-  if (store.globalStore.loading) return <LoadingComponent />;
+  if (store.globalStore.loading) {
+    return <LoadingComponent />;
+  }
   return (
     <Container>
       <Container textAlign="center">

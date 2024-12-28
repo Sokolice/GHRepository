@@ -66,7 +66,9 @@ const PlantRecordFormComponent = observer(function PlantRecordForm({
     }
   }
 
-  if (store.globalStore.loading) return <LoadingComponent />;
+  if (store.globalStore.loading) {
+    return <LoadingComponent />;
+  }
   return (
     <Formik
       validationSchema={validationSchema}

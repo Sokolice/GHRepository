@@ -6,7 +6,9 @@ import LoadingComponent from "../layout/LoadingComponent";
 import { store } from "../../app/stores/store";
 
 const BedsPage = observer(function BedsPage() {
-  if (store.globalStore.loading) return <LoadingComponent />;
+  if (store.globalStore.loading) {
+    return <LoadingComponent />;
+  }
   return (
     <Container>
       <BedsFormComponent />

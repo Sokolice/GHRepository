@@ -67,9 +67,12 @@ export const isCropRotationSame = (
   if (
     plant?.cropRotation == 23 &&
     (bed.cropRotation == 2 || bed.cropRotation == 3)
-  )
+  ) {
     return true;
-  if (plant?.cropRotation == bed.cropRotation) return true;
+  }
+  if (plant?.cropRotation == bed.cropRotation) {
+    return true;
+  }
 
   return false;
 };

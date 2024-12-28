@@ -27,7 +27,9 @@ const MainDashboard = observer(function MainDashboard() {
   const { globalStore } = useStore();
   const { loading, stats } = globalStore;
 
-  if (loading) return <LoadingComponent />;
+  if (loading) {
+    return <LoadingComponent />;
+  }
   return (
     <>
       <Grid columns={4}>

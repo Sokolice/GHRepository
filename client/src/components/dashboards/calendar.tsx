@@ -19,7 +19,9 @@ const CalendarList = observer(function CalendarView() {
         shareWeekTasks(week);
     } */
 
-  if (store.globalStore.loading) return <LoadingComponent />;
+  if (store.globalStore.loading) {
+    return <LoadingComponent />;
+  }
   return (
     <Container key={"1"}>
       {monthTaskRelations.map((month) => {

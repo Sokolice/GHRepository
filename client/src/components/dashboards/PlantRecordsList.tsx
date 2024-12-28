@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { observer } from "mobx-react-lite";
 import {
   Button,
@@ -52,7 +51,9 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
     plantRecord: PlantRecordDTO,
     plant: PlantDTO | undefined,
   ) => {
-    if (!plant || store.globalStore.loading) return <LoadingComponent />;
+    if (!plant || store.globalStore.loading) {
+      return <LoadingComponent />;
+    }
 
     return (
       <Card key={plantRecord.id}>

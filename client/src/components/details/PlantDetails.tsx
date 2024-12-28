@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { Link, useParams } from "react-router-dom";
 import {
   Button,
@@ -37,7 +36,9 @@ const PlantDetails = observer(function PlantDetails() {
       loadOtherPlants(id);
     }
   }, [id]);
-  if (store.globalStore.loading || !selectedPlant) return <LoadingComponent />;
+  if (store.globalStore.loading || !selectedPlant) {
+    return <LoadingComponent />;
+  }
   return (
     <Segment basic>
       <Grid columns={2} divided>
