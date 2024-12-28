@@ -4,30 +4,31 @@ import { store } from "./store";
 import agent from "../../api/agent";
 
 export default class PestsStore {
-    pestsList = new Array<PestRelation>();
-    currentPests = new Array<PestRelation>();
+  pestsList = new Array<PestRelation>();
+  currentPests = new Array<PestRelation>();
 
-    constructor() {
-        makeAutoObservable(this)
-    }
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-    get getPests() {
-        return this.pestsList;
-    }
+  get getPests() {
+    return this.pestsList;
+  }
 
-    loadPests = async () => {
-        store.globalStore.setLoading(true);
-        const pests = await agent.Pests.getPests();
+  loadPests = async () => {
+    store.globalStore.setLoading(true);
+    const pests = await agent.Pests.getPests();
 
-        runInAction(() => {
-            this.pestsList = pests;
-        })
+    runInAction(() => {
+      this.pestsList = pests;
+    });
 
-        store.globalStore.setLoading(false);
-    }
+    store.globalStore.setLoading(false);
+  };
 
-    getCurrentPest = (plantId: string) => {
-
-        this.currentPests = this.pestsList.filter(relation => relation.plants.find(p => p.id == plantId));
-    }
+  getCurrentPest = (plantId: string) => {
+    this.currentPests = this.pestsList.filter((relation) =>
+      relation.plants.find((p) => p.id == plantId),
+    );
+  };
 }

@@ -11,33 +11,33 @@ import UserStore from "./userStore";
 import ModalStore from "./modalStore";
 
 interface Store {
-    monthWeekStore: MonthWeekStore,
-    plantRecordStore: PlantRecordStore,
-    globalStore: GlobalStore,
-    bedsStore: BedsStore,
-    weatherStore: WeatherStore,
-    recipesStore: RecipesStore,
-    pestsStore: PestsStore,
-    plantStore: PlantStore,
-    userStore: UserStore,
-    modalStore: ModalStore
+  monthWeekStore: MonthWeekStore;
+  plantRecordStore: PlantRecordStore;
+  globalStore: GlobalStore;
+  bedsStore: BedsStore;
+  weatherStore: WeatherStore;
+  recipesStore: RecipesStore;
+  pestsStore: PestsStore;
+  plantStore: PlantStore;
+  userStore: UserStore;
+  modalStore: ModalStore;
 }
 
 export const store: Store = {
-    monthWeekStore: new MonthWeekStore(),
-    plantRecordStore: new PlantRecordStore(),
-    globalStore: new GlobalStore(),
-    bedsStore: new BedsStore(),
-    weatherStore: new WeatherStore(),
-    recipesStore: new RecipesStore(),
-    pestsStore: new PestsStore(),
-    plantStore: new PlantStore(),
-    userStore: new UserStore(),
-    modalStore: new ModalStore()
-}
+  monthWeekStore: new MonthWeekStore(),
+  plantRecordStore: new PlantRecordStore(),
+  globalStore: new GlobalStore(),
+  bedsStore: new BedsStore(),
+  weatherStore: new WeatherStore(),
+  recipesStore: new RecipesStore(),
+  pestsStore: new PestsStore(),
+  plantStore: new PlantStore(),
+  userStore: new UserStore(),
+  modalStore: new ModalStore(),
+};
 
 export const StoreContext = createContext(store);
 
 export function useStore() {
-    return useContext(StoreContext);
+  return useContext(StoreContext);
 }

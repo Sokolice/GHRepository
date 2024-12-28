@@ -12,26 +12,26 @@ import MainDashboard from "../components/dashboards/MainDashboard";
 import MyPlantsComponent from "../components/dashboards/MyPlants";
 import CalendarList from "../components/dashboards/calendar";
 
-
 export const routes: RouteObject[] = [
-    {
-        path: '/',
-        element: <App />,
-        children: [
-            { path: '', element: <HomePage /> },
-            { path: 'main', element: <MainDashboard /> },
-            { path: 'login', element: <LoginComponent /> },
-            { path: 'sewingplan', element: <SewingPlanComponent /> },
-            { path: 'plantrecords', element: <PlantRecordsListComponent /> },
-            { path: 'plants/:id/:origin', element: <PlantDetails /> },
-            { path: 'plants/:id/:origin/:otherId', element: <PlantDetails /> }, 
-            { path: 'plants/:id/', element: <PlantDetails /> },
-            { path: 'beds', element: <BedsPage /> },
-            { path: 'beds/:id', element: <BedComponent /> },
-            { path: 'recipeHints/:name', element: <RecipeHints /> },
-            { path: 'calendar', element: <CalendarList /> },
-            { path: 'myPlants', element: <MyPlantsComponent /> }
-        ]
-    }]
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "", element: <HomePage /> },
+      { path: "main", element: <MainDashboard /> },
+      { path: "login", element: <LoginComponent /> },
+      { path: "sewingplan", element: <SewingPlanComponent /> },
+      { path: "plantrecords", element: <PlantRecordsListComponent /> },
+      { path: "plants/:id/:origin", element: <PlantDetails /> },
+      { path: "plants/:id/:origin/:otherId", element: <PlantDetails /> },
+      { path: "plants/:id/", element: <PlantDetails /> },
+      { path: "beds", element: <BedsPage /> },
+      { path: "beds/:id", element: <BedComponent /> },
+      { path: "recipeHints/:name", element: <RecipeHints /> },
+      { path: "calendar", element: <CalendarList /> },
+      { path: "myPlants", element: <MyPlantsComponent /> },
+    ],
+  },
+];
 
 export const router = createBrowserRouter(routes);

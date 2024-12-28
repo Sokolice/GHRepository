@@ -4,72 +4,66 @@ import { MonthWeekDTO } from "../../models/MonthWeekDTO";
 import agent from "../../api/agent";
 import { Statistics } from "../../models/Stats";
 import { HarvestDTO } from "../../models/HarvestDTO";
-import { v4 as uiid } from 'uuid';
+import { v4 as uiid } from "uuid";
 import { store } from "./store";
 export default class GlobalStore {
-
-    monthweekDTOlist = new Map<string, MonthWeekDTO>();
-    gardeningTaskList = new Map<string, GardeningTaskDTO>();
-    loading = false;
-    stats: Statistics | undefined;
-    token: string | null = localStorage.getItem('jwt');
-    appLoaded = false;
-    constructor() {
-        makeAutoObservable(this);
-        reaction(
-            () => this.token, 
-            token => {
-                if (token) {
-                    localStorage.setItem('jwt', token)
-                }
-                else {
-                    localStorage.removeItem('jwt')
-                }
-            }
-        )
-    }
-
-    setToken = (token: string) => {
-        this.token = token;
-    }
-
-    setAppLoaded = () => {
-        this.appLoaded = true;
-    }
-
-    loadStats = async () => {
-        this.setLoading(true);
-        try {
-            const allStats = await agent.Stats.getStats();
-            runInAction(() => {
-                this.stats = allStats;
-            });
-            this.setLoading(false);
+  monthweekDTOlist = new Map<string, MonthWeekDTO>();
+  gardeningTaskList = new Map<string, GardeningTaskDTO>();
+  loading = false;
+  stats: Statistics | undefined;
+  token: string | null = localStorage.getItem("jwt");
+  appLoaded = false;
+  constructor() {
+    makeAutoObservable(this);
+    reaction(
+      () => this.token,
+      (token) => {
+        if (token) {
+          localStorage.setItem("jwt", token);
+        } else {
+          localStorage.removeItem("jwt");
         }
-        catch (error) {
-            console.log(error);
-        }
-    }
-        
-    setLoading = (state: boolean) => {
-        runInAction(() => {
-            this.loading = state;
-        })
-    }
+      },
+    );
+  }
 
+  setToken = (token: string) => {
+    this.token = token;
+  };
 
-    saveHarvest = async (harvest: HarvestDTO) => {
-        this.setLoading(true);
+  setAppLoaded = () => {
+    this.appLoaded = true;
+  };
 
-        try {
-            harvest.id = uiid();
-            await agent.Plants.harvest(harvest);
-            this.setLoading(false);
-        }
-        catch (error) {
-            console.log(error);
-        }
-        store.modalStore.closeModal();
+  loadStats = async () => {
+    this.setLoading(true);
+    try {
+      const allStats = await agent.Stats.getStats();
+      runInAction(() => {
+        this.stats = allStats;
+      });
+      this.setLoading(false);
+    } catch (error) {
+      console.log(error);
     }
-    
-} 
+  };
+
+  setLoading = (state: boolean) => {
+    runInAction(() => {
+      this.loading = state;
+    });
+  };
+
+  saveHarvest = async (harvest: HarvestDTO) => {
+    this.setLoading(true);
+
+    try {
+      harvest.id = uiid();
+      await agent.Plants.harvest(harvest);
+      this.setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+    store.modalStore.closeModal();
+  };
+}
