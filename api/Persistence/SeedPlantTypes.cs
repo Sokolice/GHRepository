@@ -12,7 +12,7 @@ namespace API.Persistence
             var monthWeekMap = context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
             var plants = new List<PlantType>
             {
-                /*new PlantType
+                new PlantType
                 {
                     Name = "Rajče",
                     DirectSewing = false,
@@ -45,7 +45,11 @@ namespace API.Persistence
                     ImageSrc = "tomato.jpg",
                     Description = "Rajče jedlé, též lilek rajče (Solanum lycopersicum) je trvalka bylinného charakteru pěstovaná jako jednoletka." +
                     " Patří do čeledi lilkovitých. Pochází ze Střední a Jižní Ameriky. Plodem je bobule zvaná rajče, původně rajské jablko, " +
-                    "proto se rajče řadí mezi plodovou zeleninu, ale jsou spekulace o tom, že rajče je ovoce."
+                    "proto se rajče řadí mezi plodovou zeleninu, ale jsou spekulace o tom, že rajče je ovoce.",
+                    MinTemperature = 10,
+                    PlantHeight = 120,
+                    PlantSpace = 45,
+                    RowSpace = 90
                 }
                 ,
                 new PlantType
@@ -71,7 +75,11 @@ namespace API.Persistence
                     Description = "Lilek vejcoplodý (Solanum melongena), jinak také baklažán, " +
                     "je jednoletá rostlina z rodu lilek (příbuzná s bramborem a rajčetem), z čeledi lilkovité. Dorůstá až jednometrové výšky. " +
                     "Květy jsou nachové až světle fialové. Plodem jsou červenofialové bobule používané " +
-                    "jako plodová zelenina a označované jako lilek."
+                    "jako plodová zelenina a označované jako lilek.",
+                    MinTemperature = 10,
+                    PlantHeight = 100,
+                    PlantSpace = 40,
+                    RowSpace = 50
                 },
                 new PlantType
                 {
@@ -119,7 +127,11 @@ namespace API.Persistence
                     "také minerální látky, zvláště fosfor a draslík, ale i vápník a hořčík.\r\n\r\nHrách je rostlina původem ze Středomoří, " +
                     "která se během neolitické revoluce rozšířila po celé Evropě. " +
                     "V Čechách patří k nejstarším doloženým pěstovaným rostlinám[1].\r\n\r\n" +
-                    "Hrách má hypogeické klíčení (dělohy zůstávají pod zemí) a proto musí mít hlubší výsev."
+                    "Hrách má hypogeické klíčení (dělohy zůstávají pod zemí) a proto musí mít hlubší výsev.",
+                    MinTemperature = 4,
+                    PlantHeight = 60,
+                    PlantSpace = 5,
+                    RowSpace = 15
                 },
                new PlantType
                 {
@@ -194,7 +206,11 @@ namespace API.Persistence
                     " vodová – závisí obecně na zálivce a počasí během vegetace. Prodává se na tržištích na jaře a na podzim ve svazečcích," +
                     " někdy též loupaná. Ředkvička pěstovaná volně na venkovním záhonu při dlouhých letních dnech vyhání do květu a bulva " +
                     "je pak malá a pálivá.",
-                    RepeatedPlanting = 14
+                    RepeatedPlanting = 14,
+                    MinTemperature = 4,
+                    PlantHeight = 15,
+                    PlantSpace = 5,
+                    RowSpace = 15
                },
                new PlantType
                 {
@@ -230,7 +246,13 @@ namespace API.Persistence
                     Description = "Dýně Hokkaido je původem z Japonska a v současné době se jedná o velice oblíbenou odrůdu tykve.\r\n\r\n" +
                     "Její plody jsou 20–25 cm velké a váží 1–2 kg. Velkou předností je vysoký podíl dužiny oproti semeníku.\r\n\r\n" +
                     "Další její výhodou je dlouhá skladovatelnost. Při dobrých podmínkách vydrží v chladu a temnu i celou zimu.\r\n\r\n" +
-                    "Dýně Hokkaido má v kuchyni široké využití. Její dužina je velmi chutná, sladká a před zpracováním není nutné dýni loupat. Slupka, stejně jako samotná dužina, obsahuje velké množství vitamínů a minerálů a během tepelné úpravy rychle měkne."
+                    "Dýně Hokkaido má v kuchyni široké využití. Její dužina je velmi chutná, sladká a před zpracováním není nutné dýni loupat."+ 
+                    "Slupka, stejně jako samotná dužina, obsahuje velké množství vitamínů a minerálů a během tepelné úpravy rychle měkne.",
+                    RepeatedPlanting = 14,
+                    MinTemperature = 10,
+                    PlantHeight = 50,
+                    PlantSpace = 100,
+                    RowSpace = 200
                 },
                 new PlantType
                 {
@@ -1214,7 +1236,7 @@ namespace API.Persistence
                     Description = "Květák neboli lidově karfiol (Brassica oleracea convar. botrytis) je oblíbenou košťálovou zeleninou, " +
                     "kterou člověk získal vyšlechtěním divoké brukve zelné (stejně jako např. kedluben, zelí či kapustu). " +
                     "V případě květáku využíváme jako zeleninu zdužnatělé květenství. Patří mezi jednoleté rostliny."
-                }
+                },
 
                 new PlantType
                 {
@@ -1326,10 +1348,14 @@ namespace API.Persistence
                     CropRotation = 1,
                     ImageSrc = "others.jpg",
                     Description = ""
-                }*/
+                }
             };
 
-            /*var plants = context.PlantTypes.OrderBy(a=>a.Name).ToList();
+            
+            await context.PlantTypes.AddRangeAsync(plants);
+            await context.SaveChangesAsync();
+
+            plants.OrderBy(a=>a.Name).ToList();
 
             foreach (var plant in plants)
             {
@@ -1367,11 +1393,7 @@ namespace API.Persistence
                         }
                     }
                 }
-            }*/
-
-
-            await context.PlantTypes.AddRangeAsync(plants);
-            await context.SaveChangesAsync();
+            }
         }
     }
 }

@@ -33,7 +33,12 @@ namespace API.Domain
 
         public virtual List<AppUser> Users { get; set; }
 
-        public bool IsApproved {  get; set; }
+        public bool IsApproved { get; set; }
+
+        public long? MinTemperature { get; set; }
+        public int? PlantHeight { get; set; }
+        public int? PlantSpace { get; set; }
+        public int? RowSpace { get; set; }
 
         public Plant()
         {

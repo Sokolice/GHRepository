@@ -6,8 +6,6 @@ namespace API.Persistence
     {
         public static async Task SeedData(DataContext context)
         {
-            //await context.Plants.re;
-
             var monthweeks = new List<MonthWeek>
             {
                 new MonthWeek{Month = Month.January, Week = 1, MonthIndex=1},

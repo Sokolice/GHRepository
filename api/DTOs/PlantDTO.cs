@@ -29,6 +29,11 @@ namespace API.DTOs
 
         public Guid PlantTypeId { get; set; }
 
+        public long MinTemperature { get; set; }
+        public int PlantHeight { get; set; }
+        public int PlantSpace { get; set; }
+        public int RowSpace { get; set; }
+
         public PlantDTO()
         {
             Id = new Guid();
@@ -51,6 +56,10 @@ namespace API.DTOs
             RepeatedPlanting = aPlant.RepeatedPlanting;
             PreCultivation = aPlant.PreCultivation;
             PlantTypeId = aPlant.PlantTypeId;
+            MinTemperature = aPlant.MinTemperature ?? aPlant.PlantType.MinTemperature;
+            PlantHeight = aPlant.PlantHeight ?? aPlant.PlantType.PlantHeight;
+            PlantSpace = aPlant.PlantSpace ?? aPlant.PlantType.PlantSpace;
+            RowSpace = aPlant.RowSpace ?? aPlant.PlantType.RowSpace;
 
             if(aPlant.SewingMonths.Count > 0)
             {

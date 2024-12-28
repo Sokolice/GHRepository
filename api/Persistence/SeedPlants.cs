@@ -11,8 +11,8 @@ namespace API.Persistence
     {
         public static async Task SeedData(DataContext context)
         {
-            /*var monthWeekMap = context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
-            var plants = new List<Plant>
+            var monthWeekMap = context.MonthWeeks.ToDictionary(x => (x.Month, x.Week));
+            var plantsList = new List<Plant>
             {
                 new Plant
                 {
@@ -3772,7 +3772,7 @@ namespace API.Persistence
 
             
 
-            await context.Plants.AddRangeAsync(plants);*/
+            await context.Plants.AddRangeAsync(plantsList);
 
             var plantTypes = context.PlantTypes.ToList();
 
@@ -3836,7 +3836,6 @@ namespace API.Persistence
                     }
                 }
             }
-
             await context.SaveChangesAsync();
         }
     }

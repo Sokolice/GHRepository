@@ -305,9 +305,18 @@ namespace API.Migrations
                     b.Property<bool>("IsHybrid")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long?>("MinTemperature")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("PlantHeight")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("PlantSpace")
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("PlantTypeId")
                         .HasColumnType("TEXT");
@@ -316,6 +325,9 @@ namespace API.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("RepeatedPlanting")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("RowSpace")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
