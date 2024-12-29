@@ -7,21 +7,19 @@ import {
   Image,
   Popup,
   Progress,
-  Item,
-  ItemContent,
-  ItemHeader,
   Label,
   Checkbox,
+  Grid,
 } from "semantic-ui-react";
 import { store, useStore } from "../../app/stores/store";
 import { PlantRecordDTO } from "../../models/PlantRecordDTO";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { PlantDTO } from "../../models/PlantDTO";
 import LoadingComponent from "../layout/LoadingComponent";
 import PlantRecordFormComponent from "./PlantRecordForm";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSnowflake, faWheatAwn } from "@fortawesome/free-solid-svg-icons";
+import { faWheatAwn } from "@fortawesome/free-solid-svg-icons";
 import HarvestComponent from "../details/HarvestComponent";
 import { dateOptions } from "../../app/options/dateOptions";
 import ConfirmationDeleteComponent from "../details/ConfirmationDelete";
@@ -166,30 +164,25 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const { globalStore, plantStore } = useStore();
-  const { stats } = globalStore;
+  const { plantStore, plantRecordStore } = useStore();
+  const[plantRecordList, setPlantRecordList]=useState(store.plantRecordStore.plantRecords);
 
-  /*if (store.globalStore.loading)
-        return (
-            <LoadingComponent />
-        )*/
+  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
+    const inputValue = event.target.value;
+    if(inputValue.length >= 3){
+      setPlantRecordList(plantRecordStore.searchPlantRecords(inputValue));
+    }
+  }
 
   return (
-    <Container>
-      <Container>
-        {stats?.freezeAlert ? (
-          <Item>
-            <ItemContent verticalAlign="middle">
-              <ItemHeader>
-                <Label color="red">
-                  <FontAwesomeIcon icon={faSnowflake} />
-                </Label>
-                Hrozí mrazy! Zakryj rotliny neodolávající mrazu
-              </ItemHeader>
-            </ItemContent>
-          </Item>
-        ) : null}
-      </Container>
+    <Grid> 
+      <Grid.Row>
+      <input type="text" placeholder="Hledat..." onChange={handleChange}/> 
+      <Button
+        icon="times"
+        color="red"
+        onClick={()=>setPlantRecordList(store.plantRecordStore.plantRecords)}
+        />
       <Button
         icon="minus"
         color="red"
@@ -200,10 +193,18 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
             <ConfirmationDeleteComponent handleSubmit={deleteSelected} />,
           )
         }
-      />
+        />
+        <Button
+        color="blue"
+        disabled={!selectedItems.length}
+        onClick={() =>{}}      
+      ><FontAwesomeIcon icon={faWheatAwn} />{" Sklidit oznacene"}
+</Button>
+      </Grid.Row>
+      <Grid.Row>
       <Container>
         <Card.Group itemsPerRow="6">
-          {store.plantRecordStore.plantRecords.map(
+          {plantRecordList.map(
             (plantRecord: PlantRecordDTO) => {
               return RenderPlantRecord(
                 plantRecord,
@@ -213,7 +214,8 @@ const PlantRecordsListComponent = observer(function PlantRecordsList() {
           )}
         </Card.Group>
       </Container>
-    </Container>
+      </Grid.Row>
+    </Grid>
   );
 });
 

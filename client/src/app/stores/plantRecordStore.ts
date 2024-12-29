@@ -3,6 +3,7 @@ import { PlantRecordDTO } from "../../models/PlantRecordDTO";
 import agent from "../../api/agent";
 import { v4 as uiid } from "uuid";
 import { store } from "./store";
+import plantStore from "./plantStore";
 export default class PlantRecordStore {
   plantRecordMap = new Map<string, PlantRecordDTO>();
   constructor() {
@@ -122,4 +123,15 @@ export default class PlantRecordStore {
       this.plantRecordMap.set(plantRecord.id, plantRecord);
     });
   };
+
+  searchPlantRecords =(searchedString: string)=>{
+    const filteredPlantRecords= this.plantRecords.filter(record => {
+      const plant =store.plantStore.getPlantDTO(record.plantId);
+    if(plant?.name.toLowerCase().includes(searchedString)){
+      console.log(plant.name);
+      return record;
+    };   
+  })
+    return filteredPlantRecords;
+  }
 }
